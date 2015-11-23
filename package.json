@@ -1,0 +1,22 @@
+{
+  "name": "web-synth",
+  "version": "0.0.1",
+  "description": "Web Audio Modular Synth",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^5.6.18",
+    "babel-loader": "^5.1.4",
+    "babel-plugin-react-transform": "^1.1.0",
+    "webpack": "^1.9.11",
+    "karma": "0.13.x",
+    "karma-coverage": "0.5.x",
+    "karma-jasmine": "~0.3.5",
+    "karma-phantomjs-launcher": "0.2.x"
+  },
+  "scripts": {
+    "pretest": "npm install",
+    "test": "karma start karma.conf.js",
+    "develop": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js -build"
+  }
+}

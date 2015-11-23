@@ -1,0 +1,11 @@
+*~
+.DS_Store
+.idea
+*.iml
+*.log
+.vagrant
+
+node_modules
+coverage
+dist
+
