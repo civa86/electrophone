@@ -24,5 +24,9 @@ $ npm install
 $ npm run build
 ```
 
+# Demo Page
+
+Open `demo/index.html` in a Web Browser
+
 
 

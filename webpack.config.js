@@ -5,7 +5,7 @@ var path = require('path'),
 //-------------- CONFIGURATION ------------------------
 if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1) {
     //Build Configuration
-    console.log("/***** BUILD ****/");
+    console.log('/***** BUILD ****/');
     config.watch = false;
     config.outputFile = 'web-synth.min.js';
     config.plugins = [
@@ -14,7 +14,7 @@ if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1)
     ];
 } else {
     //Development Configuration
-    console.log("/***** DEVELOPMENT ****/");
+    console.log('/***** DEVELOPMENT ****/');
     config.watch = true;
     config.outputFile = 'web-synth.js';
     config.plugins = [
