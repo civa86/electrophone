@@ -93,26 +93,6 @@ class Synth {
         this.master.gain.value = 0;
         this.voices = [];
     }
-
-    static publish (synth) {
-        let ret = {},
-            methods = Object.keys(Modules),
-            fx;
-
-        //Synth Module Creators
-        for (let type of methods) {
-            fx = type.toLowerCase();
-            ret[fx] = (label, props) => {
-                synth.module(type, label, props);
-            }
-        }
-
-        //Public Method
-        ret.play = (t) => synth.play(t);
-        ret.stop = () => synth.stop();
-
-        return ret;
-    }
 }
 
 class decoratedSynth {

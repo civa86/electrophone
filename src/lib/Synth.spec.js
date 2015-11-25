@@ -1,11 +1,9 @@
-import chai from 'chai'
+import Synth from './Synth'
 
-chai.should();
+describe('Synth', function () {
 
-describe('Synth', () => {
-    let test = 10;
-
-    it('exists', () => {
-        test.should.equal(10);
+    it('should exist', function () {
+        expect(1).toBeDefined();
     });
+
 });
