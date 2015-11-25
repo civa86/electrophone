@@ -37,13 +37,12 @@ module.exports = function (config) {
                         include: __dirname
 
                     }
-                ]
-                //,
-                //postLoaders: [{
-                //    test:    /\.js$/,
-                //    exclude: /(node_modules|bower_components)\/|(spec.js)/,
-                //    loader:  'istanbul-instrumenter'
-                //}]
+                ],
+                postLoaders: [{
+                    test:    /\.js$/,
+                    exclude: /(node_modules|bower_components)\/|(spec.js)/,
+                    loader:  'istanbul-instrumenter'
+                }]
             }
         },
 
