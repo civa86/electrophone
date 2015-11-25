@@ -115,4 +115,24 @@ class Synth {
     }
 }
 
-export default Synth;
+class decoratedSynth {
+    constructor () {
+        let synth = new Synth();
+
+        let methods = Object.keys(Modules),
+            fx;
+
+        //Synth Module Creators
+        for (let type of methods) {
+            fx = type.toLowerCase();
+            this[fx] = (label, props) => {
+                synth.module(type, label, props);
+            }
+        }
+
+        this.play = (t) => synth.play(t);
+        this.stop = () => synth.stop();
+    }
+}
+
+export default decoratedSynth;

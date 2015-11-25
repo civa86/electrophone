@@ -4,5 +4,5 @@ import Synth from './lib/Synth'
 
 const win = window || {};
 
-win.WebSynth = Synth.publish(new Synth());
+win.WebSynth = Synth;
 
