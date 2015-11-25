@@ -5,29 +5,55 @@
     <body>
         <script src="../dist/web-synth.js"></script>
         <script>
-            WebSynth.oscillator('OSC-A', {
+            var synth = new WebSynth(),
+                othSynth = new WebSynth();
+
+            synth.oscillator('OSC-A', {
                 type: 'sine',
                 frequency: '600',
                 level: 1,
                 link: 'F1'
             });
 
-            WebSynth.oscillator('OSC-B', {
+            synth.oscillator('OSC-B', {
                 type: 'sine',
                 frequency: '500',
                 level: 1,
                 link: 'F1'
             });
 
-            WebSynth.filter('F1', {
+            synth.filter('F1', {
                 type: 'lowpass',
                 frequency: '400',
                 link: 'master'
             });
 
-            WebSynth.play();
 
-            var s = WebSynth;
+            othSynth.oscillator('OSC-A', {
+                type: 'sine',
+                frequency: '600',
+                level: 1,
+                link: 'F1'
+            });
+
+            othSynth.oscillator('OSC-B', {
+                type: 'sine',
+                frequency: '500',
+                level: 1,
+                link: 'F1'
+            });
+
+            othSynth.filter('F1', {
+                type: 'lowpass',
+                frequency: '400',
+                link: 'master'
+            });
+
+            setTimeout(othSynth.play, 200);
+
+            synth.play();
+
+            var s = synth;
         </script>
     </body>
 </html>
