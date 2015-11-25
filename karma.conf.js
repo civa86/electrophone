@@ -10,7 +10,6 @@ module.exports = function (config) {
         basePath: './',
 
         preprocessors: {
-            //'src/**/*.js': ['webpack'],
             'src/**/*.spec.js': ['webpack']
         },
 
