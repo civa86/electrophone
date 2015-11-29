@@ -1,5 +1,5 @@
 var path = require('path'),
-    webpack= require('webpack'),
+    webpack = require('webpack'),
     config = {};
 
 //-------------- CONFIGURATION ------------------------
@@ -10,7 +10,7 @@ if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1)
     config.outputFile = 'web-synth.min.js';
     config.plugins = [
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({minimize: true})
+        new webpack.optimize.UglifyJsPlugin({ minimize: true })
     ];
 } else {
     //Development Configuration

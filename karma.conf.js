@@ -2,12 +2,11 @@
 
 module.exports = function (config) {
     config.set({
+        basePath: './',
 
         files: [
             'src/**/*.spec.js'
         ],
-
-        basePath: './',
 
         preprocessors: {
             'src/**/*.spec.js': ['webpack']
@@ -22,26 +21,27 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
 
         coverageReporter: {
-            type: 'html',
-            dir: 'coverage'
+            reporters: [
+                { type: 'html', dir: 'coverage/', subdir: '.' },
+                { type: 'text-summary' }
+            ]
         },
 
         webpack: {
+            entry:  'src/**/*.spec.js',
             module: {
                 loaders: [
                     {
-                        test:    /\.js$/,
+                        test:    /\.spec\.js$/,
                         loaders: ['babel'],
-                        exclude: /node_modules/,
-                        include: __dirname
-
+                        exclude: /node_modules/
+                    },
+                    {
+                        test:    /\.js$/,
+                        loaders: ['isparta'],
+                        exclude: /node_modules|\.spec.js$/
                     }
-                ],
-                postLoaders: [{
-                    test:    /\.js$/,
-                    exclude: /(node_modules|bower_components)\/|(spec.js)/,
-                    loader:  'istanbul-instrumenter'
-                }]
+                ]
             }
         },
 
@@ -50,7 +50,8 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-coverage',
             'karma-webpack'
-        ]
+        ],
 
+        colors: true
     });
 };
