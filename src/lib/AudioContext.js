@@ -1,15 +1,14 @@
 let AudioCtx = window.AudioContext || window.webkitAudioContext,
+    ctx = new AudioCtx(),
     deprecatedFn = {
         createGainNode: 'createGain',
-        createDelayNode: 'createDelay',
-        noteOn: 'start',
-        noteOff: 'stop'
+        createDelayNode: 'createDelay'
     };
 
 for (let f in deprecatedFn) {
-    if (typeof AudioCtx[f] === 'function') {
-        AudioCtx[deprecatedFn[f]] = AudioCtx[f];
+    if (typeof ctx[f] === 'function') {
+        ctx[deprecatedFn[f]] = ctx[f];
     }
 }
 
-export default new AudioCtx();
+export default ctx;

@@ -1,6 +1,4 @@
-//Inspiration https://github.com/rserota/wad/blob/master/src/wad.js
-//Libs
-import Synth from './lib/Synth'
+import Synth from './DecoratedSynth'
 
 const win = window || {};
 

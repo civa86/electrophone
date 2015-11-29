@@ -1,4 +1,5 @@
 'use strict';
+var path = require('path');
 
 module.exports = function (config) {
     config.set({
@@ -28,7 +29,6 @@ module.exports = function (config) {
         },
 
         webpack: {
-            entry:  'src/**/*.spec.js',
             module: {
                 loaders: [
                     {
