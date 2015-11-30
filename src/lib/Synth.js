@@ -7,7 +7,15 @@ class Synth {
         this.modules = {};
         this.voices = {};
 
-        this.module('Master', 'master', {});
+        this.module('Master', 'master', {
+            level: 1,
+            envelope: {
+                attack:  2,
+                decay:   15,
+                sustain: 0,
+                release: 5
+            }
+        });
     }
 
     module (type, label, props) {

@@ -11,7 +11,7 @@ class Oscillator {
         this.osc.detune.value = props.detune || 0;
         this.osc.connect(this.gain);
 
-        this.gain.gain.value = props.level || 1;
+        this.gain.gain.value = (props.level >= 0) ?  props.level : 1;
 
         this.lineout = {
             source: this.gain,
