@@ -214,7 +214,15 @@
 	        this.modules = {};
 	        this.voices = {};
 
-	        this.module('Master', 'master', { level: 1 });
+	        this.module('Master', 'master', {
+	            level: 1,
+	            envelope: {
+	                attack: 2,
+	                decay: 15,
+	                sustain: 0,
+	                release: 5
+	            }
+	        });
 	    }
 
 	    _createClass(Synth, [{
@@ -370,10 +378,11 @@
 
 	                    if (this.modules[dest]) {
 	                        out = this.modules[dest].instance.lineout.source;
-	                    } else {
-	                        out = _AudioContext2['default'].destination;
+	                        source.connect(out);
+	                    } else if (mod === 'master') {
+	                        source.connect(instance.gain);
+	                        instance.gain.connect(_AudioContext2['default'].destination);
 	                    }
-	                    source.connect(out);
 	                }
 	            } catch (err) {
 	                _didIteratorError2 = true;
@@ -393,6 +402,9 @@
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
+	            var master = this.modules.master.instance;
+	            master.setEnvelope();
+
 	            var _iteratorNormalCompletion3 = true;
 	            var _didIteratorError3 = false;
 	            var _iteratorError3 = undefined;
@@ -402,7 +414,7 @@
 	                    var source = _step3.value;
 
 	                    source.setNote(this.note);
-	                    source.noteOn(this.modules.master.instance.env);
+	                    source.noteOn();
 	                }
 	            } catch (err) {
 	                _didIteratorError3 = true;
@@ -422,6 +434,11 @@
 	    }, {
 	        key: 'noteOff',
 	        value: function noteOff() {
+	            var master = this.modules.master.instance,
+	                release = _AudioContext2['default'].currentTime + master.env.release / 10.0;
+
+	            master.resetEnvelope();
+
 	            var _iteratorNormalCompletion4 = true;
 	            var _didIteratorError4 = false;
 	            var _iteratorError4 = undefined;
@@ -430,7 +447,7 @@
 	                for (var _iterator4 = this.soundSources[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
 	                    var source = _step4.value;
 
-	                    source.noteOff();
+	                    source.noteOff(release);
 	                }
 	            } catch (err) {
 	                _didIteratorError4 = true;
@@ -523,7 +540,7 @@
 	        this.osc.detune.value = props.detune || 0;
 	        this.osc.connect(this.gain);
 
-	        this.gain.gain.value = props.level || 1;
+	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
 
 	        this.lineout = {
 	            source: this.gain,
@@ -539,33 +556,11 @@
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
-	            var currentEnvA = 2,
-	                currentEnvD = 15,
-	                currentEnvS = 0,
-	                currentEnvR = 5,
-	                now = _AudioContext2['default'].currentTime,
-	                envAttackEnd = now + currentEnvA / 20.0;
-
-	            this.gain.gain.value = 0.0;
-	            this.gain.gain.setValueAtTime(0.0, now);
-	            this.gain.gain.linearRampToValueAtTime(1.0, envAttackEnd);
-	            this.gain.gain.setTargetAtTime(currentEnvS / 100.0, envAttackEnd, currentEnvD / 100.0 + 0.001);
-
 	            this.osc.start(0);
 	        }
 	    }, {
 	        key: 'noteOff',
-	        value: function noteOff() {
-	            var currentEnvA = 2,
-	                currentEnvD = 15,
-	                currentEnvS = 68,
-	                currentEnvR = 5,
-	                now = _AudioContext2['default'].currentTime,
-	                release = now + currentEnvR / 10.0;
-
-	            this.gain.gain.cancelScheduledValues(now);
-	            this.gain.gain.setValueAtTime(this.gain.gain.value, now);
-	            this.gain.gain.setTargetAtTime(0.0, now, currentEnvR / 100);
+	        value: function noteOff(release) {
 	            this.osc.stop(release);
 	        }
 	    }]);
@@ -587,6 +582,8 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -595,30 +592,45 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var Master = function Master(props) {
-	    _classCallCheck(this, Master);
+	var Master = (function () {
+	    function Master(props) {
+	        _classCallCheck(this, Master);
 
-	    this.gain = _AudioContext2['default'].createGain();
-	    this.env = {
-	        attack: 0,
-	        decay: 0,
-	        sustain: 1,
-	        hold: 1,
-	        release: 0
-	    };
+	        this.gain = _AudioContext2['default'].createGain();
+	        this.envelope = _AudioContext2['default'].createGain();
+	        this.env = props.envelope;
 
-	    this.gain.gain.value = props.level || 1;
+	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
 
-	    //this.gain.gain.linearRampToValueAtTime(0.0001, AudioContext.currentTime);
-	    //this.gain.gain.linearRampToValueAtTime(1, AudioContext.currentTime + this.env.attack + 0.00001);
-	    //this.gain.gain.linearRampToValueAtTime(1 * this.env.sustain, AudioContext.currentTime + this.env.attack + this.env.decay + 0.00002);
-	    //this.gain.gain.linearRampToValueAtTime(1 * this.env.sustain, AudioContext.currentTime + this.env.attack + this.env.decay + this.env.hold + 0.00003);
-	    //this.gain.gain.linearRampToValueAtTime(0.0001, AudioContext.currentTime + this.env.attack + this.env.decay + this.env.hold + this.env.release + 0.00004);
+	        this.lineout = {
+	            source: this.envelope
+	        };
+	    }
 
-	    this.lineout = {
-	        source: this.gain
-	    };
-	};
+	    _createClass(Master, [{
+	        key: 'setEnvelope',
+	        value: function setEnvelope() {
+	            var now = _AudioContext2['default'].currentTime,
+	                envAttackEnd = now + this.env.attack / 20.0;
+
+	            this.envelope.gain.value = 0.0;
+	            this.envelope.gain.setValueAtTime(0.0, now);
+	            this.envelope.gain.linearRampToValueAtTime(1.0, envAttackEnd);
+	            this.envelope.gain.setTargetAtTime(this.env.sustain / 100.0, envAttackEnd, this.env.decay / 100.0 + 0.001);
+	        }
+	    }, {
+	        key: 'resetEnvelope',
+	        value: function resetEnvelope() {
+	            var now = _AudioContext2['default'].currentTime;
+
+	            this.envelope.gain.cancelScheduledValues(now);
+	            this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
+	            this.envelope.gain.setTargetAtTime(0.0, now, this.env.release / 100);
+	        }
+	    }]);
+
+	    return Master;
+	})();
 
 	exports['default'] = Master;
 	module.exports = exports['default'];
