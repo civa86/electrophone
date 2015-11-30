@@ -7,7 +7,7 @@ class Synth {
         this.modules = {};
         this.voices = {};
 
-        this.module('Master', 'master', { level: 1 });
+        this.module('Master', 'master', {});
     }
 
     module (type, label, props) {

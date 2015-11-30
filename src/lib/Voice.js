@@ -7,6 +7,8 @@ class Voice {
         this.note = note;
         this.modules = modules;
         this.soundSources = [];
+        this.lineout = AudioContext.createGain();
+        this.lineout.gain.value = 1;
 
         this.setupModules();
         this.linkModules();
@@ -43,23 +45,43 @@ class Voice {
 
             if (this.modules[dest]) {
                 out = this.modules[dest].instance.lineout.source;
+                source.connect(out);
             } else {
-                out = AudioContext.destination;
+                source.connect(this.lineout);
+                this.lineout.connect(AudioContext.destination);
             }
-            source.connect(out);
         }
     }
 
     noteOn () {
+        let currentEnvA = 2,
+            currentEnvD = 15,
+            currentEnvS = 0,
+            currentEnvR = 5,
+            now = AudioContext.currentTime,
+            envAttackEnd = now + (currentEnvA / 20.0),
+            master = this.modules.master.instance;
+
+        master.setEnvelope(now, envAttackEnd, currentEnvS, currentEnvD);
         for (let source of this.soundSources) {
             source.setNote(this.note);
-            source.noteOn(this.modules.master.instance.env);
+            source.noteOn();
         }
     }
 
     noteOff () {
+        let currentEnvA = 2,
+            currentEnvD = 15,
+            currentEnvS = 0,
+            currentEnvR = 5,
+            now = AudioContext.currentTime,
+            envAttackEnd = now + (currentEnvA / 20.0),
+            release = now + (currentEnvR / 10.0),
+            master = this.modules.master.instance;
+
+        master.resetEnvelope(now, currentEnvR);
         for (let source of this.soundSources) {
-            source.noteOff();
+            source.noteOff(release);
         }
     }
 
