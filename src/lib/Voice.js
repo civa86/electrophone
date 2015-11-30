@@ -3,11 +3,9 @@ import * as Modules from './modules'
 
 class Voice {
 
-    constructor (note, modules, master) {
+    constructor (note, modules) {
         this.note = note;
         this.modules = modules;
-        this.master = master;
-
         this.soundSources = [];
 
         this.setupModules();
@@ -19,10 +17,11 @@ class Voice {
 
         for (let mod of Object.keys(this.modules)) {
             m = this.modules[mod];
-
-            m.instance = new Modules[m.type](m.props);
-            if (m.type === 'Oscillator') {
-                this.soundSources.push(m.instance);
+            if (m.type && m.props) {
+                m.instance = new Modules[m.type](m.props);
+                if (m.type === 'Oscillator') {
+                    this.soundSources.push(m.instance);
+                }
             }
         }
     }
@@ -41,12 +40,12 @@ class Voice {
             dest = lineout.dest;
 
             source.disconnect();
-            if (dest === 'master') {
-                out = this.master;
-            } else if (this.modules[dest]) {
-                out = this.modules[dest].instance.lineout.source;
-            }
 
+            if (this.modules[dest]) {
+                out = this.modules[dest].instance.lineout.source;
+            } else {
+                out = AudioContext.destination;
+            }
             source.connect(out);
         }
     }
@@ -54,7 +53,7 @@ class Voice {
     noteOn () {
         for (let source of this.soundSources) {
             source.setNote(this.note);
-            source.noteOn();
+            source.noteOn(this.modules.master.instance.env);
         }
     }
 

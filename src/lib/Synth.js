@@ -4,10 +4,10 @@ import Voice from './Voice'
 class Synth {
 
     constructor () {
-        this.master = AudioContext.createGain();
-        this.master.connect(AudioContext.destination);
         this.modules = {};
         this.voices = {};
+
+        this.module('Master', 'master', { level: 1 });
     }
 
     module (type, label, props) {
@@ -23,6 +23,14 @@ class Synth {
             throw new Error('Synth Module :: missing properties');
         }
 
+        if (!this.modules[label]) {
+            this.addModule(type, label, props);
+        }
+
+        return this;
+    }
+
+    addModule (type, label, props) {
         this.modules[label] = {
             type,
             props
@@ -31,7 +39,7 @@ class Synth {
 
     play (note) {
         if (!this.voices[note]) {
-            this.voices[note] = new Voice(note, this.modules, this.master);
+            this.voices[note] = new Voice(note, this.modules);
             this.voices[note].noteOn();
         }
     }

@@ -25,6 +25,11 @@
             window.onload = function () {
                 var notes = document.getElementsByClassName('note');
                 var synth = new WebSynth();
+                var frequencies = {
+                    65: '261.626',
+                    83: '293.665',
+                    68: '329.628'
+                };
 
                 for (var i = 0; i < notes.length; i++) {
 
@@ -42,25 +47,40 @@
                     })(i);
 
                 }
+                document.addEventListener('keydown', function(e){
+                    var evt = e.which || e.keyCode,
+                        freq = frequencies[evt];
+                    if(freq){
+                        synth.play(freq);
+                    }
+                }, false);
+
+                document.addEventListener('keyup', function(e){
+                    var evt = e.which || e.keyCode,
+                            freq = frequencies[evt];
+                    if(freq){
+                        synth.stop(freq);
+                    }
+                }, false);
 
 
                 synth.oscillator('OSC-A', {
                     type: 'sine',
                     level: 1,
-                    link: 'F1'
+                    link: 'mster'
                 });
 
-                synth.oscillator('OSC-B', {
-                    type: 'sine',
-                    level: 1,
-                    link: 'F1'
-                });
+//                synth.oscillator('OSC-B', {
+//                    type: 'sine',
+//                    level: 1,
+//                    link: 'F1'
+//                });
 
-                synth.filter('F1', {
-                    type: 'lowpass',
-                    frequency: '400',
-                    link: 'master'
-                });
+//                synth.filter('F1', {
+//                    type: 'lowpass',
+//                    frequency: '400',
+//                    link: 'master'
+//                });
             };
 
         </script>

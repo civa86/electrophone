@@ -93,13 +93,17 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Oscillator = __webpack_require__(7);
+	var _Oscillator = __webpack_require__(8);
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
-	var _Filter = __webpack_require__(6);
+	var _Filter = __webpack_require__(7);
 
 	exports.Filter = _interopRequire(_Filter);
+
+	var _Master = __webpack_require__(9);
+
+	exports.Master = _interopRequire(_Master);
 
 /***/ },
 /* 3 */
@@ -121,7 +125,7 @@
 
 	var Modules = _interopRequireWildcard(_libModules);
 
-	var _libSynth = __webpack_require__(4);
+	var _libSynth = __webpack_require__(5);
 
 	var _libSynth2 = _interopRequireDefault(_libSynth);
 
@@ -179,7 +183,8 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -198,7 +203,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _Voice = __webpack_require__(5);
+	var _Voice = __webpack_require__(6);
 
 	var _Voice2 = _interopRequireDefault(_Voice);
 
@@ -206,10 +211,10 @@
 	    function Synth() {
 	        _classCallCheck(this, Synth);
 
-	        this.master = _AudioContext2['default'].createGain();
-	        this.master.connect(_AudioContext2['default'].destination);
 	        this.modules = {};
 	        this.voices = {};
+
+	        this.module('Master', 'master', { level: 1 });
 	    }
 
 	    _createClass(Synth, [{
@@ -227,6 +232,15 @@
 	                throw new Error('Synth Module :: missing properties');
 	            }
 
+	            if (!this.modules[label]) {
+	                this.addModule(type, label, props);
+	            }
+
+	            return this;
+	        }
+	    }, {
+	        key: 'addModule',
+	        value: function addModule(type, label, props) {
 	            this.modules[label] = {
 	                type: type,
 	                props: props
@@ -236,7 +250,7 @@
 	        key: 'play',
 	        value: function play(note) {
 	            if (!this.voices[note]) {
-	                this.voices[note] = new _Voice2['default'](note, this.modules, this.master);
+	                this.voices[note] = new _Voice2['default'](note, this.modules);
 	                this.voices[note].noteOn();
 	            }
 	        }
@@ -257,7 +271,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -283,13 +297,11 @@
 	var Modules = _interopRequireWildcard(_modules);
 
 	var Voice = (function () {
-	    function Voice(note, modules, master) {
+	    function Voice(note, modules) {
 	        _classCallCheck(this, Voice);
 
 	        this.note = note;
 	        this.modules = modules;
-	        this.master = master;
-
 	        this.soundSources = [];
 
 	        this.setupModules();
@@ -310,10 +322,11 @@
 	                    var mod = _step.value;
 
 	                    m = this.modules[mod];
-
-	                    m.instance = new Modules[m.type](m.props);
-	                    if (m.type === 'Oscillator') {
-	                        this.soundSources.push(m.instance);
+	                    if (m.type && m.props) {
+	                        m.instance = new Modules[m.type](m.props);
+	                        if (m.type === 'Oscillator') {
+	                            this.soundSources.push(m.instance);
+	                        }
 	                    }
 	                }
 	            } catch (err) {
@@ -354,12 +367,12 @@
 	                    dest = lineout.dest;
 
 	                    source.disconnect();
-	                    if (dest === 'master') {
-	                        out = this.master;
-	                    } else if (this.modules[dest]) {
-	                        out = this.modules[dest].instance.lineout.source;
-	                    }
 
+	                    if (this.modules[dest]) {
+	                        out = this.modules[dest].instance.lineout.source;
+	                    } else {
+	                        out = _AudioContext2['default'].destination;
+	                    }
 	                    source.connect(out);
 	                }
 	            } catch (err) {
@@ -389,7 +402,7 @@
 	                    var source = _step3.value;
 
 	                    source.setNote(this.note);
-	                    source.noteOn();
+	                    source.noteOn(this.modules.master.instance.env);
 	                }
 	            } catch (err) {
 	                _didIteratorError3 = true;
@@ -443,7 +456,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//Web Audio Context
@@ -479,7 +492,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//Web Audio Context
@@ -526,13 +539,34 @@
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
+	            var currentEnvA = 2,
+	                currentEnvD = 15,
+	                currentEnvS = 0,
+	                currentEnvR = 5,
+	                now = _AudioContext2['default'].currentTime,
+	                envAttackEnd = now + currentEnvA / 20.0;
+
+	            this.gain.gain.value = 0.0;
+	            this.gain.gain.setValueAtTime(0.0, now);
+	            this.gain.gain.linearRampToValueAtTime(1.0, envAttackEnd);
+	            this.gain.gain.setTargetAtTime(currentEnvS / 100.0, envAttackEnd, currentEnvD / 100.0 + 0.001);
+
 	            this.osc.start(0);
-	            this.osc.stop(_AudioContext2['default'].currentTime + 5);
 	        }
 	    }, {
 	        key: 'noteOff',
 	        value: function noteOff() {
-	            this.osc.stop(0);
+	            var currentEnvA = 2,
+	                currentEnvD = 15,
+	                currentEnvS = 68,
+	                currentEnvR = 5,
+	                now = _AudioContext2['default'].currentTime,
+	                release = now + currentEnvR / 10.0;
+
+	            this.gain.gain.cancelScheduledValues(now);
+	            this.gain.gain.setValueAtTime(this.gain.gain.value, now);
+	            this.gain.gain.setTargetAtTime(0.0, now, currentEnvR / 100);
+	            this.osc.stop(release);
 	        }
 	    }]);
 
@@ -540,6 +574,53 @@
 	})();
 
 	exports['default'] = Oscillator;
+	module.exports = exports['default'];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//Web Audio Context
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var Master = function Master(props) {
+	    _classCallCheck(this, Master);
+
+	    this.gain = _AudioContext2['default'].createGain();
+	    this.env = {
+	        attack: 0,
+	        decay: 0,
+	        sustain: 1,
+	        hold: 1,
+	        release: 0
+	    };
+
+	    this.gain.gain.value = props.level || 1;
+
+	    //this.gain.gain.linearRampToValueAtTime(0.0001, AudioContext.currentTime);
+	    //this.gain.gain.linearRampToValueAtTime(1, AudioContext.currentTime + this.env.attack + 0.00001);
+	    //this.gain.gain.linearRampToValueAtTime(1 * this.env.sustain, AudioContext.currentTime + this.env.attack + this.env.decay + 0.00002);
+	    //this.gain.gain.linearRampToValueAtTime(1 * this.env.sustain, AudioContext.currentTime + this.env.attack + this.env.decay + this.env.hold + 0.00003);
+	    //this.gain.gain.linearRampToValueAtTime(0.0001, AudioContext.currentTime + this.env.attack + this.env.decay + this.env.hold + this.env.release + 0.00004);
+
+	    this.lineout = {
+	        source: this.gain
+	    };
+	};
+
+	exports['default'] = Master;
 	module.exports = exports['default'];
 
 /***/ }
