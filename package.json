@@ -24,6 +24,7 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "develop": "webpack --config webpack.config.js",
-    "build": "webpack --config webpack.config.js -build"
+    "build": "webpack --config webpack.config.js -build",
+    "dist": "npm run test; npm run build"
   }
 }
