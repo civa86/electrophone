@@ -10,10 +10,10 @@ class Synth {
         this.module('Master', 'master', {
             level: 1,
             envelope: {
-                attack:  2,
-                decay:   15,
-                sustain: 0,
-                release: 5
+                attack:  1,
+                decay:   50,
+                sustain: 100,
+                release: 10
             }
         });
     }
@@ -34,8 +34,6 @@ class Synth {
         if (!this.modules[label]) {
             this.addModule(type, label, props);
         }
-
-        return this;
     }
 
     addModule (type, label, props) {

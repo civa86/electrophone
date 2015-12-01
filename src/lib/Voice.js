@@ -20,7 +20,7 @@ class Voice {
             m = this.modules[mod];
             if (m.type && m.props) {
                 m.instance = new Modules[m.type](m.props);
-                if (m.type === 'Oscillator') {
+                if (m.type === 'Oscillator' || m.type === 'Noise') {
                     this.soundSources.push(m.instance);
                 } else if (m.type === 'Master') {
                     this.master = m.instance;

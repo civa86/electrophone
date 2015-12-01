@@ -12,6 +12,7 @@ class DecoratedSynth {
             fx = type.toLowerCase();
             this[fx] = (label, props) => {
                 synth.module(type, label, props);
+                return this;
             }
         }
 

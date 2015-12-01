@@ -21,48 +21,6 @@
 
 
         <script src="../dist/web-synth.min.js"></script>
-        <script>
-            window.onload = function () {
-                var notes = document.getElementsByClassName('note');
-                var synth = new WebSynth();
-
-                for (var i = 0; i < notes.length; i++) {
-
-                    (function(i){
-                        var current = notes[i];
-                        current.addEventListener('mousedown', function(){
-                            var freq = current.getAttribute('data-note');
-                            synth.play(freq);
-                        }, false);
-
-                        current.addEventListener('mouseup', function(){
-                            var freq = current.getAttribute('data-note');
-                            synth.stop(freq);
-                        }, false);
-                    })(i);
-
-                }
-
-
-                synth.oscillator('OSC-A', {
-                    type: 'sine',
-                    level: 1,
-                    link: 'F1'
-                });
-
-                synth.oscillator('OSC-B', {
-                    type: 'sine',
-                    level: 1,
-                    link: 'F1'
-                });
-
-                synth.filter('F1', {
-                    type: 'lowpass',
-                    frequency: '400',
-                    link: 'master'
-                });
-            };
-
-        </script>
+        <script src="./demo.js"></script>
     </body>
 </html>

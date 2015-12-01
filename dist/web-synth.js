@@ -97,6 +97,10 @@
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
+	var _Noise = __webpack_require__(9);
+
+	exports.Noise = _interopRequire(_Noise);
+
 	var _Filter = __webpack_require__(6);
 
 	exports.Filter = _interopRequire(_Filter);
@@ -150,6 +154,7 @@
 	            fx = type.toLowerCase();
 	            _this[fx] = function (label, props) {
 	                synth.module(type, label, props);
+	                return _this;
 	            };
 	        };
 
@@ -216,10 +221,10 @@
 	        this.module('Master', 'master', {
 	            level: 1,
 	            envelope: {
-	                attack: 2,
-	                decay: 15,
-	                sustain: 0,
-	                release: 5
+	                attack: 1,
+	                decay: 50,
+	                sustain: 100,
+	                release: 10
 	            }
 	        });
 	    }
@@ -242,8 +247,6 @@
 	            if (!this.modules[label]) {
 	                this.addModule(type, label, props);
 	            }
-
-	            return this;
 	        }
 	    }, {
 	        key: 'addModule',
@@ -332,7 +335,7 @@
 	                    m = this.modules[mod];
 	                    if (m.type && m.props) {
 	                        m.instance = new Modules[m.type](m.props);
-	                        if (m.type === 'Oscillator') {
+	                        if (m.type === 'Oscillator' || m.type === 'Noise') {
 	                            this.soundSources.push(m.instance);
 	                        } else if (m.type === 'Master') {
 	                            this.master = m.instance;
@@ -650,6 +653,166 @@
 	})();
 
 	exports['default'] = Oscillator;
+	module.exports = exports['default'];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//Web Audio Context
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var Noise = (function () {
+	    function Noise(props) {
+	        _classCallCheck(this, Noise);
+
+	        this.gain = _AudioContext2['default'].createGain();
+
+	        this.noise = _AudioContext2['default'].createBufferSource();
+	        this.noise.connect(this.gain);
+
+	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
+
+	        this.color = props.color || 'white';
+
+	        this.lineout = {
+	            source: this.gain,
+	            dest: props.link
+	        };
+
+	        this.setColor();
+	    }
+
+	    _createClass(Noise, [{
+	        key: 'setColor',
+	        value: function setColor() {
+	            switch (this.color) {
+	                case 'white':
+	                    this.noise.buffer = this.white();
+	                    break;
+	                case 'pink':
+	                    this.noise.buffer = this.pink();
+	                    break;
+	                case 'brown':
+	                    this.noise.buffer = this.brown();
+	                    break;
+	                default:
+	                    throw new Error('Invalid Noise color: ' + this.color);
+	            }
+	        }
+	    }, {
+	        key: 'white',
+	        value: function white() {
+	            var noiseBuffer = this.getNoiseBuffer(),
+	                bufferSize = this.getBufferSize(),
+	                output = noiseBuffer.getChannelData(0);
+
+	            for (var i = 0; i < bufferSize; i++) {
+	                output[i] = Math.random() * 2 - 1;
+	            }
+
+	            return noiseBuffer;
+	        }
+	    }, {
+	        key: 'pink',
+	        value: function pink() {
+	            var b0 = undefined,
+	                b1 = undefined,
+	                b2 = undefined,
+	                b3 = undefined,
+	                b4 = undefined,
+	                b5 = undefined,
+	                b6 = undefined,
+	                noiseBuffer = this.getNoiseBuffer(),
+	                bufferSize = this.getBufferSize(),
+	                output = noiseBuffer.getChannelData(0),
+	                white = undefined;
+
+	            b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+
+	            for (var i = 0; i < bufferSize; i++) {
+	                white = Math.random() * 2 - 1;
+
+	                b0 = 0.99886 * b0 + white * 0.0555179;
+	                b1 = 0.99332 * b1 + white * 0.0750759;
+	                b2 = 0.96900 * b2 + white * 0.1538520;
+	                b3 = 0.86650 * b3 + white * 0.3104856;
+	                b4 = 0.55000 * b4 + white * 0.5329522;
+	                b5 = -0.7616 * b5 - white * 0.0168980;
+
+	                output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+	                output[i] *= 0.11;
+	                b6 = white * 0.115926;
+	            }
+
+	            return noiseBuffer;
+	        }
+	    }, {
+	        key: 'brown',
+	        value: function brown() {
+	            var noiseBuffer = this.getNoiseBuffer(),
+	                bufferSize = this.getBufferSize(),
+	                output = noiseBuffer.getChannelData(0),
+	                lastOut = 0.0,
+	                white = undefined;
+
+	            for (var i = 0; i < bufferSize; i++) {
+	                white = white = Math.random() * 2 - 1;
+
+	                output[i] = (lastOut + 0.02 * white) / 1.02;
+	                lastOut = output[i];
+	                output[i] *= 3.5;
+	            }
+
+	            return noiseBuffer;
+	        }
+	    }, {
+	        key: 'setNote',
+	        value: function setNote() {
+	            this.noise.loop = true;
+	        }
+	    }, {
+	        key: 'getBufferSize',
+	        value: function getBufferSize() {
+	            return 2 * _AudioContext2['default'].sampleRate;
+	        }
+	    }, {
+	        key: 'getNoiseBuffer',
+	        value: function getNoiseBuffer() {
+	            var bufferSize = this.getBufferSize(),
+	                noiseBuffer = _AudioContext2['default'].createBuffer(1, bufferSize, _AudioContext2['default'].sampleRate);
+	            return noiseBuffer;
+	        }
+	    }, {
+	        key: 'noteOn',
+	        value: function noteOn() {
+	            this.noise.start(0);
+	        }
+	    }, {
+	        key: 'noteOff',
+	        value: function noteOff(release) {
+	            this.noise.stop(release);
+	        }
+	    }]);
+
+	    return Noise;
+	})();
+
+	exports['default'] = Noise;
 	module.exports = exports['default'];
 
 /***/ }
