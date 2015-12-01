@@ -44,14 +44,14 @@
 
         synth
             .oscillator('OSC-A', {
-                type:  'square',
+                type:  synth.VARS.WAVE_SQUARE,
                 level: 0.8,
-                link:  'master'
+                link:  synth.VARS.MASTER
             })
             .noise('NOISE', {
                 level: 0.2,
-                color: 'white',
-                link:  'master'
+                color: synth.VARS.NOISE_WHITE,
+                link:  synth.VARS.MASTER
             });
     }
 })();

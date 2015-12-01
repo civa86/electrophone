@@ -1,5 +1,6 @@
 import AudioContext from './AudioContext'
 import * as Modules from './modules'
+import { CONST, TYPES } from './Constants'
 
 class Voice {
 
@@ -20,9 +21,9 @@ class Voice {
             m = this.modules[mod];
             if (m.type && m.props) {
                 m.instance = new Modules[m.type](m.props);
-                if (m.type === 'Oscillator' || m.type === 'Noise') {
+                if (m.type === TYPES.OSCILLATOR || m.type === TYPES.NOISE) {
                     this.soundSources.push(m.instance);
-                } else if (m.type === 'Master') {
+                } else if (m.type === TYPES.MASTER) {
                     this.master = m.instance;
                 }
             }
@@ -47,7 +48,7 @@ class Voice {
             if (this.modules[dest]) {
                 out = this.modules[dest].instance.lineout.source;
                 source.connect(out);
-            } else if (mod === 'master') {
+            } else if (mod === CONST.MASTER) {
                 source.connect(instance.gain);
                 instance.gain.connect(AudioContext.destination);
             }

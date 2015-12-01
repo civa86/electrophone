@@ -1,4 +1,5 @@
 import AudioContext from './AudioContext'
+import { CONST } from './Constants'
 import Voice from './Voice'
 
 class Synth {
@@ -7,7 +8,7 @@ class Synth {
         this.modules = {};
         this.voices = {};
 
-        this.module('Master', 'master', {
+        this.module('Master', CONST.MASTER, {
             level: 1,
             envelope: {
                 attack:  1,

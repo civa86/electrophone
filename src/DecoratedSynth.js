@@ -1,4 +1,5 @@
 import * as Modules from './lib/modules'
+import { CONST } from './lib/Constants'
 import Synth from './lib/Synth'
 
 class DecoratedSynth {
@@ -18,6 +19,7 @@ class DecoratedSynth {
 
         this.play = (note) => synth.play(note);
         this.stop = (note) => synth.stop(note);
+        this.VARS = CONST;
     }
 }
 

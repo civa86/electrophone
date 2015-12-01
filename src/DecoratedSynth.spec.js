@@ -32,4 +32,8 @@ describe('DecoratedSynth', function () {
         }
     });
 
+    it('should have VARS', function () {
+        expect(synth.VARS).toBeDefined();
+    });
+
 });
