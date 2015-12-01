@@ -48,7 +48,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _DecoratedSynth = __webpack_require__(3);
+	var _DecoratedSynth = __webpack_require__(4);
 
 	var _DecoratedSynth2 = _interopRequireDefault(_DecoratedSynth);
 
@@ -88,12 +88,72 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	var _modules = __webpack_require__(3);
+
+	var Modules = _interopRequireWildcard(_modules);
+
+	var moduleTypes = {},
+	    methods = Object.keys(Modules),
+	    key = undefined;
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+	    for (var _iterator = methods[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var type = _step.value;
+
+	        key = type.toUpperCase();
+	        moduleTypes[key] = type;
+	    }
+	} catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	} finally {
+	    try {
+	        if (!_iteratorNormalCompletion && _iterator['return']) {
+	            _iterator['return']();
+	        }
+	    } finally {
+	        if (_didIteratorError) {
+	            throw _iteratorError;
+	        }
+	    }
+	}
+
+	var TYPES = moduleTypes;
+	exports.TYPES = TYPES;
+	var CONST = {
+	    MASTER: 'master',
+
+	    NOISE_WHITE: 'white',
+	    NOISE_PINK: 'pink',
+	    NOISE_BROWN: 'brown',
+
+	    WAVE_SINE: 'sine',
+	    WAVE_SQUARE: 'square'
+	};
+	exports.CONST = CONST;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Oscillator = __webpack_require__(8);
+	var _Oscillator = __webpack_require__(10);
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
@@ -101,16 +161,16 @@
 
 	exports.Noise = _interopRequire(_Noise);
 
-	var _Filter = __webpack_require__(6);
+	var _Filter = __webpack_require__(7);
 
 	exports.Filter = _interopRequire(_Filter);
 
-	var _Master = __webpack_require__(7);
+	var _Master = __webpack_require__(8);
 
 	exports.Master = _interopRequire(_Master);
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -125,11 +185,13 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _libModules = __webpack_require__(2);
+	var _libModules = __webpack_require__(3);
 
 	var Modules = _interopRequireWildcard(_libModules);
 
-	var _libSynth = __webpack_require__(4);
+	var _libConstants = __webpack_require__(2);
+
+	var _libSynth = __webpack_require__(5);
 
 	var _libSynth2 = _interopRequireDefault(_libSynth);
 
@@ -182,13 +244,14 @@
 	    this.stop = function (note) {
 	        return synth.stop(note);
 	    };
+	    this.VARS = _libConstants.CONST;
 	};
 
 	exports['default'] = DecoratedSynth;
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -207,7 +270,9 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _Voice = __webpack_require__(5);
+	var _Constants = __webpack_require__(2);
+
+	var _Voice = __webpack_require__(6);
 
 	var _Voice2 = _interopRequireDefault(_Voice);
 
@@ -218,7 +283,7 @@
 	        this.modules = {};
 	        this.voices = {};
 
-	        this.module('Master', 'master', {
+	        this.module('Master', _Constants.CONST.MASTER, {
 	            level: 1,
 	            envelope: {
 	                attack: 1,
@@ -281,7 +346,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -302,9 +367,11 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _modules = __webpack_require__(2);
+	var _modules = __webpack_require__(3);
 
 	var Modules = _interopRequireWildcard(_modules);
+
+	var _Constants = __webpack_require__(2);
 
 	var Voice = (function () {
 	    function Voice(note, modules) {
@@ -335,9 +402,9 @@
 	                    m = this.modules[mod];
 	                    if (m.type && m.props) {
 	                        m.instance = new Modules[m.type](m.props);
-	                        if (m.type === 'Oscillator' || m.type === 'Noise') {
+	                        if (m.type === _Constants.TYPES.OSCILLATOR || m.type === _Constants.TYPES.NOISE) {
 	                            this.soundSources.push(m.instance);
-	                        } else if (m.type === 'Master') {
+	                        } else if (m.type === _Constants.TYPES.MASTER) {
 	                            this.master = m.instance;
 	                        }
 	                    }
@@ -384,7 +451,7 @@
 	                    if (this.modules[dest]) {
 	                        out = this.modules[dest].instance.lineout.source;
 	                        source.connect(out);
-	                    } else if (mod === 'master') {
+	                    } else if (mod === _Constants.CONST.MASTER) {
 	                        source.connect(instance.gain);
 	                        instance.gain.connect(_AudioContext2['default'].destination);
 	                    }
@@ -474,7 +541,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//Web Audio Context
@@ -510,7 +577,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//Web Audio Context
@@ -590,69 +657,6 @@
 	})();
 
 	exports['default'] = Master;
-	module.exports = exports['default'];
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//Web Audio Context
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var Oscillator = (function () {
-	    function Oscillator(props) {
-	        _classCallCheck(this, Oscillator);
-
-	        this.osc = _AudioContext2['default'].createOscillator();
-	        this.gain = _AudioContext2['default'].createGain();
-
-	        this.osc.type = props.type || 'sine';
-	        this.osc.detune.value = props.detune || 0;
-	        this.osc.connect(this.gain);
-
-	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
-
-	        this.lineout = {
-	            source: this.gain,
-	            dest: props.link
-	        };
-	    }
-
-	    _createClass(Oscillator, [{
-	        key: 'setNote',
-	        value: function setNote(note) {
-	            this.osc.frequency.value = note;
-	        }
-	    }, {
-	        key: 'noteOn',
-	        value: function noteOn() {
-	            this.osc.start(0);
-	        }
-	    }, {
-	        key: 'noteOff',
-	        value: function noteOff(release) {
-	            this.osc.stop(release);
-	        }
-	    }]);
-
-	    return Oscillator;
-	})();
-
-	exports['default'] = Oscillator;
 	module.exports = exports['default'];
 
 /***/ },
@@ -813,6 +817,69 @@
 	})();
 
 	exports['default'] = Noise;
+	module.exports = exports['default'];
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//Web Audio Context
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var Oscillator = (function () {
+	    function Oscillator(props) {
+	        _classCallCheck(this, Oscillator);
+
+	        this.osc = _AudioContext2['default'].createOscillator();
+	        this.gain = _AudioContext2['default'].createGain();
+
+	        this.osc.type = props.type || 'sine';
+	        this.osc.detune.value = props.detune || 0;
+	        this.osc.connect(this.gain);
+
+	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
+
+	        this.lineout = {
+	            source: this.gain,
+	            dest: props.link
+	        };
+	    }
+
+	    _createClass(Oscillator, [{
+	        key: 'setNote',
+	        value: function setNote(note) {
+	            this.osc.frequency.value = note;
+	        }
+	    }, {
+	        key: 'noteOn',
+	        value: function noteOn() {
+	            this.osc.start(0);
+	        }
+	    }, {
+	        key: 'noteOff',
+	        value: function noteOff(release) {
+	            this.osc.stop(release);
+	        }
+	    }]);
+
+	    return Oscillator;
+	})();
+
+	exports['default'] = Oscillator;
 	module.exports = exports['default'];
 
 /***/ }
