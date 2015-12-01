@@ -97,11 +97,11 @@
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
-	var _Filter = __webpack_require__(7);
+	var _Filter = __webpack_require__(6);
 
 	exports.Filter = _interopRequire(_Filter);
 
-	var _Master = __webpack_require__(9);
+	var _Master = __webpack_require__(7);
 
 	exports.Master = _interopRequire(_Master);
 
@@ -125,7 +125,7 @@
 
 	var Modules = _interopRequireWildcard(_libModules);
 
-	var _libSynth = __webpack_require__(5);
+	var _libSynth = __webpack_require__(4);
 
 	var _libSynth2 = _interopRequireDefault(_libSynth);
 
@@ -183,8 +183,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -203,7 +202,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _Voice = __webpack_require__(6);
+	var _Voice = __webpack_require__(5);
 
 	var _Voice2 = _interopRequireDefault(_Voice);
 
@@ -279,7 +278,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -311,6 +310,7 @@
 	        this.note = note;
 	        this.modules = modules;
 	        this.soundSources = [];
+	        this.master = null;
 
 	        this.setupModules();
 	        this.linkModules();
@@ -334,6 +334,8 @@
 	                        m.instance = new Modules[m.type](m.props);
 	                        if (m.type === 'Oscillator') {
 	                            this.soundSources.push(m.instance);
+	                        } else if (m.type === 'Master') {
+	                            this.master = m.instance;
 	                        }
 	                    }
 	                }
@@ -402,8 +404,7 @@
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
-	            var master = this.modules.master.instance;
-	            master.setEnvelope();
+	            this.master.setEnvelope();
 
 	            var _iteratorNormalCompletion3 = true;
 	            var _didIteratorError3 = false;
@@ -434,10 +435,7 @@
 	    }, {
 	        key: 'noteOff',
 	        value: function noteOff() {
-	            var master = this.modules.master.instance,
-	                release = _AudioContext2['default'].currentTime + master.env.release / 10.0;
-
-	            master.resetEnvelope();
+	            var release = this.master.releaseEnvelope();
 
 	            var _iteratorNormalCompletion4 = true;
 	            var _didIteratorError4 = false;
@@ -473,7 +471,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//Web Audio Context
@@ -506,6 +504,89 @@
 	};
 
 	exports['default'] = Filter;
+	module.exports = exports['default'];
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//Web Audio Context
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var Master = (function () {
+	    function Master(props) {
+	        _classCallCheck(this, Master);
+
+	        this.gain = _AudioContext2['default'].createGain();
+	        this.envelope = _AudioContext2['default'].createGain();
+	        this.env = props.envelope || null;
+
+	        this.gain.gain.value = props.level && props.level >= 0 ? props.level : 1;
+
+	        this.lineout = {
+	            source: this.envelope
+	        };
+	    }
+
+	    _createClass(Master, [{
+	        key: 'setEnvelope',
+	        value: function setEnvelope() {
+	            var now = _AudioContext2['default'].currentTime,
+	                envAttackEnd = undefined;
+
+	            this.envelope.gain.value = 0.0;
+
+	            if (this.env) {
+	                envAttackEnd = now + this.env.attack / 20.0;
+	                this.envelope.gain.setValueAtTime(0.0, now);
+	                this.envelope.gain.linearRampToValueAtTime(1.0, envAttackEnd);
+	                this.envelope.gain.setTargetAtTime(this.env.sustain / 100.0, envAttackEnd, this.env.decay / 100.0 + 0.001);
+	            } else {
+	                this.envelope.gain.setValueAtTime(0.0, now);
+	                this.envelope.gain.linearRampToValueAtTime(1.0, now + 0.02);
+	                this.envelope.gain.setTargetAtTime(1, now + 0.02, 0 + 0.001);
+	                this.envelope.gain.value = 1;
+	            }
+	        }
+	    }, {
+	        key: 'releaseEnvelope',
+	        value: function releaseEnvelope() {
+	            var now = _AudioContext2['default'].currentTime,
+	                release = undefined;
+	            if (this.env) {
+	                this.envelope.gain.cancelScheduledValues(now);
+	                this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
+	                this.envelope.gain.setTargetAtTime(0.0, now, this.env.release / 100);
+	                release = now + this.env.release / 10.0;
+	            } else {
+	                this.envelope.gain.cancelScheduledValues(now);
+	                this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
+	                this.envelope.gain.setTargetAtTime(0.0, now, 0.05);
+	                release = now + 0.2;
+	            }
+
+	            return release;
+	        }
+	    }]);
+
+	    return Master;
+	})();
+
+	exports['default'] = Master;
 	module.exports = exports['default'];
 
 /***/ },
@@ -569,70 +650,6 @@
 	})();
 
 	exports['default'] = Oscillator;
-	module.exports = exports['default'];
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//Web Audio Context
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var Master = (function () {
-	    function Master(props) {
-	        _classCallCheck(this, Master);
-
-	        this.gain = _AudioContext2['default'].createGain();
-	        this.envelope = _AudioContext2['default'].createGain();
-	        this.env = props.envelope;
-
-	        this.gain.gain.value = props.level >= 0 ? props.level : 1;
-
-	        this.lineout = {
-	            source: this.envelope
-	        };
-	    }
-
-	    _createClass(Master, [{
-	        key: 'setEnvelope',
-	        value: function setEnvelope() {
-	            var now = _AudioContext2['default'].currentTime,
-	                envAttackEnd = now + this.env.attack / 20.0;
-
-	            this.envelope.gain.value = 0.0;
-	            this.envelope.gain.setValueAtTime(0.0, now);
-	            this.envelope.gain.linearRampToValueAtTime(1.0, envAttackEnd);
-	            this.envelope.gain.setTargetAtTime(this.env.sustain / 100.0, envAttackEnd, this.env.decay / 100.0 + 0.001);
-	        }
-	    }, {
-	        key: 'resetEnvelope',
-	        value: function resetEnvelope() {
-	            var now = _AudioContext2['default'].currentTime;
-
-	            this.envelope.gain.cancelScheduledValues(now);
-	            this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
-	            this.envelope.gain.setTargetAtTime(0.0, now, this.env.release / 100);
-	        }
-	    }]);
-
-	    return Master;
-	})();
-
-	exports['default'] = Master;
 	module.exports = exports['default'];
 
 /***/ }

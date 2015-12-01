@@ -7,6 +7,7 @@ class Voice {
         this.note = note;
         this.modules = modules;
         this.soundSources = [];
+        this.master = null;
 
         this.setupModules();
         this.linkModules();
@@ -21,6 +22,8 @@ class Voice {
                 m.instance = new Modules[m.type](m.props);
                 if (m.type === 'Oscillator') {
                     this.soundSources.push(m.instance);
+                } else if (m.type === 'Master') {
+                    this.master = m.instance;
                 }
             }
         }
@@ -52,8 +55,7 @@ class Voice {
     }
 
     noteOn () {
-        let master = this.modules.master.instance;
-        master.setEnvelope();
+        this.master.setEnvelope();
 
         for (let source of this.soundSources) {
             source.setNote(this.note);
@@ -62,10 +64,7 @@ class Voice {
     }
 
     noteOff () {
-        let master = this.modules.master.instance,
-            release = AudioContext.currentTime + (master.env.release / 10.0);
-
-        master.resetEnvelope();
+        let release = this.master.releaseEnvelope();
 
         for (let source of this.soundSources) {
             source.noteOff(release);
