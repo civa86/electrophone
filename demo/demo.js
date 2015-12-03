@@ -43,16 +43,28 @@
         }, false);
 
         synth
+            .oscillator('FM-A', {
+                type:  synth.VARS.WAVE_SQUARE,
+                freq: 1,
+                level: 1,
+                link:  'OSC-A'
+            })
+            .oscillator('FM-B', {
+                type:  synth.VARS.WAVE_SQUARE,
+                freq: 10,
+                level: 1,
+                link:  'OSC-A'
+            })
             .oscillator('OSC-A', {
                 type:  synth.VARS.WAVE_SQUARE,
-                level: 0.8,
+                level: 0.5,
                 link:  synth.VARS.MASTER
             })
-            .noise('NOISE', {
-                level: 0.2,
-                color: synth.VARS.NOISE_WHITE,
+            .oscillator('OSC-B', {
+                type:  synth.VARS.WAVE_SQUARE,
+                level: 0.5,
                 link:  synth.VARS.MASTER
-            });
+            })
     }
 })();
 

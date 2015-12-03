@@ -48,7 +48,11 @@ class Voice {
             source.disconnect();
 
             if (this.modules[dest]) {
-                out = this.modules[dest].instance.lineout.source;
+                if (this.modules[dest].type === TYPES.OSCILLATOR) {
+                    out = this.modules[dest].instance.main.frequency;
+                } else {
+                    out = this.modules[dest].instance.gain;
+                }
                 source.connect(out);
             } else if (mod === CONST.MASTER) {
                 source.connect(instance.gain);
