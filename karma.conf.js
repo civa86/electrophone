@@ -19,7 +19,7 @@ module.exports = function (config) {
 
         browsers: ['Chrome'],
 
-        reporters: ['progress', 'coverage'],
+        reporters: ['spec', 'coverage'],
 
         coverageReporter: {
             reporters: [
@@ -47,6 +47,7 @@ module.exports = function (config) {
 
         plugins: [
             'karma-chrome-launcher',
+            'karma-spec-reporter',
             'karma-jasmine',
             'karma-coverage',
             'karma-webpack'
