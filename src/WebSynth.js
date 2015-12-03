@@ -1,5 +1,5 @@
 import * as Modules from './lib/modules'
-import { CONST } from './lib/Constants'
+import { CONST } from './lib/core/Constants'
 import Synth from './lib/Synth'
 
 class WebSynth {

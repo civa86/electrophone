@@ -1,17 +1,15 @@
-//Web Audio Context
 import AudioContext from '../AudioContext'
+import SoundSource from '../core/SoundSource'
 
-class Oscillator {
+class Oscillator extends SoundSource {
 
     constructor (props) {
-        this.osc = AudioContext.createOscillator();
-        this.gain = AudioContext.createGain();
+        super(props);
 
+        this.osc = AudioContext.createOscillator();
         this.osc.type = props.type || 'sine';
         this.osc.detune.value = props.detune || 0;
         this.osc.connect(this.gain);
-
-        this.gain.gain.value = (props.level >= 0) ?  props.level : 1;
 
         this.lineout = {
             source: this.gain,

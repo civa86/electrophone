@@ -1,5 +1,6 @@
-import AudioContext from './AudioContext'
-import * as Modules from './modules'
+import AudioContext from '../AudioContext'
+import * as Modules from '../modules'
+import SoundSource from './SoundSource'
 import { CONST, TYPES } from './Constants'
 
 class Voice {
@@ -21,7 +22,7 @@ class Voice {
             m = this.modules[mod];
             if (m.type && m.props) {
                 m.instance = new Modules[m.type](m.props);
-                if (m.type === TYPES.OSCILLATOR || m.type === TYPES.NOISE) {
+                if (m.instance instanceof SoundSource) {
                     this.soundSources.push(m.instance);
                 } else if (m.type === TYPES.MASTER) {
                     this.master = m.instance;

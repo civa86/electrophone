@@ -1,4 +1,4 @@
-import * as Modules from './modules'
+import * as Modules from '../modules'
 
 let moduleTypes = {},
     methods = Object.keys(Modules),

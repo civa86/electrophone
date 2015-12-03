@@ -1,6 +1,6 @@
 import AudioContext from './AudioContext'
-import { CONST } from './Constants'
-import Voice from './Voice'
+import { CONST } from './core/Constants'
+import Voice from './core/Voice'
 
 class Synth {
 

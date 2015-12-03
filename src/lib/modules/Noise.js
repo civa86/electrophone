@@ -1,15 +1,13 @@
-//Web Audio Context
 import AudioContext from '../AudioContext'
+import SoundSource from '../core/SoundSource'
 
-class Noise {
+class Noise extends SoundSource {
 
     constructor (props) {
-        this.gain = AudioContext.createGain();
+        super(props);
 
         this.noise = AudioContext.createBufferSource();
         this.noise.connect(this.gain);
-
-        this.gain.gain.value = (props.level >= 0) ?  props.level : 1;
 
         this.color = props.color || 'white';
 

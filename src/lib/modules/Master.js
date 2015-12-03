@@ -1,14 +1,14 @@
 //Web Audio Context
 import AudioContext from '../AudioContext'
+import Module from '../core/Module'
 
-class Master {
+class Master extends Module {
 
     constructor (props) {
-        this.gain = AudioContext.createGain();
+        super(props);
+
         this.envelope = AudioContext.createGain();
         this.env = props.envelope || null;
-
-        this.gain.gain.value = (props.level && props.level >= 0) ?  props.level : 1;
 
         this.lineout = {
             source: this.envelope
