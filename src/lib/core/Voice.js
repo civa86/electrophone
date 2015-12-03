@@ -22,6 +22,7 @@ class Voice {
             m = this.modules[mod];
             if (m.type && m.props) {
                 m.instance = new Modules[m.type](m.props);
+
                 if (m.instance instanceof SoundSource) {
                     this.soundSources.push(m.instance);
                 } else if (m.type === TYPES.MASTER) {

@@ -1,3 +1,4 @@
+import { CONST } from '../core/Constants'
 import AudioContext from '../AudioContext'
 import SoundSource from '../core/SoundSource'
 
@@ -6,10 +7,10 @@ class Oscillator extends SoundSource {
     constructor (props) {
         super(props);
 
-        this.osc = AudioContext.createOscillator();
-        this.osc.type = props.type || 'sine';
-        this.osc.detune.value = props.detune || 0;
-        this.osc.connect(this.gain);
+        this.main = AudioContext.createOscillator();
+        this.main.type = props.type || CONST.WAVE_SINE;
+        this.main.detune.value = props.detune || 0;
+        this.main.connect(this.gain);
 
         this.lineout = {
             source: this.gain,
@@ -18,15 +19,7 @@ class Oscillator extends SoundSource {
     }
 
     setNote (note) {
-        this.osc.frequency.value = note;
-    }
-
-    noteOn () {
-        this.osc.start(0);
-    }
-
-    noteOff (release) {
-        this.osc.stop(release);
+        this.main.frequency.value = note;
     }
 }
 

@@ -1,15 +1,14 @@
-import * as Modules from '../modules'
+export const TYPES = {
+    MASTER: 'Master',
+    OSCILLATOR: 'Oscillator',
+    FILTER: 'Filter',
+    NOISE: 'Noise',
+    REVERB: 'Reverb',
+    CHORUS: 'Chorus',
+    DELAY: 'Delay',
+    ENVELOPE: 'Envelope'
+};
 
-let moduleTypes = {},
-    methods = Object.keys(Modules),
-    key;
-
-for (let type of methods) {
-    key = type.toUpperCase();
-    moduleTypes[key] = type;
-}
-
-export const TYPES = moduleTypes;
 export const CONST = {
     MASTER: 'master',
 
@@ -18,5 +17,7 @@ export const CONST = {
     NOISE_BROWN: 'brown',
 
     WAVE_SINE:   'sine',
-    WAVE_SQUARE: 'square'
+    WAVE_SQUARE: 'square',
+
+    FILTER_LOWPASS: 'lowpass'
 };

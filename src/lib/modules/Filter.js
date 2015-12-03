@@ -1,4 +1,4 @@
-//Web Audio Context
+import { CONST } from '../core/Constants'
 import AudioContext from '../AudioContext'
 import Module from '../core/Module'
 
@@ -7,14 +7,14 @@ class Filter extends Module {
     constructor (props) {
         super(props);
 
-        this.filter = AudioContext.createBiquadFilter();
+        this.main = AudioContext.createBiquadFilter();
 
-        this.filter.type = props.type || 'lowpass';
-        this.filter.frequency.value = props.frequency || 440;
-        this.filter.connect(this.gain);
+        this.main.type = props.type || CONST.FILTER_LOWPASS;
+        this.main.frequency.value = props.frequency || 440;
+        this.main.connect(this.gain);
 
         this.lineout = {
-            source: this.filter,
+            source: this.gain,
             dest: props.link
         };
     }

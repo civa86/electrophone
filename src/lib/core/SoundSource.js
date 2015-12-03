@@ -7,17 +7,13 @@ class SoundSource extends Module {
         super(props);
     }
 
-    //setNote (note) {
-    //    this.osc.frequency.value = note;
-    //}
-    //
-    //noteOn () {
-    //    this.osc.start(0);
-    //}
-    //
-    //noteOff (release) {
-    //    this.osc.stop(release);
-    //}
+    noteOn () {
+        this.main.start(0);
+    }
+
+    noteOff (release) {
+        this.main.stop(release);
+    }
 }
 
 export default SoundSource;

@@ -1,3 +1,4 @@
+import { CONST } from '../core/Constants'
 import AudioContext from '../AudioContext'
 import SoundSource from '../core/SoundSource'
 
@@ -6,8 +7,8 @@ class Noise extends SoundSource {
     constructor (props) {
         super(props);
 
-        this.noise = AudioContext.createBufferSource();
-        this.noise.connect(this.gain);
+        this.main = AudioContext.createBufferSource();
+        this.main.connect(this.gain);
 
         this.color = props.color || 'white';
 
@@ -22,13 +23,13 @@ class Noise extends SoundSource {
     setColor () {
         switch (this.color) {
             case 'white' :
-                this.noise.buffer = this.white();
+                this.main.buffer = this.white();
                 break;
             case 'pink' :
-                this.noise.buffer = this.pink();
+                this.main.buffer = this.pink();
                 break;
             case 'brown' :
-                this.noise.buffer = this.brown();
+                this.main.buffer = this.brown();
                 break;
             default :
                 throw new Error('Invalid Noise color: ' + this.color);
@@ -93,7 +94,7 @@ class Noise extends SoundSource {
     }
 
     setNote () {
-        this.noise.loop = true;
+        this.main.loop = true;
     }
 
     getBufferSize () {
@@ -104,14 +105,6 @@ class Noise extends SoundSource {
         let bufferSize = this.getBufferSize(),
             noiseBuffer = AudioContext.createBuffer(1, bufferSize, AudioContext.sampleRate);
         return noiseBuffer;
-    }
-
-    noteOn () {
-        this.noise.start(0);
-    }
-
-    noteOff (release) {
-        this.noise.stop(release);
     }
 }
 
