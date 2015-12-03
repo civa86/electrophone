@@ -1,4 +1,4 @@
-import Synth from './DecoratedSynth'
+import Synth from './WebSynth'
 
 const win = window || {};
 

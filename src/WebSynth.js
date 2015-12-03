@@ -2,11 +2,13 @@ import * as Modules from './lib/modules'
 import { CONST } from './lib/Constants'
 import Synth from './lib/Synth'
 
-class DecoratedSynth {
+class WebSynth {
     constructor () {
         let synth = new Synth(),
             methods = Object.keys(Modules),
             fx;
+
+        this.VARS = CONST;
 
         //Synth Module Creators
         for (let type of methods) {
@@ -19,8 +21,7 @@ class DecoratedSynth {
 
         this.play = (note) => synth.play(note);
         this.stop = (note) => synth.stop(note);
-        this.VARS = CONST;
     }
 }
 
-export default DecoratedSynth;
+export default WebSynth;

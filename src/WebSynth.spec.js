@@ -1,11 +1,11 @@
-import DecoratedSynth from './DecoratedSynth'
+import WebSynth from './WebSynth'
 import * as Modules from './lib/modules'
 
-describe('DecoratedSynth', function () {
+describe('WebSynth', function () {
     let synth;
 
     it('should create a Synth public instance', function () {
-        synth = new DecoratedSynth();
+        synth = new WebSynth();
         expect(synth).toBeDefined();
     });
 
