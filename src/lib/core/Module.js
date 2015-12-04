@@ -4,9 +4,8 @@ class Module {
 
     constructor (props) {
         this.gain = null;
-        this.link = null;
         this.lineout = null;
-
+        this.link = props.link || null;
         this.createGain(props.level);
     }
 
@@ -20,9 +19,17 @@ class Module {
         this.gain.disconnect();
     }
 
-    linkModule (source) {
-        source.gain.connect(this.lineout);
+    getLineIn () {
+        return this.main;
     }
+
+    getLineOut () {
+        return this.gain;
+    }
+
+    //linkModule (source) {
+    //    source.gain.connect(this.lineout);
+    //}
 }
 
 export default Module;

@@ -22,7 +22,6 @@ class Voice {
             m = this.modules[mod];
             if (m.type && m.props) {
                 m.instance = new Modules[m.type](m.props);
-
                 if (m.instance instanceof SoundSource) {
                     this.soundSources.push(m.instance);
                 } else if (m.type === TYPES.MASTER) {
@@ -34,15 +33,18 @@ class Voice {
 
     linkModules () {
         for (let mod of Object.keys(this.modules)) {
-            let instance = this.modules[mod].instance,
-                dest = instance.link,
-                destInstance;
+            let currentModule = this.modules[mod].instance,
+                destinationModule,
+                source,
+                dest;
 
-            instance.disconnect();
-
-            if (this.modules[dest]) {
-                destInstance = this.modules[dest].instance;
-                destInstance.linkModule(instance);
+            if (currentModule.link) {
+                destinationModule = this.modules[currentModule.link];
+                if (destinationModule && destinationModule.instance) {
+                    source = currentModule.getLineOut();
+                    dest = destinationModule.instance.getLineIn();
+                    source.connect(dest);
+                }
             }
         }
 

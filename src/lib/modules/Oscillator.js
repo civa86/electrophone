@@ -13,16 +13,14 @@ class Oscillator extends SoundSource {
         this.main.type = props.type || CONST.WAVE_SINE;
         this.main.detune.value = props.detune || 0;
         this.main.connect(this.gain);
-
-        this.link = props.link || null;
     }
 
     setNote (note) {
         this.main.frequency.value = this.freq || note;
     }
 
-    linkModule (source) {
-        source.gain.connect(this.main.frequency);
+    getLineIn () {
+        return this.main.frequency;
     }
 }
 

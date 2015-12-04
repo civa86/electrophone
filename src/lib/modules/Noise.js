@@ -11,12 +11,6 @@ class Noise extends SoundSource {
         this.main.connect(this.gain);
 
         this.color = props.color || 'white';
-
-        this.lineout = {
-            source: this.gain,
-            dest: props.link
-        };
-
         this.setColor();
     }
 
@@ -93,10 +87,6 @@ class Noise extends SoundSource {
         return noiseBuffer;
     }
 
-    setNote () {
-        this.main.loop = true;
-    }
-
     getBufferSize () {
         return 2 * AudioContext.sampleRate;
     }
@@ -105,6 +95,10 @@ class Noise extends SoundSource {
         let bufferSize = this.getBufferSize(),
             noiseBuffer = AudioContext.createBuffer(1, bufferSize, AudioContext.sampleRate);
         return noiseBuffer;
+    }
+
+    setNote () {
+        this.main.loop = true;
     }
 }
 
