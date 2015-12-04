@@ -14,14 +14,15 @@ class Oscillator extends SoundSource {
         this.main.detune.value = props.detune || 0;
         this.main.connect(this.gain);
 
-        this.lineout = {
-            source: this.gain,
-            dest:   props.link
-        };
+        this.link = props.link || null;
     }
 
     setNote (note) {
         this.main.frequency.value = this.freq || note;
+    }
+
+    linkModule (source) {
+        source.gain.connect(this.main.frequency);
     }
 }
 

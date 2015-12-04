@@ -2,13 +2,13 @@
     'use strict';
 
     window.onload = function () {
-        var notes = document.getElementsByClassName('note');
-        var synth = new WebSynth();
-        var frequencies = {
-            65: '261.626',
-            83: '293.665',
-            68: '329.628'
-        };
+        var notes = document.getElementsByClassName('note'),
+            synth = new WebSynth(),
+            frequencies = {
+                65: '261.626',
+                83: '293.665',
+                68: '329.628'
+            };
 
         for (var i = 0; i < notes.length; i++) {
 
@@ -44,16 +44,16 @@
 
         synth
             .oscillator('FM-A', {
-                type:  synth.VARS.WAVE_SQUARE,
+                type:  synth.VARS.WAVE_SINE,
                 freq: 1,
                 level: 1,
                 link:  'OSC-A'
             })
             .oscillator('FM-B', {
-                type:  synth.VARS.WAVE_SQUARE,
-                freq: 10,
+                type:  synth.VARS.WAVE_SINE,
+                freq: 5,
                 level: 1,
-                link:  'OSC-A'
+                link:  'OSC-B'
             })
             .oscillator('OSC-A', {
                 type:  synth.VARS.WAVE_SQUARE,

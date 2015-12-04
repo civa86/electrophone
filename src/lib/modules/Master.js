@@ -10,9 +10,7 @@ class Master extends Module {
         this.envelope = AudioContext.createGain();
         this.env = props.envelope || null;
 
-        this.lineout = {
-            source: this.envelope
-        };
+        this.lineout = this.envelope;
     }
 
     setEnvelope () {
@@ -54,6 +52,11 @@ class Master extends Module {
         }
 
         return release;
+    }
+
+    lineOut () {
+        this.envelope.connect(this.gain);
+        this.gain.connect(AudioContext.destination);
     }
 }
 

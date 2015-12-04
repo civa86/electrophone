@@ -13,7 +13,7 @@ class Synth {
             envelope: {
                 attack:  1,
                 decay:   50,
-                sustain: 1,
+                sustain: 100,
                 release: 1
             }
         });

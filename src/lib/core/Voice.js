@@ -34,31 +34,19 @@ class Voice {
 
     linkModules () {
         for (let mod of Object.keys(this.modules)) {
-            let instance,
-                lineout,
-                source,
-                dest,
-                out;
+            let instance = this.modules[mod].instance,
+                dest = instance.link,
+                destInstance;
 
-            instance = this.modules[mod].instance;
-            lineout = instance.lineout;
-            source = lineout.source;
-            dest = lineout.dest;
-
-            source.disconnect();
+            instance.disconnect();
 
             if (this.modules[dest]) {
-                if (this.modules[dest].type === TYPES.OSCILLATOR) {
-                    out = this.modules[dest].instance.main.frequency;
-                } else {
-                    out = this.modules[dest].instance.gain;
-                }
-                source.connect(out);
-            } else if (mod === CONST.MASTER) {
-                source.connect(instance.gain);
-                instance.gain.connect(AudioContext.destination);
+                destInstance = this.modules[dest].instance;
+                destInstance.linkModule(instance);
             }
         }
+
+        this.master.lineOut();
     }
 
     noteOn () {
