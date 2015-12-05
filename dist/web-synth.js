@@ -140,61 +140,6 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var _coreModule = __webpack_require__(4);
-
-	var _coreModule2 = _interopRequireDefault(_coreModule);
-
-	var SoundSource = (function (_Module) {
-	    _inherits(SoundSource, _Module);
-
-	    function SoundSource(props) {
-	        _classCallCheck(this, SoundSource);
-
-	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props);
-	    }
-
-	    _createClass(SoundSource, [{
-	        key: 'noteOn',
-	        value: function noteOn() {
-	            this.main.start(0);
-	        }
-	    }, {
-	        key: 'noteOff',
-	        value: function noteOff(release) {
-	            this.main.stop(release);
-	        }
-	    }]);
-
-	    return SoundSource;
-	})(_coreModule2['default']);
-
-	exports['default'] = SoundSource;
-	module.exports = exports['default'];
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -245,6 +190,61 @@
 	module.exports = exports['default'];
 
 /***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreModule = __webpack_require__(3);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var SoundSource = (function (_Module) {
+	    _inherits(SoundSource, _Module);
+
+	    function SoundSource(props) {
+	        _classCallCheck(this, SoundSource);
+
+	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props);
+	    }
+
+	    _createClass(SoundSource, [{
+	        key: 'noteOn',
+	        value: function noteOn() {
+	            this.main.start(0);
+	        }
+	    }, {
+	        key: 'noteOff',
+	        value: function noteOff(release) {
+	            this.main.stop(release);
+	        }
+	    }]);
+
+	    return SoundSource;
+	})(_coreModule2['default']);
+
+	exports['default'] = SoundSource;
+	module.exports = exports['default'];
+
+/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -256,27 +256,27 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Oscillator = __webpack_require__(13);
+	var _Oscillator = __webpack_require__(14);
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
-	var _Modulator = __webpack_require__(11);
+	var _Modulator = __webpack_require__(12);
 
 	exports.Modulator = _interopRequire(_Modulator);
 
-	var _Noise = __webpack_require__(12);
+	var _Noise = __webpack_require__(13);
 
 	exports.Noise = _interopRequire(_Noise);
 
-	var _Filter = __webpack_require__(9);
+	var _Filter = __webpack_require__(10);
 
 	exports.Filter = _interopRequire(_Filter);
 
-	var _Envelope = __webpack_require__(14);
+	var _Envelope = __webpack_require__(9);
 
 	exports.Envelope = _interopRequire(_Envelope);
 
-	var _Master = __webpack_require__(10);
+	var _Master = __webpack_require__(11);
 
 	exports.Master = _interopRequire(_Master);
 
@@ -489,7 +489,7 @@
 
 	var Modules = _interopRequireWildcard(_modules);
 
-	var _SoundSource = __webpack_require__(3);
+	var _SoundSource = __webpack_require__(4);
 
 	var _SoundSource2 = _interopRequireDefault(_SoundSource);
 
@@ -647,7 +647,144 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(4);
+	var _coreModule = __webpack_require__(3);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var Envelope = (function (_Module) {
+	    _inherits(Envelope, _Module);
+
+	    function Envelope(props) {
+	        _classCallCheck(this, Envelope);
+
+	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
+
+	        this.target = props.target || null;
+
+	        this.attack = props.attack;
+	        this.decay = props.decay;
+	        this.sustain = props.sustain;
+	        this.release = props.release;
+	    }
+
+	    _createClass(Envelope, [{
+	        key: 'createGain',
+	        value: function createGain() {
+	            return false;
+	        }
+	    }, {
+	        key: 'getReleaseTime',
+	        value: function getReleaseTime() {
+	            var now = _AudioContext2['default'].currentTime,
+	                release = undefined;
+
+	            if (this.release) {
+	                release = now + this.release / 10.0;
+	            } else {
+	                release = now + 0.2;
+	            }
+
+	            return release;
+	        }
+	    }, {
+	        key: 'setEnvelope',
+	        value: function setEnvelope(dest) {
+	            var now = _AudioContext2['default'].currentTime,
+	                envelope = this.level % 101,
+	                attackLevel = undefined,
+	                sustainLevel = undefined,
+	                attackEnd = this.attack / 20.0,
+	                t = undefined;
+
+	            if (this.target === 'gain') {
+	                attackLevel = envelope / 100;
+	                sustainLevel = this.sustain / 100.0;
+	            } else {
+	                attackLevel = envelope * 72; // Range: 0-7200: 6-octave range
+	                sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
+	            }
+
+	            if (!attackEnd) {
+	                attackEnd = 0.05; // tweak to get target decay to work properly
+	            }
+
+	            if (dest && dest.main) {
+	                if (dest.main[this.target]) {
+	                    t = dest.main[this.target];
+	                } else if (this.target === 'gain' && dest.gain) {
+	                    t = dest.gain.gain;
+	                    t.value = 0.0;
+	                }
+
+	                if (t) {
+	                    t.setValueAtTime(0, now);
+	                    t.linearRampToValueAtTime(attackLevel, now + attackEnd);
+	                    t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'resetEnvelope',
+	        value: function resetEnvelope(dest) {
+	            var now = _AudioContext2['default'].currentTime,
+	                t = undefined;
+
+	            if (dest && dest.main) {
+	                if (dest.main[this.target]) {
+	                    t = dest.main[this.target];
+	                } else if (this.target === 'gain' && dest.gain) {
+	                    t = dest.gain.gain;
+	                }
+
+	                if (t) {
+	                    t.cancelScheduledValues(now);
+	                    if (this.target === 'gain') {
+	                        t.setValueAtTime(t.value, now);
+	                    }
+	                    t.setTargetAtTime(0, now, this.release / 100.0);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'getLineOut',
+	        value: function getLineOut() {
+	            return false;
+	        }
+	    }]);
+
+	    return Envelope;
+	})(_coreModule2['default']);
+
+	exports['default'] = Envelope;
+	module.exports = exports['default'];
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(2);
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreModule = __webpack_require__(3);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -710,7 +847,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -735,7 +872,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(4);
+	var _coreModule = __webpack_require__(3);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -809,7 +946,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -834,7 +971,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(3);
+	var _coreSoundSource = __webpack_require__(4);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -873,7 +1010,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -898,7 +1035,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(3);
+	var _coreSoundSource = __webpack_require__(4);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -1026,7 +1163,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1051,7 +1188,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(3);
+	var _coreSoundSource = __webpack_require__(4);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -1099,143 +1236,6 @@
 	})(_coreSoundSource2['default']);
 
 	exports['default'] = Oscillator;
-	module.exports = exports['default'];
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var _coreModule = __webpack_require__(4);
-
-	var _coreModule2 = _interopRequireDefault(_coreModule);
-
-	var Envelope = (function (_Module) {
-	    _inherits(Envelope, _Module);
-
-	    function Envelope(props) {
-	        _classCallCheck(this, Envelope);
-
-	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
-
-	        this.target = props.target || null;
-
-	        this.attack = props.attack;
-	        this.decay = props.decay;
-	        this.sustain = props.sustain;
-	        this.release = props.release;
-	    }
-
-	    _createClass(Envelope, [{
-	        key: 'createGain',
-	        value: function createGain() {
-	            return false;
-	        }
-	    }, {
-	        key: 'getReleaseTime',
-	        value: function getReleaseTime() {
-	            var now = _AudioContext2['default'].currentTime,
-	                release = undefined;
-
-	            if (this.release) {
-	                release = now + this.release / 10.0;
-	            } else {
-	                release = now + 0.2;
-	            }
-
-	            return release;
-	        }
-	    }, {
-	        key: 'setEnvelope',
-	        value: function setEnvelope(dest) {
-	            var now = _AudioContext2['default'].currentTime,
-	                envelope = this.level % 101,
-	                attackLevel = undefined,
-	                sustainLevel = undefined,
-	                attackEnd = this.attack / 20.0,
-	                t = undefined;
-
-	            if (this.target === 'gain') {
-	                attackLevel = envelope / 100;
-	                sustainLevel = this.sustain / 100.0;
-	            } else {
-	                attackLevel = envelope * 72; // Range: 0-7200: 6-octave range
-	                sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
-	            }
-
-	            if (!attackEnd) {
-	                attackEnd = 0.05; // tweak to get target decay to work properly
-	            }
-
-	            if (dest && dest.main) {
-	                if (dest.main[this.target]) {
-	                    t = dest.main[this.target];
-	                } else if (this.target === 'gain' && dest.gain) {
-	                    t = dest.gain.gain;
-	                    t.value = 0.0;
-	                }
-
-	                if (t) {
-	                    t.setValueAtTime(0, now);
-	                    t.linearRampToValueAtTime(attackLevel, now + attackEnd);
-	                    t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'resetEnvelope',
-	        value: function resetEnvelope(dest) {
-	            var now = _AudioContext2['default'].currentTime,
-	                t = undefined;
-
-	            if (dest && dest.main) {
-	                if (dest.main[this.target]) {
-	                    t = dest.main[this.target];
-	                } else if (this.target === 'gain' && dest.gain) {
-	                    t = dest.gain.gain;
-	                }
-
-	                if (t) {
-	                    t.cancelScheduledValues(now);
-	                    if (this.target === 'gain') {
-	                        t.setValueAtTime(t.value, now);
-	                    }
-	                    t.setTargetAtTime(0, now, this.release / 100.0);
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'getLineOut',
-	        value: function getLineOut() {
-	            return false;
-	        }
-	    }]);
-
-	    return Envelope;
-	})(_coreModule2['default']);
-
-	exports['default'] = Envelope;
 	module.exports = exports['default'];
 
 /***/ }

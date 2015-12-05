@@ -22,6 +22,9 @@
     "karma-webpack": "1.7.x",
     "webpack": "^1.9.11"
   },
+  "dependencies": {
+    "tunajs": "0.4.x"
+  },
   "scripts": {
     "test": "karma start karma.conf.js",
     "develop": "webpack --config webpack.config.js",
