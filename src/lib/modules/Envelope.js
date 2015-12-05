@@ -22,10 +22,18 @@ class Envelope extends Module {
     setEnvelope (dest) {
         let now = AudioContext.currentTime,
             envelope = this.level % 101,
-            attackLevel = envelope * 72,  // Range: 0-7200: 6-octave range
-            sustainLevel = attackLevel * this.sustain / 100.0, // range: 0-7200
+            attackLevel,
+            sustainLevel,
             attackEnd = (this.attack / 20.0),
             t;
+
+        if (this.target === 'gain') {
+            attackLevel = envelope;
+            sustainLevel = this.sustain / 100.0;
+        } else {
+            attackLevel = envelope * 72;  // Range: 0-7200: 6-octave range
+            sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
+        }
 
         if (!attackEnd) {
             attackEnd = 0.05; // tweak to get target decay to work properly
@@ -47,7 +55,11 @@ class Envelope extends Module {
         if (dest && dest.main && dest.main[this.target]) {
             t = dest.main[this.target];
             t.cancelScheduledValues(now);
+            if (this.target === 'gain') {
+                t.setValueAtTime(t.gain.value, now);
+            }
             t.setTargetAtTime(0, now, (this.release / 100.0));
+
         }
     }
 
