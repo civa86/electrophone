@@ -12,6 +12,7 @@ export const TYPES = {
 
 export const CONST = {
     MASTER: 'master',
+    ADSR: 'adsr',
 
     NOISE_WHITE: 'white',
     NOISE_PINK:  'pink',

@@ -9,14 +9,21 @@ class Synth {
         this.voices = {};
 
         this.module('Master', CONST.MASTER, {
-            level: 1,
-            envelope: {
-                attack:  10,
-                decay:   10,
-                sustain: 100,
-                release: 2
-            }
+            level: 100
         });
+
+        //TODO put default value as if no envelope....copy from master commetend fallback cases
+        //TODO let update values from props....
+        this.module('Envelope', CONST.ADSR, {
+            link:    CONST.MASTER,
+            target:  'gain',
+            level:   100,
+            attack:  10,
+            decay:   1,
+            sustain: 100,
+            release: 10
+        });
+
     }
 
     module (type, label, props) {

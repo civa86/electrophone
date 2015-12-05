@@ -86,9 +86,12 @@ class Voice {
     }
 
     noteOff () {
-        let release = this.master.getRelease(),
+        let release = 0,
+            adsr = this.modules.adsr.instance,
             m,
             dest;
+
+        release = adsr.getReleaseTime();
 
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;

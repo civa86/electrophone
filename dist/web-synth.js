@@ -105,6 +105,7 @@
 	exports.TYPES = TYPES;
 	var CONST = {
 	    MASTER: 'master',
+	    ADSR: 'adsr',
 
 	    NOISE_WHITE: 'white',
 	    NOISE_PINK: 'pink',
@@ -207,17 +208,18 @@
 	        _classCallCheck(this, Module);
 
 	        this.gain = null;
-	        this.lineout = null;
 	        this.link = props.link || null;
-	        this.createGain(props.level);
+	        this.level = +props.level;
+
+	        this.createGain(this.level);
 	    }
 
 	    _createClass(Module, [{
 	        key: 'createGain',
 	        value: function createGain(level) {
+	            var l = level >= 0 ? level % 101 : 100;
 	            this.gain = _AudioContext2['default'].createGain();
-	            this.gain.gain.value = +level >= 0 ? level : 1;
-	            this.lineout = this.gain;
+	            this.gain.gain.value = l / 100;
 	        }
 	    }, {
 	        key: 'disconnect',
@@ -269,6 +271,10 @@
 	var _Filter = __webpack_require__(9);
 
 	exports.Filter = _interopRequire(_Filter);
+
+	var _Envelope = __webpack_require__(14);
+
+	exports.Envelope = _interopRequire(_Envelope);
 
 	var _Master = __webpack_require__(10);
 
@@ -390,13 +396,19 @@
 	        this.voices = {};
 
 	        this.module('Master', _coreConstants.CONST.MASTER, {
-	            level: 1,
-	            envelope: {
-	                attack: 1,
-	                decay: 10,
-	                sustain: 100,
-	                release: 1
-	            }
+	            level: 100
+	        });
+
+	        //TODO put default value as if no envelope....copy from master commetend fallback cases
+	        //TODO let update values from props....
+	        this.module('Envelope', _coreConstants.CONST.ADSR, {
+	            link: _coreConstants.CONST.MASTER,
+	            target: 'gain',
+	            level: 100,
+	            attack: 10,
+	            decay: 1,
+	            sustain: 100,
+	            release: 10
 	        });
 	    }
 
@@ -539,8 +551,10 @@
 	                    if (destinationModule && destinationModule.instance) {
 	                        source = currentModule.getLineOut();
 	                        dest = destinationModule.instance.getLineIn(currentModuleType);
-	                        console.log(mod, source, currentModule.link, dest);
-	                        source.connect(dest);
+	                        //console.log(mod, source, currentModule.link, dest);
+	                        if (source && dest) {
+	                            source.connect(dest);
+	                        }
 	                    }
 	                }
 	            });
@@ -552,11 +566,15 @@
 	        value: function noteOn() {
 	            var _this3 = this;
 
-	            var m = undefined;
+	            var m = undefined,
+	                dest = undefined;
+
 	            Object.keys(this.modules).forEach(function (e) {
 	                m = _this3.modules[e].instance;
+
 	                if (typeof m.setEnvelope === 'function') {
-	                    m.setEnvelope();
+	                    dest = _this3.modules[m.link] ? _this3.modules[m.link].instance : null;
+	                    m.setEnvelope(dest);
 	                }
 	                if (typeof m.setNote === 'function') {
 	                    m.setNote(+_this3.note);
@@ -574,13 +592,18 @@
 	        value: function noteOff() {
 	            var _this4 = this;
 
-	            var release = this.master.releaseEnvelope(),
-	                m = undefined;
+	            var release = 0,
+	                adsr = this.modules.adsr.instance,
+	                m = undefined,
+	                dest = undefined;
+
+	            release = adsr.getReleaseTime();
 
 	            Object.keys(this.modules).forEach(function (e) {
 	                m = _this4.modules[e].instance;
 	                if (typeof m.resetEnvelope === 'function') {
-	                    m.resetEnvelope();
+	                    dest = _this4.modules[m.link] ? _this4.modules[m.link].instance : null;
+	                    m.resetEnvelope(dest);
 	                }
 	            });
 	            Object.keys(this.modules).forEach(function (e) {
@@ -638,24 +661,29 @@
 
 	        this.freq = +props.freq || 11000;
 	        this.q = +props.q || 10;
-	        this.envelope = +props.envelope || 0;
+	        //this.envelope = +props.envelope || 0;
 
 	        this.main = _AudioContext2['default'].createBiquadFilter();
 	        this.main.type = props.type || _coreConstants.CONST.FILTER_LOWPASS;
 
-	        //TODO config envelope....introduce an Env Module!!!
-	        this.env = {
-	            attack: 2,
-	            decay: 1,
-	            sustain: 100,
-	            release: 1
-	        };
+	        ////TODO config envelope....introduce an Env Module!!!
+	        //this.env = {
+	        //    attack:  2,
+	        //    decay:   1,
+	        //    sustain: 100,
+	        //    release: 1
+	        //};
 
 	        this.setCutOff();
 	        this.setQ();
 	    }
 
 	    _createClass(Filter, [{
+	        key: 'createGain',
+	        value: function createGain() {
+	            return false;
+	        }
+	    }, {
 	        key: 'setCutOff',
 	        value: function setCutOff() {
 	            var cutOff = (this.freq - 20) / (20000 - 20) * (14.287712379549449 - 0) + 0;
@@ -667,33 +695,32 @@
 	            var q = this.q % 21;
 	            this.main.Q.value = q;
 	        }
-	    }, {
-	        key: 'setEnvelope',
-	        value: function setEnvelope() {
-	            var now = _AudioContext2['default'].currentTime,
-	                envelope = this.envelope % 101,
-	                filterAttackLevel = envelope * 72,
-	                // Range: 0-7200: 6-octave range
-	            filterSustainLevel = filterAttackLevel * this.env.sustain / 100.0,
-	                // range: 0-7200
-	            filterAttackEnd = this.env.attack / 20.0;
 
-	            if (!filterAttackEnd) {
-	                filterAttackEnd = 0.05; // tweak to get target decay to work properly
-	            }
-	            //TODO let main parameter detune | frequency... configurable
-	            this.main.detune.setValueAtTime(0, now);
-	            this.main.detune.linearRampToValueAtTime(filterAttackLevel, now + filterAttackEnd);
-	            this.main.detune.setTargetAtTime(filterSustainLevel, now + filterAttackEnd, this.env.decay / 100.0);
-	        }
-	    }, {
-	        key: 'resetEnvelope',
-	        value: function resetEnvelope() {
-	            var now = _AudioContext2['default'].currentTime;
-	            //TODO let main parameter detune | frequency... configurable
-	            this.main.detune.cancelScheduledValues(now);
-	            this.main.detune.setTargetAtTime(0, now, this.env.release / 100.0);
-	        }
+	        //setEnvelope () {
+	        //    let now = AudioContext.currentTime,
+	        //        envelope = this.envelope % 101,
+	        //        filterAttackLevel = envelope * 72,  // Range: 0-7200: 6-octave range
+	        //        filterSustainLevel = filterAttackLevel * this.env.sustain / 100.0, // range: 0-7200
+	        //        filterAttackEnd = (this.env.attack / 20.0);
+	        //
+	        //    if (!filterAttackEnd) {
+	        //        filterAttackEnd = 0.05; // tweak to get target decay to work properly
+	        //    }
+	        //    //TODO let main parameter detune | frequency... configurable
+	        //    this.main.detune.setValueAtTime(0, now);
+	        //    this.main.detune.linearRampToValueAtTime(filterAttackLevel, now + filterAttackEnd);
+	        //    this.main.detune.setTargetAtTime(filterSustainLevel, now + filterAttackEnd, (this.env.decay / 100.0));
+	        //
+	        //}
+	        //
+	        //resetEnvelope () {
+	        //    let now = AudioContext.currentTime;
+	        //    //TODO let main parameter detune | frequency... configurable
+	        //    this.main.detune.cancelScheduledValues(now);
+	        //    this.main.detune.setTargetAtTime(0, now, (this.env.release / 100.0));
+	        //
+	        //}
+
 	    }, {
 	        key: 'getLineIn',
 	        value: function getLineIn(source) {
@@ -755,60 +782,57 @@
 
 	        _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).call(this, props);
 
-	        this.envelope = _AudioContext2['default'].createGain();
+	        this.main = _AudioContext2['default'].createGain();
 	        this.env = props.envelope || null;
 	        this.link = null;
-	        this.lineout = this.envelope;
 	    }
 
+	    //setEnvelope () {
+	    //    let now = AudioContext.currentTime,
+	    //        envAttackEnd;
+	    //
+	    //    this.envelope.gain.value = 0.0;
+	    //
+	    //    if (this.env) {
+	    //        envAttackEnd = now + (this.env.attack / 20.0);
+	    //        this.envelope.gain.setValueAtTime(0.0, now);
+	    //        this.envelope.gain.linearRampToValueAtTime(1.0, envAttackEnd);
+	    //        this.envelope.gain.setTargetAtTime(
+	    //            (this.env.sustain / 100.0),
+	    //            envAttackEnd,
+	    //            (this.env.decay / 100.0) + 0.001
+	    //        );
+	    //    } else {
+	    //        this.envelope.gain.setValueAtTime(0.0, now);
+	    //        this.envelope.gain.linearRampToValueAtTime(1.0, now + 0.02);
+	    //        this.envelope.gain.setTargetAtTime(1, now + 0.02, 0 + 0.001);
+	    //        this.envelope.gain.value = 1;
+	    //    }
+	    //}
+	    //
+	    //resetEnvelope () {
+	    //    let now = AudioContext.currentTime;
+	    //
+	    //    if (this.env) {
+	    //        this.envelope.gain.cancelScheduledValues(now);
+	    //        this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
+	    //        this.envelope.gain.setTargetAtTime(0.0, now, (this.env.release / 100));
+	    //    } else {
+	    //        this.envelope.gain.cancelScheduledValues(now);
+	    //        this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
+	    //        this.envelope.gain.setTargetAtTime(0.0, now, 0.05);
+	    //    }
+	    //}
+
 	    _createClass(Master, [{
-	        key: 'setEnvelope',
-	        value: function setEnvelope() {
-	            var now = _AudioContext2['default'].currentTime,
-	                envAttackEnd = undefined;
-
-	            this.envelope.gain.value = 0.0;
-
-	            if (this.env) {
-	                envAttackEnd = now + this.env.attack / 20.0;
-	                this.envelope.gain.setValueAtTime(0.0, now);
-	                this.envelope.gain.linearRampToValueAtTime(1.0, envAttackEnd);
-	                this.envelope.gain.setTargetAtTime(this.env.sustain / 100.0, envAttackEnd, this.env.decay / 100.0 + 0.001);
-	            } else {
-	                this.envelope.gain.setValueAtTime(0.0, now);
-	                this.envelope.gain.linearRampToValueAtTime(1.0, now + 0.02);
-	                this.envelope.gain.setTargetAtTime(1, now + 0.02, 0 + 0.001);
-	                this.envelope.gain.value = 1;
-	            }
-	        }
-	    }, {
-	        key: 'releaseEnvelope',
-	        value: function releaseEnvelope() {
-	            var now = _AudioContext2['default'].currentTime,
-	                release = undefined;
-	            if (this.env) {
-	                this.envelope.gain.cancelScheduledValues(now);
-	                this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
-	                this.envelope.gain.setTargetAtTime(0.0, now, this.env.release / 100);
-	                release = now + this.env.release / 10.0;
-	            } else {
-	                this.envelope.gain.cancelScheduledValues(now);
-	                this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
-	                this.envelope.gain.setTargetAtTime(0.0, now, 0.05);
-	                release = now + 0.2;
-	            }
-
-	            return release;
-	        }
-	    }, {
 	        key: 'getLineIn',
 	        value: function getLineIn() {
-	            return this.envelope;
+	            return this.main;
 	        }
 	    }, {
 	        key: 'lineOut',
 	        value: function lineOut() {
-	            this.envelope.connect(this.gain);
+	            this.main.connect(this.gain);
 	            this.gain.connect(_AudioContext2['default'].destination);
 	        }
 	    }]);
@@ -1110,6 +1134,143 @@
 	})(_coreSoundSource2['default']);
 
 	exports['default'] = Oscillator;
+	module.exports = exports['default'];
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(2);
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreModule = __webpack_require__(4);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var Envelope = (function (_Module) {
+	    _inherits(Envelope, _Module);
+
+	    function Envelope(props) {
+	        _classCallCheck(this, Envelope);
+
+	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
+
+	        this.target = props.target || null;
+
+	        this.attack = props.attack;
+	        this.decay = props.decay;
+	        this.sustain = props.sustain;
+	        this.release = props.release;
+	    }
+
+	    _createClass(Envelope, [{
+	        key: 'createGain',
+	        value: function createGain() {
+	            return false;
+	        }
+	    }, {
+	        key: 'getReleaseTime',
+	        value: function getReleaseTime() {
+	            var now = _AudioContext2['default'].currentTime,
+	                release = undefined;
+
+	            if (this.release) {
+	                release = now + this.release / 10.0;
+	            } else {
+	                release = now + 0.2;
+	            }
+
+	            return release;
+	        }
+	    }, {
+	        key: 'setEnvelope',
+	        value: function setEnvelope(dest) {
+	            var now = _AudioContext2['default'].currentTime,
+	                envelope = this.level % 101,
+	                attackLevel = undefined,
+	                sustainLevel = undefined,
+	                attackEnd = this.attack / 20.0,
+	                t = undefined;
+
+	            if (this.target === 'gain') {
+	                attackLevel = envelope / 100;
+	                sustainLevel = this.sustain / 100.0;
+	            } else {
+	                attackLevel = envelope * 72; // Range: 0-7200: 6-octave range
+	                sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
+	            }
+
+	            if (!attackEnd) {
+	                attackEnd = 0.05; // tweak to get target decay to work properly
+	            }
+
+	            if (dest && dest.main) {
+	                if (dest.main[this.target]) {
+	                    t = dest.main[this.target];
+	                } else if (this.target === 'gain' && dest.gain) {
+	                    t = dest.gain.gain;
+	                    t.value = 0.0;
+	                }
+
+	                if (t) {
+	                    t.setValueAtTime(0, now);
+	                    t.linearRampToValueAtTime(attackLevel, now + attackEnd);
+	                    t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'resetEnvelope',
+	        value: function resetEnvelope(dest) {
+	            var now = _AudioContext2['default'].currentTime,
+	                t = undefined;
+
+	            if (dest && dest.main) {
+	                if (dest.main[this.target]) {
+	                    t = dest.main[this.target];
+	                } else if (this.target === 'gain' && dest.gain) {
+	                    t = dest.gain.gain;
+	                }
+
+	                if (t) {
+	                    t.cancelScheduledValues(now);
+	                    if (this.target === 'gain') {
+	                        t.setValueAtTime(t.value, now);
+	                    }
+	                    t.setTargetAtTime(0, now, this.release / 100.0);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'getLineOut',
+	        value: function getLineOut() {
+	            return false;
+	        }
+	    }]);
+
+	    return Envelope;
+	})(_coreModule2['default']);
+
+	exports['default'] = Envelope;
 	module.exports = exports['default'];
 
 /***/ }
