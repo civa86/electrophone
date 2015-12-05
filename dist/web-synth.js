@@ -112,8 +112,18 @@
 
 	    WAVE_SINE: 'sine',
 	    WAVE_SQUARE: 'square',
+	    WAVE_SAWTOOTH: 'sawtooth',
+	    WAVE_TRIANLGE: 'triangle',
+	    WAVE_CUSTOM: 'custom',
 
-	    FILTER_LOWPASS: 'lowpass'
+	    FILTER_LOWPASS: 'lowpass',
+	    FILTER_HIGHPASS: 'highpass',
+	    FILTER_BANDPASS: 'bandpass',
+	    FILTER_LOWSHELF: 'lowshelf',
+	    FILTER_HIGHSHELF: 'highshelf',
+	    FILTER_PEAKING: 'peaking',
+	    FILTER_NOTCH: 'notch',
+	    FILTER_ALLPASS: 'allpass'
 	};
 	exports.CONST = CONST;
 
@@ -376,14 +386,14 @@
 	    function Synth() {
 	        _classCallCheck(this, Synth);
 
-	        this.modules = {};
+	        this.modulesConfig = {};
 	        this.voices = {};
 
 	        this.module('Master', _coreConstants.CONST.MASTER, {
 	            level: 1,
 	            envelope: {
 	                attack: 1,
-	                decay: 50,
+	                decay: 10,
 	                sustain: 100,
 	                release: 1
 	            }
@@ -405,14 +415,14 @@
 	                throw new Error('Synth Module :: missing properties');
 	            }
 
-	            if (!this.modules[label]) {
+	            if (!this.modulesConfig[label]) {
 	                this.addModule(type, label, props);
 	            }
 	        }
 	    }, {
 	        key: 'addModule',
 	        value: function addModule(type, label, props) {
-	            this.modules[label] = {
+	            this.modulesConfig[label] = {
 	                type: type,
 	                props: props
 	            };
@@ -421,7 +431,7 @@
 	        key: 'play',
 	        value: function play(note) {
 	            if (!this.voices[note]) {
-	                this.voices[note] = new _coreVoice2['default'](note, this.modules);
+	                this.voices[note] = new _coreVoice2['default'](note, this.modulesConfig);
 	                this.voices[note].noteOn();
 	            }
 	        }
@@ -474,11 +484,12 @@
 	var _Constants = __webpack_require__(2);
 
 	var Voice = (function () {
-	    function Voice(note, modules) {
+	    function Voice(note, modulesConfig) {
 	        _classCallCheck(this, Voice);
 
 	        this.note = note;
-	        this.modules = modules;
+	        this.modulesConfig = modulesConfig;
+	        this.modules = {};
 	        this.soundSources = [];
 	        this.master = null;
 
@@ -489,97 +500,70 @@
 	    _createClass(Voice, [{
 	        key: 'setupModules',
 	        value: function setupModules() {
-	            var m = undefined;
+	            var _this = this;
 
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
+	            var modConf = undefined,
+	                m = undefined;
 
-	            try {
-	                for (var _iterator = Object.keys(this.modules)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var mod = _step.value;
+	            Object.keys(this.modulesConfig).forEach(function (mod) {
+	                modConf = _this.modulesConfig[mod];
+	                if (modConf.type && modConf.props) {
+	                    m = new Modules[modConf.type](modConf.props);
+	                    _this.modules[mod] = {
+	                        type: modConf.type,
+	                        instance: m
+	                    };
 
-	                    m = this.modules[mod];
-	                    if (m.type && m.props) {
-	                        m.instance = new Modules[m.type](m.props);
-	                        if (m.instance instanceof _SoundSource2['default']) {
-	                            this.soundSources.push(m.instance);
-	                        } else if (m.type === _Constants.TYPES.MASTER) {
-	                            this.master = m.instance;
-	                        }
+	                    if (m.instance instanceof _SoundSource2['default']) {
+	                        _this.soundSources.push(m);
+	                    } else if (modConf.type === _Constants.TYPES.MASTER) {
+	                        _this.master = m;
 	                    }
 	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator['return']) {
-	                        _iterator['return']();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
+	            });
 	        }
 	    }, {
 	        key: 'linkModules',
 	        value: function linkModules() {
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
+	            var _this2 = this;
 
-	            try {
-	                for (var _iterator2 = Object.keys(this.modules)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var mod = _step2.value;
+	            Object.keys(this.modules).forEach(function (mod) {
+	                var currentModule = _this2.modules[mod].instance,
+	                    currentModuleType = _this2.modules[mod].type,
+	                    destinationModule = undefined,
+	                    source = undefined,
+	                    dest = undefined;
 
-	                    var currentModule = this.modules[mod].instance,
-	                        currentModuleType = this.modules[mod].type,
-	                        destinationModule = undefined,
-	                        source = undefined,
-	                        dest = undefined;
-
-	                    if (currentModule.link) {
-	                        destinationModule = this.modules[currentModule.link];
-	                        if (destinationModule && destinationModule.instance) {
-	                            source = currentModule.getLineOut();
-	                            dest = destinationModule.instance.getLineIn(currentModuleType);
-	                            source.connect(dest);
-	                        }
+	                if (currentModule.link) {
+	                    destinationModule = _this2.modules[currentModule.link];
+	                    if (destinationModule && destinationModule.instance) {
+	                        source = currentModule.getLineOut();
+	                        dest = destinationModule.instance.getLineIn(currentModuleType);
+	                        console.log(mod, source, currentModule.link, dest);
+	                        source.connect(dest);
 	                    }
 	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-	                        _iterator2['return']();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
+	            });
 
 	            this.master.lineOut();
 	        }
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
-	            var _this = this;
+	            var _this3 = this;
 
 	            var m = undefined;
-	            this.master.setEnvelope();
-
 	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this.modules[e].instance;
-	                if (typeof m.setNote === 'function') {
-	                    m.setNote(+_this.note);
+	                m = _this3.modules[e].instance;
+	                if (typeof m.setEnvelope === 'function') {
+	                    m.setEnvelope();
 	                }
+	                if (typeof m.setNote === 'function') {
+	                    m.setNote(+_this3.note);
+	                }
+	            });
+	            Object.keys(this.modules).forEach(function (e) {
+	                m = _this3.modules[e].instance;
 	                if (typeof m.noteOn === 'function') {
 	                    m.noteOn();
 	                }
@@ -588,13 +572,19 @@
 	    }, {
 	        key: 'noteOff',
 	        value: function noteOff() {
-	            var _this2 = this;
+	            var _this4 = this;
 
 	            var release = this.master.releaseEnvelope(),
 	                m = undefined;
 
 	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this2.modules[e].instance;
+	                m = _this4.modules[e].instance;
+	                if (typeof m.resetEnvelope === 'function') {
+	                    m.resetEnvelope();
+	                }
+	            });
+	            Object.keys(this.modules).forEach(function (e) {
+	                m = _this4.modules[e].instance;
 	                if (typeof m.noteOff === 'function') {
 	                    m.noteOff(release);
 	                }
@@ -648,10 +638,18 @@
 
 	        this.freq = +props.freq || 11000;
 	        this.q = +props.q || 10;
+	        this.envelope = +props.envelope || 0;
 
 	        this.main = _AudioContext2['default'].createBiquadFilter();
 	        this.main.type = props.type || _coreConstants.CONST.FILTER_LOWPASS;
-	        this.main.connect(this.gain);
+
+	        //TODO config envelope....introduce an Env Module!!!
+	        this.env = {
+	            attack: 2,
+	            decay: 1,
+	            sustain: 100,
+	            release: 1
+	        };
 
 	        this.setCutOff();
 	        this.setQ();
@@ -670,13 +668,46 @@
 	            this.main.Q.value = q;
 	        }
 	    }, {
+	        key: 'setEnvelope',
+	        value: function setEnvelope() {
+	            var now = _AudioContext2['default'].currentTime,
+	                envelope = this.envelope % 101,
+	                filterAttackLevel = envelope * 72,
+	                // Range: 0-7200: 6-octave range
+	            filterSustainLevel = filterAttackLevel * this.env.sustain / 100.0,
+	                // range: 0-7200
+	            filterAttackEnd = this.env.attack / 20.0;
+
+	            if (!filterAttackEnd) {
+	                filterAttackEnd = 0.05; // tweak to get target decay to work properly
+	            }
+	            //TODO let main parameter detune | frequency... configurable
+	            this.main.detune.setValueAtTime(0, now);
+	            this.main.detune.linearRampToValueAtTime(filterAttackLevel, now + filterAttackEnd);
+	            this.main.detune.setTargetAtTime(filterSustainLevel, now + filterAttackEnd, this.env.decay / 100.0);
+	        }
+	    }, {
+	        key: 'resetEnvelope',
+	        value: function resetEnvelope() {
+	            var now = _AudioContext2['default'].currentTime;
+	            //TODO let main parameter detune | frequency... configurable
+	            this.main.detune.cancelScheduledValues(now);
+	            this.main.detune.setTargetAtTime(0, now, this.env.release / 100.0);
+	        }
+	    }, {
 	        key: 'getLineIn',
 	        value: function getLineIn(source) {
 	            if (source === _coreConstants.TYPES.MODULATOR) {
-	                return this.main.frequency;
+	                //TODO let main parameter detune | frequency... configurable
+	                return this.main.detune;
 	            } else {
 	                return this.main;
 	            }
+	        }
+	    }, {
+	        key: 'getLineOut',
+	        value: function getLineOut() {
+	            return this.main;
 	        }
 	    }]);
 
@@ -1043,13 +1074,27 @@
 
 	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props);
 
+	        this.detune = +props.detune || 0;
+
 	        this.main = _AudioContext2['default'].createOscillator();
 	        this.main.type = props.type || _coreConstants.CONST.WAVE_SINE;
-	        this.main.detune.value = props.detune || 0;
 	        this.main.connect(this.gain);
+
+	        this.setDetune();
 	    }
 
 	    _createClass(Oscillator, [{
+	        key: 'setDetune',
+	        value: function setDetune() {
+	            if (this.detune > 1200) {
+	                this.detune = 1200;
+	            } else if (this.detune < -1200) {
+	                this.detune = -1200;
+	            }
+
+	            this.main.detune.value = this.detune;
+	        }
+	    }, {
 	        key: 'setNote',
 	        value: function setNote(note) {
 	            this.main.frequency.value = note;
