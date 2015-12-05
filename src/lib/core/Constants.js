@@ -19,6 +19,16 @@ export const CONST = {
 
     WAVE_SINE:   'sine',
     WAVE_SQUARE: 'square',
+    WAVE_SAWTOOTH: 'sawtooth',
+    WAVE_TRIANLGE: 'triangle',
+    WAVE_CUSTOM: 'custom',
 
-    FILTER_LOWPASS: 'lowpass'
+    FILTER_LOWPASS: 'lowpass',
+    FILTER_HIGHPASS: 'highpass',
+    FILTER_BANDPASS: 'bandpass',
+    FILTER_LOWSHELF: 'lowshelf',
+    FILTER_HIGHSHELF: 'highshelf',
+    FILTER_PEAKING: 'peaking',
+    FILTER_NOTCH: 'notch',
+    FILTER_ALLPASS: 'allpass'
 };

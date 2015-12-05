@@ -45,24 +45,24 @@
         synth
             .modulator('FM-A', {
                 type:  synth.VARS.WAVE_SINE,
-                freq: 3,
+                freq: 5,
                 level: 1,
                 link:  'OSC-A'
             })
             .modulator('FM-B', {
-                type:  synth.VARS.WAVE_SQUARE,
-                freq: 2,
+                type:  synth.VARS.WAVE_SINE,
+                freq: 1,
                 level: 1,
                 link:  'OSC-B'
             })
             .oscillator('OSC-A', {
                 type:  synth.VARS.WAVE_SQUARE,
-                level: 0.5,
+                level: 1,
                 link:  'FILT1'
             })
             .oscillator('OSC-B', {
-                type:  synth.VARS.WAVE_SQUARE,
-                level: 0.5,
+                type:  synth.VARS.WAVE_SAWTOOTH,
+                level: 1,
                 link:  'FILT1'
             })
             .modulator('FM-FILT', {
@@ -72,9 +72,10 @@
                 link:  'FILT1'
             })
             .filter('FILT1', {
-                level: 1,
-                freq: 12000,
-                envelope: 100,
+                type: synth.VARS.FILTER_BANDPASS,
+                freq: 10000,
+                q: 4,
+                envelope: 30,
                 link:  synth.VARS.MASTER
             })
     }

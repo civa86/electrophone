@@ -9,13 +9,12 @@ class Filter extends Module {
 
         this.freq = +props.freq || 11000;
         this.q = +props.q || 10;
+        this.envelope = +props.envelope || 0;
 
         this.main = AudioContext.createBiquadFilter();
         this.main.type = props.type || CONST.FILTER_LOWPASS;
-        this.main.connect(this.gain);
 
         //TODO config envelope....introduce an Env Module!!!
-        this.envelope = +props.envelope || 0;
         this.env = {
             attack:  2,
             decay:   1,
@@ -64,10 +63,15 @@ class Filter extends Module {
 
     getLineIn (source) {
         if (source === TYPES.MODULATOR) {
-            return this.main.frequency;
+            //TODO let main parameter detune | frequency... configurable
+            return this.main.detune;
         } else {
             return this.main;
         }
+    }
+
+    getLineOut () {
+        return this.main;
     }
 }
 
