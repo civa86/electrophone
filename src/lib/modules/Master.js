@@ -13,6 +13,18 @@ class Master extends Module {
         this.lineout = this.envelope;
     }
 
+    getRelease () {
+        let now = AudioContext.currentTime,
+            release;
+        if (this.env) {
+            release = now + (this.env.release / 10.0);
+        } else {
+            release = now + 0.2;
+        }
+
+        return release;
+    }
+
     setEnvelope () {
         let now = AudioContext.currentTime,
             envAttackEnd;
@@ -36,22 +48,18 @@ class Master extends Module {
         }
     }
 
-    releaseEnvelope () {
-        let now = AudioContext.currentTime,
-            release;
+    resetEnvelope () {
+        let now = AudioContext.currentTime;
+
         if (this.env) {
             this.envelope.gain.cancelScheduledValues(now);
             this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
             this.envelope.gain.setTargetAtTime(0.0, now, (this.env.release / 100));
-            release = now + (this.env.release / 10.0);
         } else {
             this.envelope.gain.cancelScheduledValues(now);
             this.envelope.gain.setValueAtTime(this.envelope.gain.value, now);
             this.envelope.gain.setTargetAtTime(0.0, now, 0.05);
-            release = now + 0.2;
         }
-
-        return release;
     }
 
     getLineIn () {

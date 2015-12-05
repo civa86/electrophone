@@ -75,7 +75,7 @@
                 type: synth.VARS.FILTER_BANDPASS,
                 freq: 10000,
                 q: 4,
-                envelope: 30,
+                envelope: 0,
                 link:  synth.VARS.MASTER
             })
     }

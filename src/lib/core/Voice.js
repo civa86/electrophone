@@ -80,7 +80,7 @@ class Voice {
     }
 
     noteOff () {
-        let release = this.master.releaseEnvelope(),
+        let release = this.master.getRelease(),
             m;
 
         Object.keys(this.modules).forEach((e) => {

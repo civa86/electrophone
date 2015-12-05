@@ -26,6 +26,10 @@ class Filter extends Module {
         this.setQ();
     }
 
+    createGain () {
+        return false;
+    }
+
     setCutOff () {
         let cutOff = ((this.freq - 20) / (20000 - 20)) * (14.287712379549449 - 0) + 0;
         this.main.frequency.value = Math.pow(2, cutOff);

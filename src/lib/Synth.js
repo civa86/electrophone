@@ -14,7 +14,7 @@ class Synth {
                 attack:  1,
                 decay:   10,
                 sustain: 100,
-                release: 1
+                release: 2
             }
         });
     }
