@@ -11,7 +11,7 @@ class Synth {
         this.module('Master', CONST.MASTER, {
             level: 1,
             envelope: {
-                attack:  1,
+                attack:  10,
                 decay:   10,
                 sustain: 100,
                 release: 2

@@ -45,38 +45,55 @@
         synth
             .modulator('FM-A', {
                 type:  synth.VARS.WAVE_SINE,
-                freq: 5,
+                freq:  5,
                 level: 1,
                 link:  'OSC-A'
             })
             .modulator('FM-B', {
                 type:  synth.VARS.WAVE_SINE,
-                freq: 1,
+                freq:  1,
                 level: 1,
                 link:  'OSC-B'
             })
+            .envelope('OSC-A-FREQ-ENV', {
+                link:    'OSC-A',
+                target:  'frequency',
+                level: 20,
+                attack:  2,
+                decay:   1,
+                sustain: 100,
+                release: 10
+            })
             .oscillator('OSC-A', {
                 type:  synth.VARS.WAVE_SQUARE,
-                level: 1,
+                level: 0.5,
                 link:  'FILT1'
             })
             .oscillator('OSC-B', {
                 type:  synth.VARS.WAVE_SAWTOOTH,
-                level: 1,
+                level: 0.5,
                 link:  'FILT1'
             })
             .modulator('FM-FILT', {
                 type:  synth.VARS.WAVE_SINE,
-                freq: 5,
+                freq:  5,
                 level: 1,
                 link:  'FILT1'
             })
+            .envelope('FILT1-DETUNE-ENV', {
+                link:    'FILT1',
+                target:  'detune',
+                level: 100,
+                attack:  20,
+                decay:   1,
+                sustain: 1,
+                release: 10
+            })
             .filter('FILT1', {
                 type: synth.VARS.FILTER_BANDPASS,
-                freq: 10000,
-                q: 4,
-                envelope: 0,
-                link:  synth.VARS.MASTER
+                freq: 13000,
+                q:    2,
+                link: synth.VARS.MASTER
             })
     }
 })();

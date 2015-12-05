@@ -10,7 +10,6 @@ class Master extends Module {
         this.envelope = AudioContext.createGain();
         this.env = props.envelope || null;
         this.link = null;
-        this.lineout = this.envelope;
     }
 
     getRelease () {

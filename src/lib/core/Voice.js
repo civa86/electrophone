@@ -51,8 +51,10 @@ class Voice {
                 if (destinationModule && destinationModule.instance) {
                     source = currentModule.getLineOut();
                     dest = destinationModule.instance.getLineIn(currentModuleType);
-                    console.log(mod, source, currentModule.link, dest);
-                    source.connect(dest);
+                    //console.log(mod, source, currentModule.link, dest);
+                    if (source && dest) {
+                        source.connect(dest);
+                    }
                 }
             }
         });
@@ -61,11 +63,15 @@ class Voice {
     }
 
     noteOn () {
-        let m;
+        let m,
+            dest;
+
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;
+
             if (typeof m.setEnvelope === 'function') {
-                m.setEnvelope();
+                dest = (this.modules[m.link]) ? this.modules[m.link].instance : null;
+                m.setEnvelope(dest);
             }
             if (typeof m.setNote === 'function') {
                 m.setNote(+this.note);
@@ -81,12 +87,14 @@ class Voice {
 
     noteOff () {
         let release = this.master.getRelease(),
-            m;
+            m,
+            dest;
 
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;
             if (typeof m.resetEnvelope === 'function') {
-                m.resetEnvelope();
+                dest = (this.modules[m.link]) ? this.modules[m.link].instance : null;
+                m.resetEnvelope(dest);
             }
         });
         Object.keys(this.modules).forEach((e) => {
