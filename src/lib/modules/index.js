@@ -1,4 +1,5 @@
 export {default as Oscillator} from './Oscillator'
+export {default as Modulator} from './Modulator'
 export {default as Noise} from './Noise'
 export {default as Filter} from './Filter'
 export {default as Master} from './Master'

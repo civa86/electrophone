@@ -11,7 +11,7 @@ class Module {
 
     createGain (level) {
         this.gain = AudioContext.createGain();
-        this.gain.gain.value = (level && level >= 0) ?  level : 1;
+        this.gain.gain.value = (+level >= 0) ?  level : 1;
         this.lineout = this.gain;
     }
 
@@ -26,10 +26,6 @@ class Module {
     getLineOut () {
         return this.gain;
     }
-
-    //linkModule (source) {
-    //    source.gain.connect(this.lineout);
-    //}
 }
 
 export default Module;

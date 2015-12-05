@@ -34,6 +34,7 @@ class Voice {
     linkModules () {
         for (let mod of Object.keys(this.modules)) {
             let currentModule = this.modules[mod].instance,
+                currentModuleType = this.modules[mod].type,
                 destinationModule,
                 source,
                 dest;
@@ -42,7 +43,7 @@ class Voice {
                 destinationModule = this.modules[currentModule.link];
                 if (destinationModule && destinationModule.instance) {
                     source = currentModule.getLineOut();
-                    dest = destinationModule.instance.getLineIn();
+                    dest = destinationModule.instance.getLineIn(currentModuleType);
                     source.connect(dest);
                 }
             }
@@ -52,20 +53,30 @@ class Voice {
     }
 
     noteOn () {
+        let m;
         this.master.setEnvelope();
 
-        for (let source of this.soundSources) {
-            source.setNote(this.note);
-            source.noteOn();
-        }
+        Object.keys(this.modules).forEach((e) => {
+            m = this.modules[e].instance;
+            if (typeof m.setNote === 'function') {
+                m.setNote(+this.note);
+            }
+            if (typeof m.noteOn === 'function') {
+                m.noteOn();
+            }
+        });
     }
 
     noteOff () {
-        let release = this.master.releaseEnvelope();
+        let release = this.master.releaseEnvelope(),
+            m;
 
-        for (let source of this.soundSources) {
-            source.noteOff(release);
-        }
+        Object.keys(this.modules).forEach((e) => {
+            m = this.modules[e].instance;
+            if (typeof m.noteOff === 'function') {
+                m.noteOff(release);
+            }
+        });
     }
 
 }

@@ -1,6 +1,7 @@
 export const TYPES = {
     MASTER: 'Master',
     OSCILLATOR: 'Oscillator',
+    MODULATOR: 'Modulator',
     FILTER: 'Filter',
     NOISE: 'Noise',
     REVERB: 'Reverb',

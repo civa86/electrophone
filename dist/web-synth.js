@@ -93,6 +93,7 @@
 	var TYPES = {
 	    MASTER: 'Master',
 	    OSCILLATOR: 'Oscillator',
+	    MODULATOR: 'Modulator',
 	    FILTER: 'Filter',
 	    NOISE: 'Noise',
 	    REVERB: 'Reverb',
@@ -128,62 +129,6 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var Module = (function () {
-	    function Module(props) {
-	        _classCallCheck(this, Module);
-
-	        this.gain = null;
-	        this.link = null;
-	        this.lineout = null;
-
-	        this.createGain(props.level);
-	    }
-
-	    _createClass(Module, [{
-	        key: 'createGain',
-	        value: function createGain(level) {
-	            this.gain = _AudioContext2['default'].createGain();
-	            this.gain.gain.value = level && level >= 0 ? level : 1;
-	            this.lineout = this.gain;
-	        }
-	    }, {
-	        key: 'disconnect',
-	        value: function disconnect() {
-	            this.gain.disconnect();
-	        }
-	    }, {
-	        key: 'linkModule',
-	        value: function linkModule(source) {
-	            source.gain.connect(this.lineout);
-	        }
-	    }]);
-
-	    return Module;
-	})();
-
-	exports['default'] = Module;
-	module.exports = exports['default'];
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -196,7 +141,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(3);
+	var _coreModule = __webpack_require__(4);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -228,6 +173,66 @@
 	module.exports = exports['default'];
 
 /***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var Module = (function () {
+	    function Module(props) {
+	        _classCallCheck(this, Module);
+
+	        this.gain = null;
+	        this.lineout = null;
+	        this.link = props.link || null;
+	        this.createGain(props.level);
+	    }
+
+	    _createClass(Module, [{
+	        key: 'createGain',
+	        value: function createGain(level) {
+	            this.gain = _AudioContext2['default'].createGain();
+	            this.gain.gain.value = +level >= 0 ? level : 1;
+	            this.lineout = this.gain;
+	        }
+	    }, {
+	        key: 'disconnect',
+	        value: function disconnect() {
+	            this.gain.disconnect();
+	        }
+	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn() {
+	            return this.main;
+	        }
+	    }, {
+	        key: 'getLineOut',
+	        value: function getLineOut() {
+	            return this.gain;
+	        }
+	    }]);
+
+	    return Module;
+	})();
+
+	exports['default'] = Module;
+	module.exports = exports['default'];
+
+/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -239,11 +244,15 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Oscillator = __webpack_require__(12);
+	var _Oscillator = __webpack_require__(13);
 
 	exports.Oscillator = _interopRequire(_Oscillator);
 
-	var _Noise = __webpack_require__(11);
+	var _Modulator = __webpack_require__(11);
+
+	exports.Modulator = _interopRequire(_Modulator);
+
+	var _Noise = __webpack_require__(12);
 
 	exports.Noise = _interopRequire(_Noise);
 
@@ -458,7 +467,7 @@
 
 	var Modules = _interopRequireWildcard(_modules);
 
-	var _SoundSource = __webpack_require__(4);
+	var _SoundSource = __webpack_require__(3);
 
 	var _SoundSource2 = _interopRequireDefault(_SoundSource);
 
@@ -493,7 +502,6 @@
 	                    m = this.modules[mod];
 	                    if (m.type && m.props) {
 	                        m.instance = new Modules[m.type](m.props);
-
 	                        if (m.instance instanceof _SoundSource2['default']) {
 	                            this.soundSources.push(m.instance);
 	                        } else if (m.type === _Constants.TYPES.MASTER) {
@@ -527,15 +535,19 @@
 	                for (var _iterator2 = Object.keys(this.modules)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                    var mod = _step2.value;
 
-	                    var instance = this.modules[mod].instance,
-	                        dest = instance.link,
-	                        destInstance = undefined;
+	                    var currentModule = this.modules[mod].instance,
+	                        currentModuleType = this.modules[mod].type,
+	                        destinationModule = undefined,
+	                        source = undefined,
+	                        dest = undefined;
 
-	                    instance.disconnect();
-
-	                    if (this.modules[dest]) {
-	                        destInstance = this.modules[dest].instance;
-	                        destInstance.linkModule(instance);
+	                    if (currentModule.link) {
+	                        destinationModule = this.modules[currentModule.link];
+	                        if (destinationModule && destinationModule.instance) {
+	                            source = currentModule.getLineOut();
+	                            dest = destinationModule.instance.getLineIn(currentModuleType);
+	                            source.connect(dest);
+	                        }
 	                    }
 	                }
 	            } catch (err) {
@@ -558,63 +570,35 @@
 	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
+	            var _this = this;
+
+	            var m = undefined;
 	            this.master.setEnvelope();
 
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-
-	            try {
-	                for (var _iterator3 = this.soundSources[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var source = _step3.value;
-
-	                    source.setNote(this.note);
-	                    source.noteOn();
+	            Object.keys(this.modules).forEach(function (e) {
+	                m = _this.modules[e].instance;
+	                if (typeof m.setNote === 'function') {
+	                    m.setNote(+_this.note);
 	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-	                        _iterator3['return']();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
+	                if (typeof m.noteOn === 'function') {
+	                    m.noteOn();
 	                }
-	            }
+	            });
 	        }
 	    }, {
 	        key: 'noteOff',
 	        value: function noteOff() {
-	            var release = this.master.releaseEnvelope();
+	            var _this2 = this;
 
-	            var _iteratorNormalCompletion4 = true;
-	            var _didIteratorError4 = false;
-	            var _iteratorError4 = undefined;
+	            var release = this.master.releaseEnvelope(),
+	                m = undefined;
 
-	            try {
-	                for (var _iterator4 = this.soundSources[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                    var source = _step4.value;
-
-	                    source.noteOff(release);
+	            Object.keys(this.modules).forEach(function (e) {
+	                m = _this2.modules[e].instance;
+	                if (typeof m.noteOff === 'function') {
+	                    m.noteOff(release);
 	                }
-	            } catch (err) {
-	                _didIteratorError4 = true;
-	                _iteratorError4 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-	                        _iterator4['return']();
-	                    }
-	                } finally {
-	                    if (_didIteratorError4) {
-	                        throw _iteratorError4;
-	                    }
-	                }
-	            }
+	            });
 	        }
 	    }]);
 
@@ -634,6 +618,8 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -648,7 +634,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(3);
+	var _coreModule = __webpack_require__(4);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -660,17 +646,39 @@
 
 	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
 
-	        this.main = _AudioContext2['default'].createBiquadFilter();
+	        this.freq = +props.freq || 11000;
+	        this.q = +props.q || 10;
 
+	        this.main = _AudioContext2['default'].createBiquadFilter();
 	        this.main.type = props.type || _coreConstants.CONST.FILTER_LOWPASS;
-	        this.main.frequency.value = props.frequency || 440;
 	        this.main.connect(this.gain);
 
-	        this.lineout = {
-	            source: this.gain,
-	            dest: props.link
-	        };
+	        this.setCutOff();
+	        this.setQ();
 	    }
+
+	    _createClass(Filter, [{
+	        key: 'setCutOff',
+	        value: function setCutOff() {
+	            var cutOff = (this.freq - 20) / (20000 - 20) * (14.287712379549449 - 0) + 0;
+	            this.main.frequency.value = Math.pow(2, cutOff);
+	        }
+	    }, {
+	        key: 'setQ',
+	        value: function setQ() {
+	            var q = this.q % 21;
+	            this.main.Q.value = q;
+	        }
+	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn(source) {
+	            if (source === _coreConstants.TYPES.MODULATOR) {
+	                return this.main.frequency;
+	            } else {
+	                return this.main;
+	            }
+	        }
+	    }]);
 
 	    return Filter;
 	})(_coreModule2['default']);
@@ -704,7 +712,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(3);
+	var _coreModule = __webpack_require__(4);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -718,7 +726,7 @@
 
 	        this.envelope = _AudioContext2['default'].createGain();
 	        this.env = props.envelope || null;
-
+	        this.link = null;
 	        this.lineout = this.envelope;
 	    }
 
@@ -762,6 +770,11 @@
 	            return release;
 	        }
 	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn() {
+	            return this.envelope;
+	        }
+	    }, {
 	        key: 'lineOut',
 	        value: function lineOut() {
 	            this.envelope.connect(this.gain);
@@ -801,7 +814,71 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(4);
+	var _coreSoundSource = __webpack_require__(3);
+
+	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
+
+	var Modulator = (function (_SoundSource) {
+	    _inherits(Modulator, _SoundSource);
+
+	    function Modulator(props) {
+	        _classCallCheck(this, Modulator);
+
+	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props);
+
+	        this.freq = +props.freq || 440;
+
+	        this.main = _AudioContext2['default'].createOscillator();
+	        this.main.type = props.type || _coreConstants.CONST.WAVE_SINE;
+	        this.main.connect(this.gain);
+	    }
+
+	    _createClass(Modulator, [{
+	        key: 'setNote',
+	        value: function setNote() {
+	            var f = this.freq % 11;
+	            this.main.frequency.value = f;
+	        }
+	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn() {
+	            return this.main.frequency;
+	        }
+	    }]);
+
+	    return Modulator;
+	})(_coreSoundSource2['default']);
+
+	exports['default'] = Modulator;
+	module.exports = exports['default'];
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(2);
+
+	var _AudioContext = __webpack_require__(1);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreSoundSource = __webpack_require__(3);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -817,12 +894,6 @@
 	        this.main.connect(this.gain);
 
 	        this.color = props.color || 'white';
-
-	        this.lineout = {
-	            source: this.gain,
-	            dest: props.link
-	        };
-
 	        this.setColor();
 	    }
 
@@ -910,11 +981,6 @@
 	            return noiseBuffer;
 	        }
 	    }, {
-	        key: 'setNote',
-	        value: function setNote() {
-	            this.main.loop = true;
-	        }
-	    }, {
 	        key: 'getBufferSize',
 	        value: function getBufferSize() {
 	            return 2 * _AudioContext2['default'].sampleRate;
@@ -926,6 +992,11 @@
 	                noiseBuffer = _AudioContext2['default'].createBuffer(1, bufferSize, _AudioContext2['default'].sampleRate);
 	            return noiseBuffer;
 	        }
+	    }, {
+	        key: 'setNote',
+	        value: function setNote() {
+	            this.main.loop = true;
+	        }
 	    }]);
 
 	    return Noise;
@@ -935,7 +1006,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -960,7 +1031,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(4);
+	var _coreSoundSource = __webpack_require__(3);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -972,25 +1043,21 @@
 
 	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props);
 
-	        this.freq = props.freq || null;
-
 	        this.main = _AudioContext2['default'].createOscillator();
 	        this.main.type = props.type || _coreConstants.CONST.WAVE_SINE;
 	        this.main.detune.value = props.detune || 0;
 	        this.main.connect(this.gain);
-
-	        this.link = props.link || null;
 	    }
 
 	    _createClass(Oscillator, [{
 	        key: 'setNote',
 	        value: function setNote(note) {
-	            this.main.frequency.value = this.freq || note;
+	            this.main.frequency.value = note;
 	        }
 	    }, {
-	        key: 'linkModule',
-	        value: function linkModule(source) {
-	            source.gain.connect(this.main.frequency);
+	        key: 'getLineIn',
+	        value: function getLineIn() {
+	            return this.main.frequency;
 	        }
 	    }]);
 

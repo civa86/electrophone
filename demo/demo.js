@@ -43,26 +43,37 @@
         }, false);
 
         synth
-            .oscillator('FM-A', {
+            .modulator('FM-A', {
                 type:  synth.VARS.WAVE_SINE,
-                freq: 1,
+                freq: 3,
                 level: 1,
                 link:  'OSC-A'
             })
-            .oscillator('FM-B', {
-                type:  synth.VARS.WAVE_SINE,
-                freq: 5,
+            .modulator('FM-B', {
+                type:  synth.VARS.WAVE_SQUARE,
+                freq: 2,
                 level: 1,
                 link:  'OSC-B'
             })
             .oscillator('OSC-A', {
                 type:  synth.VARS.WAVE_SQUARE,
                 level: 0.5,
-                link:  synth.VARS.MASTER
+                link:  'FILT1'
             })
             .oscillator('OSC-B', {
                 type:  synth.VARS.WAVE_SQUARE,
                 level: 0.5,
+                link:  'FILT1'
+            })
+            .modulator('FM-FILT', {
+                type:  synth.VARS.WAVE_SINE,
+                freq: 5,
+                level: 1,
+                link:  'FILT1'
+            })
+            .filter('FILT1', {
+                level: 1,
+                freq: 12000,
                 link:  synth.VARS.MASTER
             })
     }
