@@ -5,9 +5,10 @@ import { CONST, TYPES } from './Constants'
 
 class Voice {
 
-    constructor (note, modules) {
+    constructor (note, modulesConfig) {
         this.note = note;
-        this.modules = modules;
+        this.modulesConfig = modulesConfig;
+        this.modules = {};
         this.soundSources = [];
         this.master = null;
 
@@ -16,23 +17,29 @@ class Voice {
     }
 
     setupModules () {
-        let m;
+        let modConf,
+            m;
 
-        for (let mod of Object.keys(this.modules)) {
-            m = this.modules[mod];
-            if (m.type && m.props) {
-                m.instance = new Modules[m.type](m.props);
+        Object.keys(this.modulesConfig).forEach((mod) => {
+            modConf = this.modulesConfig[mod];
+            if (modConf.type && modConf.props) {
+                m = new Modules[modConf.type](modConf.props);
+                this.modules[mod] = {
+                    type: modConf.type,
+                    instance: m
+                };
+
                 if (m.instance instanceof SoundSource) {
-                    this.soundSources.push(m.instance);
-                } else if (m.type === TYPES.MASTER) {
-                    this.master = m.instance;
+                    this.soundSources.push(m);
+                } else if (modConf.type === TYPES.MASTER) {
+                    this.master = m;
                 }
             }
-        }
+        });
     }
 
     linkModules () {
-        for (let mod of Object.keys(this.modules)) {
+        Object.keys(this.modules).forEach((mod) => {
             let currentModule = this.modules[mod].instance,
                 currentModuleType = this.modules[mod].type,
                 destinationModule,
@@ -47,7 +54,7 @@ class Voice {
                     source.connect(dest);
                 }
             }
-        }
+        });
 
         this.master.lineOut();
     }

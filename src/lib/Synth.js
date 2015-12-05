@@ -5,10 +5,9 @@ import Voice from './core/Voice'
 class Synth {
 
     constructor () {
-        this.modules = {};
+        this.modulesConfig = {};
         this.voices = {};
 
-        //TODO DONT SHARE SAME MASTER!!!!
         this.module('Master', CONST.MASTER, {
             level: 1,
             envelope: {
@@ -33,13 +32,13 @@ class Synth {
             throw new Error('Synth Module :: missing properties');
         }
 
-        if (!this.modules[label]) {
+        if (!this.modulesConfig[label]) {
             this.addModule(type, label, props);
         }
     }
 
     addModule (type, label, props) {
-        this.modules[label] = {
+        this.modulesConfig[label] = {
             type,
             props
         };
@@ -47,13 +46,12 @@ class Synth {
 
     play (note) {
         if (!this.voices[note]) {
-            this.voices[note] = new Voice(note, this.modules);
+            this.voices[note] = new Voice(note, this.modulesConfig);
             this.voices[note].noteOn();
         }
     }
 
     stop (note) {
-        //TODO system mute alla notes...we have only one master....master have to be part of a single voice!
         if (this.voices[note]) {
             this.voices[note].noteOff();
             this.voices[note] = undefined;
