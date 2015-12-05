@@ -74,6 +74,7 @@
             .filter('FILT1', {
                 level: 1,
                 freq: 12000,
+                envelope: 100,
                 link:  synth.VARS.MASTER
             })
     }

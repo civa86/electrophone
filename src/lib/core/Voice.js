@@ -54,13 +54,17 @@ class Voice {
 
     noteOn () {
         let m;
-        this.master.setEnvelope();
-
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;
+            if (typeof m.setEnvelope === 'function') {
+                m.setEnvelope();
+            }
             if (typeof m.setNote === 'function') {
                 m.setNote(+this.note);
             }
+        });
+        Object.keys(this.modules).forEach((e) => {
+            m = this.modules[e].instance;
             if (typeof m.noteOn === 'function') {
                 m.noteOn();
             }
@@ -71,6 +75,12 @@ class Voice {
         let release = this.master.releaseEnvelope(),
             m;
 
+        Object.keys(this.modules).forEach((e) => {
+            m = this.modules[e].instance;
+            if (typeof m.resetEnvelope === 'function') {
+                m.resetEnvelope();
+            }
+        });
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;
             if (typeof m.noteOff === 'function') {

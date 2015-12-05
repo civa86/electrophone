@@ -14,6 +14,15 @@ class Filter extends Module {
         this.main.type = props.type || CONST.FILTER_LOWPASS;
         this.main.connect(this.gain);
 
+        //TODO config envelope....introduce an Env Module!!!
+        this.envelope = +props.envelope || 0;
+        this.env = {
+            attack:  2,
+            decay:   1,
+            sustain: 100,
+            release: 1
+        };
+
         this.setCutOff();
         this.setQ();
     }
@@ -26,6 +35,31 @@ class Filter extends Module {
     setQ () {
         let q = this.q % 21;
         this.main.Q.value = q;
+    }
+
+    setEnvelope () {
+        let now = AudioContext.currentTime,
+            envelope = this.envelope % 101,
+            filterAttackLevel = envelope * 72,  // Range: 0-7200: 6-octave range
+            filterSustainLevel = filterAttackLevel * this.env.sustain / 100.0, // range: 0-7200
+            filterAttackEnd = (this.env.attack / 20.0);
+
+        if (!filterAttackEnd) {
+            filterAttackEnd = 0.05; // tweak to get target decay to work properly
+        }
+        //TODO let main parameter detune | frequency... configurable
+        this.main.detune.setValueAtTime(0, now);
+        this.main.detune.linearRampToValueAtTime(filterAttackLevel, now + filterAttackEnd);
+        this.main.detune.setTargetAtTime(filterSustainLevel, now + filterAttackEnd, (this.env.decay / 100.0));
+
+    }
+
+    resetEnvelope () {
+        let now = AudioContext.currentTime;
+        //TODO let main parameter detune | frequency... configurable
+        this.main.detune.cancelScheduledValues(now);
+        this.main.detune.setTargetAtTime(0, now, (this.env.release / 100.0));
+
     }
 
     getLineIn (source) {

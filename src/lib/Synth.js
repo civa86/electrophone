@@ -8,11 +8,12 @@ class Synth {
         this.modules = {};
         this.voices = {};
 
+        //TODO DONT SHARE SAME MASTER!!!!
         this.module('Master', CONST.MASTER, {
             level: 1,
             envelope: {
                 attack:  1,
-                decay:   50,
+                decay:   10,
                 sustain: 100,
                 release: 1
             }
@@ -52,6 +53,7 @@ class Synth {
     }
 
     stop (note) {
+        //TODO system mute alla notes...we have only one master....master have to be part of a single voice!
         if (this.voices[note]) {
             this.voices[note].noteOff();
             this.voices[note] = undefined;
