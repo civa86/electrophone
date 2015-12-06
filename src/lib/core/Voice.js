@@ -1,18 +1,32 @@
+import AudioContext from '../AudioContext'
 import * as Modules from '../modules'
 import SoundSource from './SoundSource'
 import { TYPES } from './Constants'
 
 class Voice {
 
-    constructor (note, modulesConfig) {
+    constructor (note, modulesConfig, spectrum, updateSpectrum) {
         this.note = note;
         this.modulesConfig = modulesConfig;
         this.modules = {};
         this.soundSources = [];
         this.master = null;
+        this.spectrum = spectrum || false;
+        this.onSpectrum = updateSpectrum || null;
 
+        if (this.spectrum) {
+            this.createSpectrum();
+        }
         this.setupModules();
         this.linkModules();
+    }
+
+    createSpectrum () {
+        this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
+        this.javascriptNode.connect(AudioContext.destination);
+
+        this.analyser = AudioContext.createAnalyser();
+        this.analyser.fftSize = 1024;
     }
 
     setupModules () {
@@ -24,7 +38,7 @@ class Voice {
             if (modConf.type && modConf.props) {
                 m = new Modules[modConf.type](modConf.props);
                 this.modules[mod] = {
-                    type: modConf.type,
+                    type:     modConf.type,
                     instance: m
                 };
 
@@ -38,6 +52,8 @@ class Voice {
     }
 
     linkModules () {
+        let masterOutput;
+
         Object.keys(this.modules).forEach((mod) => {
             let currentModule = this.modules[mod].instance,
                 currentModuleType = this.modules[mod].type,
@@ -58,12 +74,30 @@ class Voice {
             }
         });
 
-        this.master.lineOut();
+        masterOutput = this.master.lineOut();
+        if (this.spectrum === true && this.analyser) {
+            masterOutput.connect(this.analyser);
+            this.analyser.connect(AudioContext.destination);
+        } else {
+            masterOutput.connect(AudioContext.destination);
+        }
     }
 
     noteOn () {
         let m,
-            dest;
+            dest,
+            frequencyData;
+
+        if (this.spectrum === true && this.javascriptNode) {
+            frequencyData =  new Uint8Array(this.analyser.frequencyBinCount);
+
+            this.javascriptNode.onaudioprocess =  () => {
+                this.analyser.getByteFrequencyData(frequencyData);
+                if (this.onSpectrum && typeof this.onSpectrum === 'function') {
+                    this.onSpectrum(frequencyData);
+                }
+            };
+        }
 
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;
@@ -91,6 +125,10 @@ class Voice {
             dest;
 
         release = adsr.getReleaseTime();
+
+        if (this.spectrum === true && this.javascriptNode) {
+            this.javascriptNode.onaudioprocess = null;
+        }
 
         Object.keys(this.modules).forEach((e) => {
             m = this.modules[e].instance;

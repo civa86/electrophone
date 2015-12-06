@@ -3,9 +3,11 @@ import Voice from './core/Voice'
 
 class Synth {
 
-    constructor () {
+    constructor (props) {
         this.modulesConfig = {};
         this.voices = {};
+        this.spectrum = props.spectrum || false;
+        this.updateSpectrum = props.updateSpectrum || null;
 
         this.module('Master', CONST.MASTER, {
             level: 100
@@ -50,7 +52,8 @@ class Synth {
 
     play (note) {
         if (!this.voices[note]) {
-            this.voices[note] = new Voice(note, this.modulesConfig);
+            //TODO study on spectrum centralization....create on synth and pass to voices....
+            this.voices[note] = new Voice(note, this.modulesConfig, this.spectrum, this.updateSpectrum);
             this.voices[note].noteOn();
         }
     }

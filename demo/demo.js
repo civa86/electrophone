@@ -3,7 +3,12 @@
 
     window.onload = function () {
         var notes = document.getElementsByClassName('note'),
-            synth = new WebSynth(),
+            synth = new WebSynth({
+                spectrum: true,
+                updateSpectrum: function (data) {
+                    console.log('asd');
+                }
+            }),
             frequencies = {
                 65: '261.626',
                 83: '293.665',

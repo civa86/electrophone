@@ -3,8 +3,8 @@ import { CONST } from './lib/core/Constants'
 import Synth from './lib/Synth'
 
 class WebSynth {
-    constructor () {
-        let synth = new Synth(),
+    constructor (props) {
+        let synth = new Synth(props),
             methods = Object.keys(Modules),
             fx;
 
