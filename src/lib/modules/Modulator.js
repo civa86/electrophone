@@ -8,6 +8,7 @@ class Modulator extends SoundSource {
         super(props);
 
         this.freq = +props.freq || 440;
+        this.target = props.target || 'frequency';
 
         this.main = AudioContext.createOscillator();
         this.main.type = props.type || CONST.WAVE_SINE;

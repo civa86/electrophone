@@ -50,7 +50,7 @@ class Voice {
                 destinationModule = this.modules[currentModule.link];
                 if (destinationModule && destinationModule.instance) {
                     source = currentModule.getLineOut();
-                    dest = destinationModule.instance.getLineIn(currentModuleType);
+                    dest = destinationModule.instance.getLineIn(currentModuleType, currentModule);
                     //console.log(mod, source, currentModule.link, dest);
                     if (source && dest) {
                         source.connect(dest);

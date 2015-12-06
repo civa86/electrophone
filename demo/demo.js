@@ -45,13 +45,13 @@
         synth
             .modulator('FM-A', {
                 type:  synth.VARS.WAVE_SINE,
-                freq:  5,
+                freq:  1,
                 level: 100,
                 link:  'OSC-A'
             })
             .modulator('FM-B', {
                 type:  synth.VARS.WAVE_SINE,
-                freq:  1,
+                freq:  5,
                 level: 100,
                 link:  'OSC-B'
             })
@@ -69,6 +69,15 @@
                 level: 50,
                 link:  'FILT1'
             })
+            .envelope('OSC-B-FREQ-ENV', {
+                link:    'OSC-B',
+                target:  'frequency',
+                level:   20,
+                attack:  2,
+                decay:   1,
+                sustain: 80,
+                release: 10
+            })
             .oscillator('OSC-B', {
                 type:  synth.VARS.WAVE_SAWTOOTH,
                 level: 50,
@@ -78,7 +87,8 @@
                 type:  synth.VARS.WAVE_SINE,
                 freq:  5,
                 level: 100,
-                link:  'FILT1'
+                link:  'FILT1',
+                target: 'detune'
             })
             .envelope('FILT1-DETUNE-ENV', {
                 link:    'FILT1',

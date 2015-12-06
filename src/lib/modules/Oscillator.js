@@ -1,4 +1,4 @@
-import { CONST } from '../core/Constants'
+import { CONST, TYPES } from '../core/Constants'
 import AudioContext from '../AudioContext'
 import SoundSource from '../core/SoundSource'
 
@@ -30,8 +30,12 @@ class Oscillator extends SoundSource {
         this.main.frequency.value = note;
     }
 
-    getLineIn () {
-        return this.main.frequency;
+    getLineIn (sourceType, source) {
+        if (sourceType === TYPES.MODULATOR) {
+            return this.main[source.target];
+        } else {
+            return this.main.frequency;
+        }
     }
 }
 
