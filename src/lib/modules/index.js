@@ -8,16 +8,17 @@ export {default as Filter} from './Filter'
 export {default as Delay} from './Delay'
 export {default as PingPongDelay} from './PingPongDelay'
 export {default as WahWah} from './WahWah'
+export {default as Tremolo} from './Tremolo'
 //Filter --> DONE
 //Delay --> DONE
 //Ping Pong Delay --> DONE
 //WahWah --> DONE
+//Tremolo --> DONE
 
 //Overdrive
 //Cabinet
 //Convolver (Reverb)
 //Compressor
-//Tremolo
 //Phaser
 //Chorus
 //Bitcrusher
