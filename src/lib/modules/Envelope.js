@@ -57,7 +57,6 @@ class Envelope extends Module {
                 t = dest.main[this.target];
             } else if (this.target === 'gain' && dest.gain) {
                 t = dest.gain.gain;
-                t.value = 0.0;
             }
 
             if (t) {
