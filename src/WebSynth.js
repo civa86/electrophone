@@ -4,7 +4,8 @@ import Synth from './lib/Synth'
 
 class WebSynth {
     constructor (props) {
-        let synth = new Synth(props),
+        let properties = props || {},
+            synth = new Synth(properties),
             methods = Object.keys(Modules),
             fx;
 

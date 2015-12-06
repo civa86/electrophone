@@ -6,7 +6,7 @@
             synth = new WebSynth({
                 spectrum: true,
                 updateSpectrum: function (data) {
-                    console.log('asd');
+                    console.log(data);
                 }
             }),
             frequencies = {

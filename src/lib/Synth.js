@@ -4,10 +4,11 @@ import Voice from './core/Voice'
 class Synth {
 
     constructor (props) {
+        let properties = props || {};
         this.modulesConfig = {};
         this.voices = {};
-        this.spectrum = props.spectrum || false;
-        this.updateSpectrum = props.updateSpectrum || null;
+        this.spectrum = properties.spectrum || false;
+        this.updateSpectrum = properties.updateSpectrum || null;
 
         this.module('Master', CONST.MASTER, {
             level: 100
