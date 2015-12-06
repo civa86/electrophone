@@ -18,7 +18,6 @@ class Tremolo extends Effect {
             stereoPhase: this.stereoPhase,
             bypass: this.bypass
         });
-        console.log(this.main);
     }
 }
 
