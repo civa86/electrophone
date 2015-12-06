@@ -1,7 +1,6 @@
-import AudioContext from '../AudioContext'
 import * as Modules from '../modules'
 import SoundSource from './SoundSource'
-import { CONST, TYPES } from './Constants'
+import { TYPES } from './Constants'
 
 class Voice {
 

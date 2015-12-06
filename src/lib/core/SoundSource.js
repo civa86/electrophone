@@ -1,4 +1,3 @@
-import AudioContext from '../AudioContext'
 import Module from '../core/Module'
 
 class SoundSource extends Module {

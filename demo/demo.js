@@ -83,6 +83,25 @@
                 level: 50,
                 link:  'FILT1'
             })
+            .modulator('FM-NOISE', {
+                type:  synth.VARS.WAVE_SQUARE,
+                freq:  10,
+                level: 100,
+                link:  'NOISE-W'
+            })
+            .envelope('NOISE-ENV', {
+                link:    'NOISE-W',
+                target:  'gain',
+                level:   50,
+                attack:  1,
+                decay:   50,
+                sustain: 10,
+                release: 1
+            })
+            .noise('NOISE-W', {
+                level: 50,
+                link:  'FILT1'
+            })
             .modulator('FM-FILT', {
                 type:  synth.VARS.WAVE_SINE,
                 freq:  5,

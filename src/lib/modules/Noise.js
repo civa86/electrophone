@@ -1,4 +1,4 @@
-import { CONST } from '../core/Constants'
+import { CONST, TYPES } from '../core/Constants'
 import AudioContext from '../AudioContext'
 import SoundSource from '../core/SoundSource'
 
@@ -6,7 +6,6 @@ class Noise extends SoundSource {
 
     constructor (props) {
         super(props);
-
         this.main = AudioContext.createBufferSource();
         this.main.connect(this.gain);
 
@@ -16,13 +15,13 @@ class Noise extends SoundSource {
 
     setColor () {
         switch (this.color) {
-            case 'white' :
+            case CONST.NOISE_WHITE :
                 this.main.buffer = this.white();
                 break;
-            case 'pink' :
+            case CONST.NOISE_PINK :
                 this.main.buffer = this.pink();
                 break;
-            case 'brown' :
+            case CONST.NOISE_BROWN :
                 this.main.buffer = this.brown();
                 break;
             default :
@@ -99,6 +98,14 @@ class Noise extends SoundSource {
 
     setNote () {
         this.main.loop = true;
+    }
+
+    getLineIn (sourceType, source) {
+        if (sourceType === TYPES.MODULATOR && this.main[source.target]) {
+            return this.main[source.target];
+        } else {
+            return this.main.detune;
+        }
     }
 }
 

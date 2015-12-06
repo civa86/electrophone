@@ -13,6 +13,8 @@ class Module {
 
     createGain (level) {
         let l = (level >= 0) ?  level % 101 : 100;
+        //TODO create two gians...one for envelope and one as output to se finale level!!
+        //TODO now if you put an envelope on gain your module level prop is ignored because envelope insist on same gain....
         this.gain = AudioContext.createGain();
         this.gain.gain.value = l / 100;
     }

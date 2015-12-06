@@ -1,5 +1,4 @@
-import { CONST, TYPES } from '../core/Constants'
-import AudioContext from '../AudioContext'
+import { TYPES } from '../core/Constants'
 import Module from '../core/Module'
 import EffectManager from './EffectManager'
 
