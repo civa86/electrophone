@@ -152,6 +152,8 @@
 	    function Module(props) {
 	        _classCallCheck(this, Module);
 
+	        //TODO introduce this security line in all modules....
+	        //let properties = props || {};
 	        this.gain = null;
 	        this.main = null;
 	        this.link = props.link || null;
@@ -356,7 +358,8 @@
 
 	    _classCallCheck(this, WebSynth);
 
-	    var synth = new _libSynth2['default'](props),
+	    var properties = props || {},
+	        synth = new _libSynth2['default'](properties),
 	        methods = Object.keys(Modules),
 	        fx = undefined;
 
@@ -433,10 +436,11 @@
 	    function Synth(props) {
 	        _classCallCheck(this, Synth);
 
+	        var properties = props || {};
 	        this.modulesConfig = {};
 	        this.voices = {};
-	        this.spectrum = props.spectrum || false;
-	        this.updateSpectrum = props.updateSpectrum || null;
+	        this.spectrum = properties.spectrum || false;
+	        this.updateSpectrum = properties.updateSpectrum || null;
 
 	        this.module('Master', _coreConstants.CONST.MASTER, {
 	            level: 100
