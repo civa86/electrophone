@@ -52,12 +52,8 @@ class Envelope extends Module {
             attackEnd = 0.05; // tweak to get target decay to work properly
         }
 
-        if (dest && dest.main) {
-            if (dest.main[this.target]) {
-                t = dest.main[this.target];
-            } else if (this.target === 'gain' && dest.gain) {
-                t = dest.gain.gain;
-            }
+        if (dest && typeof dest.getEnvelopeTarget === 'function') {
+            t = dest.getEnvelopeTarget(this.target);
 
             if (t) {
                 t.setValueAtTime(0, now);
@@ -72,12 +68,8 @@ class Envelope extends Module {
         let now = AudioContext.currentTime,
             t;
 
-        if (dest && dest.main) {
-            if (dest.main[this.target]) {
-                t = dest.main[this.target];
-            } else if (this.target === 'gain' && dest.gain) {
-                t = dest.gain.gain;
-            }
+        if (dest && typeof dest.getEnvelopeTarget === 'function') {
+            t = dest.getEnvelopeTarget(this.target);
 
             if (t) {
                 t.cancelScheduledValues(now);

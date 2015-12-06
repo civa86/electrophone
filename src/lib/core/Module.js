@@ -4,6 +4,7 @@ class Module {
 
     constructor (props) {
         this.gain = null;
+        this.main = null;
         this.link = props.link || null;
         this.level = +props.level;
 
@@ -26,6 +27,18 @@ class Module {
 
     getLineOut () {
         return this.gain;
+    }
+
+    getEnvelopeTarget (target) {
+        let ret = null;
+
+        if (this.main && this.main[target]) {
+            ret = this.main[target];
+        } else if (target === 'gain' && this.gain) {
+            ret = this.gain.gain;
+        }
+
+        return ret;
     }
 }
 
