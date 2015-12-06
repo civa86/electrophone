@@ -133,11 +133,21 @@
                 bypass:    0
             })
             .pingpongdelay('PINGPONG', {
-                link:      synth.VARS.MASTER,
+                link:      'WAHWAH',
                 wet: 0.5, //0 to 1
                 feedback: 0.3, //0 to 1
                 delayTimeLeft: 150, //1 to 10000 (milliseconds)
                 delayTimeRight: 200 //1 to 10000 (milliseconds)
+            })
+            .wahwah('WAHWAH', {
+                link:      synth.VARS.MASTER,
+                automode: true,                //true/false
+                baseFrequency: 0.4,            //0 to 1
+                excursionOctaves: 4,           //1 to 6
+                sweep: 0.2,                    //0 to 1
+                resonance: 50,                 //1 to 100
+                sensitivity: 0.5,              //-1 to 1
+                bypass: 0
             })
     }
 })();
