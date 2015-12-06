@@ -79,9 +79,9 @@
                 release: 10
             })
             .oscillator('OSC-B', {
-                type:  synth.VARS.WAVE_SAWTOOTH,
-                level: 50,
-                link:  'FILT1'
+                type:  synth.VARS.WAVE_SINE,
+                level: 100,
+                link:  'PINGPONG'
             })
             .modulator('FM-NOISE', {
                 type:  synth.VARS.WAVE_SQUARE,
@@ -103,10 +103,10 @@
                 link:  'FILT1'
             })
             .modulator('FM-FILT', {
-                type:  synth.VARS.WAVE_SINE,
-                freq:  5,
-                level: 100,
-                link:  'FILT1',
+                type:   synth.VARS.WAVE_SINE,
+                freq:   5,
+                level:  100,
+                link:   'FILT1',
                 target: 'detune'
             })
             .envelope('FILT1-DETUNE-ENV', {
@@ -122,7 +122,22 @@
                 type: synth.VARS.FILTER_LOWPASS,
                 freq: 500,
                 q:    1,
-                link: synth.VARS.MASTER
+                link: 'DELAY'
+            })
+            .delay('DELAY', {
+                link:      'PINGPONG',
+                feedback:  0.55,
+                delayTime: 100,
+                wet:       1,
+                cutoff:    1000,
+                bypass:    0
+            })
+            .pingpongdelay('PINGPONG', {
+                link:      synth.VARS.MASTER,
+                wet: 0.5, //0 to 1
+                feedback: 0.3, //0 to 1
+                delayTimeLeft: 150, //1 to 10000 (milliseconds)
+                delayTimeRight: 200 //1 to 10000 (milliseconds)
             })
     }
 })();
