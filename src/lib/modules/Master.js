@@ -14,9 +14,13 @@ class Master extends Module {
         return this.main;
     }
 
-    lineOut () {
+    lineOut (analyser) {
         this.main.connect(this.gain);
-        return this.gain;
+        if (analyser) {
+            this.gain.connect(analyser);
+        } else {
+            this.gain.connect(AudioContext.destination);
+        }
         //if (spectrum) {
         //    this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
         //    this.javascriptNode.connect(AudioContext.destination);

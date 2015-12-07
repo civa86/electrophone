@@ -1,4 +1,5 @@
 import { CONST } from './core/Constants'
+import AudioContext from './AudioContext'
 import Voice from './core/Voice'
 
 class Synth {
@@ -9,6 +10,13 @@ class Synth {
         this.voices = {};
         this.spectrum = properties.spectrum || false;
         this.updateSpectrum = properties.updateSpectrum || null;
+
+        this.analyser = null;
+        this.javascriptNode = null;
+
+        if (this.spectrum === true) {
+            this.createSpectrum();
+        }
 
         this.module('Master', CONST.MASTER, {
             level: 100
@@ -24,6 +32,16 @@ class Synth {
             release: 5
         });
 
+    }
+
+    createSpectrum () {
+        this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
+        this.javascriptNode.connect(AudioContext.destination);
+
+        this.analyser = AudioContext.createAnalyser();
+        this.analyser.fftSize = 1024;
+
+        this.analyser.connect(AudioContext.destination);
     }
 
     module (type, label, props) {
@@ -52,10 +70,21 @@ class Synth {
     }
 
     play (note) {
+        let frequencyData;
+
         if (!this.voices[note]) {
-            //TODO study on spectrum centralization....create on synth and pass to voices....
-            this.voices[note] = new Voice(note, this.modulesConfig, this.spectrum, this.updateSpectrum);
+            this.voices[note] = new Voice(note, this.modulesConfig, this.analyser);
             this.voices[note].noteOn();
+        }
+        if (this.spectrum === true && this.javascriptNode) {
+            frequencyData =  new Uint8Array(this.analyser.frequencyBinCount);
+
+            this.javascriptNode.onaudioprocess =  () => {
+                this.analyser.getByteFrequencyData(frequencyData);
+                if (this.updateSpectrum && typeof this.updateSpectrum === 'function') {
+                    this.updateSpectrum(frequencyData);
+                }
+            };
         }
     }
 
@@ -63,6 +92,9 @@ class Synth {
         if (this.voices[note]) {
             this.voices[note].noteOff();
             this.voices[note] = undefined;
+        }
+        if (this.spectrum === true && this.javascriptNode) {
+            this.javascriptNode.onaudioprocess = null;
         }
     }
 }
