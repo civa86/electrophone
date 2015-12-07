@@ -532,6 +532,7 @@
 	        this.voices = {};
 	        this.spectrum = properties.spectrum || false;
 	        this.updateSpectrum = properties.updateSpectrum || null;
+	        this.resetSpectrum = properties.resetSpectrum || null;
 
 	        this.analyser = null;
 	        this.javascriptNode = null;
@@ -621,9 +622,13 @@
 	            if (this.voices[note]) {
 	                this.voices[note].noteOff();
 	                this.voices[note] = undefined;
+	                delete this.voices[note];
 	            }
-	            if (this.spectrum === true && this.javascriptNode) {
+	            if (Object.keys(this.voices).length === 0 && this.spectrum === true && this.javascriptNode) {
 	                this.javascriptNode.onaudioprocess = null;
+	                if (this.resetSpectrum && typeof this.resetSpectrum === 'function') {
+	                    this.resetSpectrum();
+	                }
 	            }
 	        }
 	    }]);
