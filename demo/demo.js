@@ -3,17 +3,49 @@
 
     window.onload = function () {
         var notes = document.getElementsByClassName('note'),
-            synth = new WebSynth({
-                spectrum: true,
-                updateSpectrum: function (data) {
-                    console.log(data);
-                }
-            }),
             frequencies = {
                 65: '261.626',
                 83: '293.665',
                 68: '329.628'
-            };
+            },
+            c = document.getElementById('spectrum'),
+            WIDTH = 600,
+            HEIGHT = 150,
+            canvasCtx = c.getContext('2d'),
+            synth = new WebSynth({
+                spectrum:       true,
+                updateSpectrum: function (dataArray) {
+                    var sliceWidth = WIDTH * 1.0 / 128,
+                        x = 0;
+
+                    canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                    canvasCtx.lineWidth = 2;
+                    canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+                    canvasCtx.beginPath();
+
+                    for (var i = 0; i < 128; i++) {
+
+                        var v = dataArray[i] / 128.0;
+                        var y = v * HEIGHT / 2;
+
+                        if (i === 0) {
+                            canvasCtx.moveTo(x, y);
+                        } else {
+                            canvasCtx.lineTo(x, y);
+                        }
+
+                        x += sliceWidth;
+                    }
+                    canvasCtx.lineTo(c.width, c.height / 2);
+                    canvasCtx.stroke();
+                },
+                resetSpectrum: function () {
+                    canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+                }
+            });
+
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
         for (var i = 0; i < notes.length; i++) {
 
