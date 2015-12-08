@@ -9,8 +9,8 @@
                 68: '329.628'
             },
             c = document.getElementById('spectrum'),
-            WIDTH = 600,
-            HEIGHT = 150,
+            WIDTH = notes[0].offsetWidth,
+            HEIGHT = notes[0].offsetHeight * 5,
             canvasCtx = c.getContext('2d'),
             synth = new WebSynth({
                 spectrum:       true,
@@ -20,14 +20,14 @@
 
                     canvasCtx.fillStyle = 'rgb(255, 255, 255)';
                     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-                    canvasCtx.lineWidth = 2;
+                    canvasCtx.lineWidth = 1;
                     canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
                     canvasCtx.beginPath();
 
-                    for (var i = 0; i < 128; i++) {
+                    for (var i = 0; i < dataArray.length; i++) {
 
-                        var v = dataArray[i] / 128.0;
-                        var y = v * HEIGHT / 2;
+                        var v = dataArray[i] / 128.0,
+                            y = v * HEIGHT / 2;
 
                         if (i === 0) {
                             canvasCtx.moveTo(x, y);
@@ -39,12 +39,27 @@
                     }
                     canvasCtx.lineTo(c.width, c.height / 2);
                     canvasCtx.stroke();
+
+                    // Draw the frequency domain chart.
+                    for (var i = 0; i < dataArray.length; i++) {
+                        var value = dataArray[i],
+                            percent = value / 256,
+                            height = HEIGHT * percent,
+                            offset = HEIGHT - height - 1,
+                            barWidth = WIDTH / dataArray.length,
+                            hue = i / dataArray.length * 360;
+                        canvasCtx.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
+                        canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
+                    }
+
                 },
-                resetSpectrum: function () {
+                resetSpectrum:  function () {
                     canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
                 }
             });
 
+        c.width = WIDTH;
+        c.height = HEIGHT;
         canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
         for (var i = 0; i < notes.length; i++) {
@@ -80,109 +95,109 @@
         }, false);
 
         synth
-            .modulator('FM-A', {
-                type:  synth.VARS.WAVE_SINE,
-                freq:  1,
-                level: 100,
-                link:  'OSC-A'
-            })
-            .modulator('FM-B', {
-                type:  synth.VARS.WAVE_SINE,
-                freq:  5,
-                level: 100,
-                link:  'OSC-B'
-            })
-            .envelope('OSC-A-FREQ-ENV', {
-                link:    'OSC-A',
-                target:  'detune',
-                level:   20,
-                attack:  2,
-                decay:   1,
-                sustain: 100,
-                release: 10
-            })
-            .oscillator('OSC-A', {
-                type:  synth.VARS.WAVE_SQUARE,
-                level: 50,
-                link:  'FILT1'
-            })
-            .envelope('OSC-B-FREQ-ENV', {
-                link:    'OSC-B',
-                target:  'frequency',
-                level:   20,
-                attack:  2,
-                decay:   1,
-                sustain: 80,
-                release: 10
-            })
+        //.modulator('FM-A', {
+        //    type:  synth.VARS.WAVE_SINE,
+        //    freq:  1,
+        //    level: 100,
+        //    link:  'OSC-A'
+        //})
+        //.modulator('FM-B', {
+        //    type:  synth.VARS.WAVE_SINE,
+        //    freq:  5,
+        //    level: 100,
+        //    link:  'OSC-B'
+        //})
+        //.envelope('OSC-A-FREQ-ENV', {
+        //    link:    'OSC-A',
+        //    target:  'detune',
+        //    level:   20,
+        //    attack:  2,
+        //    decay:   1,
+        //    sustain: 100,
+        //    release: 10
+        //})
+        //.oscillator('OSC-A', {
+        //    type:  synth.VARS.WAVE_SQUARE,
+        //    level: 50,
+        //    link:  'FILT1'
+        //})
+        //.envelope('OSC-B-FREQ-ENV', {
+        //    link:    'OSC-B',
+        //    target:  'frequency',
+        //    level:   20,
+        //    attack:  2,
+        //    decay:   1,
+        //    sustain: 80,
+        //    release: 10
+        //})
             .oscillator('OSC-B', {
                 type:  synth.VARS.WAVE_SINE,
                 level: 100,
-                link:  'PINGPONG'
+                link:  synth.VARS.MASTER
             })
-            .modulator('FM-NOISE', {
-                type:  synth.VARS.WAVE_SQUARE,
-                freq:  10,
-                level: 100,
-                link:  'NOISE-W'
-            })
-            .envelope('NOISE-ENV', {
-                link:    'NOISE-W',
-                target:  'gain',
-                level:   50,
-                attack:  1,
-                decay:   50,
-                sustain: 10,
-                release: 1
-            })
-            .noise('NOISE-W', {
-                level: 50,
-                link:  'FILT1'
-            })
-            .modulator('FM-FILT', {
-                type:   synth.VARS.WAVE_SINE,
-                freq:   5,
-                level:  100,
-                link:   'FILT1',
-                target: 'detune'
-            })
-            .envelope('FILT1-DETUNE-ENV', {
-                link:    'FILT1',
-                target:  'detune',
-                level:   100,
-                attack:  1,
-                decay:   10,
-                sustain: 100,
-                release: 100
-            })
-            .filter('FILT1', {
-                type: synth.VARS.FILTER_LOWPASS,
-                freq: 500,
-                q:    1,
-                link: 'DELAY'
-            })
-            .delay('DELAY', {
-                link:      'PINGPONG',
-                feedback:  0.55,
-                delayTime: 100,
-                wet:       1,
-                cutoff:    1000,
-                bypass:    0
-            })
-            .pingpongdelay('PINGPONG', {
-                link:           'TREMOLO',
-                wet:            0.5, //0 to 1
-                feedback:       0.3, //0 to 1
-                delayTimeLeft:  150, //1 to 10000 (milliseconds)
-                delayTimeRight: 200 //1 to 10000 (milliseconds)
-            })
-            .tremolo('TREMOLO', {
-                link:        synth.VARS.MASTER,
-                intensity:   0.7,    //0 to 1
-                rate:        6,         //0.001 to 8
-                stereoPhase: 90,    //0 to 180
-                bypass:      0
-            })
+        //.modulator('FM-NOISE', {
+        //    type:  synth.VARS.WAVE_SQUARE,
+        //    freq:  10,
+        //    level: 100,
+        //    link:  'NOISE-W'
+        //})
+        //.envelope('NOISE-ENV', {
+        //    link:    'NOISE-W',
+        //    target:  'gain',
+        //    level:   50,
+        //    attack:  1,
+        //    decay:   50,
+        //    sustain: 10,
+        //    release: 1
+        //})
+        //.noise('NOISE-W', {
+        //    level: 50,
+        //    link:  'FILT1'
+        //})
+        //.modulator('FM-FILT', {
+        //    type:   synth.VARS.WAVE_SINE,
+        //    freq:   5,
+        //    level:  100,
+        //    link:   'FILT1',
+        //    target: 'detune'
+        //})
+        //.envelope('FILT1-DETUNE-ENV', {
+        //    link:    'FILT1',
+        //    target:  'detune',
+        //    level:   100,
+        //    attack:  1,
+        //    decay:   10,
+        //    sustain: 100,
+        //    release: 100
+        //})
+        //.filter('FILT1', {
+        //    type: synth.VARS.FILTER_LOWPASS,
+        //    freq: 500,
+        //    q:    1,
+        //    link: 'DELAY'
+        //})
+        //.delay('DELAY', {
+        //    link:      'PINGPONG',
+        //    feedback:  0.55,
+        //    delayTime: 100,
+        //    wet:       1,
+        //    cutoff:    1000,
+        //    bypass:    0
+        //})
+        //.pingpongdelay('PINGPONG', {
+        //    link:           'TREMOLO',
+        //    wet:            0.5, //0 to 1
+        //    feedback:       0.3, //0 to 1
+        //    delayTimeLeft:  150, //1 to 10000 (milliseconds)
+        //    delayTimeRight: 200 //1 to 10000 (milliseconds)
+        //})
+        //.tremolo('TREMOLO', {
+        //    link:        synth.VARS.MASTER,
+        //    intensity:   0.7,    //0 to 1
+        //    rate:        6,         //0.001 to 8
+        //    stereoPhase: 90,    //0 to 180
+        //    bypass:      0
+        //})
     }
 })();
 

@@ -36,11 +36,17 @@ class Synth {
     }
 
     createSpectrum () {
+        var SMOOTHING = 0.8,
+            FFT_SIZE = 2048;
+
         this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
         this.javascriptNode.connect(AudioContext.destination);
 
         this.analyser = AudioContext.createAnalyser();
-        this.analyser.fftSize = 1024;
+        this.analyser.smoothingTimeConstant = SMOOTHING;
+        this.analyser.fftSize = FFT_SIZE;
+        this.analyser.minDecibels = -140;
+        this.analyser.maxDecibels = 0;
 
         this.analyser.connect(AudioContext.destination);
     }

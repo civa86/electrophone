@@ -1,35 +1,35 @@
 <html>
-    <head>
-        <title>Web Synth</title>
-        <style>
-            body{
-                padding: 20px;
-            }
-            .note {
-                padding: 10px;
-                border: 1px solid #000;
-                margin: 10px 0px;
-            }
-            canvas {
-                border: 1px solid #333;
-                width: 600px; height: 150px;
-            }
-        </style>
-    </head>
-    <body>
+<head>
+    <title>Web Synth</title>
+    <style>
+        body {
+            padding: 20px;
+        }
 
-        <div class="note" data-note="261.626">C4</div>
-        <div class="note" data-note="293.665">D4</div>
-        <div class="note" data-note="329.628">E4</div>
-        <div class="note" data-note="349.228">F4</div>
-        <div class="note" data-note="391.995">G4</div>
-        <div class="note" data-note="440.000">A4</div>
-        <div class="note" data-note="493.883">B4</div>
+        .note {
+            padding: 10px;
+            border: 1px solid #000;
+            margin: 10px 0px;
+        }
 
-        <canvas id="spectrum"></canvas>
+        canvas {
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
 
+<div class="note" data-note="261.626">C4</div>
+<div class="note" data-note="293.665">D4</div>
+<div class="note" data-note="329.628">E4</div>
+<div class="note" data-note="349.228">F4</div>
+<div class="note" data-note="391.995">G4</div>
+<div class="note" data-note="440.000">A4</div>
+<div class="note" data-note="493.883">B4</div>
 
-        <script src="../dist/web-synth.js"></script>
-        <script src="./demo.js"></script>
-    </body>
+<canvas id="spectrum"></canvas>
+
+<script src="../dist/web-synth.js"></script>
+<script src="./demo.js"></script>
+</body>
 </html>
