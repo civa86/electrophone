@@ -20,9 +20,21 @@
 
                     canvasCtx.fillStyle = 'rgb(255, 255, 255)';
                     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-                    canvasCtx.lineWidth = 2;
+                    canvasCtx.lineWidth = 1.5;
                     canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
                     canvasCtx.beginPath();
+
+                    // Draw the frequency domain chart.
+                    for (var i = 0; i < dataArray.length; i++) {
+                        var value = dataArray[i],
+                            percent = value / 256,
+                            height = HEIGHT * percent,
+                            offset = HEIGHT - height - 1,
+                            barWidth = WIDTH / dataArray.length,
+                            hue = i / dataArray.length * 360;
+                        canvasCtx.fillStyle = 'hsl(' + hue + ', 90%, 50%)';
+                        canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
+                    }
 
                     for (var i = 0; i < dataArray.length; i++) {
 
@@ -40,17 +52,7 @@
                     canvasCtx.lineTo(c.width, c.height / 2);
                     canvasCtx.stroke();
 
-                    // Draw the frequency domain chart.
-                    for (var i = 0; i < dataArray.length; i++) {
-                        var value = dataArray[i],
-                            percent = value / 256,
-                            height = HEIGHT * percent,
-                            offset = HEIGHT - height - 1,
-                            barWidth = WIDTH / dataArray.length,
-                            hue = i / dataArray.length * 360;
-                        canvasCtx.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
-                        canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
-                    }
+
 
                 },
                 resetSpectrum:  function () {
