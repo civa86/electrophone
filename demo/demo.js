@@ -122,7 +122,7 @@
                 link:  'PAN-A'
             })
             .pan('PAN-A', {
-                link: 'FILT1',
+                link:  'FILT1',
                 value: -1
             })
             .oscillator('OSC-B', {
@@ -131,7 +131,7 @@
                 link:  'PAN-B'
             })
             .pan('PAN-B', {
-                link: 'FILT1',
+                link:  'FILT1',
                 value: 1
             })
             .modulator('FM-NOISE', {
@@ -173,30 +173,17 @@
                 type: synth.VARS.FILTER_LOWPASS,
                 freq: 500,
                 q:    1,
-                link: 'DELAY'
+                link: 'FX'
             })
-            .delay('DELAY', {
-                link:      'PINGPONG',
-                feedback:  0.55,
-                delayTime: 100,
-                wet:       1,
-                cutoff:    1000,
-                bypass:    0
-            })
-            .pingpongdelay('PINGPONG', {
-                link:           'TREMOLO',
-                wet:            0.5, //0 to 1
-                feedback:       0.3, //0 to 1
-                delayTimeLeft:  150, //1 to 10000 (milliseconds)
-                delayTimeRight: 200 //1 to 10000 (milliseconds)
-            })
-            .tremolo('TREMOLO', {
+            .cabinet('FX', {
                 link:        synth.VARS.MASTER,
-                intensity:   0.5,    //0 to 1
-                rate:        6,         //0.001 to 8
-                stereoPhase: 0,    //0 to 180
+                makeupGain:  1,
+                impulsePath: './impulse/diffusor4.wav',
                 bypass:      0
-            })
+            });
+
+        //TODO IMPULSES WAV...GET A BASE 64 DEFAULT IN WEBPACK??
+        //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/
     }
 })();
 

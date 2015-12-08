@@ -11,18 +11,23 @@ export {default as Delay} from './Delay'
 export {default as PingPongDelay} from './PingPongDelay'
 export {default as WahWah} from './WahWah'
 export {default as Tremolo} from './Tremolo'
+export {default as Overdrive} from './Overdrive'
+export {default as Cabinet} from './Cabinet'
 //Filter --> DONE
 //Delay --> DONE
 //Ping Pong Delay --> DONE
 //WahWah --> DONE
 //Tremolo --> DONE
+//Overdrive --> DONE
+//Cabinet --> DONE
 
-//Overdrive
-//Cabinet
+//TODO implement below...
 //Convolver (Reverb)
 //Compressor
 //Phaser
 //Chorus
 //Bitcrusher
 //Moog Filter
+
+//SAMPLER..
 
