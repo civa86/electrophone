@@ -559,11 +559,17 @@
 	    _createClass(Synth, [{
 	        key: 'createSpectrum',
 	        value: function createSpectrum() {
+	            var SMOOTHING = 0.8,
+	                FFT_SIZE = 2048;
+
 	            this.javascriptNode = _AudioContext2['default'].createScriptProcessor(2048, 1, 1);
 	            this.javascriptNode.connect(_AudioContext2['default'].destination);
 
 	            this.analyser = _AudioContext2['default'].createAnalyser();
-	            this.analyser.fftSize = 1024;
+	            this.analyser.smoothingTimeConstant = SMOOTHING;
+	            this.analyser.fftSize = FFT_SIZE;
+	            this.analyser.minDecibels = -140;
+	            this.analyser.maxDecibels = 0;
 
 	            this.analyser.connect(_AudioContext2['default'].destination);
 	        }
