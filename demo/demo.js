@@ -175,12 +175,19 @@
                 q:    1,
                 link: 'FX'
             })
-            .cabinet('FX', {
-                link:        synth.VARS.MASTER,
-                makeupGain:  1,
-                impulsePath: './impulse/diffusor4.wav',
-                bypass:      0
-            });
+            //.cabinet('FX', {
+            //    link:        synth.VARS.MASTER,
+            //    makeupGain:  1,
+            //    impulsePath: './impulse/diffusor4.wav',
+            //    bypass:      0
+            //})
+            //.bitcrusher('FX', {
+            //    link:        synth.VARS.MASTER
+            //})
+            .moogfilter('FX', {
+                link:        synth.VARS.MASTER
+            })
+        ;
 
         //TODO IMPULSES WAV...GET A BASE 64 DEFAULT IN WEBPACK??
         //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/

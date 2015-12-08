@@ -1,5 +1,5 @@
-import { CONST } from '../core/Constants'
-import Effect from '../core/Effect'
+import { CONST } from '../../core/Constants'
+import Effect from '../../core/Effect'
 
 class Tremolo extends Effect {
 

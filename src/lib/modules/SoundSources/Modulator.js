@@ -1,6 +1,6 @@
-import { CONST, TYPES } from '../core/Constants'
-import AudioContext from '../AudioContext'
-import SoundSource from '../core/SoundSource'
+import { CONST, TYPES } from '../../core/Constants'
+import AudioContext from '../../AudioContext'
+import SoundSource from '../../core/SoundSource'
 
 class Modulator extends SoundSource {
 
