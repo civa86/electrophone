@@ -31,14 +31,6 @@ class Oscillator extends SoundSource {
     setNote (note) {
         this.main.frequency.value = note;
     }
-
-    getLineIn (sourceType, source) {
-        if (sourceType === TYPES.MODULATOR) {
-            return this.main[source.target];
-        } else {
-            return this.main.frequency;
-        }
-    }
 }
 
 export default Oscillator;

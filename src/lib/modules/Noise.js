@@ -9,6 +9,7 @@ class Noise extends SoundSource {
 
         let properties = props || {};
 
+        this.defaultLineInProperty = 'detune';
         this.main = AudioContext.createBufferSource();
         this.main.connect(this.envelope);
 
@@ -101,14 +102,6 @@ class Noise extends SoundSource {
 
     setNote () {
         this.main.loop = true;
-    }
-
-    getLineIn (sourceType, source) {
-        if (sourceType === TYPES.MODULATOR && this.main[source.target]) {
-            return this.main[source.target];
-        } else {
-            return this.main.detune;
-        }
     }
 }
 

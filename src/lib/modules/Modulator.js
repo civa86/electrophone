@@ -21,15 +21,6 @@ class Modulator extends SoundSource {
         let f =  this.freq % 11;
         this.main.frequency.value = f;
     }
-
-    //TODO refactor in parent class
-    getLineIn (sourceType, source) {
-        if (sourceType === TYPES.MODULATOR) {
-            return this.main[source.target];
-        } else {
-            return this.main.frequency;
-        }
-    }
 }
 
 export default Modulator;

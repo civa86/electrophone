@@ -1,9 +1,12 @@
+import { TYPES } from '../core/Constants'
 import Module from '../core/Module'
 
 class SoundSource extends Module {
 
     constructor (props) {
         super(props);
+
+        this.defaultLineInProperty = 'frequency';
     }
 
     noteOn () {
@@ -12,6 +15,14 @@ class SoundSource extends Module {
 
     noteOff (release) {
         this.main.stop(release);
+    }
+
+    getLineIn (sourceType, source) {
+        if (sourceType === TYPES.MODULATOR) {
+            return this.main[source.target];
+        } else {
+            return this.main[this.defaultLineInProperty];
+        }
     }
 }
 
