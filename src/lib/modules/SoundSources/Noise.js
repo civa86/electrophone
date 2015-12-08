@@ -7,14 +7,20 @@ class Noise extends SoundSource {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
         this.defaultLineInProperty = 'detune';
         this.main = AudioContext.createBufferSource();
         this.main.connect(this.envelope);
 
-        this.color = properties.color || 'white';
         this.setColor();
+    }
+
+    getProperties () {
+        return {
+            color: {
+                type: 'string',
+                defaultValue: CONST.NOISE_WHITE
+            }
+        };
     }
 
     setColor () {

@@ -15,6 +15,7 @@
             synth = new WebSynth({
                 spectrum:       true,
                 updateSpectrum: function (dataArray) {
+                    //console.log(dataArray);
                     var sliceWidth = WIDTH * 1.0 / 128,
                         x = 0;
 
@@ -173,7 +174,7 @@
                 type: synth.VARS.FILTER_LOWPASS,
                 freq: 500,
                 q:    1,
-                link: 'FX'
+                link: synth.VARS.MASTER
             })
             //.cabinet('FX', {
             //    link:        synth.VARS.MASTER,
@@ -184,9 +185,9 @@
             //.bitcrusher('FX', {
             //    link:        synth.VARS.MASTER
             //})
-            .moogfilter('FX', {
-                link:        synth.VARS.MASTER
-            })
+            //.moogfilter('FX', {
+            //    link:        synth.VARS.MASTER
+            //})
         ;
 
         //TODO IMPULSES WAV...GET A BASE 64 DEFAULT IN WEBPACK??

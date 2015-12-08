@@ -23,6 +23,8 @@ class Delay extends Effect {
             bypass: this.bypass
         });
     }
+
+    //TODO implement get properties method....
 }
 
 export default Delay;

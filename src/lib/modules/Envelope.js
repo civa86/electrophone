@@ -5,14 +5,35 @@ class Envelope extends Module {
 
     constructor (props) {
         super(props);
+    }
 
-        let properties = props || {};
-
-        this.target = properties.target || null;
-        this.attack = properties.attack;
-        this.decay = properties.decay;
-        this.sustain = properties.sustain;
-        this.release = properties.release;
+    getProperties () {
+        return {
+            target: {
+                type: 'string',
+                defaultValue: null
+            },
+            attack: {
+                type: 'number',
+                bounds: [0, 100],
+                defaultValue: 1
+            },
+            decay: {
+                type: 'number',
+                bounds: [0, 100],
+                defaultValue: 1
+            },
+            sustain: {
+                type: 'number',
+                bounds: [1, 100],
+                defaultValue: 100
+            },
+            release: {
+                type: 'number',
+                bounds: [0.001, 100],
+                defaultValue: 5
+            }
+        };
     }
 
     createGain () {

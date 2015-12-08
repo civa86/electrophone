@@ -6,16 +6,6 @@ class WahWah extends Effect {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
-        this.automode = +properties.automode || false;      //true/false
-        this.baseFrequency = +properties.baseFrequency || 0;            //0 to 1
-        this.excursionOctaves = +properties.excursionOctaves || 1;           //1 to 6
-        this.sweep = +properties.sweep || 0;                          //0 to 1
-        this.resonance = +properties.resonance || 1;                //1 to 100
-        this.sensitivity = +properties.sensitivity || 0;              //-1 to 1
-        this.bypass = +properties.bypass || 0;
-
         this.setMainEffect('WahWah', 'filterBp', {
             automode:         this.automode,
             baseFrequency:    this.baseFrequency,
@@ -25,6 +15,45 @@ class WahWah extends Effect {
             sensitivity:      this.sensitivity,
             bypass:           this.bypass
         });
+    }
+
+    getProperties () {
+        return {
+            automode: {
+                type: 'boolean',
+                defaultValue: false
+            },
+            baseFrequency: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            excursionOctaves: {
+                type: 'number',
+                bounds: [1, 6],
+                defaultValue: 1
+            },
+            sweep: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            resonance: {
+                type: 'number',
+                bounds: [1, 100],
+                defaultValue: 1
+            },
+            sensitivity: {
+                type: 'number',
+                bounds: [-1, 1],
+                defaultValue: 0
+            },
+            bypass: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            }
+        };
     }
 }
 

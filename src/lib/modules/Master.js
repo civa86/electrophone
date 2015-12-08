@@ -21,23 +21,6 @@ class Master extends Module {
         } else {
             this.gain.connect(AudioContext.destination);
         }
-        //if (spectrum) {
-        //    this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
-        //    this.javascriptNode.connect(AudioContext.destination);
-        //
-        //    this.analyser = AudioContext.createAnalyser();
-        //    this.analyser.fftSize = 1024;
-        //
-        //    this.gain.connect(this.analyser);
-        //    this.analyser.connect(AudioContext.destination);
-        //
-        //    this.javascriptNode.onaudioprocess = function () {
-        //        console.log('asd');
-        //    };
-        //
-        //} else {
-
-        //}
     }
 }
 

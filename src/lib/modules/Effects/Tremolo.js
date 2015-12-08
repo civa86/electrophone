@@ -6,19 +6,37 @@ class Tremolo extends Effect {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
-        this.intensity = +properties.intensity || 0;    //0 to 1
-        this.rate = +properties.rate || 0.001;         //0.001 to 8
-        this.stereoPhase = +properties.stereoPhase || 0;    //0 to 180
-        this.bypass = +properties.bypass || 0;
-
         this.setMainEffect('Tremolo', 'output', {
             intensity: this.intensity,
             rate: this.rate,
             stereoPhase: this.stereoPhase,
             bypass: this.bypass
         });
+    }
+
+    getProperties () {
+        return {
+            intensity: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            rate: {
+                type: 'number',
+                bounds: [0.001, 8],
+                defaultValue: 0.001
+            },
+            stereoPhase: {
+                type: 'number',
+                bounds: [0, 180],
+                defaultValue: 0
+            },
+            bypass: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            }
+        };
     }
 }
 

@@ -6,11 +6,19 @@ class Pan extends Module {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
         this.main = AudioContext.createStereoPanner();
-        this.main.pan.value = +properties.value || 0;
+        this.main.pan.value = this.value;
         this.main.connect(this.envelope);
+    }
+
+    getProperties () {
+        return {
+            value: {
+                type: 'number',
+                bounds: [-1, 1],
+                defaultValue: 0
+            }
+        };
     }
 }
 

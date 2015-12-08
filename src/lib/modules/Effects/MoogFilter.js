@@ -6,17 +6,31 @@ class MoogFilter extends Effect {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
-        this.cutoff = +properties.cutoff || 0.2;      //0 to 1
-        this.resonance = +properties.resonance || 1;      //0 to 4
-        this.bufferSize = +properties.bufferSize || 4096;  //256 to 16384
-
         this.setMainEffect('MoogFilter', 'output', {
             cutoff:     this.cutoff,
             resonance:  this.resonance,
             bufferSize: this.bufferSize
         });
+    }
+
+    getProperties () {
+        return {
+            cutoff: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            resonance: {
+                type: 'number',
+                bounds: [0, 4],
+                defaultValue: 0
+            },
+            bufferSize: {
+                type: 'number',
+                bounds: [256, 16384],
+                defaultValue: 4096
+            }
+        };
     }
 }
 

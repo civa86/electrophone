@@ -21,6 +21,8 @@ class Filter extends Effect {
             bypass: this.bypass
         });
     }
+
+    //TODO implement get properties method....
 }
 
 export default Filter;

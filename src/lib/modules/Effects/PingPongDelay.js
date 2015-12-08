@@ -21,6 +21,8 @@ class PingPongDelay extends Effect {
             delayTimeRight: this.delayTimeRight //1 to 10000 (milliseconds)
         });
     }
+
+    //TODO implement get properties method....
 }
 
 export default PingPongDelay;
