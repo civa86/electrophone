@@ -12,7 +12,7 @@ class Modulator extends SoundSource {
 
         this.main = AudioContext.createOscillator();
         this.main.type = props.type || CONST.WAVE_SINE;
-        this.main.connect(this.gain);
+        this.main.connect(this.envelope);
     }
 
     setNote () {

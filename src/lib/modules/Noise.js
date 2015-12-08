@@ -7,7 +7,7 @@ class Noise extends SoundSource {
     constructor (props) {
         super(props);
         this.main = AudioContext.createBufferSource();
-        this.main.connect(this.gain);
+        this.main.connect(this.envelope);
 
         this.color = props.color || 'white';
         this.setColor();

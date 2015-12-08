@@ -15,7 +15,7 @@ class Master extends Module {
     }
 
     lineOut (analyser) {
-        this.main.connect(this.gain);
+        this.main.connect(this.envelope);
         if (analyser) {
             this.gain.connect(analyser);
         } else {

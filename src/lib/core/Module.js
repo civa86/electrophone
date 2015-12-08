@@ -6,6 +6,7 @@ class Module {
         //TODO introduce this security line in all modules....
         //let properties = props || {};
         this.gain = null;
+        this.envelope = null;
         this.main = null;
         this.link = props.link || null;
         this.level = +props.level;
@@ -15,10 +16,12 @@ class Module {
 
     createGain (level) {
         let l = (level >= 0) ?  level % 101 : 100;
-        //TODO create two gains...one for envelope and one as output to set final level!!
-        //TODO now if you put an envelope on gain your module level prop is ignored because envelope insist on same gain....
         this.gain = AudioContext.createGain();
+        this.envelope = AudioContext.createGain();
         this.gain.gain.value = l / 100;
+        this.envelope.gain.value = 1;
+
+        this.envelope.connect(this.gain);
     }
 
     disconnect () {
@@ -39,7 +42,7 @@ class Module {
         if (this.main && this.main[target]) {
             ret = this.main[target];
         } else if (target === 'gain' && this.gain) {
-            ret = this.gain.gain;
+            ret = this.envelope.gain;
         }
 
         return ret;
