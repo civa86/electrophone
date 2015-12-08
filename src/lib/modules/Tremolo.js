@@ -6,10 +6,12 @@ class Tremolo extends Effect {
     constructor (props) {
         super(props);
 
-        this.intensity = +props.intensity || 0;    //0 to 1
-        this.rate = +props.rate || 0.001;         //0.001 to 8
-        this.stereoPhase = +props.stereoPhase || 0;    //0 to 180
-        this.bypass = +props.bypass || 0;
+        let properties = props || {};
+
+        this.intensity = +properties.intensity || 0;    //0 to 1
+        this.rate = +properties.rate || 0.001;         //0.001 to 8
+        this.stereoPhase = +properties.stereoPhase || 0;    //0 to 180
+        this.bypass = +properties.bypass || 0;
 
         //TODO set an array of main effects??
         this.setMainEffect('Tremolo', 'output', {

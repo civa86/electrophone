@@ -7,11 +7,13 @@ class Modulator extends SoundSource {
     constructor (props) {
         super(props);
 
-        this.freq = +props.freq || 440;
-        this.target = props.target || 'frequency';
+        let properties = props || {};
+
+        this.freq = +properties.freq || 440;
+        this.target = properties.target || 'frequency';
 
         this.main = AudioContext.createOscillator();
-        this.main.type = props.type || CONST.WAVE_SINE;
+        this.main.type = properties.type || CONST.WAVE_SINE;
         this.main.connect(this.envelope);
     }
 

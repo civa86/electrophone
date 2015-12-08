@@ -6,11 +6,13 @@ class PingPongDelay extends Effect {
     constructor (props) {
         super(props);
 
-        this.wet = +props.wet || 0;
-        this.feedback = +props.feedback || 0;
-        this.delayTimeLeft = +props.delayTimeLeft || 0;
-        this.delayTimeRight = +props.delayTimeRight || 0;
-        this.bypass = +props.bypass || 0;
+        let properties = props || {};
+
+        this.wet = +properties.wet || 0;
+        this.feedback = +properties.feedback || 0;
+        this.delayTimeLeft = +properties.delayTimeLeft || 0;
+        this.delayTimeRight = +properties.delayTimeRight || 0;
+        this.bypass = +properties.bypass || 0;
 
         //TODO set an array of main effects??
         this.setMainEffect('PingPongDelay', 'delayLeft', {

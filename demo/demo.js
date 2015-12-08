@@ -184,9 +184,9 @@
         })
         .tremolo('TREMOLO', {
             link:        synth.VARS.MASTER,
-            intensity:   0.7,    //0 to 1
+            intensity:   0.5,    //0 to 1
             rate:        6,         //0.001 to 8
-            stereoPhase: 90,    //0 to 180
+            stereoPhase: 0,    //0 to 180
             bypass:      0
         })
     }

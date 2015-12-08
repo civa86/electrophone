@@ -6,12 +6,13 @@ class Envelope extends Module {
     constructor (props) {
         super(props);
 
-        this.target = props.target || null;
+        let properties = props || {};
 
-        this.attack = props.attack;
-        this.decay = props.decay;
-        this.sustain = props.sustain;
-        this.release = props.release;
+        this.target = properties.target || null;
+        this.attack = properties.attack;
+        this.decay = properties.decay;
+        this.sustain = properties.sustain;
+        this.release = properties.release;
     }
 
     createGain () {

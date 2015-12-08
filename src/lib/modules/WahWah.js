@@ -6,13 +6,15 @@ class WahWah extends Effect {
     constructor (props) {
         super(props);
 
-        this.automode = +props.automode || false;      //true/false
-        this.baseFrequency = +props.baseFrequency || 0;            //0 to 1
-        this.excursionOctaves = +props.excursionOctaves || 1;           //1 to 6
-        this.sweep = +props.sweep || 0;                          //0 to 1
-        this.resonance = +props.resonance || 1;                //1 to 100
-        this.sensitivity = +props.sensitivity || 0;              //-1 to 1
-        this.bypass = +props.bypass || 0;
+        let properties = props || {};
+
+        this.automode = +properties.automode || false;      //true/false
+        this.baseFrequency = +properties.baseFrequency || 0;            //0 to 1
+        this.excursionOctaves = +properties.excursionOctaves || 1;           //1 to 6
+        this.sweep = +properties.sweep || 0;                          //0 to 1
+        this.resonance = +properties.resonance || 1;                //1 to 100
+        this.sensitivity = +properties.sensitivity || 0;              //-1 to 1
+        this.bypass = +properties.bypass || 0;
 
         //TODO set an array of main effects??
         this.setMainEffect('WahWah', 'filterBp', {

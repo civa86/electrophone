@@ -7,10 +7,12 @@ class Oscillator extends SoundSource {
     constructor (props) {
         super(props);
 
-        this.detune = +props.detune || 0;
+        let properties = props || {};
+
+        this.detune = +properties.detune || 0;
 
         this.main = AudioContext.createOscillator();
-        this.main.type = props.type || CONST.WAVE_SINE;
+        this.main.type = properties.type || CONST.WAVE_SINE;
         this.main.connect(this.envelope);
 
         this.setDetune();

@@ -3,13 +3,12 @@ import AudioContext from '../AudioContext'
 class Module {
 
     constructor (props) {
-        //TODO introduce this security line in all modules....
-        //let properties = props || {};
+        let properties = props || {};
         this.gain = null;
         this.envelope = null;
         this.main = null;
-        this.link = props.link || null;
-        this.level = +props.level;
+        this.link = properties.link || null;
+        this.level = +properties.level;
 
         this.createGain(this.level);
     }
