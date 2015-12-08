@@ -48,7 +48,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _WebSynth = __webpack_require__(5);
+	var _WebSynth = __webpack_require__(7);
 
 	var _WebSynth2 = _interopRequireDefault(_WebSynth);
 
@@ -60,31 +60,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	var AudioCtx = window.AudioContext || window.webkitAudioContext,
-	    ctx = new AudioCtx(),
-	    deprecatedFn = {
-	    createGainNode: 'createGain',
-	    createDelayNode: 'createDelay'
-	};
-
-	for (var f in deprecatedFn) {
-	    if (typeof ctx[f] === 'function') {
-	        ctx[deprecatedFn[f]] = ctx[f];
-	    }
-	}
-
-	exports['default'] = ctx;
-	module.exports = exports['default'];
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -131,7 +106,121 @@
 	exports.CONST = CONST;
 
 /***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var AudioCtx = window.AudioContext || window.webkitAudioContext,
+	    ctx = new AudioCtx(),
+	    deprecatedFn = {
+	    createGainNode: 'createGain',
+	    createDelayNode: 'createDelay'
+	};
+
+	for (var f in deprecatedFn) {
+	    if (typeof ctx[f] === 'function') {
+	        ctx[deprecatedFn[f]] = ctx[f];
+	    }
+	}
+
+	exports['default'] = ctx;
+	module.exports = exports['default'];
+
+/***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreModule = __webpack_require__(4);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var _EffectManager = __webpack_require__(9);
+
+	var _EffectManager2 = _interopRequireDefault(_EffectManager);
+
+	var Effect = (function (_Module) {
+	    _inherits(Effect, _Module);
+
+	    function Effect(props) {
+	        _classCallCheck(this, Effect);
+
+	        _get(Object.getPrototypeOf(Effect.prototype), 'constructor', this).call(this, props);
+	        this.main = null;
+	        this.mainEffect = null;
+	    }
+
+	    _createClass(Effect, [{
+	        key: 'setMainEffect',
+	        value: function setMainEffect(type, mainEffect, props) {
+	            //TODO set an array of main effects??
+	            //TODO manage props internally....get from module with getProperties method and pass to Tuna
+	            this.main = new _EffectManager2['default'][type](props);
+	            this.mainEffect = this.main[mainEffect];
+	        }
+	    }, {
+	        key: 'createGain',
+	        value: function createGain() {
+	            return false;
+	        }
+	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn(sourceType, source) {
+	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
+	                return this.mainEffect[source.target];
+	            } else {
+	                return this.main.input;
+	            }
+	        }
+	    }, {
+	        key: 'getLineOut',
+	        value: function getLineOut() {
+	            return this.main.output;
+	        }
+	    }, {
+	        key: 'getEnvelopeTarget',
+	        value: function getEnvelopeTarget(target) {
+	            var ret = null;
+
+	            if (target === 'gain') {
+	                ret = this.main.output.gain;
+	            } else if (this.main && this.mainEffect && this.mainEffect[target]) {
+	                ret = this.main.filter[target];
+	            }
+
+	            return ret;
+	        }
+	    }]);
+
+	    return Effect;
+	})(_coreModule2['default']);
+
+	exports['default'] = Effect;
+	module.exports = exports['default'];
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -146,7 +235,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
@@ -154,17 +243,58 @@
 	    function Module(props) {
 	        _classCallCheck(this, Module);
 
-	        var properties = props || {};
 	        this.gain = null;
 	        this.envelope = null;
 	        this.main = null;
-	        this.link = properties.link || null;
-	        this.level = +properties.level;
+
+	        this.setupProperties(props);
 
 	        this.createGain(this.level);
 	    }
 
 	    _createClass(Module, [{
+	        key: 'setupProperties',
+	        value: function setupProperties(props) {
+	            var _this = this;
+
+	            var properties = props || {},
+	                defaultProperties = {
+	                link: {
+	                    type: 'string',
+	                    defaultValue: ''
+	                },
+	                level: {
+	                    type: 'number',
+	                    bounds: [0, 100],
+	                    defaultValue: 100
+	                }
+	            },
+	                customProps = this.getProperties() || {};
+
+	            defaultProperties = Object.assign(defaultProperties, customProps);
+
+	            Object.keys(defaultProperties).forEach(function (e) {
+	                _this.setProperty(e, properties[e], defaultProperties[e]);
+	            });
+	        }
+	    }, {
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {};
+	        }
+	    }, {
+	        key: 'setProperty',
+	        value: function setProperty(propKey, propVal, propConfig) {
+	            //TODO Check if is a propery to create...
+	            this[propKey] = null;
+	            if (propConfig.type && typeof propVal === propConfig.type) {
+	                //TODO setBounds...
+	                this[propKey] = propVal;
+	            } else if (propConfig.defaultValue !== undefined) {
+	                this[propKey] = propConfig.defaultValue;
+	            }
+	        }
+	    }, {
 	        key: 'createGain',
 	        value: function createGain(level) {
 	            var l = level >= 0 ? level % 101 : 100;
@@ -212,7 +342,71 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreModule = __webpack_require__(4);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var SoundSource = (function (_Module) {
+	    _inherits(SoundSource, _Module);
+
+	    function SoundSource(props) {
+	        _classCallCheck(this, SoundSource);
+
+	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props);
+
+	        this.defaultLineInProperty = 'frequency';
+	    }
+
+	    _createClass(SoundSource, [{
+	        key: 'noteOn',
+	        value: function noteOn() {
+	            this.main.start(0);
+	        }
+	    }, {
+	        key: 'noteOff',
+	        value: function noteOff(release) {
+	            this.main.stop(release);
+	        }
+	    }, {
+	        key: 'getLineIn',
+	        value: function getLineIn(sourceType, source) {
+	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
+	                return this.main[source.target];
+	            } else {
+	                return this.main[this.defaultLineInProperty];
+	            }
+	        }
+	    }]);
+
+	    return SoundSource;
+	})(_coreModule2['default']);
+
+	exports['default'] = SoundSource;
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -223,29 +417,29 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Master = __webpack_require__(10);
+	var _Master = __webpack_require__(21);
 
 	exports.Master = _interopRequire(_Master);
 
-	var _Envelope = __webpack_require__(9);
+	var _Envelope = __webpack_require__(20);
 
 	exports.Envelope = _interopRequire(_Envelope);
 
-	var _Pan = __webpack_require__(11);
+	var _Pan = __webpack_require__(22);
 
 	exports.Pan = _interopRequire(_Pan);
 
 	//SOUNDSOURCES
 
-	var _SoundSourcesOscillator = __webpack_require__(21);
+	var _SoundSourcesOscillator = __webpack_require__(25);
 
 	exports.Oscillator = _interopRequire(_SoundSourcesOscillator);
 
-	var _SoundSourcesModulator = __webpack_require__(19);
+	var _SoundSourcesModulator = __webpack_require__(23);
 
 	exports.Modulator = _interopRequire(_SoundSourcesModulator);
 
-	var _SoundSourcesNoise = __webpack_require__(20);
+	var _SoundSourcesNoise = __webpack_require__(24);
 
 	exports.Noise = _interopRequire(_SoundSourcesNoise);
 
@@ -262,19 +456,19 @@
 
 	exports.Delay = _interopRequire(_EffectsDelay);
 
-	var _EffectsPingPongDelay = __webpack_require__(16);
+	var _EffectsPingPongDelay = __webpack_require__(17);
 
 	exports.PingPongDelay = _interopRequire(_EffectsPingPongDelay);
 
-	var _EffectsWahWah = __webpack_require__(18);
+	var _EffectsWahWah = __webpack_require__(19);
 
 	exports.WahWah = _interopRequire(_EffectsWahWah);
 
-	var _EffectsTremolo = __webpack_require__(17);
+	var _EffectsTremolo = __webpack_require__(18);
 
 	exports.Tremolo = _interopRequire(_EffectsTremolo);
 
-	var _EffectsOverdrive = __webpack_require__(15);
+	var _EffectsOverdrive = __webpack_require__(16);
 
 	exports.Overdrive = _interopRequire(_EffectsOverdrive);
 
@@ -282,11 +476,11 @@
 
 	exports.Cabinet = _interopRequire(_EffectsCabinet);
 
-	var _EffectsBitcrusher = __webpack_require__(25);
+	var _EffectsBitcrusher = __webpack_require__(11);
 
 	exports.Bitcrusher = _interopRequire(_EffectsBitcrusher);
 
-	var _EffectsMoogFilter = __webpack_require__(26);
+	var _EffectsMoogFilter = __webpack_require__(15);
 
 	exports.MoogFilter = _interopRequire(_EffectsMoogFilter);
 
@@ -297,7 +491,7 @@
 	//Chorus
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -312,13 +506,13 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _libModules = __webpack_require__(4);
+	var _libModules = __webpack_require__(6);
 
 	var Modules = _interopRequireWildcard(_libModules);
 
-	var _libCoreConstants = __webpack_require__(2);
+	var _libCoreConstants = __webpack_require__(1);
 
-	var _libSynth = __webpack_require__(6);
+	var _libSynth = __webpack_require__(8);
 
 	var _libSynth2 = _interopRequireDefault(_libSynth);
 
@@ -380,7 +574,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -395,13 +589,13 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _coreConstants = __webpack_require__(2);
+	var _coreConstants = __webpack_require__(1);
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreVoice = __webpack_require__(8);
+	var _coreVoice = __webpack_require__(10);
 
 	var _coreVoice2 = _interopRequireDefault(_coreVoice);
 
@@ -528,71 +722,32 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	    value: true
+	  value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _AudioContext = __webpack_require__(2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreConstants = __webpack_require__(2);
+	var _tunajs = __webpack_require__(26);
 
-	var _coreModule = __webpack_require__(3);
+	var _tunajs2 = _interopRequireDefault(_tunajs);
 
-	var _coreModule2 = _interopRequireDefault(_coreModule);
+	var manager = new _tunajs2['default'](_AudioContext2['default']);
 
-	var SoundSource = (function (_Module) {
-	    _inherits(SoundSource, _Module);
-
-	    function SoundSource(props) {
-	        _classCallCheck(this, SoundSource);
-
-	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props);
-
-	        this.defaultLineInProperty = 'frequency';
-	    }
-
-	    _createClass(SoundSource, [{
-	        key: 'noteOn',
-	        value: function noteOn() {
-	            this.main.start(0);
-	        }
-	    }, {
-	        key: 'noteOff',
-	        value: function noteOff(release) {
-	            this.main.stop(release);
-	        }
-	    }, {
-	        key: 'getLineIn',
-	        value: function getLineIn(sourceType, source) {
-	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
-	                return this.main[source.target];
-	            } else {
-	                return this.main[this.defaultLineInProperty];
-	            }
-	        }
-	    }]);
-
-	    return SoundSource;
-	})(_coreModule2['default']);
-
-	exports['default'] = SoundSource;
+	exports['default'] = manager;
 	module.exports = exports['default'];
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -609,19 +764,19 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _modules = __webpack_require__(4);
+	var _modules = __webpack_require__(6);
 
 	var Modules = _interopRequireWildcard(_modules);
 
-	var _SoundSource = __webpack_require__(7);
+	var _SoundSource = __webpack_require__(5);
 
 	var _SoundSource2 = _interopRequireDefault(_SoundSource);
 
-	var _Constants = __webpack_require__(2);
+	var _Constants = __webpack_require__(1);
 
 	var Voice = (function () {
 	    function Voice(note, modulesConfig, analyser) {
@@ -751,7 +906,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -770,11 +925,638 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _AudioContext = __webpack_require__(1);
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Bitcrusher = (function (_Effect) {
+	    _inherits(Bitcrusher, _Effect);
+
+	    function Bitcrusher(props) {
+	        _classCallCheck(this, Bitcrusher);
+
+	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('Bitcrusher', 'output', {
+	            bits: this.bits,
+	            normfreq: this.normfreq,
+	            bufferSize: this.bufferSize
+	        });
+	    }
+
+	    _createClass(Bitcrusher, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                bits: {
+	                    type: 'number',
+	                    bounds: [1, 16],
+	                    defaultValue: 1
+	                },
+	                normfreq: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0.5
+	                },
+	                bufferSize: {
+	                    type: 'number',
+	                    bounds: [256, 16384],
+	                    defaultValue: 4096
+	                }
+	            };
+	        }
+	    }]);
+
+	    return Bitcrusher;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Bitcrusher;
+	module.exports = exports['default'];
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Cabinet = (function (_Effect) {
+	    _inherits(Cabinet, _Effect);
+
+	    function Cabinet(props) {
+	        _classCallCheck(this, Cabinet);
+
+	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('Cabinet', 'output', {
+	            makeupGain: this.makeupGain,
+	            impulsePath: this.impulsePath,
+	            bypass: this.bypass
+	        });
+	    }
+
+	    _createClass(Cabinet, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                makeupGain: {
+	                    type: 'number',
+	                    bounds: [0, 20],
+	                    defaultValue: 0
+	                },
+	                impulsePath: {
+	                    type: 'string',
+	                    defaultValue: ''
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
+	    return Cabinet;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Cabinet;
+	module.exports = exports['default'];
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Delay = (function (_Effect) {
+	    _inherits(Delay, _Effect);
+
+	    function Delay(props) {
+	        _classCallCheck(this, Delay);
+
+	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props);
+
+	        var properties = props || {};
+
+	        this.wet = +properties.wet || 0;
+	        this.feedback = +properties.feedback || 0;
+	        this.cutoff = +properties.cutoff || 0;
+	        this.delayTime = +properties.delayTime || 0;
+	        this.bypass = +properties.bypass || 0;
+
+	        this.setMainEffect('Delay', 'filter', {
+	            feedback: this.feedback, //0 to 1+
+	            delayTime: this.delayTime, //how many milliseconds should the wet signal be delayed?
+	            wetLevel: this.wet, //0 to 1+
+	            dryLevel: 1, //0 to 1+
+	            cutoff: this.cutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+	            bypass: this.bypass
+	        });
+	    }
+
+	    //TODO implement get properties method....
+	    return Delay;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Delay;
+	module.exports = exports['default'];
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Filter = (function (_Effect) {
+	    _inherits(Filter, _Effect);
+
+	    function Filter(props) {
+	        _classCallCheck(this, Filter);
+
+	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
+
+	        var properties = props || {};
+
+	        this.freq = +properties.freq || 11000;
+	        this.q = +properties.q || 10;
+	        this.bypass = +properties.bypass || 0;
+	        this.filterGain = this.level || 0;
+
+	        this.setMainEffect('Filter', 'filter', {
+	            frequency: this.freq, //20 to 22050
+	            Q: this.q, //0.001 to 100
+	            gain: this.filterGain, //-40 to 40
+	            filterType: properties.type || _coreConstants.CONST.FILTER_LOWPASS,
+	            bypass: this.bypass
+	        });
+	    }
+
+	    //TODO implement get properties method....
+	    return Filter;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Filter;
+	module.exports = exports['default'];
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var MoogFilter = (function (_Effect) {
+	    _inherits(MoogFilter, _Effect);
+
+	    function MoogFilter(props) {
+	        _classCallCheck(this, MoogFilter);
+
+	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('MoogFilter', 'output', {
+	            cutoff: this.cutoff,
+	            resonance: this.resonance,
+	            bufferSize: this.bufferSize
+	        });
+	    }
+
+	    _createClass(MoogFilter, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                cutoff: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                resonance: {
+	                    type: 'number',
+	                    bounds: [0, 4],
+	                    defaultValue: 0
+	                },
+	                bufferSize: {
+	                    type: 'number',
+	                    bounds: [256, 16384],
+	                    defaultValue: 4096
+	                }
+	            };
+	        }
+	    }]);
+
+	    return MoogFilter;
+	})(_coreEffect2['default']);
+
+	exports['default'] = MoogFilter;
+	module.exports = exports['default'];
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Overdrive = (function (_Effect) {
+	    _inherits(Overdrive, _Effect);
+
+	    function Overdrive(props) {
+	        _classCallCheck(this, Overdrive);
+
+	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('Overdrive', 'output', {
+	            outputGain: this.outputGain,
+	            drive: this.drive,
+	            curveAmount: this.curveAmount,
+	            algorithmIndex: this.algorithmIndex,
+	            bypass: this.bypass
+	        });
+	    }
+
+	    _createClass(Overdrive, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                outputGain: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0.5
+	                },
+	                drive: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                curveAmount: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 1
+	                },
+	                algorithmIndex: {
+	                    type: 'number',
+	                    bounds: [0, 5],
+	                    defaultValue: 0
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
+	    return Overdrive;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Overdrive;
+	module.exports = exports['default'];
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var PingPongDelay = (function (_Effect) {
+	    _inherits(PingPongDelay, _Effect);
+
+	    function PingPongDelay(props) {
+	        _classCallCheck(this, PingPongDelay);
+
+	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props);
+
+	        var properties = props || {};
+
+	        this.wet = +properties.wet || 0;
+	        this.feedback = +properties.feedback || 0;
+	        this.delayTimeLeft = +properties.delayTimeLeft || 0;
+	        this.delayTimeRight = +properties.delayTimeRight || 0;
+	        this.bypass = +properties.bypass || 0;
+
+	        this.setMainEffect('PingPongDelay', 'delayLeft', {
+	            wetLevel: this.wet, //0 to 1
+	            feedback: this.feedback, //0 to 1
+	            delayTimeLeft: this.delayTimeRight, //1 to 10000 (milliseconds)
+	            delayTimeRight: this.delayTimeRight //1 to 10000 (milliseconds)
+	        });
+	    }
+
+	    //TODO implement get properties method....
+	    return PingPongDelay;
+	})(_coreEffect2['default']);
+
+	exports['default'] = PingPongDelay;
+	module.exports = exports['default'];
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var Tremolo = (function (_Effect) {
+	    _inherits(Tremolo, _Effect);
+
+	    function Tremolo(props) {
+	        _classCallCheck(this, Tremolo);
+
+	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('Tremolo', 'output', {
+	            intensity: this.intensity,
+	            rate: this.rate,
+	            stereoPhase: this.stereoPhase,
+	            bypass: this.bypass
+	        });
+	    }
+
+	    _createClass(Tremolo, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                intensity: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                rate: {
+	                    type: 'number',
+	                    bounds: [0.001, 8],
+	                    defaultValue: 0.001
+	                },
+	                stereoPhase: {
+	                    type: 'number',
+	                    bounds: [0, 180],
+	                    defaultValue: 0
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
+	    return Tremolo;
+	})(_coreEffect2['default']);
+
+	exports['default'] = Tremolo;
+	module.exports = exports['default'];
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _coreEffect = __webpack_require__(3);
+
+	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+
+	var WahWah = (function (_Effect) {
+	    _inherits(WahWah, _Effect);
+
+	    function WahWah(props) {
+	        _classCallCheck(this, WahWah);
+
+	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props);
+
+	        this.setMainEffect('WahWah', 'filterBp', {
+	            automode: this.automode,
+	            baseFrequency: this.baseFrequency,
+	            excursionOctaves: this.excursionOctaves,
+	            sweep: this.sweep,
+	            resonance: this.resonance,
+	            sensitivity: this.sensitivity,
+	            bypass: this.bypass
+	        });
+	    }
+
+	    _createClass(WahWah, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                automode: {
+	                    type: 'boolean',
+	                    defaultValue: false
+	                },
+	                baseFrequency: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                excursionOctaves: {
+	                    type: 'number',
+	                    bounds: [1, 6],
+	                    defaultValue: 1
+	                },
+	                sweep: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                resonance: {
+	                    type: 'number',
+	                    bounds: [1, 100],
+	                    defaultValue: 1
+	                },
+	                sensitivity: {
+	                    type: 'number',
+	                    bounds: [-1, 1],
+	                    defaultValue: 0
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
+	    return WahWah;
+	})(_coreEffect2['default']);
+
+	exports['default'] = WahWah;
+	module.exports = exports['default'];
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(3);
+	var _coreModule = __webpack_require__(4);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -785,17 +1567,39 @@
 	        _classCallCheck(this, Envelope);
 
 	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.target = properties.target || null;
-	        this.attack = properties.attack;
-	        this.decay = properties.decay;
-	        this.sustain = properties.sustain;
-	        this.release = properties.release;
 	    }
 
 	    _createClass(Envelope, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                target: {
+	                    type: 'string',
+	                    defaultValue: null
+	                },
+	                attack: {
+	                    type: 'number',
+	                    bounds: [0, 100],
+	                    defaultValue: 1
+	                },
+	                decay: {
+	                    type: 'number',
+	                    bounds: [0, 100],
+	                    defaultValue: 1
+	                },
+	                sustain: {
+	                    type: 'number',
+	                    bounds: [1, 100],
+	                    defaultValue: 100
+	                },
+	                release: {
+	                    type: 'number',
+	                    bounds: [0.001, 100],
+	                    defaultValue: 5
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'createGain',
 	        value: function createGain() {
 	            return false;
@@ -878,7 +1682,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -897,11 +1701,11 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(3);
+	var _coreModule = __webpack_require__(4);
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
@@ -931,23 +1735,6 @@
 	            } else {
 	                this.gain.connect(_AudioContext2['default'].destination);
 	            }
-	            //if (spectrum) {
-	            //    this.javascriptNode = AudioContext.createScriptProcessor(2048, 1, 1);
-	            //    this.javascriptNode.connect(AudioContext.destination);
-	            //
-	            //    this.analyser = AudioContext.createAnalyser();
-	            //    this.analyser.fftSize = 1024;
-	            //
-	            //    this.gain.connect(this.analyser);
-	            //    this.analyser.connect(AudioContext.destination);
-	            //
-	            //    this.javascriptNode.onaudioprocess = function () {
-	            //        console.log('asd');
-	            //    };
-	            //
-	            //} else {
-
-	            //}
 	        }
 	    }]);
 
@@ -958,434 +1745,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var _coreModule = __webpack_require__(3);
-
-	var _coreModule2 = _interopRequireDefault(_coreModule);
-
-	var Pan = (function (_Module) {
-	    _inherits(Pan, _Module);
-
-	    function Pan(props) {
-	        _classCallCheck(this, Pan);
-
-	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.main = _AudioContext2['default'].createStereoPanner();
-	        this.main.pan.value = +properties.value || 0;
-	        this.main.connect(this.envelope);
-	    }
-
-	    return Pan;
-	})(_coreModule2['default']);
-
-	exports['default'] = Pan;
-	module.exports = exports['default'];
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Cabinet = (function (_Effect) {
-	    _inherits(Cabinet, _Effect);
-
-	    function Cabinet(props) {
-	        _classCallCheck(this, Cabinet);
-
-	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-	        this.makeupGain = +properties.makeupGain || 1; //0 to 20
-	        this.impulsePath = properties.impulsePath || ''; //path to your speaker impulse
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('Cabinet', 'output', {
-	            makeupGain: this.makeupGain,
-	            impulsePath: this.impulsePath,
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return Cabinet;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Cabinet;
-	module.exports = exports['default'];
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Delay = (function (_Effect) {
-	    _inherits(Delay, _Effect);
-
-	    function Delay(props) {
-	        _classCallCheck(this, Delay);
-
-	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.wet = +properties.wet || 0;
-	        this.feedback = +properties.feedback || 0;
-	        this.cutoff = +properties.cutoff || 0;
-	        this.delayTime = +properties.delayTime || 0;
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('Delay', 'filter', {
-	            feedback: this.feedback, //0 to 1+
-	            delayTime: this.delayTime, //how many milliseconds should the wet signal be delayed?
-	            wetLevel: this.wet, //0 to 1+
-	            dryLevel: 1, //0 to 1+
-	            cutoff: this.cutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return Delay;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Delay;
-	module.exports = exports['default'];
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Filter = (function (_Effect) {
-	    _inherits(Filter, _Effect);
-
-	    function Filter(props) {
-	        _classCallCheck(this, Filter);
-
-	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.freq = +properties.freq || 11000;
-	        this.q = +properties.q || 10;
-	        this.bypass = +properties.bypass || 0;
-	        this.filterGain = this.level || 0;
-
-	        this.setMainEffect('Filter', 'filter', {
-	            frequency: this.freq, //20 to 22050
-	            Q: this.q, //0.001 to 100
-	            gain: this.filterGain, //-40 to 40
-	            filterType: properties.type || _coreConstants.CONST.FILTER_LOWPASS,
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return Filter;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Filter;
-	module.exports = exports['default'];
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Overdrive = (function (_Effect) {
-	    _inherits(Overdrive, _Effect);
-
-	    function Overdrive(props) {
-	        _classCallCheck(this, Overdrive);
-
-	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-	        this.outputGain = +properties.outputGain || 0.5; //0 to 1+
-	        this.drive = +properties.drive || 0.7; //0 to 1
-	        this.curveAmount = +properties.curveAmount || 1; //0 to 1
-	        this.algorithmIndex = +properties.algorithmIndex || 0; //0 to 5, selects one of our drive algorithms
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('Overdrive', 'output', {
-	            outputGain: this.outputGain,
-	            drive: this.drive,
-	            curveAmount: this.curveAmount,
-	            algorithmIndex: this.algorithmIndex,
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return Overdrive;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Overdrive;
-	module.exports = exports['default'];
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var PingPongDelay = (function (_Effect) {
-	    _inherits(PingPongDelay, _Effect);
-
-	    function PingPongDelay(props) {
-	        _classCallCheck(this, PingPongDelay);
-
-	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.wet = +properties.wet || 0;
-	        this.feedback = +properties.feedback || 0;
-	        this.delayTimeLeft = +properties.delayTimeLeft || 0;
-	        this.delayTimeRight = +properties.delayTimeRight || 0;
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('PingPongDelay', 'delayLeft', {
-	            wetLevel: this.wet, //0 to 1
-	            feedback: this.feedback, //0 to 1
-	            delayTimeLeft: this.delayTimeRight, //1 to 10000 (milliseconds)
-	            delayTimeRight: this.delayTimeRight //1 to 10000 (milliseconds)
-	        });
-	    }
-
-	    return PingPongDelay;
-	})(_coreEffect2['default']);
-
-	exports['default'] = PingPongDelay;
-	module.exports = exports['default'];
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Tremolo = (function (_Effect) {
-	    _inherits(Tremolo, _Effect);
-
-	    function Tremolo(props) {
-	        _classCallCheck(this, Tremolo);
-
-	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.intensity = +properties.intensity || 0; //0 to 1
-	        this.rate = +properties.rate || 0.001; //0.001 to 8
-	        this.stereoPhase = +properties.stereoPhase || 0; //0 to 180
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('Tremolo', 'output', {
-	            intensity: this.intensity,
-	            rate: this.rate,
-	            stereoPhase: this.stereoPhase,
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return Tremolo;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Tremolo;
-	module.exports = exports['default'];
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var WahWah = (function (_Effect) {
-	    _inherits(WahWah, _Effect);
-
-	    function WahWah(props) {
-	        _classCallCheck(this, WahWah);
-
-	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.automode = +properties.automode || false; //true/false
-	        this.baseFrequency = +properties.baseFrequency || 0; //0 to 1
-	        this.excursionOctaves = +properties.excursionOctaves || 1; //1 to 6
-	        this.sweep = +properties.sweep || 0; //0 to 1
-	        this.resonance = +properties.resonance || 1; //1 to 100
-	        this.sensitivity = +properties.sensitivity || 0; //-1 to 1
-	        this.bypass = +properties.bypass || 0;
-
-	        this.setMainEffect('WahWah', 'filterBp', {
-	            automode: this.automode,
-	            baseFrequency: this.baseFrequency,
-	            excursionOctaves: this.excursionOctaves,
-	            sweep: this.sweep,
-	            resonance: this.resonance,
-	            sensitivity: this.sensitivity,
-	            bypass: this.bypass
-	        });
-	    }
-
-	    return WahWah;
-	})(_coreEffect2['default']);
-
-	exports['default'] = WahWah;
-	module.exports = exports['default'];
-
-/***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1404,13 +1764,73 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coreConstants = __webpack_require__(2);
-
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(7);
+	var _coreModule = __webpack_require__(4);
+
+	var _coreModule2 = _interopRequireDefault(_coreModule);
+
+	var Pan = (function (_Module) {
+	    _inherits(Pan, _Module);
+
+	    function Pan(props) {
+	        _classCallCheck(this, Pan);
+
+	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props);
+
+	        this.main = _AudioContext2['default'].createStereoPanner();
+	        this.main.pan.value = this.value;
+	        this.main.connect(this.envelope);
+	    }
+
+	    _createClass(Pan, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                value: {
+	                    type: 'number',
+	                    bounds: [-1, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
+	    return Pan;
+	})(_coreModule2['default']);
+
+	exports['default'] = Pan;
+	module.exports = exports['default'];
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _AudioContext = __webpack_require__(2);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreSoundSource = __webpack_require__(5);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -1422,17 +1842,31 @@
 
 	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
-	        this.freq = +properties.freq || 440;
-	        this.target = properties.target || 'frequency';
-
 	        this.main = _AudioContext2['default'].createOscillator();
-	        this.main.type = properties.type || _coreConstants.CONST.WAVE_SINE;
+	        this.main.type = this.wave;
 	        this.main.connect(this.envelope);
 	    }
 
 	    _createClass(Modulator, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                freq: {
+	                    type: 'number',
+	                    bounds: [20, 20000],
+	                    defaultValue: 440
+	                },
+	                target: {
+	                    type: 'string',
+	                    defaultValue: 'frequency'
+	                },
+	                wave: {
+	                    type: 'string',
+	                    defaultValue: _coreConstants.CONST.WAVE_SINE
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'setNote',
 	        value: function setNote() {
 	            var f = this.freq % 11;
@@ -1447,7 +1881,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 20 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1466,13 +1900,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coreConstants = __webpack_require__(2);
+	var _coreConstants = __webpack_require__(1);
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(7);
+	var _coreSoundSource = __webpack_require__(5);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -1484,17 +1918,24 @@
 
 	        _get(Object.getPrototypeOf(Noise.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
 	        this.defaultLineInProperty = 'detune';
 	        this.main = _AudioContext2['default'].createBufferSource();
 	        this.main.connect(this.envelope);
 
-	        this.color = properties.color || 'white';
 	        this.setColor();
 	    }
 
 	    _createClass(Noise, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                color: {
+	                    type: 'string',
+	                    defaultValue: _coreConstants.CONST.NOISE_WHITE
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'setColor',
 	        value: function setColor() {
 	            switch (this.color) {
@@ -1603,7 +2044,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 21 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1622,13 +2063,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coreConstants = __webpack_require__(2);
+	var _coreConstants = __webpack_require__(1);
 
-	var _AudioContext = __webpack_require__(1);
+	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(7);
+	var _coreSoundSource = __webpack_require__(5);
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
@@ -1640,18 +2081,29 @@
 
 	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
-	        this.detune = +properties.detune || 0;
-
 	        this.main = _AudioContext2['default'].createOscillator();
-	        this.main.type = properties.type || _coreConstants.CONST.WAVE_SINE;
+	        this.main.type = this.wave;
 	        this.main.connect(this.envelope);
 
 	        this.setDetune();
 	    }
 
 	    _createClass(Oscillator, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                detune: {
+	                    type: 'number',
+	                    bounds: [-1200, 1200],
+	                    defaultValue: 0
+	                },
+	                wave: {
+	                    type: 'string',
+	                    defaultValue: _coreConstants.CONST.WAVE_SINE
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'setDetune',
 	        value: function setDetune() {
 	            if (this.detune > 1200) {
@@ -1676,120 +2128,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreModule = __webpack_require__(3);
-
-	var _coreModule2 = _interopRequireDefault(_coreModule);
-
-	var _EffectManager = __webpack_require__(23);
-
-	var _EffectManager2 = _interopRequireDefault(_EffectManager);
-
-	var Effect = (function (_Module) {
-	    _inherits(Effect, _Module);
-
-	    function Effect(props) {
-	        _classCallCheck(this, Effect);
-
-	        _get(Object.getPrototypeOf(Effect.prototype), 'constructor', this).call(this, props);
-	        this.main = null;
-	        this.mainEffect = null;
-	    }
-
-	    _createClass(Effect, [{
-	        key: 'setMainEffect',
-	        value: function setMainEffect(type, mainEffect, props) {
-	            //TODO set an array of main effects??
-	            this.main = new _EffectManager2['default'][type](props);
-	            this.mainEffect = this.main[mainEffect];
-	        }
-	    }, {
-	        key: 'createGain',
-	        value: function createGain() {
-	            return false;
-	        }
-	    }, {
-	        key: 'getLineIn',
-	        value: function getLineIn(sourceType, source) {
-	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
-	                return this.mainEffect[source.target];
-	            } else {
-	                return this.main.input;
-	            }
-	        }
-	    }, {
-	        key: 'getLineOut',
-	        value: function getLineOut() {
-	            return this.main.output;
-	        }
-	    }, {
-	        key: 'getEnvelopeTarget',
-	        value: function getEnvelopeTarget(target) {
-	            var ret = null;
-
-	            if (target === 'gain') {
-	                ret = this.main.output.gain;
-	            } else if (this.main && this.mainEffect && this.mainEffect[target]) {
-	                ret = this.main.filter[target];
-	            }
-
-	            return ret;
-	        }
-	    }]);
-
-	    return Effect;
-	})(_coreModule2['default']);
-
-	exports['default'] = Effect;
-	module.exports = exports['default'];
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _AudioContext = __webpack_require__(1);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var _tunajs = __webpack_require__(24);
-
-	var _tunajs2 = _interopRequireDefault(_tunajs);
-
-	var manager = new _tunajs2['default'](_AudioContext2['default']);
-
-	exports['default'] = manager;
-	module.exports = exports['default'];
-
-/***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -3974,108 +4313,6 @@
 	    };
 	})(this);
 
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var Bitcrusher = (function (_Effect) {
-	    _inherits(Bitcrusher, _Effect);
-
-	    function Bitcrusher(props) {
-	        _classCallCheck(this, Bitcrusher);
-
-	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.bits = +properties.bits || 4; //1 to 16
-	        this.normfreq = +properties.normfreq || 0.1; //0 to 1
-	        this.bufferSize = +properties.bufferSize || 4096; //256 to 16384
-
-	        this.setMainEffect('Bitcrusher', 'output', {
-	            bits: this.bits,
-	            normfreq: this.normfreq,
-	            bufferSize: this.bufferSize
-	        });
-	    }
-
-	    return Bitcrusher;
-	})(_coreEffect2['default']);
-
-	exports['default'] = Bitcrusher;
-	module.exports = exports['default'];
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(2);
-
-	var _coreEffect = __webpack_require__(22);
-
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
-
-	var MoogFilter = (function (_Effect) {
-	    _inherits(MoogFilter, _Effect);
-
-	    function MoogFilter(props) {
-	        _classCallCheck(this, MoogFilter);
-
-	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props);
-
-	        var properties = props || {};
-
-	        this.cutoff = +properties.cutoff || 0.2; //0 to 1
-	        this.resonance = +properties.resonance || 1; //0 to 4
-	        this.bufferSize = +properties.bufferSize || 4096; //256 to 16384
-
-	        this.setMainEffect('MoogFilter', 'output', {
-	            cutoff: this.cutoff,
-	            resonance: this.resonance,
-	            bufferSize: this.bufferSize
-	        });
-	    }
-
-	    return MoogFilter;
-	})(_coreEffect2['default']);
-
-	exports['default'] = MoogFilter;
-	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
