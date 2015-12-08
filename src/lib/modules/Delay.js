@@ -14,7 +14,6 @@ class Delay extends Effect {
         this.delayTime = +properties.delayTime || 0;
         this.bypass = +properties.bypass || 0;
 
-        //TODO set an array of main effects??
         this.setMainEffect('Delay', 'filter', {
             feedback: this.feedback,    //0 to 1+
             delayTime: this.delayTime,    //how many milliseconds should the wet signal be delayed?

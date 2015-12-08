@@ -16,7 +16,6 @@ class WahWah extends Effect {
         this.sensitivity = +properties.sensitivity || 0;              //-1 to 1
         this.bypass = +properties.bypass || 0;
 
-        //TODO set an array of main effects??
         this.setMainEffect('WahWah', 'filterBp', {
             automode:         this.automode,
             baseFrequency:    this.baseFrequency,
