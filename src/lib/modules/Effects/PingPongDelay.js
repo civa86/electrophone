@@ -6,23 +6,50 @@ class PingPongDelay extends Effect {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
-        this.wet = +properties.wet || 0;
-        this.feedback = +properties.feedback || 0;
-        this.delayTimeLeft = +properties.delayTimeLeft || 0;
-        this.delayTimeRight = +properties.delayTimeRight || 0;
-        this.bypass = +properties.bypass || 0;
-
         this.setMainEffect('PingPongDelay', 'delayLeft', {
-            wetLevel: this.wet, //0 to 1
-            feedback: this.feedback, //0 to 1
-            delayTimeLeft: this.delayTimeRight, //1 to 10000 (milliseconds)
-            delayTimeRight: this.delayTimeRight //1 to 10000 (milliseconds)
+            dryLevel: this.dry,
+            wetLevel: this.wet,
+            feedback: this.feedback,
+            delayTimeLeft: this.delayTimeLeft,
+            delayTimeRight: this.delayTimeRight,
+            bypass: this.bypass
         });
     }
 
-    //TODO implement get properties method....
+    getProperties () {
+        return {
+            dry: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 1
+            },
+            wet: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            feedback: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            delayTimeLeft: {
+                type: 'number',
+                bounds: [1, 10000],
+                defaultValue: 1
+            },
+            delayTimeRight: {
+                type: 'number',
+                bounds: [1, 10000],
+                defaultValue: 1
+            },
+            bypass: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            }
+        };
+    }
 }
 
 export default PingPongDelay;

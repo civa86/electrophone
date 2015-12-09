@@ -6,25 +6,50 @@ class Delay extends Effect {
     constructor (props) {
         super(props);
 
-        let properties = props || {};
-
-        this.wet = +properties.wet || 0;
-        this.feedback = +properties.feedback || 0;
-        this.cutoff = +properties.cutoff || 0;
-        this.delayTime = +properties.delayTime || 0;
-        this.bypass = +properties.bypass || 0;
-
         this.setMainEffect('Delay', 'filter', {
-            feedback: this.feedback,    //0 to 1+
-            delayTime: this.delayTime,    //how many milliseconds should the wet signal be delayed?
-            wetLevel: this.wet,    //0 to 1+
-            dryLevel: 1,       //0 to 1+
-            cutoff: this.cutoff,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
+            dryLevel: this.dry,
+            wetLevel: this.wet,
+            feedback: this.feedback,
+            cutoff: this.cutoff,
+            delayTime: this.delayTime,
             bypass: this.bypass
         });
     }
 
-    //TODO implement get properties method....
+    getProperties () {
+        return {
+            dry: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 1
+            },
+            wet: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            feedback: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            },
+            cutoff: {
+                type: 'number',
+                bounds: [20, 20000],
+                defaultValue: 440
+            },
+            delayTime: {
+                type: 'number',
+                bounds: [1, 10000],
+                defaultValue: 1
+            },
+            bypass: {
+                type: 'number',
+                bounds: [0, 1],
+                defaultValue: 0
+            }
+        };
+    }
 }
 
 export default Delay;
