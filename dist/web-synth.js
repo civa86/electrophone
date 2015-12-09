@@ -285,10 +285,9 @@
 	    }, {
 	        key: 'setProperty',
 	        value: function setProperty(propKey, propVal, propConfig) {
-	            //TODO Check if is a propery to create...
 	            this[propKey] = null;
 	            if (propConfig.type && typeof propVal === propConfig.type) {
-	                //TODO setBounds...
+	                //TODO check propval && bounds....set a value...
 	                this[propKey] = propVal;
 	            } else if (propConfig.defaultValue !== undefined) {
 	                this[propKey] = propConfig.defaultValue;
@@ -1054,6 +1053,8 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -1076,25 +1077,54 @@
 
 	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
-	        this.wet = +properties.wet || 0;
-	        this.feedback = +properties.feedback || 0;
-	        this.cutoff = +properties.cutoff || 0;
-	        this.delayTime = +properties.delayTime || 0;
-	        this.bypass = +properties.bypass || 0;
-
 	        this.setMainEffect('Delay', 'filter', {
-	            feedback: this.feedback, //0 to 1+
-	            delayTime: this.delayTime, //how many milliseconds should the wet signal be delayed?
-	            wetLevel: this.wet, //0 to 1+
-	            dryLevel: 1, //0 to 1+
-	            cutoff: this.cutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+	            dryLevel: this.dry,
+	            wetLevel: this.wet,
+	            feedback: this.feedback,
+	            cutoff: this.cutoff,
+	            delayTime: this.delayTime,
 	            bypass: this.bypass
 	        });
 	    }
 
-	    //TODO implement get properties method....
+	    _createClass(Delay, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                dry: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 1
+	                },
+	                wet: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                feedback: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                cutoff: {
+	                    type: 'number',
+	                    bounds: [20, 20000],
+	                    defaultValue: 440
+	                },
+	                delayTime: {
+	                    type: 'number',
+	                    bounds: [1, 10000],
+	                    defaultValue: 1
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
 	    return Delay;
 	})(_coreEffect2['default']);
 
@@ -1110,6 +1140,8 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1133,23 +1165,47 @@
 
 	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
-	        this.freq = +properties.freq || 11000;
-	        this.q = +properties.q || 10;
-	        this.bypass = +properties.bypass || 0;
-	        this.filterGain = this.level || 0;
-
 	        this.setMainEffect('Filter', 'filter', {
-	            frequency: this.freq, //20 to 22050
-	            Q: this.q, //0.001 to 100
-	            gain: this.filterGain, //-40 to 40
-	            filterType: properties.type || _coreConstants.CONST.FILTER_LOWPASS,
+	            frequency: this.freq,
+	            Q: this.q,
+	            gain: this.filterGain,
+	            filterType: this.filterType,
 	            bypass: this.bypass
 	        });
 	    }
 
-	    //TODO implement get properties method....
+	    _createClass(Filter, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                freq: {
+	                    type: 'number',
+	                    bounds: [20, 20000],
+	                    defaultValue: 440
+	                },
+	                q: {
+	                    type: 'number',
+	                    bounds: [0.001, 100],
+	                    defaultValue: 10
+	                },
+	                filterGain: {
+	                    type: 'number',
+	                    bounds: [-40, 40],
+	                    defaultValue: 0
+	                },
+	                filterType: {
+	                    type: 'string',
+	                    defaultValue: _coreConstants.CONST.FILTER_LOWPASS
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
 	    return Filter;
 	})(_coreEffect2['default']);
 
@@ -1318,6 +1374,8 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -1340,23 +1398,54 @@
 
 	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props);
 
-	        var properties = props || {};
-
-	        this.wet = +properties.wet || 0;
-	        this.feedback = +properties.feedback || 0;
-	        this.delayTimeLeft = +properties.delayTimeLeft || 0;
-	        this.delayTimeRight = +properties.delayTimeRight || 0;
-	        this.bypass = +properties.bypass || 0;
-
 	        this.setMainEffect('PingPongDelay', 'delayLeft', {
-	            wetLevel: this.wet, //0 to 1
-	            feedback: this.feedback, //0 to 1
-	            delayTimeLeft: this.delayTimeRight, //1 to 10000 (milliseconds)
-	            delayTimeRight: this.delayTimeRight //1 to 10000 (milliseconds)
+	            dryLevel: this.dry,
+	            wetLevel: this.wet,
+	            feedback: this.feedback,
+	            delayTimeLeft: this.delayTimeLeft,
+	            delayTimeRight: this.delayTimeRight,
+	            bypass: this.bypass
 	        });
 	    }
 
-	    //TODO implement get properties method....
+	    _createClass(PingPongDelay, [{
+	        key: 'getProperties',
+	        value: function getProperties() {
+	            return {
+	                dry: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 1
+	                },
+	                wet: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                feedback: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                },
+	                delayTimeLeft: {
+	                    type: 'number',
+	                    bounds: [1, 10000],
+	                    defaultValue: 1
+	                },
+	                delayTimeRight: {
+	                    type: 'number',
+	                    bounds: [1, 10000],
+	                    defaultValue: 1
+	                },
+	                bypass: {
+	                    type: 'number',
+	                    bounds: [0, 1],
+	                    defaultValue: 0
+	                }
+	            };
+	        }
+	    }]);
+
 	    return PingPongDelay;
 	})(_coreEffect2['default']);
 
