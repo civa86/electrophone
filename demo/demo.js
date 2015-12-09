@@ -97,13 +97,13 @@
 
         synth
             .modulator('FM-A', {
-                type:  synth.VARS.WAVE_SINE,
+                wave:  synth.VARS.WAVE_SINE,
                 freq:  1,
                 level: 100,
                 link:  'OSC-A'
             })
             .modulator('FM-B', {
-                type:  synth.VARS.WAVE_SINE,
+                wave:  synth.VARS.WAVE_SINE,
                 freq:  5,
                 level: 100,
                 link:  'OSC-B'
@@ -118,7 +118,7 @@
                 release: 10
             })
             .oscillator('OSC-A', {
-                type:  synth.VARS.WAVE_SQUARE,
+                wave:  synth.VARS.WAVE_SQUARE,
                 level: 50,
                 link:  'PAN-A'
             })
@@ -127,7 +127,7 @@
                 value: -1
             })
             .oscillator('OSC-B', {
-                type:  synth.VARS.WAVE_SINE,
+                wave:  synth.VARS.WAVE_SINE,
                 level: 100,
                 link:  'PAN-B'
             })
@@ -136,7 +136,7 @@
                 value: 1
             })
             .modulator('FM-NOISE', {
-                type:  synth.VARS.WAVE_SQUARE,
+                wave:  synth.VARS.WAVE_SQUARE,
                 freq:  10,
                 level: 100,
                 link:  'NOISE-W'
@@ -155,7 +155,7 @@
                 link:  'FILT1'
             })
             .modulator('FM-FILT', {
-                type:   synth.VARS.WAVE_SINE,
+                wave:   synth.VARS.WAVE_SINE,
                 freq:   5,
                 level:  100,
                 link:   'FILT1',
@@ -171,17 +171,18 @@
                 release: 100
             })
             .filter('FILT1', {
-                type: synth.VARS.FILTER_LOWPASS,
+                filterType: synth.VARS.FILTER_LOWPASS,
                 freq: 500,
                 q:    1,
-                link: synth.VARS.MASTER
+                link: 'FX'
             })
-            //.cabinet('FX', {
-            //    link:        synth.VARS.MASTER,
-            //    makeupGain:  1,
-            //    impulsePath: './impulse/diffusor4.wav',
-            //    bypass:      0
-            //})
+            .cabinet('FX', {
+                link:        synth.VARS.MASTER,
+                makeupGain:  1,
+                impulsePath: './impulse/diffusor4.wav',
+                bypass:      0,
+                asd: 1
+            })
             //.bitcrusher('FX', {
             //    link:        synth.VARS.MASTER
             //})
