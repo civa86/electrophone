@@ -6,7 +6,8 @@ class Tremolo extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('Tremolo', 'output', {
+        this.setMainEffect('Tremolo', 'output');
+        this.setMainProperties({
             intensity: this.intensity,
             rate: this.rate,
             stereoPhase: this.stereoPhase,

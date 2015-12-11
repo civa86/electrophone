@@ -173,7 +173,7 @@
             .filter('FILT1', {
                 filterType: synth.VARS.FILTER_LOWPASS,
                 freq: 500,
-                q:    1,
+                q:    10,
                 link: 'FX'
             })
             .cabinet('FX', {

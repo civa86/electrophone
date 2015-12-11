@@ -6,7 +6,8 @@ class WahWah extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('WahWah', 'filterBp', {
+        this.setMainEffect('WahWah', 'filterBp');
+        this.setMainProperties({
             automode:         this.automode,
             baseFrequency:    this.baseFrequency,
             excursionOctaves: this.excursionOctaves,

@@ -6,7 +6,7 @@ class Noise extends SoundSource {
 
     constructor (props) {
         super(props);
-
+        //TODO separate in a method to call on update...like setMainProperties of Effect!!
         this.defaultLineInProperty = 'detune';
         this.main = AudioContext.createBufferSource();
         this.main.connect(this.envelope);

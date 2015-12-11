@@ -5,7 +5,7 @@ class Master extends Module {
 
     constructor (props) {
         super(props);
-
+        //TODO check for method to call on update...like setMainProperties of Effect!!
         this.main = AudioContext.createGain();
         this.link = null;
     }

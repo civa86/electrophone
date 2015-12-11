@@ -12,9 +12,16 @@ class Effect extends Module {
 
     setMainEffect (type, mainEffect, props) {
         //TODO set an array of main effects??
-        //TODO manage props internally....get from module with getProperties method and pass to Tuna
         this.main = new EffectManager[type](props);
         this.mainEffect = this.main[mainEffect];
+    }
+
+    setMainProperties (props) {
+        Object.keys(props).forEach((e) => {
+            if (this.main[e]) {
+                this.main[e] = props[e];
+            }
+        });
     }
 
     createGain () {

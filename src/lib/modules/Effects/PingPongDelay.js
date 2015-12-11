@@ -6,7 +6,8 @@ class PingPongDelay extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('PingPongDelay', 'delayLeft', {
+        this.setMainEffect('PingPongDelay', 'delayLeft');
+        this.setMainProperties({
             dryLevel: this.dry,
             wetLevel: this.wet,
             feedback: this.feedback,

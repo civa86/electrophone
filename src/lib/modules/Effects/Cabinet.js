@@ -7,8 +7,12 @@ class Cabinet extends Effect {
         super(props);
 
         this.setMainEffect('Cabinet', 'output', {
-            makeupGain: this.makeupGain,
             impulsePath: this.impulsePath,
+            makeupGain: 1
+        });
+        this.setMainProperties({
+            impulsePath: this.impulsePath,
+            makeupGain: this.makeupGain,
             bypass: this.bypass
         });
     }

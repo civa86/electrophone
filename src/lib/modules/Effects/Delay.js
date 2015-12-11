@@ -6,7 +6,8 @@ class Delay extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('Delay', 'filter', {
+        this.setMainEffect('Delay', 'filter');
+        this.setMainProperties({
             dryLevel: this.dry,
             wetLevel: this.wet,
             feedback: this.feedback,

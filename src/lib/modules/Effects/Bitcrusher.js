@@ -6,7 +6,8 @@ class Bitcrusher extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('Bitcrusher', 'output', {
+        this.setMainEffect('Bitcrusher', 'output');
+        this.setMainProperties({
             bits: this.bits,
             normfreq: this.normfreq,
             bufferSize: this.bufferSize

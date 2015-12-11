@@ -6,7 +6,8 @@ class Overdrive extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('Overdrive', 'output', {
+        this.setMainEffect('Overdrive', 'output');
+        this.setMainProperties({
             outputGain: this.outputGain,
             drive: this.drive,
             curveAmount: this.curveAmount,

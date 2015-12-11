@@ -6,7 +6,8 @@ class MoogFilter extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('MoogFilter', 'output', {
+        this.setMainEffect('MoogFilter', 'output');
+        this.setMainProperties({
             cutoff:     this.cutoff,
             resonance:  this.resonance,
             bufferSize: this.bufferSize

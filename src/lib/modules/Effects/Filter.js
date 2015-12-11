@@ -6,7 +6,8 @@ class Filter extends Effect {
     constructor (props) {
         super(props);
 
-        this.setMainEffect('Filter', 'filter', {
+        this.setMainEffect('Filter', 'filter');
+        this.setMainProperties({
             frequency: this.freq,
             Q: this.q,
             gain: this.filterGain,
