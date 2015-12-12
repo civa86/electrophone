@@ -54,8 +54,6 @@
 
 	var win = window || {};
 
-	//TODO manage module.exports....etc...
-
 	win.WebSynth = _WebSynth2['default'];
 
 /***/ },
@@ -175,9 +173,19 @@
 	        key: 'setMainEffect',
 	        value: function setMainEffect(type, mainEffect, props) {
 	            //TODO set an array of main effects??
-	            //TODO manage props internally....get from module with getProperties method and pass to Tuna
 	            this.main = new _EffectManager2['default'][type](props);
 	            this.mainEffect = this.main[mainEffect];
+	        }
+	    }, {
+	        key: 'setMainProperties',
+	        value: function setMainProperties(props) {
+	            var _this = this;
+
+	            Object.keys(props).forEach(function (e) {
+	                if (_this.main[e]) {
+	                    _this.main[e] = props[e];
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'createGain',
@@ -938,7 +946,8 @@
 
 	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('Bitcrusher', 'output', {
+	        this.setMainEffect('Bitcrusher', 'output');
+	        this.setMainProperties({
 	            bits: this.bits,
 	            normfreq: this.normfreq,
 	            bufferSize: this.bufferSize
@@ -1009,8 +1018,12 @@
 	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props);
 
 	        this.setMainEffect('Cabinet', 'output', {
-	            makeupGain: this.makeupGain,
 	            impulsePath: this.impulsePath,
+	            makeupGain: 1
+	        });
+	        this.setMainProperties({
+	            impulsePath: this.impulsePath,
+	            makeupGain: this.makeupGain,
 	            bypass: this.bypass
 	        });
 	    }
@@ -1077,7 +1090,8 @@
 
 	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('Delay', 'filter', {
+	        this.setMainEffect('Delay', 'filter');
+	        this.setMainProperties({
 	            dryLevel: this.dry,
 	            wetLevel: this.wet,
 	            feedback: this.feedback,
@@ -1165,7 +1179,8 @@
 
 	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('Filter', 'filter', {
+	        this.setMainEffect('Filter', 'filter');
+	        this.setMainProperties({
 	            frequency: this.freq,
 	            Q: this.q,
 	            gain: this.filterGain,
@@ -1246,7 +1261,8 @@
 
 	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('MoogFilter', 'output', {
+	        this.setMainEffect('MoogFilter', 'output');
+	        this.setMainProperties({
 	            cutoff: this.cutoff,
 	            resonance: this.resonance,
 	            bufferSize: this.bufferSize
@@ -1316,7 +1332,8 @@
 
 	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('Overdrive', 'output', {
+	        this.setMainEffect('Overdrive', 'output');
+	        this.setMainProperties({
 	            outputGain: this.outputGain,
 	            drive: this.drive,
 	            curveAmount: this.curveAmount,
@@ -1398,7 +1415,8 @@
 
 	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('PingPongDelay', 'delayLeft', {
+	        this.setMainEffect('PingPongDelay', 'delayLeft');
+	        this.setMainProperties({
 	            dryLevel: this.dry,
 	            wetLevel: this.wet,
 	            feedback: this.feedback,
@@ -1486,7 +1504,8 @@
 
 	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('Tremolo', 'output', {
+	        this.setMainEffect('Tremolo', 'output');
+	        this.setMainProperties({
 	            intensity: this.intensity,
 	            rate: this.rate,
 	            stereoPhase: this.stereoPhase,
@@ -1562,7 +1581,8 @@
 
 	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props);
 
-	        this.setMainEffect('WahWah', 'filterBp', {
+	        this.setMainEffect('WahWah', 'filterBp');
+	        this.setMainProperties({
 	            automode: this.automode,
 	            baseFrequency: this.baseFrequency,
 	            excursionOctaves: this.excursionOctaves,
@@ -1656,6 +1676,7 @@
 	        _classCallCheck(this, Envelope);
 
 	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
+	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	    }
 
 	    _createClass(Envelope, [{
@@ -1805,7 +1826,7 @@
 	        _classCallCheck(this, Master);
 
 	        _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).call(this, props);
-
+	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createGain();
 	        this.link = null;
 	    }
@@ -1868,7 +1889,7 @@
 	        _classCallCheck(this, Pan);
 
 	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props);
-
+	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createStereoPanner();
 	        this.main.pan.value = this.value;
 	        this.main.connect(this.envelope);
@@ -1930,7 +1951,7 @@
 	        _classCallCheck(this, Modulator);
 
 	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props);
-
+	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createOscillator();
 	        this.main.type = this.wave;
 	        this.main.connect(this.envelope);
@@ -2006,7 +2027,7 @@
 	        _classCallCheck(this, Noise);
 
 	        _get(Object.getPrototypeOf(Noise.prototype), 'constructor', this).call(this, props);
-
+	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        this.defaultLineInProperty = 'detune';
 	        this.main = _AudioContext2['default'].createBufferSource();
 	        this.main.connect(this.envelope);
@@ -2169,7 +2190,7 @@
 	        _classCallCheck(this, Oscillator);
 
 	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props);
-
+	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createOscillator();
 	        this.main.type = this.wave;
 	        this.main.connect(this.envelope);
