@@ -1,8 +1,6 @@
-import Synth from './WebSynth'
+import WebSynth from './WebSynth'
 
 const win = window || {};
 
-//TODO manage module.exports....etc...
-
-win.WebSynth = Synth;
+win.WebSynth = WebSynth;
 
