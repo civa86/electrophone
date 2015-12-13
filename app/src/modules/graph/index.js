@@ -3,5 +3,5 @@ import GraphManager from './GraphManager'
 import GraphDirective from './GraphDirective'
 
 angular.module('WS.Graph', [])
-    .factory('synthGraphManager', ['$q', GraphManager])
-    .directive('synthGraph', ['synthGraphManager', GraphDirective]);
+    .factory('GraphManager', ['$q', '$rootScope', GraphManager])
+    .directive('graph', ['$rootScope', 'GraphManager', GraphDirective]);

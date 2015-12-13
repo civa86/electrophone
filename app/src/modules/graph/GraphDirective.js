@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-function GraphDirective (graphManager) {
+function GraphDirective ($rootScope, graphManager) {
     return {
         restrict: 'EA',
         replace: true,
@@ -17,17 +17,28 @@ function GraphDirective (graphManager) {
                 $scope.$apply();
             }
 
+            function openControlPanel () {
+                $('#control-panel').collapse('show');
+            }
+
+            function closeControlPanel () {
+                $('#control-panel').collapse('hide');
+            }
+
             function bindGraph (graph) {
                 graph.on('click', 'node', function(e) {
                     let ele = e.cyTarget;
                     if (ele.hasClass('selected')) {
                         ele.removeClass('selected');
                         setCurrentNode(null);
+                        closeControlPanel();
                     } else {
                         graph.$('node.selected').removeClass('selected');
                         ele.addClass('selected');
                         setCurrentNode(ele.id());
+                        openControlPanel();
                     }
+                    $rootScope.$emit('graphResize');
                 });
             }
 

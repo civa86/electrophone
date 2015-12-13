@@ -2,8 +2,10 @@
 import '../humans.txt'
 import '../robots.txt'
 
+//BOOTSTRAP
+import 'bootstrap-webpack'
+
 //STYLES
-import 'bootstrap/dist/css/bootstrap.css'
 import '../less/screen.less'
 
 //JAVASCRIPT
@@ -21,6 +23,5 @@ angular.module('myApp', [
         'WS.Graph'
     ])
     .controller('ApplicationController', [
-        'WebSynth', 'synthGraphManager',
-        ApplicationController
+        '$rootScope', 'WebSynthManager', 'GraphManager', ApplicationController
     ]);

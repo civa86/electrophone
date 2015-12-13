@@ -36,6 +36,7 @@
     "bootstrap": "3.3.x",
     "cytoscape": "2.5.x",
     "jquery-knob": "1.2.x",
+    "bootstrap-webpack": "0.0.x",
     "webpack": "^1.9.11"
   },
   "scripts": {

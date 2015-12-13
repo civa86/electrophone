@@ -1,5 +1,5 @@
 import angular from 'angular'
-import WebSynthFactory from './WebSynthFactory'
+import WebSynthManager from './WebSynthManager'
 
 angular.module('WS.WebSynth', [])
-    .factory('WebSynth', [WebSynthFactory]);
+    .factory('WebSynthManager', [WebSynthManager]);

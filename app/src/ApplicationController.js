@@ -1,6 +1,8 @@
-function ApplicationController (webSynth, graphManager) {
-    this.graphReady = false;
-    this.currentNode = null;
+function ApplicationController ($rootScope, webSynth, graphManager) {
+    let ctrl = this;
+
+    ctrl.graphReady = false;
+    ctrl.currentNode = null;
 
     function addNode () {
         graphManager.addNode({
@@ -8,7 +10,12 @@ function ApplicationController (webSynth, graphManager) {
         });
     }
 
-    this.addNode = addNode;
+    function updateGraph () {
+        $rootScope.$emit('graphResize');
+    }
+
+    ctrl.addNode = addNode;
+    ctrl.updateGraph = updateGraph;
 }
 
 export default ApplicationController;

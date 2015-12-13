@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html ng-app="myApp" id="ng-app" class="no-js"><!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="format-detection" content="telephone=no">
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html ng-app="myApp" id="ng-app" class="no-js"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
 
-        <title>My AngularJS App</title>
-        <meta name="description" content="" />
-        <meta name="keywords" content="">
+    <title>My AngularJS App</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="">
 
-        <link type="text/plain" rel="author" href="humans.txt" />
+    <link type="text/plain" rel="author" href="humans.txt"/>
 
-        <!-- ICONS -->
-        <link rel="icon" href="" />
-        <link rel="apple-touch-icon" href="" />
+    <!-- ICONS -->
+    <link rel="icon" href=""/>
+    <link rel="apple-touch-icon" href=""/>
 
-        <!-- FACEBOOK METAs -->
-        <meta property="og:title" content="">
-        <meta property="og:description" content="">
-        <meta property="og:image" content="">
-    </head>
-    <body ng-cloak="">
-        <div id="main-wrapper" class="container-fluid" ng-controller="ApplicationController as appCtrl">
-            <header class="row">
-                <div class="col-xs-6">
-                    {{appCtrl.currentNode}}
-                </div>
-                <div class="col-xs-6">
-                    <button ng-click="appCtrl.addNode()">Add Node</button>
-                </div>
-            </header>
-            <section id="content" class="row">
-                <div class="col-xs-12">
-                    <div data-synth-graph
-                         data-current-node="appCtrl.currentNode"
-                         data-graph-ready="appCtrl.graphReady"></div>
-                </div>
-            </section>
+    <!-- FACEBOOK METAs -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+</head>
+<body ng-cloak="">
+<div id="main-wrapper" ng-controller="ApplicationController as appCtrl">
+    <header class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                {{appCtrl.currentNode}}
+            </div>
+            <div class="col-xs-6">
+                <button class="btn"
+                        role="button"
+                        ng-click="appCtrl.updateGraph()"
+                        data-toggle="collapse" data-target="#nodes-menu">Add Node</button>
+            </div>
         </div>
-    </body>
+        <div id="control-panel" class="row collapse">
+            <div class="col-xs-12" style="height: 150px">
+                control panel
+            </div>
+        </div>
+        <div id="nodes-menu" class="row collapse">
+            <div class="col-xs-12" style="height: 100px">
+                asd
+            </div>
+        </div>
+    </header>
+    <section id="content" class="row">
+        <div class="col-xs-12">
+            <div data-graph
+                 data-current-node="appCtrl.currentNode"
+                 data-graph-ready="appCtrl.graphReady"></div>
+        </div>
+    </section>
+</div>
+</body>
 </html>

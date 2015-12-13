@@ -56,6 +56,10 @@ module.exports = {
                 exclude: /node_modules|dist/
             },
             {
+                test: /bootstrap\/js\//,
+                loader: 'imports?jQuery=jquery'
+            },
+            {
                 test:   /\.(woff|woff2|ttf|eot)$/,
                 loader: 'file?name=assets/fonts/[name].[ext]'
             },

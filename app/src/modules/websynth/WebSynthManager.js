@@ -1,6 +1,6 @@
 import WebSynth from '../../../../src/WebSynth'
 
-function WebSynthFactory () {
+function WebSynthManager () {
     let synth = new WebSynth(),
         service = {};
 
@@ -13,4 +13,4 @@ function WebSynthFactory () {
     return service;
 }
 
-export default WebSynthFactory
+export default WebSynthManager

@@ -2,7 +2,7 @@ import cytoscape from 'cytoscape'
 import $ from 'jquery'
 import style from './GraphStyle'
 
-function GraphManager ($q) {
+function GraphManager ($q, $rootScope) {
     let service = {},
         graph;
 
@@ -36,6 +36,7 @@ function GraphManager ($q) {
                 ],
                 ready:     function () {
                     graph = this;
+                    graph.reset();
                     def.resolve(graph);
                 }
             };
@@ -52,6 +53,12 @@ function GraphManager ($q) {
 
     service.createGraph = createGraph;
     service.addNode = addNode;
+
+    $rootScope.$on('graphResize', function () {
+        if (graph) {
+            graph.resize();
+        }
+    });
 
     return service;
 }
