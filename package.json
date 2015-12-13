@@ -12,6 +12,16 @@
     "babel": "6.x",
     "babel-core": "^5.6.18",
     "babel-loader": "^5.1.4",
+    "autoprefixer": "^6.0.3",
+    "html-webpack-plugin": "^1.6.2",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "postcss-loader": "^0.8.0",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.13.0",
+    "css-loader": "^0.23.0",
+    "file-loader": "^0.8.4",
     "isparta": "3.0.4",
     "isparta-loader": "0.2.0",
     "karma": "0.13.x",
@@ -20,15 +30,19 @@
     "karma-jasmine": "~0.3.5",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "1.7.x",
+    "tunajs": "0.4.x",
+    "jquery": "1.11.x",
+    "angular": "1.4.x",
+    "bootstrap": "3.3.x",
+    "cytoscape": "2.5.x",
+    "jquery-knob": "1.2.x",
     "webpack": "^1.9.11"
-  },
-  "dependencies": {
-    "tunajs": "0.4.x"
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "develop": "webpack --config webpack.config.js",
-    "build": "webpack --config webpack.config.js -build",
-    "dist": "npm run test; npm run build"
+    "lib-dev": "webpack --config webpack.lib.config.js",
+    "lib-build": "webpack --config webpack.lib.config.js -build",
+    "lib-dist": "npm run test; npm run lib-build",
+    "app-dev": "webpack --config webpack.app.config.js"
   }
 }
