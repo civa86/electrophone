@@ -12,49 +12,46 @@ function GraphManager ($q) {
             screenCenterY = ($(window).height() / 2),
             config;
 
-        config = {
-            container: element,
-            elements: [
-                {
-                    group: 'nodes',
-                    data: {
-                        id: 'master'
-                    },
-                    position: {
-                        x: screenCenterX,
-                        y: screenCenterY
-                    },
-                    style: {
-                        width: 100,
-                        height: 100
-                    },
-                    locked: true
+        if (graph) {
+            def.reject();
+        } else {
+            config = {
+                container: element,
+                elements:  [
+                    {
+                        group:    'nodes',
+                        data:     {
+                            id: 'master'
+                        },
+                        position: {
+                            x: screenCenterX,
+                            y: screenCenterY
+                        },
+                        style:    {
+                            width:  100,
+                            height: 100
+                        },
+                        locked:   true
+                    }
+                ],
+                ready:     function () {
+                    graph = this;
+                    def.resolve(graph);
                 }
-            ],
-            ready: function () {
-                graph = this;
-                bindGraph();
-                def.resolve();
-            }
-        };
-        cytoscape(Object.assign(config, style));
+            };
+            cytoscape(Object.assign(config, style));
+        }
 
         return def.promise;
     }
 
-    function bindGraph () {
-        graph.on('click', 'node', function(e) {
-            let ele = e.cyTarget;
-            if (ele.hasClass('selected')) {
-                ele.removeClass('selected');
-            } else {
-                graph.$('node.selected').removeClass('selected');
-                ele.addClass('selected')
-            }
-        });
+    function addNode (elem) {
+        graph.add(elem);
+        graph.layout(style.layout);
     }
 
     service.createGraph = createGraph;
+    service.addNode = addNode;
 
     return service;
 }

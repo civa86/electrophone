@@ -12,8 +12,8 @@ const style = {
         {
             selector: 'node',
             style: {
-                width: 50,
-                height: 50,
+                width: 80,
+                height: 80,
                 'overlay-opacity': 0
             }
         },
@@ -24,8 +24,8 @@ const style = {
             }
         }
     ],
-    zoomingEnabled: false,
-    userZoomingEnabled: false,
+    zoomingEnabled: true,
+    userZoomingEnabled: true,
     boxSelectionEnabled: false
 };
 

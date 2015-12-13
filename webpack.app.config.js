@@ -5,6 +5,8 @@ var path = require('path'),
     autoprefixer = require('autoprefixer'),
     config = {};
 
+//TODO add ng-template loader....https://github.com/WearyMonkey/ngtemplate-loader
+
 //-------------- CONFIGURATION ------------------------
 if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1) {
     console.log('/***** APPLICATION BUILD ****/');

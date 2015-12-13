@@ -26,10 +26,22 @@
         <meta property="og:image" content="">
     </head>
     <body ng-cloak="">
-        <div id="main-wrapper" class="container" ng-controller="ApplicationController as appCtrl">
-            {{::appCtrl.name}} {{appCtrl.graphReady | json}}
-            <span class="glyphicon glyphicon-eur"></span>
-            <div data-synth-graph data-graph-ready="appCtrl.graphReady"></div>
+        <div id="main-wrapper" class="container-fluid" ng-controller="ApplicationController as appCtrl">
+            <header class="row">
+                <div class="col-xs-6">
+                    {{appCtrl.currentNode}}
+                </div>
+                <div class="col-xs-6">
+                    <button ng-click="appCtrl.addNode()">Add Node</button>
+                </div>
+            </header>
+            <section id="content" class="row">
+                <div class="col-xs-12">
+                    <div data-synth-graph
+                         data-current-node="appCtrl.currentNode"
+                         data-graph-ready="appCtrl.graphReady"></div>
+                </div>
+            </section>
         </div>
     </body>
 </html>

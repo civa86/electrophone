@@ -21,6 +21,6 @@ angular.module('myApp', [
         'WS.Graph'
     ])
     .controller('ApplicationController', [
-        'WebSynth',
+        'WebSynth', 'synthGraphManager',
         ApplicationController
     ]);
