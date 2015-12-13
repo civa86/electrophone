@@ -5,17 +5,33 @@ var path = require('path'),
     autoprefixer = require('autoprefixer'),
     config = {};
 
-console.log('/***** APPLICATION DEVELOPMENT ****/');
-config.watch = true;
-config.outputFile = 'js/bundle.js';
-config.plugins = [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new HtmlWebpackPlugin({
-        template: path.join(__dirname, 'app/index.html'),
-        inject:   'body'
-    }),
-    new ExtractTextPlugin('screen.css')
-];
+//-------------- CONFIGURATION ------------------------
+if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1) {
+    console.log('/***** APPLICATION BUILD ****/');
+    config.watch = false;
+    config.outputFile = 'js/bundle.min.js';
+    config.plugins = [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'app/index.html'),
+            inject:   'body'
+        }),
+        new ExtractTextPlugin('screen.css')
+    ];
+} else {
+    console.log('/***** APPLICATION DEVELOPMENT ****/');
+    config.watch = true;
+    config.outputFile = 'js/bundle.js';
+    config.plugins = [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'app/index.html'),
+            inject:   'body'
+        }),
+        new ExtractTextPlugin('screen.css')
+    ];
+}
 
 //-------------- EXPORT -------------------------------
 module.exports = {

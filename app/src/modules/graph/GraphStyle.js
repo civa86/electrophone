@@ -20,7 +20,7 @@ const style = {
         {
             selector: 'node.selected',
             style: {
-                'background-color': 'black'
+                'background-color': 'green'
             }
         }
     ],

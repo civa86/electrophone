@@ -43,6 +43,7 @@
     "lib-dev": "webpack --config webpack.lib.config.js",
     "lib-build": "webpack --config webpack.lib.config.js -build",
     "lib-dist": "npm run test; npm run lib-build",
-    "app-dev": "webpack --config webpack.app.config.js"
+    "app-dev": "webpack --config webpack.app.config.js",
+    "app-build": "webpack --config webpack.app.config.js -build"
   }
 }
