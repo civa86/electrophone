@@ -22,6 +22,12 @@ angular.module('myApp', [
         'WS.WebSynth',
         'WS.Graph'
     ])
+    //TODO manage filters...
+    .filter('nodename', function () {
+        return function (input) {
+            return (input) ? input.id() : ' ... ';
+        }
+    })
     .controller('ApplicationController', [
         '$rootScope', 'WebSynthManager', 'GraphManager', ApplicationController
     ]);

@@ -10,12 +10,7 @@ function ApplicationController ($rootScope, webSynth, graphManager) {
         });
     }
 
-    function updateGraph () {
-        $rootScope.$emit('graphResize');
-    }
-
     ctrl.addNode = addNode;
-    ctrl.updateGraph = updateGraph;
 }
 
 export default ApplicationController;

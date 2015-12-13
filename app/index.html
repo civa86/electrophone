@@ -34,31 +34,54 @@
     <header class="container-fluid">
         <div class="row">
             <div class="col-xs-6">
-                {{appCtrl.currentNode}}
+                <button class="btn btn-info"
+                        type="button"
+                        data-update-graph-btn=""
+                        data-toggle="collapse" href="#menu">Menu
+                </button>
             </div>
             <div class="col-xs-6">
-                <button class="btn"
-                        role="button"
-                        ng-click="appCtrl.updateGraph()"
-                        data-toggle="collapse" data-target="#nodes-menu">Add Node</button>
-            </div>
-        </div>
-        <div id="control-panel" class="row collapse">
-            <div class="col-xs-12" style="height: 150px">
-                control panel
-            </div>
-        </div>
-        <div id="nodes-menu" class="row collapse">
-            <div class="col-xs-12" style="height: 100px">
-                asd
+                <button class="btn btn-info"
+                        role="tab"
+                        data-update-graph-btn=""
+                        data-toggle="tab" data-target="#nodes-menu">Add Node
+                </button>
+                <button class="btn btn-info"
+                        role="tab"
+                        data-update-graph-btn=""
+                        data-toggle="tab" data-target="#control-panel">{{appCtrl.currentNode | nodename}}
+                </button>
             </div>
         </div>
     </header>
-    <section id="content" class="row">
-        <div class="col-xs-12">
-            <div data-graph
-                 data-current-node="appCtrl.currentNode"
-                 data-graph-ready="appCtrl.graphReady"></div>
+    <section id="menu" class="container-fluid collapse in">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="nodes-menu">
+                        <button class="btn btn-info"
+                                ng-click="appCtrl.addNode()">OSCILLATOR
+                        </button>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="control-panel">
+                        <div ng-show="!appCtrl.currentNode">
+                            Select a Node and tweak it!
+                        </div>
+                        <div ng-show="appCtrl.currentNode">
+                            control panel
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="content" class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div data-graph
+                     data-current-node="appCtrl.currentNode"
+                     data-graph-ready="appCtrl.graphReady"></div>
+            </div>
         </div>
     </section>
 </div>

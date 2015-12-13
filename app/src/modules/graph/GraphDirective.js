@@ -10,19 +10,11 @@ function GraphDirective ($rootScope, graphManager) {
             currentNode: '='
         },
         link: function ($scope, element) {
-            let graphHeight = $(window).height() - $('header').height();
+            let graphHeight = $(window).height() - $('header').height() - $('#menu').height();
 
             function setCurrentNode (node) {
-                $scope.currentNode = node;
+                $scope.currentNode = node ;
                 $scope.$apply();
-            }
-
-            function openControlPanel () {
-                $('#control-panel').collapse('show');
-            }
-
-            function closeControlPanel () {
-                $('#control-panel').collapse('hide');
             }
 
             function bindGraph (graph) {
@@ -31,19 +23,17 @@ function GraphDirective ($rootScope, graphManager) {
                     if (ele.hasClass('selected')) {
                         ele.removeClass('selected');
                         setCurrentNode(null);
-                        closeControlPanel();
                     } else {
                         graph.$('node.selected').removeClass('selected');
                         ele.addClass('selected');
-                        setCurrentNode(ele.id());
-                        openControlPanel();
+                        setCurrentNode(ele);
                     }
                     $rootScope.$emit('graphResize');
                 });
             }
 
             $(element).height(graphHeight);
-            graphManager.createGraph(element).then(
+            graphManager.createGraph(element, graphHeight).then(
                 function (graph) {
                     $scope.graphReady = true;
                     bindGraph(graph);
