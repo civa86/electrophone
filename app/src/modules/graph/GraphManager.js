@@ -1,8 +1,8 @@
-import cytoscape from 'cytoscape'
 import $ from 'jquery'
+import cytoscape from 'cytoscape'
 import style from './GraphStyle'
 
-function GraphManager ($q, $rootScope) {
+function GraphManager ($q) {
     let service = {},
         graph;
 
@@ -65,20 +65,23 @@ function GraphManager ($q, $rootScope) {
         return def.promise;
     }
 
-    function addNode (elem) {
-        let collection = graph.add(elem),
-            oldZoom = graph.zoom(),
-            oldPos = graph.$('#master').position();
-
-        console.log(oldPos);
+    function addEdge (source, target) {
         graph.add({
             group: 'edges',
             data: {
-                source: collection[0].id(),
-                target: 'master'
+                source: source,
+                target: target
             }
-
         });
+
+        resizeGraph();
+    }
+
+    function addNode (elem) {
+        let oldZoom = graph.zoom(),
+            oldPos = graph.$('#master').position();
+
+        graph.add(elem)
 
         reloadLayout();
         graph.zoom({
@@ -87,11 +90,15 @@ function GraphManager ($q, $rootScope) {
         });
     }
 
+    function removeElem (elem) {
+        graph.remove(elem)
+    }
+
     service.createGraph = createGraph;
     service.resizeGraph = resizeGraph;
     service.addNode = addNode;
-
-    //$rootScope.$on('graphResize', resizeGraph);
+    service.addEdge = addEdge;
+    service.removeElem = removeElem;
 
     return service;
 }

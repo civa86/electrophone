@@ -3,7 +3,8 @@ import '../humans.txt'
 import '../robots.txt'
 
 //BOOTSTRAP
-import 'bootstrap-webpack'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'imports?jQuery=jquery!bootstrap/dist/js/bootstrap'
 
 //STYLES
 import '../less/screen.less'

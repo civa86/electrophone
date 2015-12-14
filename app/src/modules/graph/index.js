@@ -4,6 +4,6 @@ import GraphDirective from './GraphDirective'
 import UpdateGraphBtnDirective from './UpdateGraphBtnDirective'
 
 angular.module('WS.Graph', [])
-    .factory('GraphManager', ['$q', '$rootScope', GraphManager])
+    .factory('GraphManager', ['$q', GraphManager])
     .directive('updateGraphBtn', ['GraphManager', UpdateGraphBtnDirective])
-    .directive('graph', ['$rootScope', 'GraphManager', GraphDirective]);
+    .directive('graph', ['GraphManager', GraphDirective]);
