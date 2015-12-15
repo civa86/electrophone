@@ -39,6 +39,11 @@
                         data-update-graph-btn=""
                         data-toggle="collapse" href="#menu">Menu
                 </button>
+                <button class="btn btn-info"
+                        ng-class="{'btn-info': !appCtrl.linkMode, 'btn-danger': appCtrl.linkMode}"
+                        type="button"
+                        ng-click="appCtrl.toggleLinkMode()">Link Nodes
+                </button>
             </div>
             <div class="col-xs-6">
                 <button class="btn btn-info"

@@ -22,6 +22,18 @@ const style = {
             style: {
                 'background-color': 'green'
             }
+        },
+        {
+            selector: 'node.link-mode',
+            style: {
+                'background-color': 'purple'
+            }
+        },
+        {
+            selector: 'node.link-mode-master',
+            style: {
+                'background-color': 'black'
+            }
         }
     ],
     zoomingEnabled: true,
