@@ -9,6 +9,7 @@ function GraphManager ($rootScope, $q) {
         isDragging,
         sourceLinkNode,
         targetLinkNode,
+        screenCenter,
         startX,
         startY,
         graph;
@@ -109,15 +110,14 @@ function GraphManager ($rootScope, $q) {
 
     }
 
-    function createGraph (element, graphHeight) {
+    function createGraph (element, screenC) {
         let def = $q.defer(),
-            screenCenterX = ($(window).width() / 2),
-            screenCenterY = (graphHeight / 2),
             config;
 
         if (graph) {
             def.reject();
         } else {
+            screenCenter = screenC || {x: 0, y: 0};
             config = {
                 container: element,
                 elements:  [
@@ -127,8 +127,8 @@ function GraphManager ($rootScope, $q) {
                             id: 'master'
                         },
                         position: {
-                            x: screenCenterX,
-                            y: screenCenterY
+                            x: screenCenter.x,
+                            y: screenCenter.y
                         },
                         style:    {
                             width:  100,
@@ -184,20 +184,22 @@ function GraphManager ($rootScope, $q) {
     }
 
     function addNode (elem) {
-        let oldZoom = graph.zoom(),
-            oldPos = graph.$('#master').position();
+        if (graph) {
+            let e = elem || {};
+            e.position = {
+                x: screenCenter.x,
+                y: screenCenter.y - 150
+            };
+            graph.add(e);
+        }
 
-        graph.add(elem);
-
-        reloadLayout();
-        graph.zoom({
-            level:    oldZoom,
-            position: oldPos
-        });
+        resizeGraph();
     }
 
     function removeElem (elem) {
-        graph.remove(elem)
+        if (graph) {
+            graph.remove(elem);
+        }
     }
 
     service.createGraph = createGraph;

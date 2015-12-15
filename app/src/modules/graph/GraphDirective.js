@@ -10,7 +10,11 @@ function GraphDirective ($rootScope, graphManager) {
             currentNode: '='
         },
         link:     function ($scope, element) {
-            let graphHeight = $(window).height() - $('header').height() - $('#menu').height();
+            let graphHeight = $(window).height() - $('header').height() - $('#menu').height(),
+                screenCenter = {
+                    x: $(window).width() / 2,
+                    y: graphHeight / 2
+                };
 
             function onNodeClicked (event, params) {
                 $scope.currentNode = (params && params.node) ? params.node : null;
@@ -18,7 +22,7 @@ function GraphDirective ($rootScope, graphManager) {
             }
 
             $(element).height(graphHeight);
-            graphManager.createGraph(element, graphHeight).then(
+            graphManager.createGraph(element, screenCenter).then(
                 function () {
                     $scope.graphReady = true;
                 }
