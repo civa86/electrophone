@@ -12,6 +12,7 @@ function GraphManager ($rootScope, $q) {
         screenCenter,
         startX,
         startY,
+        canvasCtx,
         graph;
 
     function resetLinks () {
@@ -35,12 +36,16 @@ function GraphManager ($rootScope, $q) {
         }
     }
 
-    function reloadLayout () {
-        if (graph) {
-            graph.layout(style.layout);
-            resizeGraph();
-        }
+    function resetCanvas () {
+        canvasCtx.clearRect(0, 0, $('#graph').width(), $('#graph').height());
     }
+
+    //function reloadLayout () {
+    //    if (graph) {
+    //        graph.layout(style.layout);
+    //        resizeGraph();
+    //    }
+    //}
 
     function bindGraph () {
         resetLinks();
@@ -84,6 +89,19 @@ function GraphManager ($rootScope, $q) {
         graph.on('tapdrag', function (e) {
             if (linkMode && mouseDown && (Math.abs(startX - e.cyPosition.x) > 10 || Math.abs(startY - e.cyPosition.y))) {
                 isDragging = true;
+                resetCanvas();
+                if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
+                    canvasCtx.fillStyle = '#000';
+                    canvasCtx.strokeStyle = '#000';
+                    canvasCtx.lineWidth = 2;
+
+                    canvasCtx.beginPath();
+                    //TODO adjust position with panning and zooming....else disable both gesture during link mode...
+                    canvasCtx.moveTo(sourceLinkNode.position().x, sourceLinkNode.position().y);
+                    canvasCtx.lineTo(e.cyPosition.x, e.cyPosition.y);
+                    canvasCtx.closePath();
+                    canvasCtx.stroke();
+                }
             }
         });
 
@@ -91,6 +109,7 @@ function GraphManager ($rootScope, $q) {
             if (linkMode) {
                 mouseDown = false;
                 if (isDragging) {
+                    resetCanvas();
                     if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
                         console.log('from', sourceLinkNode.id(), 'to', targetLinkNode.id());
                         var edge = sourceLinkNode.connectedEdges();
@@ -99,9 +118,7 @@ function GraphManager ($rootScope, $q) {
                         }
                         addEdge(sourceLinkNode.id(), targetLinkNode.id());
                     }
-                    setTimeout(function () {
-                        isDragging = false;
-                    }, 150);
+                    isDragging = false;
                 }
                 sourceLinkNode = null;
                 targetLinkNode = null;
@@ -117,7 +134,7 @@ function GraphManager ($rootScope, $q) {
         if (graph) {
             def.reject();
         } else {
-            screenCenter = screenC || {x: 0, y: 0};
+            screenCenter = screenC || { x: 0, y: 0 };
             config = {
                 container: element,
                 elements:  [
@@ -138,9 +155,25 @@ function GraphManager ($rootScope, $q) {
                     }
                 ],
                 ready:     function () {
+                    var $canvas = $('<canvas></canvas>');
+
+                    canvasCtx = $canvas[0].getContext('2d');
                     graph = this;
+
+                    $(element).append($canvas);
+
+                    $canvas
+                        .attr('height', $(element).height())
+                        .attr('width', $(element).width())
+                        .css({
+                            position:  'absolute',
+                            top:       0,
+                            left:      0,
+                            'z-index': 999
+                        });
                     bindGraph();
                     resetGraph();
+
                     def.resolve();
                 }
             };
@@ -172,24 +205,59 @@ function GraphManager ($rootScope, $q) {
     }
 
     function addEdge (source, target) {
-        graph.add({
-            group: 'edges',
-            data:  {
-                source: source,
-                target: target
-            }
-        });
+        if (graph) {
+            graph.add({
+                group: 'edges',
+                data:  {
+                    source: source,
+                    target: target
+                }
+            });
+        }
 
         resizeGraph();
     }
 
     function addNode (elem) {
         if (graph) {
-            let e = elem || {};
+            let e = elem || {},
+                delta = 0,
+                finalX,
+                busy = true;
+
+            while (busy && delta >= 0) {
+                let present = false;
+
+                graph.nodes().forEach(function (n) {
+                    if (
+                        n.position().x === screenCenter.x + delta &&
+                        n.position().y === screenCenter.y + (Math.floor(graph.nodes().length / 6) + 1) * 150
+                    ) {
+                        present = true;
+                    }
+                });
+
+                if (present) {
+                    delta = delta + 100;
+                } else {
+                    busy = false;
+                }
+            }
+
+            if (graph.nodes().length % 2 === 0) {
+                finalX = screenCenter.x + delta;
+            } else {
+                finalX = screenCenter.x - (delta + 100);
+            }
+
             e.position = {
-                x: screenCenter.x,
-                y: screenCenter.y - 150
+                x: finalX,
+                y: screenCenter.y + (Math.floor(graph.nodes().length / 6) + 1) * 150
             };
+
+            if (linkMode) {
+                e.classes = 'link-mode'
+            }
             graph.add(e);
         }
 
