@@ -21,7 +21,20 @@ class WebSynth {
         }
 
         this.play = (note) => synth.play(note);
+
         this.stop = (note) => synth.stop(note);
+
+        this.listModules = () => {
+            let methods = Object.keys(Modules),
+                result,
+                tmp;
+            result = methods.reduce((res, e) => {
+                //tmp = new Modules[e]();
+                res[e] = {};//tmp.getProperties();
+                return res;
+            }, {});
+            return result;
+        };
     }
 }
 

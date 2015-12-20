@@ -4,11 +4,11 @@ function WebSynthManager () {
     let synth = new WebSynth(),
         service = {};
 
-    function getSynth () {
-        return synth;
+    function listModules () {
+        return synth.listModules();
     }
 
-    service.getSynth = getSynth;
+    service.listModules = listModules;
 
     return service;
 }

@@ -14,7 +14,8 @@ const style = {
             style: {
                 width: 80,
                 height: 80,
-                'overlay-opacity': 0
+                'overlay-opacity': 0,
+                'background-color': '#333'
             }
         },
         {
@@ -33,6 +34,14 @@ const style = {
             selector: 'node.link-mode-master',
             style: {
                 'background-color': 'black'
+            }
+        },
+        {
+            selector: 'edge',
+            style: {
+                width: 6,
+                'line-color': '#666',
+                'line-style': 'dashed'
             }
         }
     ],

@@ -30,5 +30,5 @@ angular.module('myApp', [
         }
     })
     .controller('ApplicationController', [
-        '$rootScope', 'WebSynthManager', 'GraphManager', ApplicationController
+        '$rootScope', '$scope', '$window', 'WebSynthManager', 'GraphManager', ApplicationController
     ]);

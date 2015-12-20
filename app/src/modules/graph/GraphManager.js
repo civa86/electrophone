@@ -12,6 +12,7 @@ function GraphManager ($rootScope, $q) {
         screenCenter,
         startX,
         startY,
+        pan,
         canvasCtx,
         graph;
 
@@ -33,6 +34,15 @@ function GraphManager ($rootScope, $q) {
     function resetGraph () {
         if (graph) {
             graph.reset();
+            graph.center();
+        }
+    }
+
+    function resetZoom () {
+        if (graph && graph.zoom() !== 1) {
+            graph.zoom(1);
+            graph.center();
+            resizeGraph();
         }
     }
 
@@ -67,8 +77,9 @@ function GraphManager ($rootScope, $q) {
         graph.on('tapstart', 'node', function (e) {
             if (linkMode) {
                 mouseDown = true;
-                startX = e.cyPosition.x;
-                startY = e.cyPosition.y;
+                startX = e.cyRenderedPosition.x;
+                startY = e.cyRenderedPosition.y;
+                pan = graph.pan();
                 sourceLinkNode = e.cyTarget;
                 targetLinkNode = null;
             }
@@ -91,15 +102,13 @@ function GraphManager ($rootScope, $q) {
                 isDragging = true;
                 resetCanvas();
                 if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
-                    canvasCtx.fillStyle = '#000';
-                    canvasCtx.strokeStyle = '#000';
-                    canvasCtx.lineWidth = 2;
-
+                    canvasCtx.fillStyle = '#ccc';
+                    canvasCtx.strokeStyle = '#ccc';
+                    canvasCtx.lineWidth = 6;
+                    canvasCtx.setLineDash([6, 5]);
                     canvasCtx.beginPath();
-                    //TODO adjust position with panning and zooming....else disable both gesture during link mode...
-                    canvasCtx.moveTo(sourceLinkNode.position().x, sourceLinkNode.position().y);
-                    canvasCtx.lineTo(e.cyPosition.x, e.cyPosition.y);
-                    canvasCtx.closePath();
+                    canvasCtx.moveTo(startX, startY);
+                    canvasCtx.lineTo(e.cyRenderedPosition.x, e.cyRenderedPosition.y);
                     canvasCtx.stroke();
                 }
             }
@@ -143,25 +152,19 @@ function GraphManager ($rootScope, $q) {
                         data:     {
                             id: 'master'
                         },
-                        position: {
-                            x: screenCenter.x,
-                            y: screenCenter.y
-                        },
                         style:    {
                             width:  100,
-                            height: 100
-                        },
-                        locked:   true
+                            height: 100,
+                            'background-color': '#000'
+                        }
+                        //,
+                        //locked:   true
                     }
                 ],
                 ready:     function () {
-                    var $canvas = $('<canvas></canvas>');
-
+                    let $canvas = $('<canvas></canvas>');
                     canvasCtx = $canvas[0].getContext('2d');
-                    graph = this;
-
                     $(element).append($canvas);
-
                     $canvas
                         .attr('height', $(element).height())
                         .attr('width', $(element).width())
@@ -171,9 +174,11 @@ function GraphManager ($rootScope, $q) {
                             left:      0,
                             'z-index': 999
                         });
+
+                    graph = this;
+
                     bindGraph();
                     resetGraph();
-
                     def.resolve();
                 }
             };
@@ -272,6 +277,8 @@ function GraphManager ($rootScope, $q) {
 
     service.createGraph = createGraph;
     service.resizeGraph = resizeGraph;
+    service.resetGraph = resetGraph;
+    service.resetZoom = resetZoom;
     service.setLinkMode = setLinkMode;
     service.addNode = addNode;
     service.addEdge = addEdge;
