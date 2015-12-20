@@ -4,23 +4,14 @@ import SoundSource from '../../core/SoundSource'
 
 class Noise extends SoundSource {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
         //TODO separate in a method to call on update...like setMainProperties of Effect!!
         this.defaultLineInProperty = 'detune';
         this.main = AudioContext.createBufferSource();
         this.main.connect(this.envelope);
 
         this.setColor();
-    }
-
-    getProperties () {
-        return {
-            color: {
-                type: 'string',
-                defaultValue: CONST.NOISE_WHITE
-            }
-        };
     }
 
     setColor () {

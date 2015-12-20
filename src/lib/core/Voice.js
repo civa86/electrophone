@@ -24,7 +24,7 @@ class Voice {
         Object.keys(this.modulesConfig).forEach((mod) => {
             modConf = this.modulesConfig[mod];
             if (modConf.type && modConf.props) {
-                m = new Modules[modConf.type](modConf.props);
+                m = new Modules[modConf.type](modConf.props, modConf.type);
                 this.modules[mod] = {
                     type:     modConf.type,
                     instance: m

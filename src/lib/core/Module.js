@@ -1,8 +1,10 @@
 import AudioContext from '../AudioContext'
+import * as Props from '../properties'
 
 class Module {
 
-    constructor (props) {
+    constructor (props, name) {
+        this.name = name;
         this.gain = null;
         this.envelope = null;
         this.main = null;
@@ -10,6 +12,10 @@ class Module {
         this.setupProperties(props);
 
         this.createGain(this.level);
+    }
+
+    toString () {
+        return this.name;
     }
 
     setupProperties (props) {
@@ -25,17 +31,14 @@ class Module {
                     defaultValue: 100
                 }
             },
-            customProps = this.getProperties() || {};
+            propsHandler = this.toString() + 'Props',
+            customProps = Props[propsHandler] || {};
 
         defaultProperties = Object.assign(defaultProperties, customProps);
 
         Object.keys(defaultProperties).forEach((e) => {
             this.setProperty(e, properties[e], defaultProperties[e]);
         });
-    }
-
-    getProperties () {
-        return {};
     }
 
     setProperty (propKey, propVal, propConfig) {

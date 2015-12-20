@@ -3,8 +3,8 @@ import Effect from '../../core/Effect'
 
 class MoogFilter extends Effect {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
 
         this.setMainEffect('MoogFilter', 'output');
         this.setMainProperties({
@@ -12,26 +12,6 @@ class MoogFilter extends Effect {
             resonance:  this.resonance,
             bufferSize: this.bufferSize
         });
-    }
-
-    getProperties () {
-        return {
-            cutoff: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0
-            },
-            resonance: {
-                type: 'number',
-                bounds: [0, 4],
-                defaultValue: 0
-            },
-            bufferSize: {
-                type: 'number',
-                bounds: [256, 16384],
-                defaultValue: 4096
-            }
-        };
     }
 }
 

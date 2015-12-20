@@ -3,8 +3,8 @@ import Module from '../core/Module'
 
 class SoundSource extends Module {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
 
         this.defaultLineInProperty = 'frequency';
     }

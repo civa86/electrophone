@@ -3,8 +3,8 @@ import Effect from '../../core/Effect'
 
 class Overdrive extends Effect {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
 
         this.setMainEffect('Overdrive', 'output');
         this.setMainProperties({
@@ -14,36 +14,6 @@ class Overdrive extends Effect {
             algorithmIndex: this.algorithmIndex,
             bypass: this.bypass
         });
-    }
-
-    getProperties () {
-        return {
-            outputGain: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0.5
-            },
-            drive: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0
-            },
-            curveAmount: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 1
-            },
-            algorithmIndex: {
-                type: 'number',
-                bounds: [0, 5],
-                defaultValue: 0
-            },
-            bypass: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0
-            }
-        };
     }
 }
 

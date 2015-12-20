@@ -1,4 +1,6 @@
 import * as Modules from './lib/modules'
+import * as Props from './lib/properties'
+
 import { CONST } from './lib/core/Constants'
 import Synth from './lib/Synth'
 
@@ -27,12 +29,20 @@ class WebSynth {
         this.listModules = () => {
             let methods = Object.keys(Modules),
                 result,
-                tmp;
+                propName,
+                props;
+
             result = methods.reduce((res, e) => {
-                //tmp = new Modules[e]();
-                res[e] = {};//tmp.getProperties();
+                propName = e + 'Props';
+                props = Props[propName] || {};
+
+                //TODO set level and add global module properties....
+
+                res[e] = props;
+
                 return res;
             }, {});
+
             return result;
         };
     }

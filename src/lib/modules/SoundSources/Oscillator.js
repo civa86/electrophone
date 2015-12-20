@@ -4,28 +4,14 @@ import SoundSource from '../../core/SoundSource'
 
 class Oscillator extends SoundSource {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
         //TODO separate in a method to call on update...like setMainProperties of Effect!!
         this.main = AudioContext.createOscillator();
         this.main.type = this.wave;
         this.main.connect(this.envelope);
 
         this.setDetune();
-    }
-
-    getProperties () {
-        return {
-            detune: {
-                type: 'number',
-                bounds: [-1200, 1200],
-                defaultValue: 0
-            },
-            wave: {
-                type: 'string',
-                defaultValue: CONST.WAVE_SINE
-            }
-        };
     }
 
     setDetune () {

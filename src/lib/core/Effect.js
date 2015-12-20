@@ -4,8 +4,8 @@ import EffectManager from './EffectManager'
 
 class Effect extends Module {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
         this.main = null;
         this.mainEffect = null;
     }

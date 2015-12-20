@@ -3,8 +3,8 @@ import Module from '../core/Module'
 
 class Master extends Module {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
         //TODO check for method to call on update...like setMainProperties of Effect!!
         this.main = AudioContext.createGain();
         this.link = null;

@@ -3,8 +3,8 @@ import Effect from '../../core/Effect'
 
 class Tremolo extends Effect {
 
-    constructor (props) {
-        super(props);
+    constructor (props, name) {
+        super(props, name);
 
         this.setMainEffect('Tremolo', 'output');
         this.setMainProperties({
@@ -13,31 +13,6 @@ class Tremolo extends Effect {
             stereoPhase: this.stereoPhase,
             bypass: this.bypass
         });
-    }
-
-    getProperties () {
-        return {
-            intensity: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0
-            },
-            rate: {
-                type: 'number',
-                bounds: [0.001, 8],
-                defaultValue: 0.001
-            },
-            stereoPhase: {
-                type: 'number',
-                bounds: [0, 180],
-                defaultValue: 0
-            },
-            bypass: {
-                type: 'number',
-                bounds: [0, 1],
-                defaultValue: 0
-            }
-        };
     }
 }
 
