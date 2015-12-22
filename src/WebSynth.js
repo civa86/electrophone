@@ -30,18 +30,21 @@ class WebSynth {
             let methods = Object.keys(Modules),
                 result,
                 propName,
-                props;
+                props,
+                tmp;
 
             result = methods.reduce((res, e) => {
                 propName = e + 'Props';
                 props = Props[propName] || {};
 
                 //TODO set level and add global module properties....
-
-                res[e] = props;
-
+                tmp = {
+                    name: e,
+                    props: props
+                };
+                res.push(tmp);
                 return res;
-            }, {});
+            }, []);
 
             return result;
         };

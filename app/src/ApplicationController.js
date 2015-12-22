@@ -6,12 +6,13 @@ function ApplicationController ($rootScope, $scope, $window, webSynth, graphMana
     ctrl.graphReady = false;
     ctrl.linkMode = false;
     ctrl.currentNode = null;
+    ctrl.synthModules = webSynth.listModules();
 
-    console.log(webSynth.listModules());
-
-    function addNode () {
+    function addNode (className) {
+        console.log('new synth module', className);
         graphManager.addNode({
-            group: 'nodes'
+            group: 'nodes',
+            data:  { type: className }
         });
     }
 

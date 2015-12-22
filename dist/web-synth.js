@@ -48,7 +48,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _WebSynth = __webpack_require__(7);
+	var _WebSynth = __webpack_require__(8);
 
 	var _WebSynth2 = _interopRequireDefault(_WebSynth);
 
@@ -154,17 +154,17 @@
 
 	var _coreModule2 = _interopRequireDefault(_coreModule);
 
-	var _EffectManager = __webpack_require__(9);
+	var _EffectManager = __webpack_require__(10);
 
 	var _EffectManager2 = _interopRequireDefault(_EffectManager);
 
 	var Effect = (function (_Module) {
 	    _inherits(Effect, _Module);
 
-	    function Effect(props) {
+	    function Effect(props, name) {
 	        _classCallCheck(this, Effect);
 
-	        _get(Object.getPrototypeOf(Effect.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Effect.prototype), 'constructor', this).call(this, props, name);
 	        this.main = null;
 	        this.mainEffect = null;
 	    }
@@ -239,6 +239,8 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -247,10 +249,15 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
+	var _properties = __webpack_require__(7);
+
+	var Props = _interopRequireWildcard(_properties);
+
 	var Module = (function () {
-	    function Module(props) {
+	    function Module(props, name) {
 	        _classCallCheck(this, Module);
 
+	        this.name = name;
 	        this.gain = null;
 	        this.envelope = null;
 	        this.main = null;
@@ -261,6 +268,11 @@
 	    }
 
 	    _createClass(Module, [{
+	        key: 'toString',
+	        value: function toString() {
+	            return this.name;
+	        }
+	    }, {
 	        key: 'setupProperties',
 	        value: function setupProperties(props) {
 	            var _this = this;
@@ -277,18 +289,14 @@
 	                    defaultValue: 100
 	                }
 	            },
-	                customProps = this.getProperties() || {};
+	                propsHandler = this.toString() + 'Props',
+	                customProps = Props[propsHandler] || {};
 
 	            defaultProperties = Object.assign(defaultProperties, customProps);
 
 	            Object.keys(defaultProperties).forEach(function (e) {
 	                _this.setProperty(e, properties[e], defaultProperties[e]);
 	            });
-	        }
-	    }, {
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {};
 	        }
 	    }, {
 	        key: 'setProperty',
@@ -377,10 +385,10 @@
 	var SoundSource = (function (_Module) {
 	    _inherits(SoundSource, _Module);
 
-	    function SoundSource(props) {
+	    function SoundSource(props, name) {
 	        _classCallCheck(this, SoundSource);
 
-	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props, name);
 
 	        this.defaultLineInProperty = 'frequency';
 	    }
@@ -424,29 +432,29 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Master = __webpack_require__(21);
+	var _Master = __webpack_require__(22);
 
 	exports.Master = _interopRequire(_Master);
 
-	var _Envelope = __webpack_require__(20);
+	var _Envelope = __webpack_require__(21);
 
 	exports.Envelope = _interopRequire(_Envelope);
 
-	var _Pan = __webpack_require__(22);
+	var _Pan = __webpack_require__(23);
 
 	exports.Pan = _interopRequire(_Pan);
 
 	//SOUNDSOURCES
 
-	var _SoundSourcesOscillator = __webpack_require__(25);
+	var _SoundSourcesOscillator = __webpack_require__(26);
 
 	exports.Oscillator = _interopRequire(_SoundSourcesOscillator);
 
-	var _SoundSourcesModulator = __webpack_require__(23);
+	var _SoundSourcesModulator = __webpack_require__(24);
 
 	exports.Modulator = _interopRequire(_SoundSourcesModulator);
 
-	var _SoundSourcesNoise = __webpack_require__(24);
+	var _SoundSourcesNoise = __webpack_require__(25);
 
 	exports.Noise = _interopRequire(_SoundSourcesNoise);
 
@@ -455,39 +463,39 @@
 
 	//EFFECTS
 
-	var _EffectsFilter = __webpack_require__(14);
+	var _EffectsFilter = __webpack_require__(15);
 
 	exports.Filter = _interopRequire(_EffectsFilter);
 
-	var _EffectsDelay = __webpack_require__(13);
+	var _EffectsDelay = __webpack_require__(14);
 
 	exports.Delay = _interopRequire(_EffectsDelay);
 
-	var _EffectsPingPongDelay = __webpack_require__(17);
+	var _EffectsPingPongDelay = __webpack_require__(18);
 
 	exports.PingPongDelay = _interopRequire(_EffectsPingPongDelay);
 
-	var _EffectsWahWah = __webpack_require__(19);
+	var _EffectsWahWah = __webpack_require__(20);
 
 	exports.WahWah = _interopRequire(_EffectsWahWah);
 
-	var _EffectsTremolo = __webpack_require__(18);
+	var _EffectsTremolo = __webpack_require__(19);
 
 	exports.Tremolo = _interopRequire(_EffectsTremolo);
 
-	var _EffectsOverdrive = __webpack_require__(16);
+	var _EffectsOverdrive = __webpack_require__(17);
 
 	exports.Overdrive = _interopRequire(_EffectsOverdrive);
 
-	var _EffectsCabinet = __webpack_require__(12);
+	var _EffectsCabinet = __webpack_require__(13);
 
 	exports.Cabinet = _interopRequire(_EffectsCabinet);
 
-	var _EffectsBitcrusher = __webpack_require__(11);
+	var _EffectsBitcrusher = __webpack_require__(12);
 
 	exports.Bitcrusher = _interopRequire(_EffectsBitcrusher);
 
-	var _EffectsMoogFilter = __webpack_require__(15);
+	var _EffectsMoogFilter = __webpack_require__(16);
 
 	exports.MoogFilter = _interopRequire(_EffectsMoogFilter);
 
@@ -499,6 +507,88 @@
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//export {default as MasterProps} from './MasterProps'
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
+
+	var _EnvelopeProps = __webpack_require__(30);
+
+	exports.EnvelopeProps = _interopRequire(_EnvelopeProps);
+
+	var _PanProps = __webpack_require__(37);
+
+	exports.PanProps = _interopRequire(_PanProps);
+
+	//SOUNDSOURCES
+
+	var _OscillatorProps = __webpack_require__(35);
+
+	exports.OscillatorProps = _interopRequire(_OscillatorProps);
+
+	var _ModulatorProps = __webpack_require__(32);
+
+	exports.ModulatorProps = _interopRequire(_ModulatorProps);
+
+	var _NoiseProps = __webpack_require__(34);
+
+	exports.NoiseProps = _interopRequire(_NoiseProps);
+
+	//TODO implement
+	//Sampler
+
+	//EFFECTS
+
+	var _FilterProps = __webpack_require__(31);
+
+	exports.FilterProps = _interopRequire(_FilterProps);
+
+	var _DelayProps = __webpack_require__(29);
+
+	exports.DelayProps = _interopRequire(_DelayProps);
+
+	var _PingPongDelayProps = __webpack_require__(38);
+
+	exports.PingPongDelayProps = _interopRequire(_PingPongDelayProps);
+
+	var _WahWahProps = __webpack_require__(40);
+
+	exports.WahWahProps = _interopRequire(_WahWahProps);
+
+	var _TremoloProps = __webpack_require__(39);
+
+	exports.TremoloProps = _interopRequire(_TremoloProps);
+
+	var _OverdriveProps = __webpack_require__(36);
+
+	exports.OverdriveProps = _interopRequire(_OverdriveProps);
+
+	var _CabinetProps = __webpack_require__(28);
+
+	exports.CabinetProps = _interopRequire(_CabinetProps);
+
+	var _BitcrusherProps = __webpack_require__(27);
+
+	exports.BitcrusherProps = _interopRequire(_BitcrusherProps);
+
+	var _MoogFilterProps = __webpack_require__(33);
+
+	exports.MoogFilterProps = _interopRequire(_MoogFilterProps);
+
+	//TODO implement
+	//Convolver
+	//Compressor
+	//Phaser
+	//Chorus
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -517,9 +607,13 @@
 
 	var Modules = _interopRequireWildcard(_libModules);
 
+	var _libProperties = __webpack_require__(7);
+
+	var Props = _interopRequireWildcard(_libProperties);
+
 	var _libCoreConstants = __webpack_require__(1);
 
-	var _libSynth = __webpack_require__(8);
+	var _libSynth = __webpack_require__(9);
 
 	var _libSynth2 = _interopRequireDefault(_libSynth);
 
@@ -572,8 +666,32 @@
 	    this.play = function (note) {
 	        return synth.play(note);
 	    };
+
 	    this.stop = function (note) {
 	        return synth.stop(note);
+	    };
+
+	    this.listModules = function () {
+	        var methods = Object.keys(Modules),
+	            result = undefined,
+	            propName = undefined,
+	            props = undefined,
+	            tmp = undefined;
+
+	        result = methods.reduce(function (res, e) {
+	            propName = e + 'Props';
+	            props = Props[propName] || {};
+
+	            //TODO set level and add global module properties....
+	            tmp = {
+	                name: e,
+	                props: props
+	            };
+	            res.push(tmp);
+	            return res;
+	        }, []);
+
+	        return result;
 	    };
 	};
 
@@ -581,7 +699,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -602,7 +720,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreVoice = __webpack_require__(10);
+	var _coreVoice = __webpack_require__(11);
 
 	var _coreVoice2 = _interopRequireDefault(_coreVoice);
 
@@ -729,7 +847,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -744,7 +862,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _tunajs = __webpack_require__(26);
+	var _tunajs = __webpack_require__(41);
 
 	var _tunajs2 = _interopRequireDefault(_tunajs);
 
@@ -754,7 +872,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -811,7 +929,7 @@
 	            Object.keys(this.modulesConfig).forEach(function (mod) {
 	                modConf = _this.modulesConfig[mod];
 	                if (modConf.type && modConf.props) {
-	                    m = new Modules[modConf.type](modConf.props);
+	                    m = new Modules[modConf.type](modConf.props, modConf.type);
 	                    _this.modules[mod] = {
 	                        type: modConf.type,
 	                        instance: m
@@ -913,7 +1031,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -921,8 +1039,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -941,10 +1057,10 @@
 	var Bitcrusher = (function (_Effect) {
 	    _inherits(Bitcrusher, _Effect);
 
-	    function Bitcrusher(props) {
+	    function Bitcrusher(props, name) {
 	        _classCallCheck(this, Bitcrusher);
 
-	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Bitcrusher', 'output');
 	        this.setMainProperties({
@@ -954,29 +1070,6 @@
 	        });
 	    }
 
-	    _createClass(Bitcrusher, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                bits: {
-	                    type: 'number',
-	                    bounds: [1, 16],
-	                    defaultValue: 1
-	                },
-	                normfreq: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0.5
-	                },
-	                bufferSize: {
-	                    type: 'number',
-	                    bounds: [256, 16384],
-	                    defaultValue: 4096
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Bitcrusher;
 	})(_coreEffect2['default']);
 
@@ -984,7 +1077,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -992,8 +1085,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1012,10 +1103,10 @@
 	var Cabinet = (function (_Effect) {
 	    _inherits(Cabinet, _Effect);
 
-	    function Cabinet(props) {
+	    function Cabinet(props, name) {
 	        _classCallCheck(this, Cabinet);
 
-	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Cabinet', 'output', {
 	            impulsePath: this.impulsePath,
@@ -1028,28 +1119,6 @@
 	        });
 	    }
 
-	    _createClass(Cabinet, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                makeupGain: {
-	                    type: 'number',
-	                    bounds: [0, 20],
-	                    defaultValue: 0
-	                },
-	                impulsePath: {
-	                    type: 'string',
-	                    defaultValue: ''
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Cabinet;
 	})(_coreEffect2['default']);
 
@@ -1057,7 +1126,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1065,8 +1134,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1085,10 +1152,10 @@
 	var Delay = (function (_Effect) {
 	    _inherits(Delay, _Effect);
 
-	    function Delay(props) {
+	    function Delay(props, name) {
 	        _classCallCheck(this, Delay);
 
-	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Delay', 'filter');
 	        this.setMainProperties({
@@ -1101,44 +1168,6 @@
 	        });
 	    }
 
-	    _createClass(Delay, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                dry: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 1
-	                },
-	                wet: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                feedback: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                cutoff: {
-	                    type: 'number',
-	                    bounds: [20, 20000],
-	                    defaultValue: 440
-	                },
-	                delayTime: {
-	                    type: 'number',
-	                    bounds: [1, 10000],
-	                    defaultValue: 1
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Delay;
 	})(_coreEffect2['default']);
 
@@ -1146,7 +1175,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1154,8 +1183,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1174,10 +1201,10 @@
 	var Filter = (function (_Effect) {
 	    _inherits(Filter, _Effect);
 
-	    function Filter(props) {
+	    function Filter(props, name) {
 	        _classCallCheck(this, Filter);
 
-	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Filter', 'filter');
 	        this.setMainProperties({
@@ -1189,38 +1216,6 @@
 	        });
 	    }
 
-	    _createClass(Filter, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                freq: {
-	                    type: 'number',
-	                    bounds: [20, 20000],
-	                    defaultValue: 440
-	                },
-	                q: {
-	                    type: 'number',
-	                    bounds: [0.001, 100],
-	                    defaultValue: 10
-	                },
-	                filterGain: {
-	                    type: 'number',
-	                    bounds: [-40, 40],
-	                    defaultValue: 0
-	                },
-	                filterType: {
-	                    type: 'string',
-	                    defaultValue: _coreConstants.CONST.FILTER_LOWPASS
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Filter;
 	})(_coreEffect2['default']);
 
@@ -1228,7 +1223,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1236,8 +1231,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1256,10 +1249,10 @@
 	var MoogFilter = (function (_Effect) {
 	    _inherits(MoogFilter, _Effect);
 
-	    function MoogFilter(props) {
+	    function MoogFilter(props, name) {
 	        _classCallCheck(this, MoogFilter);
 
-	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('MoogFilter', 'output');
 	        this.setMainProperties({
@@ -1269,29 +1262,6 @@
 	        });
 	    }
 
-	    _createClass(MoogFilter, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                cutoff: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                resonance: {
-	                    type: 'number',
-	                    bounds: [0, 4],
-	                    defaultValue: 0
-	                },
-	                bufferSize: {
-	                    type: 'number',
-	                    bounds: [256, 16384],
-	                    defaultValue: 4096
-	                }
-	            };
-	        }
-	    }]);
-
 	    return MoogFilter;
 	})(_coreEffect2['default']);
 
@@ -1299,7 +1269,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1307,8 +1277,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1327,10 +1295,10 @@
 	var Overdrive = (function (_Effect) {
 	    _inherits(Overdrive, _Effect);
 
-	    function Overdrive(props) {
+	    function Overdrive(props, name) {
 	        _classCallCheck(this, Overdrive);
 
-	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Overdrive', 'output');
 	        this.setMainProperties({
@@ -1342,39 +1310,6 @@
 	        });
 	    }
 
-	    _createClass(Overdrive, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                outputGain: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0.5
-	                },
-	                drive: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                curveAmount: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 1
-	                },
-	                algorithmIndex: {
-	                    type: 'number',
-	                    bounds: [0, 5],
-	                    defaultValue: 0
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Overdrive;
 	})(_coreEffect2['default']);
 
@@ -1382,7 +1317,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1390,8 +1325,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1410,10 +1343,10 @@
 	var PingPongDelay = (function (_Effect) {
 	    _inherits(PingPongDelay, _Effect);
 
-	    function PingPongDelay(props) {
+	    function PingPongDelay(props, name) {
 	        _classCallCheck(this, PingPongDelay);
 
-	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('PingPongDelay', 'delayLeft');
 	        this.setMainProperties({
@@ -1426,44 +1359,6 @@
 	        });
 	    }
 
-	    _createClass(PingPongDelay, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                dry: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 1
-	                },
-	                wet: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                feedback: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                delayTimeLeft: {
-	                    type: 'number',
-	                    bounds: [1, 10000],
-	                    defaultValue: 1
-	                },
-	                delayTimeRight: {
-	                    type: 'number',
-	                    bounds: [1, 10000],
-	                    defaultValue: 1
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return PingPongDelay;
 	})(_coreEffect2['default']);
 
@@ -1471,7 +1366,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1479,8 +1374,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1499,10 +1392,10 @@
 	var Tremolo = (function (_Effect) {
 	    _inherits(Tremolo, _Effect);
 
-	    function Tremolo(props) {
+	    function Tremolo(props, name) {
 	        _classCallCheck(this, Tremolo);
 
-	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('Tremolo', 'output');
 	        this.setMainProperties({
@@ -1513,34 +1406,6 @@
 	        });
 	    }
 
-	    _createClass(Tremolo, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                intensity: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                rate: {
-	                    type: 'number',
-	                    bounds: [0.001, 8],
-	                    defaultValue: 0.001
-	                },
-	                stereoPhase: {
-	                    type: 'number',
-	                    bounds: [0, 180],
-	                    defaultValue: 0
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Tremolo;
 	})(_coreEffect2['default']);
 
@@ -1548,7 +1413,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1556,8 +1421,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1576,10 +1439,10 @@
 	var WahWah = (function (_Effect) {
 	    _inherits(WahWah, _Effect);
 
-	    function WahWah(props) {
+	    function WahWah(props, name) {
 	        _classCallCheck(this, WahWah);
 
-	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props, name);
 
 	        this.setMainEffect('WahWah', 'filterBp');
 	        this.setMainProperties({
@@ -1593,48 +1456,6 @@
 	        });
 	    }
 
-	    _createClass(WahWah, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                automode: {
-	                    type: 'boolean',
-	                    defaultValue: false
-	                },
-	                baseFrequency: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                excursionOctaves: {
-	                    type: 'number',
-	                    bounds: [1, 6],
-	                    defaultValue: 1
-	                },
-	                sweep: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                },
-	                resonance: {
-	                    type: 'number',
-	                    bounds: [1, 100],
-	                    defaultValue: 1
-	                },
-	                sensitivity: {
-	                    type: 'number',
-	                    bounds: [-1, 1],
-	                    defaultValue: 0
-	                },
-	                bypass: {
-	                    type: 'number',
-	                    bounds: [0, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return WahWah;
 	})(_coreEffect2['default']);
 
@@ -1642,7 +1463,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1672,44 +1493,14 @@
 	var Envelope = (function (_Module) {
 	    _inherits(Envelope, _Module);
 
-	    function Envelope(props) {
+	    function Envelope(props, name) {
 	        _classCallCheck(this, Envelope);
 
-	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props, name);
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	    }
 
 	    _createClass(Envelope, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                target: {
-	                    type: 'string',
-	                    defaultValue: null
-	                },
-	                attack: {
-	                    type: 'number',
-	                    bounds: [0, 100],
-	                    defaultValue: 1
-	                },
-	                decay: {
-	                    type: 'number',
-	                    bounds: [0, 100],
-	                    defaultValue: 1
-	                },
-	                sustain: {
-	                    type: 'number',
-	                    bounds: [1, 100],
-	                    defaultValue: 100
-	                },
-	                release: {
-	                    type: 'number',
-	                    bounds: [0.001, 100],
-	                    defaultValue: 5
-	                }
-	            };
-	        }
-	    }, {
 	        key: 'createGain',
 	        value: function createGain() {
 	            return false;
@@ -1792,7 +1583,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1822,10 +1613,10 @@
 	var Master = (function (_Module) {
 	    _inherits(Master, _Module);
 
-	    function Master(props) {
+	    function Master(props, name) {
 	        _classCallCheck(this, Master);
 
-	        _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).call(this, props, name);
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createGain();
 	        this.link = null;
@@ -1855,7 +1646,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1863,8 +1654,6 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -1885,109 +1674,20 @@
 	var Pan = (function (_Module) {
 	    _inherits(Pan, _Module);
 
-	    function Pan(props) {
+	    function Pan(props, name) {
 	        _classCallCheck(this, Pan);
 
-	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props, name);
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createStereoPanner();
 	        this.main.pan.value = this.value;
 	        this.main.connect(this.envelope);
 	    }
 
-	    _createClass(Pan, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                value: {
-	                    type: 'number',
-	                    bounds: [-1, 1],
-	                    defaultValue: 0
-	                }
-	            };
-	        }
-	    }]);
-
 	    return Pan;
 	})(_coreModule2['default']);
 
 	exports['default'] = Pan;
-	module.exports = exports['default'];
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(1);
-
-	var _AudioContext = __webpack_require__(2);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
-	var _coreSoundSource = __webpack_require__(5);
-
-	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
-
-	var Modulator = (function (_SoundSource) {
-	    _inherits(Modulator, _SoundSource);
-
-	    function Modulator(props) {
-	        _classCallCheck(this, Modulator);
-
-	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props);
-	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	        this.main = _AudioContext2['default'].createOscillator();
-	        this.main.type = this.wave;
-	        this.main.connect(this.envelope);
-	    }
-
-	    _createClass(Modulator, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                freq: {
-	                    type: 'number',
-	                    bounds: [20, 20000],
-	                    defaultValue: 440
-	                },
-	                target: {
-	                    type: 'string',
-	                    defaultValue: 'frequency'
-	                },
-	                wave: {
-	                    type: 'string',
-	                    defaultValue: _coreConstants.CONST.WAVE_SINE
-	                }
-	            };
-	        }
-	    }, {
-	        key: 'setNote',
-	        value: function setNote() {
-	            var f = this.freq % 11;
-	            this.main.frequency.value = f;
-	        }
-	    }]);
-
-	    return Modulator;
-	})(_coreSoundSource2['default']);
-
-	exports['default'] = Modulator;
 	module.exports = exports['default'];
 
 /***/ },
@@ -2020,13 +1720,70 @@
 
 	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
 
+	var Modulator = (function (_SoundSource) {
+	    _inherits(Modulator, _SoundSource);
+
+	    function Modulator(props, name) {
+	        _classCallCheck(this, Modulator);
+
+	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props, name);
+	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
+	        this.main = _AudioContext2['default'].createOscillator();
+	        this.main.type = this.wave;
+	        this.main.connect(this.envelope);
+	    }
+
+	    _createClass(Modulator, [{
+	        key: 'setNote',
+	        value: function setNote() {
+	            var f = this.freq % 11;
+	            this.main.frequency.value = f;
+	        }
+	    }]);
+
+	    return Modulator;
+	})(_coreSoundSource2['default']);
+
+	exports['default'] = Modulator;
+	module.exports = exports['default'];
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _coreConstants = __webpack_require__(1);
+
+	var _AudioContext = __webpack_require__(2);
+
+	var _AudioContext2 = _interopRequireDefault(_AudioContext);
+
+	var _coreSoundSource = __webpack_require__(5);
+
+	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
+
 	var Noise = (function (_SoundSource) {
 	    _inherits(Noise, _SoundSource);
 
-	    function Noise(props) {
+	    function Noise(props, name) {
 	        _classCallCheck(this, Noise);
 
-	        _get(Object.getPrototypeOf(Noise.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Noise.prototype), 'constructor', this).call(this, props, name);
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        this.defaultLineInProperty = 'detune';
 	        this.main = _AudioContext2['default'].createBufferSource();
@@ -2036,16 +1793,6 @@
 	    }
 
 	    _createClass(Noise, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                color: {
-	                    type: 'string',
-	                    defaultValue: _coreConstants.CONST.NOISE_WHITE
-	                }
-	            };
-	        }
-	    }, {
 	        key: 'setColor',
 	        value: function setColor() {
 	            switch (this.color) {
@@ -2154,7 +1901,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2186,10 +1933,10 @@
 	var Oscillator = (function (_SoundSource) {
 	    _inherits(Oscillator, _SoundSource);
 
-	    function Oscillator(props) {
+	    function Oscillator(props, name) {
 	        _classCallCheck(this, Oscillator);
 
-	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props);
+	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props, name);
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        this.main = _AudioContext2['default'].createOscillator();
 	        this.main.type = this.wave;
@@ -2199,21 +1946,6 @@
 	    }
 
 	    _createClass(Oscillator, [{
-	        key: 'getProperties',
-	        value: function getProperties() {
-	            return {
-	                detune: {
-	                    type: 'number',
-	                    bounds: [-1200, 1200],
-	                    defaultValue: 0
-	                },
-	                wave: {
-	                    type: 'string',
-	                    defaultValue: _coreConstants.CONST.WAVE_SINE
-	                }
-	            };
-	        }
-	    }, {
 	        key: 'setDetune',
 	        value: function setDetune() {
 	            if (this.detune > 1200) {
@@ -2238,7 +1970,491 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 26 */
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var BitcrusherProps = {
+	    bits: {
+	        type: 'number',
+	        bounds: [1, 16],
+	        defaultValue: 1
+	    },
+	    normfreq: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0.5
+	    },
+	    bufferSize: {
+	        type: 'number',
+	        bounds: [256, 16384],
+	        defaultValue: 4096
+	    }
+	};
+
+	exports['default'] = BitcrusherProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var CabinetProps = {
+	    makeupGain: {
+	        type: 'number',
+	        bounds: [0, 20],
+	        defaultValue: 0
+	    },
+	    impulsePath: {
+	        type: 'string',
+	        defaultValue: ''
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = CabinetProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var DelayProps = {
+	    dry: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 1
+	    },
+	    wet: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    feedback: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    cutoff: {
+	        type: 'number',
+	        bounds: [20, 20000],
+	        defaultValue: 440
+	    },
+	    delayTime: {
+	        type: 'number',
+	        bounds: [1, 10000],
+	        defaultValue: 1
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = DelayProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var EnvelopeProps = {
+	    target: {
+	        type: 'string',
+	        defaultValue: null
+	    },
+	    attack: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 1
+	    },
+	    decay: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 1
+	    },
+	    sustain: {
+	        type: 'number',
+	        bounds: [1, 100],
+	        defaultValue: 100
+	    },
+	    release: {
+	        type: 'number',
+	        bounds: [0.001, 100],
+	        defaultValue: 5
+	    }
+	};
+
+	exports['default'] = EnvelopeProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _coreConstants = __webpack_require__(1);
+
+	var FilterProps = {
+	    freq: {
+	        type: 'number',
+	        bounds: [20, 20000],
+	        defaultValue: 440
+	    },
+	    q: {
+	        type: 'number',
+	        bounds: [0.001, 100],
+	        defaultValue: 10
+	    },
+	    filterGain: {
+	        type: 'number',
+	        bounds: [-40, 40],
+	        defaultValue: 0
+	    },
+	    filterType: {
+	        type: 'string',
+	        defaultValue: _coreConstants.CONST.FILTER_LOWPASS
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = FilterProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _coreConstants = __webpack_require__(1);
+
+	var ModulatorProps = {
+	    freq: {
+	        type: 'number',
+	        bounds: [20, 20000],
+	        defaultValue: 440
+	    },
+	    target: {
+	        type: 'string',
+	        defaultValue: 'frequency'
+	    },
+	    wave: {
+	        type: 'string',
+	        defaultValue: _coreConstants.CONST.WAVE_SINE
+	    }
+	};
+
+	exports['default'] = ModulatorProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var MoogFilterProps = {
+	    cutoff: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    resonance: {
+	        type: 'number',
+	        bounds: [0, 4],
+	        defaultValue: 0
+	    },
+	    bufferSize: {
+	        type: 'number',
+	        bounds: [256, 16384],
+	        defaultValue: 4096
+	    }
+	};
+
+	exports['default'] = MoogFilterProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _coreConstants = __webpack_require__(1);
+
+	var NoiseProps = {
+	    color: {
+	        type: 'string',
+	        defaultValue: _coreConstants.CONST.NOISE_WHITE
+	    }
+	};
+
+	exports['default'] = NoiseProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _coreConstants = __webpack_require__(1);
+
+	var OscillatorProps = {
+	    detune: {
+	        type: 'number',
+	        bounds: [-1200, 1200],
+	        defaultValue: 0
+	    },
+	    wave: {
+	        type: 'string',
+	        defaultValue: _coreConstants.CONST.WAVE_SINE
+	    }
+	};
+
+	exports['default'] = OscillatorProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var OverdriveProps = {
+	    outputGain: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0.5
+	    },
+	    drive: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    curveAmount: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 1
+	    },
+	    algorithmIndex: {
+	        type: 'number',
+	        bounds: [0, 5],
+	        defaultValue: 0
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = OverdriveProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var PanProps = {
+	    value: {
+	        type: 'number',
+	        bounds: [-1, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = PanProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var PingPongDelayProps = {
+	    dry: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 1
+	    },
+	    wet: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    feedback: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    delayTimeLeft: {
+	        type: 'number',
+	        bounds: [1, 10000],
+	        defaultValue: 1
+	    },
+	    delayTimeRight: {
+	        type: 'number',
+	        bounds: [1, 10000],
+	        defaultValue: 1
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = PingPongDelayProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var TremoloProps = {
+	    intensity: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    rate: {
+	        type: 'number',
+	        bounds: [0.001, 8],
+	        defaultValue: 0.001
+	    },
+	    stereoPhase: {
+	        type: 'number',
+	        bounds: [0, 180],
+	        defaultValue: 0
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = TremoloProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var WahWahProps = {
+	    automode: {
+	        type: 'boolean',
+	        defaultValue: false
+	    },
+	    baseFrequency: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    excursionOctaves: {
+	        type: 'number',
+	        bounds: [1, 6],
+	        defaultValue: 1
+	    },
+	    sweep: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    },
+	    resonance: {
+	        type: 'number',
+	        bounds: [1, 100],
+	        defaultValue: 1
+	    },
+	    sensitivity: {
+	        type: 'number',
+	        bounds: [-1, 1],
+	        defaultValue: 0
+	    },
+	    bypass: {
+	        type: 'number',
+	        bounds: [0, 1],
+	        defaultValue: 0
+	    }
+	};
+
+	exports['default'] = WahWahProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

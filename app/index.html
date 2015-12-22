@@ -64,17 +64,20 @@
             <div class="col-xs-12">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="nodes-menu">
-                        <button class="btn btn-info"
-                                ng-click="appCtrl.addNode()">OSCILLATOR
-                        </button>
+                        <div>
+                            <button ng-repeat="mod in appCtrl.synthModules"
+                                    class="btn btn-info"
+                                    ng-click="appCtrl.addNode(mod.name)">{{::mod.name}}
+                            </button>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="control-panel">
                         <div ng-show="!appCtrl.currentNode">
                             Select a Node and tweak it!
                         </div>
-                        <div ng-show="appCtrl.currentNode">
-                            control panel
-                        </div>
+                        <div ng-show="appCtrl.currentNode"
+                             data-control-panel=""
+                             data-current-node="appCtrl.currentNode"></div>
                     </div>
                 </div>
             </div>

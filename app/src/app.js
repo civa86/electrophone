@@ -15,13 +15,15 @@ import angular from 'angular'
 //ANGULAR MODULES
 import './modules/websynth'
 import './modules/graph'
+import './modules/controlPanel'
 
 //CONTROLLER FUNCTION
 import ApplicationController from './ApplicationController'
 
 angular.module('myApp', [
         'WS.WebSynth',
-        'WS.Graph'
+        'WS.Graph',
+        'WS.ControlPanel'
     ])
     //TODO manage filters...
     .filter('nodename', function () {
