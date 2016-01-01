@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
 
-    <title>My AngularJS App</title>
+    <title>Graph Synthesizer</title>
     <meta name="description" content=""/>
     <meta name="keywords" content="">
 
@@ -30,7 +30,7 @@
     <meta property="og:image" content="">
 </head>
 <body ng-cloak="">
-<div id="main-wrapper" ng-controller="ApplicationController as appCtrl">
+<div id="main-wrapper" ng-controller="ApplicationController as appCtrl" data-global-keys="">
     <header class="container-fluid">
         <div class="row">
             <div class="col-xs-6">
@@ -39,17 +39,13 @@
                         data-update-graph-btn=""
                         data-toggle="collapse" href="#menu">Menu
                 </button>
-                <button class="btn btn-info"
-                        ng-class="{'btn-info': !appCtrl.linkMode, 'btn-danger': appCtrl.linkMode}"
-                        type="button"
-                        ng-click="appCtrl.toggleLinkMode()">Link Nodes
-                </button>
+                <button data-link-mode-button=""></button>
             </div>
             <div class="col-xs-6">
                 <button class="btn btn-info"
                         role="tab"
                         data-update-graph-btn=""
-                        data-toggle="tab" data-target="#nodes-menu">Add Node
+                        data-toggle="tab" data-target="#module-builder">Add Node
                 </button>
                 <button class="btn btn-info"
                         role="tab"
@@ -63,21 +59,16 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="nodes-menu">
-                        <div>
-                            <button ng-repeat="mod in appCtrl.synthModules"
-                                    class="btn btn-info"
-                                    ng-click="appCtrl.addNode(mod.name)">{{::mod.name}}
-                            </button>
-                        </div>
-                    </div>
+                    <div data-module-builder=""
+                         data-all-modules="appCtrl.synthModules"></div>
+
                     <div role="tabpanel" class="tab-pane" id="control-panel">
                         <div ng-show="!appCtrl.currentNode">
                             Select a Node and tweak it!
                         </div>
                         <div ng-show="appCtrl.currentNode"
                              data-control-panel=""
-                             data-current-node="appCtrl.currentNode"></div>
+                             data-module-properties="appCtrl.currentModuleProperties.props"></div>
                     </div>
                 </div>
             </div>
@@ -86,9 +77,9 @@
     <section id="content" class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <div data-graph
-                     data-current-node="appCtrl.currentNode"
-                     data-graph-ready="appCtrl.graphReady"></div>
+                <div data-graph=""
+                     data-app-modules="appCtrl.modules"
+                     data-link-mode="appCtrl.linkMode"></div>
             </div>
         </div>
     </section>

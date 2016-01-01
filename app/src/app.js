@@ -16,6 +16,8 @@ import angular from 'angular'
 import './modules/websynth'
 import './modules/graph'
 import './modules/controlPanel'
+import './modules/globalKeys'
+import './modules/moduleBuilder'
 
 //CONTROLLER FUNCTION
 import ApplicationController from './ApplicationController'
@@ -23,14 +25,18 @@ import ApplicationController from './ApplicationController'
 angular.module('myApp', [
         'WS.WebSynth',
         'WS.Graph',
-        'WS.ControlPanel'
+        'WS.ControlPanel',
+        'WS.GlobalKeys',
+        'WS.ModuleBuilder'
     ])
     //TODO manage filters...
     .filter('nodename', function () {
         return function (input) {
-            return (input) ? input.id() : ' ... ';
+            return (input) ? input.data.id : ' ... ';
         }
     })
     .controller('ApplicationController', [
-        '$rootScope', '$scope', '$window', 'WebSynthManager', 'GraphManager', ApplicationController
+        '$rootScope', '$scope',
+        'WebSynthManager', 'GraphManager',
+        ApplicationController
     ]);

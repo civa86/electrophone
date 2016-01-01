@@ -1,16 +1,15 @@
 import $ from 'jquery'
 
-function ControlPanelDirective (webSynth) {
+function ControlPanelDirective ($rootScope) {
     return {
         restrict: 'EA',
         replace:  true,
-        template: '<div>asd</div>',
+        template: '<div>{{moduleProperties}}</div>',
         scope:    {
-            currentNode: '='
+            moduleProperties: '='
         },
         link: function ($scope, element) {
-            let synthModules = webSynth.listModules();
-            console.log(synthModules);
+
         }
     }
 }

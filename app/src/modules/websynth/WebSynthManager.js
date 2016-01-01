@@ -5,7 +5,7 @@ function WebSynthManager () {
         service = {};
 
     function listModules () {
-        return synth.listModules().filter((e) => e.name !== 'Master');
+        return synth.listModules();
     }
 
     service.listModules = listModules;

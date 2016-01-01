@@ -1,9 +1,9 @@
-function UpdateGraphBtnDirective (graphManager) {
+function UpdateGraphBtnDirective (GraphManager) {
     return {
         restrict: 'A',
         link: function ($scope, element) {
             element.on('click', function () {
-                graphManager.resizeGraph();
+                GraphManager.resizeGraph();
             });
 
         }
