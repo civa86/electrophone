@@ -8,7 +8,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.linkMode = false;
         ctrl.currentNode = null;
         ctrl.currentModuleProperties = null;
-        ctrl.builderModuleList = SynthManager.listAllModules().filter((e) => e.name !== 'Master');
+        ctrl.builderModuleList = SynthManager.listAllModules(true);
 
         //TODO get from synt listModules etc...
         ctrl.modules = [

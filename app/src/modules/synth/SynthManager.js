@@ -4,8 +4,12 @@ function SynthManager () {
     let synth = new WebSynth(),
         service = {};
 
-    function listAllModules () {
-        return synth.listAllModules();
+    function listAllModules (withoutMaster) {
+        let ret = synth.listAllModules();
+        if (withoutMaster === true) {
+            ret = ret.filter((e) => e.type !== synth.TYPES.MASTER);
+        }
+        return ret;
     }
 
     function listModules () {
@@ -22,7 +26,7 @@ function SynthManager () {
 
         //TODO manage master and adsr in the same module
         return allModules
-            .filter((e) => e.name === type)
+            .filter((e) => e.type === type)
             .map((e) => {
                 let tmp = e.props;
                 delete tmp.link;

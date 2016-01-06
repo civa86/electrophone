@@ -1,7 +1,6 @@
 import * as Modules from './lib/modules'
 import * as Props from './lib/properties'
-
-import { CONST } from './lib/core/Constants'
+import { CONST, TYPES } from './lib/core/Constants'
 import Synth from './lib/Synth'
 
 class WebSynth {
@@ -12,6 +11,7 @@ class WebSynth {
             fx;
 
         this.VARS = CONST;
+        this.TYPES = TYPES;
 
         //Synth Module Creators
         for (let type of methods) {
@@ -39,7 +39,7 @@ class WebSynth {
                 props = Object.assign(props, Props.DefaultProps);
 
                 tmp = {
-                    name: e,
+                    type: e,
                     props: props
                 };
 

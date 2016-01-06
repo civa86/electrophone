@@ -9,7 +9,7 @@ function ModuleBuilderDirective ($rootScope) {
                     '<div>' +
                         '<button ng-repeat="mod in modulesList" ' +
                                 'class="btn btn-info" ' +
-                                'ng-click="buildModule(mod.name)">{{::mod.name}}</button>' +
+                                'ng-click="buildModule(mod.type)">{{::mod.type}}</button>' +
                     '</div></div>',
         link: function ($scope) {
             $scope.buildModule = function (type) {
