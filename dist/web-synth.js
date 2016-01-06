@@ -278,22 +278,11 @@
 	            var _this = this;
 
 	            var properties = props || {},
-	                defaultProperties = {
-	                link: {
-	                    type: 'string',
-	                    defaultValue: ''
-	                },
-	                level: {
-	                    type: 'number',
-	                    bounds: [0, 100],
-	                    defaultValue: 100
-	                }
-	            },
+	                defaultProperties = Props.DefaultProps,
 	                propsHandler = this.toString() + 'Props',
 	                customProps = Props[propsHandler] || {};
 
 	            defaultProperties = Object.assign(defaultProperties, customProps);
-
 	            Object.keys(defaultProperties).forEach(function (e) {
 	                _this.setProperty(e, properties[e], defaultProperties[e]);
 	            });
@@ -509,7 +498,6 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	//export {default as MasterProps} from './MasterProps'
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -517,6 +505,12 @@
 	});
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
+
+	var _DefaultProps = __webpack_require__(42);
+
+	exports.DefaultProps = _interopRequire(_DefaultProps);
+
+	//export {default as MasterProps} from './MasterProps'
 
 	var _EnvelopeProps = __webpack_require__(30);
 
@@ -671,7 +665,7 @@
 	        return synth.stop(note);
 	    };
 
-	    this.listModules = function () {
+	    this.listAllModules = function () {
 	        var methods = Object.keys(Modules),
 	            result = undefined,
 	            propName = undefined,
@@ -681,17 +675,22 @@
 	        result = methods.reduce(function (res, e) {
 	            propName = e + 'Props';
 	            props = Props[propName] || {};
+	            props = Object.assign(props, Props.DefaultProps);
 
-	            //TODO set level and add global module properties....
 	            tmp = {
 	                name: e,
 	                props: props
 	            };
+
 	            res.push(tmp);
 	            return res;
 	        }, []);
 
 	        return result;
+	    };
+
+	    this.listModules = function () {
+	        return synth.modulesConfig;
 	    };
 	};
 
@@ -2257,6 +2256,7 @@
 	    },
 	    wave: {
 	        type: 'string',
+	        bounds: [_coreConstants.CONST.WAVE_SINE, _coreConstants.CONST.WAVE_SQUARE, _coreConstants.CONST.WAVE_SAWTOOTH, _coreConstants.CONST.WAVE_TRIANLGE, _coreConstants.CONST.WAVE_CUSTOM],
 	        defaultValue: _coreConstants.CONST.WAVE_SINE
 	    }
 	};
@@ -4639,6 +4639,30 @@
 	    };
 	})(this);
 
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var DefaultProps = {
+	    link: {
+	        type: 'string',
+	        defaultValue: ''
+	    },
+	    level: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 100
+	    }
+	};
+
+	exports['default'] = DefaultProps;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

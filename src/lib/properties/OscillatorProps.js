@@ -8,6 +8,13 @@ const OscillatorProps = {
     },
     wave: {
         type: 'string',
+        bounds: [
+            CONST.WAVE_SINE,
+            CONST.WAVE_SQUARE,
+            CONST.WAVE_SAWTOOTH,
+            CONST.WAVE_TRIANLGE,
+            CONST.WAVE_CUSTOM
+        ],
         defaultValue: CONST.WAVE_SINE
     }
 };

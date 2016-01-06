@@ -13,7 +13,7 @@ import '../less/screen.less'
 import angular from 'angular'
 
 //ANGULAR MODULES
-import './modules/websynth'
+import './modules/synth'
 import './modules/graph'
 import './modules/controlPanel'
 import './modules/globalKeys'
@@ -23,10 +23,10 @@ import './modules/moduleBuilder'
 import ApplicationController from './ApplicationController'
 
 angular.module('myApp', [
-        'WS.WebSynth',
+        'WS.Synth',
         'WS.Graph',
-        'WS.ControlPanel',
         'WS.GlobalKeys',
+        'WS.ControlPanel',
         'WS.ModuleBuilder'
     ])
     //TODO manage filters...
@@ -37,6 +37,6 @@ angular.module('myApp', [
     })
     .controller('ApplicationController', [
         '$rootScope', '$scope',
-        'WebSynthManager', 'GraphManager',
+        'SynthManager', 'GraphManager',
         ApplicationController
     ]);

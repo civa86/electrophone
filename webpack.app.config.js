@@ -49,6 +49,20 @@ module.exports = {
         })
     ],
     module:  {
+        preLoaders: [
+            {
+                test: /\.js$/,
+                loader: 'jscs-loader',
+                exclude: /node_modules|dist/
+            }
+            //TODO jshint
+            //,
+            //{
+            //    test: /\.js$/,
+            //    loader: 'jshint-loader',
+            //    exclude: /node_modules/
+            //}
+        ],
         loaders: [
             {
                 test:    /\.js$/,

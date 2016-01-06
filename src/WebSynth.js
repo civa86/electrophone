@@ -26,7 +26,7 @@ class WebSynth {
 
         this.stop = (note) => synth.stop(note);
 
-        this.listModules = () => {
+        this.listAllModules = () => {
             let methods = Object.keys(Modules),
                 result,
                 propName,
@@ -36,18 +36,23 @@ class WebSynth {
             result = methods.reduce((res, e) => {
                 propName = e + 'Props';
                 props = Props[propName] || {};
+                props = Object.assign(props, Props.DefaultProps);
 
-                //TODO set level and add global module properties....
                 tmp = {
                     name: e,
                     props: props
                 };
+
                 res.push(tmp);
                 return res;
             }, []);
 
             return result;
         };
+
+        this.listModules = () => {
+            return synth.modulesConfig;
+        }
     }
 }
 

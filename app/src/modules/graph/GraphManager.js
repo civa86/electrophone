@@ -89,7 +89,7 @@ function GraphManager ($q) {
         }
     }
 
-    function edgeExists(source, target) {
+    function edgeExists (source, target) {
         let edgesFromSource = source.connectedEdges(),
             ret = false;
         if (edgesFromSource.length > 0) {

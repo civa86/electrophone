@@ -3,11 +3,11 @@ function ModuleBuilderDirective ($rootScope) {
         restrict: 'EA',
         replace:  true,
         scope: {
-            allModules: '='
+            modulesList: '='
         },
         template: '<div role="tabpanel" class="tab-pane active" id="module-builder">' +
                     '<div>' +
-                        '<button ng-repeat="mod in allModules" ' +
+                        '<button ng-repeat="mod in modulesList" ' +
                                 'class="btn btn-info" ' +
                                 'ng-click="buildModule(mod.name)">{{::mod.name}}</button>' +
                     '</div></div>',

@@ -67,6 +67,11 @@ function GraphDirective ($rootScope, GraphManager) {
                 }
             }
 
+            function onFreeModule (e) {
+                let ele = e.cyTarget;
+                $rootScope.$broadcast('GRAPH_MOD_MOVED', { module: ele });
+            }
+
             function onTapStart (e) {
                 if ($scope.linkMode) {
                     mouseDown = true;
@@ -124,6 +129,7 @@ function GraphDirective ($rootScope, GraphManager) {
                 resetLinkStatus();
 
                 instance.on('click', 'node', onClickModule);
+                instance.on('free', 'node', onFreeModule);
                 instance.on('tapstart', 'node', onTapStart);
                 instance.on('tapdragover', 'node', onTapOver);
                 instance.on('tapdragout', 'node', onTapOut);

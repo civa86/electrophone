@@ -22,6 +22,8 @@
     "style-loader": "^0.13.0",
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.4",
+    "jscs-loader": "0.2.x",
+    "jshint-loader": "0.8.x",
     "isparta": "3.0.4",
     "isparta-loader": "0.2.0",
     "karma": "0.13.x",
@@ -40,10 +42,10 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "lib-dev": "webpack --config webpack.lib.config.js",
-    "lib-build": "webpack --config webpack.lib.config.js -build",
+    "lib-dev": "webpack --config webpack.lib.config.js --colors",
+    "lib-build": "webpack --config webpack.lib.config.js --colors -build",
     "lib-dist": "npm run test; npm run lib-build",
-    "app-dev": "webpack --config webpack.app.config.js",
-    "app-build": "webpack --config webpack.app.config.js -build"
+    "app-dev": "webpack --config webpack.app.config.js --colors",
+    "app-build": "webpack --config webpack.app.config.js --colors -build"
   }
 }

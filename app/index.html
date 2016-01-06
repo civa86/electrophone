@@ -60,7 +60,7 @@
             <div class="col-xs-12">
                 <div class="tab-content">
                     <div data-module-builder=""
-                         data-all-modules="appCtrl.synthModules"></div>
+                         data-modules-list="appCtrl.builderModuleList"></div>
 
                     <div role="tabpanel" class="tab-pane" id="control-panel">
                         <div ng-show="!appCtrl.currentNode">
@@ -68,7 +68,7 @@
                         </div>
                         <div ng-show="appCtrl.currentNode"
                              data-control-panel=""
-                             data-module-properties="appCtrl.currentModuleProperties.props"></div>
+                             data-module-properties="appCtrl.currentModuleProperties"></div>
                     </div>
                 </div>
             </div>

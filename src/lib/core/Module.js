@@ -20,22 +20,11 @@ class Module {
 
     setupProperties (props) {
         let properties = props || {},
-            defaultProperties = {
-                link:  {
-                    type:         'string',
-                    defaultValue: ''
-                },
-                level: {
-                    type:         'number',
-                    bounds:       [0, 100],
-                    defaultValue: 100
-                }
-            },
+            defaultProperties = Props.DefaultProps,
             propsHandler = this.toString() + 'Props',
             customProps = Props[propsHandler] || {};
 
         defaultProperties = Object.assign(defaultProperties, customProps);
-
         Object.keys(defaultProperties).forEach((e) => {
             this.setProperty(e, properties[e], defaultProperties[e]);
         });

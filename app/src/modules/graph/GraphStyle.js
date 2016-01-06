@@ -19,6 +19,14 @@ const style = {
             }
         },
         {
+            selector: 'node#master',
+            style: {
+                width: 100,
+                height: 100,
+                'background-color': 'purple'
+            }
+        },
+        {
             selector: 'node.selected',
             style: {
                 'background-color': 'green'
