@@ -63,11 +63,8 @@
                          data-modules-list="appCtrl.builderModuleList"></div>
 
                     <div role="tabpanel" class="tab-pane" id="control-panel">
-                        <div ng-show="!appCtrl.currentNode">
-                            Select a Node and tweak it!
-                        </div>
-                        <div ng-show="appCtrl.currentNode"
-                             data-control-panel=""
+                        <div data-control-panel=""
+                             data-module="appCtrl.currentNode"
                              data-module-properties="appCtrl.currentModuleProperties"></div>
                     </div>
                 </div>

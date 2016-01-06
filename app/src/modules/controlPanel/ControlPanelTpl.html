@@ -1,0 +1,25 @@
+<div>
+    <div class="row" ng-show="!module">
+        <div class="col-xs-12">
+            Select a Node and tweak it!
+        </div>
+    </div>
+    <div class="row" ng-show="module">
+        <div ng-repeat="(propName, prop) in moduleProperties"
+             ng-class="countProperties()">
+            <div>{{propName | uppercase}}</div>
+            <div class="control-property"
+                 ng-switch on="prop.type">
+
+                <div ng-switch-when="number"
+                     data-control-knob="prop"
+                     data-control-name="propName"
+                     data-control-module="module"></div>
+
+                <div ng-switch-when="string"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -9,17 +9,38 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.currentNode = null;
         ctrl.currentModuleProperties = null;
         ctrl.builderModuleList = SynthManager.listAllModules(true);
+        //TODO refactor with an indexed object...
+        ctrl.modules = getInitModulesState();
+    }
 
-        //TODO get from synt listModules etc...
-        ctrl.modules = [
-            {
+    function getInitModulesState () {
+        let initialSynthModules = SynthManager.listModules(),
+            initNode = {
+                props: {},
                 group: 'nodes',
                 data: {
                     id: 'master',
                     type: 'Master'
                 }
+            };
+
+        Object.keys(initialSynthModules).forEach((e) => {
+            let props = initialSynthModules[e].props;
+            if (e === 'adsr') {
+                delete props.link;
+                delete props.target;
+                delete props.level;
             }
-        ];
+            initNode.props = Object.assign(initNode.props, props);
+        });
+
+        return [initNode];
+    }
+
+    function getModuleNode (moduleId) {
+        return ctrl.modules
+            .filter((e) => e.data.id === moduleId)
+            .pop();
     }
 
     function createModule (event, params) {
@@ -27,7 +48,9 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         let type = (params && params.type) ? params.type : null,
             module;
         if (type) {
+            //TODO set properties with default values!!!!!
             module = {
+                props: {},
                 group: 'nodes',
                 data: { type: type }
             };
@@ -39,13 +62,24 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     }
 
-    function getModuleNode (moduleId) {
-        return ctrl.modules
-            .filter((e) => e.data.id === moduleId)
-            .pop();
+    function updateModule (event, params) {
+        if (params && params.module && params.prop) {
+            ctrl.modules.forEach((e) => {
+                if (e.data.id === params.module) {
+                    e.props[params.prop] = params.value;
+                }
+            });
+            //TODO update also synth module....
+        }
     }
 
     function moduleSelected (event, params) {
+        //TODO this is a reset....check if you can pass the right object to watch.
+        // TODO problem comes with envelop and master...they are the same object and watcher not start....
+        ctrl.currentNode = null;
+        ctrl.currentModuleProperties = null;
+        $scope.$digest();
+
         //TODO remove all cytoscape logic like id() and move it to GraphManager methods
         let selectedModule = (params && params.module) ? params.module.id() : null,
             currentModuleType;
@@ -94,6 +128,9 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     //APP MODULES EVENTS
     $rootScope.$on('MODULE_BUILD', createModule);
+
+    //CONTROL PANEL EVENTS
+    $rootScope.$on('CTRL_MOD_SET_PROP', updateModule);
 
     //GRAPH EVENTS
     $rootScope.$on('GRAPH_MOD_SELECTED', moduleSelected);
