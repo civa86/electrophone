@@ -16,38 +16,28 @@ function SynthManager () {
         return synth.listModules();
     }
 
-    function createModule (type) {
+    function createModule (module) {
         //TODO implement
-        console.log('create synth module...', type)
+        if (module.type && module.type !== synth.TYPES.MASTER) {
+            console.log('SYNTH::create module...', module);
+        }
+    }
+
+    function updateModule (module) {
+        console.log('SYNTH::update module...', module)
     }
 
     function getModuleProperties (type) {
         let allModules = listAllModules(),
-            ret,
-            additionalProps = null;
+            filtered = allModules.filter((e) => e.type === type),
+            tmp = null,
+            ret = {};
 
-        ret = allModules
-            .filter((e) => e.type === type)
-            .map((e) => {
-                let tmp = angular.copy(e.props);
-                delete tmp.link;
-                return tmp;
-            })
-            .pop();
-
-        if (type === synth.TYPES.MASTER) {
-            additionalProps = allModules
-                .filter((e) => e.type === synth.TYPES.ENVELOPE)
-                .map((e) => {
-                    let tmp = angular.copy(e.props);
-                    delete tmp.link;
-                    delete tmp.target;
-                    delete tmp.level;
-                    return tmp;
-                })
-                .pop();
-
-            ret = Object.assign(additionalProps, ret);
+        if (filtered && filtered.length === 1) {
+            tmp = JSON.parse(JSON.stringify(filtered[0]));
+            delete tmp.props.link;
+            Object.keys(tmp.props).forEach((e) => tmp.props[e].currentValue = tmp.props[e].defaultValue);
+            ret = tmp.props;
         }
 
         return ret;
@@ -56,6 +46,7 @@ function SynthManager () {
     service.listAllModules = listAllModules;
     service.listModules = listModules;
     service.createModule = createModule;
+    service.updateModule = updateModule;
     service.getModuleProperties = getModuleProperties;
 
     return service;

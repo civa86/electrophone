@@ -12,7 +12,7 @@ function GraphManager ($q) {
     //    }
     //}
 
-    function createGraph (element, modules, graphStyle) {
+    function createGraph (element, graphStyle) {
         let def = $q.defer(),
             config;
 
@@ -21,7 +21,6 @@ function GraphManager ($q) {
         } else {
             config = {
                 container: element,
-                elements: modules,
                 ready: function () {
                     graph = this;
                     def.resolve(graph);
@@ -127,16 +126,17 @@ function GraphManager ($q) {
             } else {
                 graph.$('node.selected').removeClass('selected');
                 node.addClass('selected');
-                ret = node;
+                ret = node.id();
             }
         }
         return ret;
     }
 
     function addNode (elem, linkMode) {
-        if (graph) {
-            let e = elem || {};
+        let e = elem || {},
+            ret;
 
+        if (graph) {
             e.position = {
                 x: 100,
                 y: 100
@@ -145,10 +145,16 @@ function GraphManager ($q) {
             if (linkMode) {
                 e.classes = 'link-mode'
             }
-            graph.add(e);
+
+            ret = graph.add(e);
         }
 
         resizeGraph();
+
+        return {
+            id: ret.id(),
+            position: ret.position()
+        };
     }
 
     service.createGraph = createGraph;

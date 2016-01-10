@@ -1,6 +1,6 @@
 export {default as DefaultProps} from './DefaultProps'
 
-//export {default as MasterProps} from './MasterProps'
+export {default as MasterProps} from './MasterProps'
 export {default as EnvelopeProps} from './EnvelopeProps'
 export {default as PanProps} from './PanProps'
 

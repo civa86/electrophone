@@ -32,7 +32,7 @@ angular.module('myApp', [
     //TODO manage filters...
     .filter('nodename', function () {
         return function (input) {
-            return (input) ? input.data.id : ' ... ';
+            return (input) ? input.id : ' ... ';
         }
     })
     .controller('ApplicationController', [

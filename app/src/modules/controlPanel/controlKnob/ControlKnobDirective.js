@@ -8,30 +8,37 @@ function ControlKnobDirective ($rootScope) {
         replace: true,
         template: tpl,
         scope: {
-            controlKnob: '=',
-            controlName: '=',
-            controlModule: '='
+            moduleId: '=',
+            propValue: '=',
+            propBounds: '=',
+            propName: '='
         },
         link: function ($scope, element) {
+
+            function init () {
+                $(element)
+                    .knob({
+                        min: $scope.propBounds[0],
+                        max: $scope.propBounds[1],
+                        change: onChange
+                    });
+            }
+
             function onChange (v) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
-                    module: $scope.controlModule.data.id,
-                    prop: $scope.controlName,
+                    module: $scope.moduleId,
+                    prop: $scope.propName,
                     value: v
                 });
             }
 
-            function init () {
-                let initVal = $scope.controlModule.props[$scope.controlName];
-                $scope.inputVal = Math.round(initVal);
-                $(element).val(initVal);
+            function setKnobValue () {
                 $(element)
-                    .knob({
-                        min: $scope.controlKnob.bounds[0],
-                        max: $scope.controlKnob.bounds[1],
-                        change: onChange
-                    });
+                    .val($scope.propValue)
+                    .trigger('change');
             }
+
+            $scope.$watch('moduleId', setKnobValue);
 
             init();
         }

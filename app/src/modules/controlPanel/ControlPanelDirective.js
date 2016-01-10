@@ -7,17 +7,14 @@ function ControlPanelDirective ($rootScope) {
         replace:  true,
         template: tpl,
         scope:    {
-            module: '=',
-            moduleProperties: '='
+            module: '='
         },
         link: function ($scope, element) {
             function countProperties () {
                 let cnt,
                     numProps;
-                if ($scope.moduleProperties) {
-                    numProps = Object.keys($scope.moduleProperties)
-                        //.filter((e) => e !== 'id')
-                        .length;
+                if ($scope.module) {
+                    numProps = Object.keys($scope.module.props).length;
                     cnt = Math.floor(12 / numProps);
                 }
                 return 'col-xs-' + cnt;

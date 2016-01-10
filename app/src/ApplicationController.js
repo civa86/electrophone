@@ -7,96 +7,88 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.graphReady = false;
         ctrl.linkMode = false;
         ctrl.currentNode = null;
-        ctrl.currentModuleProperties = null;
         ctrl.builderModuleList = SynthManager.listAllModules(true);
-        //TODO refactor with an indexed object...
-        ctrl.modules = getInitModulesState();
+        //TODO refactor with obj??
+        ctrl.modules = [];
     }
 
-    function getInitModulesState () {
-        let initialSynthModules = SynthManager.listModules(),
-            initNode = {
-                props: {},
-                group: 'nodes',
-                data: {
-                    id: 'master',
-                    type: 'Master'
-                }
-            };
-
-        Object.keys(initialSynthModules).forEach((e) => {
-            let props = initialSynthModules[e].props;
-            if (e === 'adsr') {
-                delete props.link;
-                delete props.target;
-                delete props.level;
-            }
-            initNode.props = Object.assign(initNode.props, props);
+    function initModules () {
+        //TODO introduce here loading presets etc..
+        $rootScope.$emit('MODULE_BUILD', {
+            id: 'master',
+            type: 'Master'
         });
 
-        return [initNode];
+        //TODO set master prop values with synth listModules....
+        //GraphManager.resetGraph();
     }
 
-    function getModuleNode (moduleId) {
-        return ctrl.modules
-            .filter((e) => e.data.id === moduleId)
-            .pop();
+    function getModule (moduleId) {
+        return ctrl.modules.filter((e) => e.id === moduleId).pop();
+    }
+
+    function getGraphNode (module) {
+        return {
+            group: 'nodes',
+            data: {
+                id: module.id,
+                type: module.type
+            }
+        };
     }
 
     function createModule (event, params) {
-        //TODO manage all params...like id
-        let type = (params && params.type) ? params.type : null,
-            module;
+        const type = (params && params.type) ? params.type : null,
+            id = (params && params.id) ? params.id : null;
+        let newModule = {},
+            graphNode;
+
         if (type) {
-            //TODO set properties with default values!!!!!
-            module = {
-                props: {},
-                group: 'nodes',
-                data: { type: type }
-            };
-
-            ctrl.modules.push(module);
-            SynthManager.createModule(type);
-            GraphManager.addNode(module, ctrl.linkMode);
+            if (id) {
+                newModule.id = id;
+            }
+            newModule.type = type;
+            newModule.props = SynthManager.getModuleProperties(type);
         }
+        //Synth mod creation
+        SynthManager.createModule(newModule);
 
+        //Graph node creation
+        graphNode = GraphManager.addNode(getGraphNode(newModule), ctrl.linkMode);
+
+        //App module registerd
+        ctrl.modules.push(Object.assign({}, newModule, graphNode));
     }
 
-    function updateModule (event, params) {
+    function setModuleProperty (event, params) {
+        let module;
         if (params && params.module && params.prop) {
-            ctrl.modules.forEach((e) => {
-                if (e.data.id === params.module) {
-                    e.props[params.prop] = params.value;
-                }
-            });
-            //TODO update also synth module....
+            module = getModule(params.module);
+            if (module.props[params.prop]) {
+                module.props[params.prop].currentValue = params.value;
+                SynthManager.updateModule(module);
+            }
+            $scope.$digest();
         }
+        console.log(ctrl.modules);
     }
 
     function moduleSelected (event, params) {
-        //TODO this is a reset....check if you can pass the right object to watch.
-        // TODO problem comes with envelop and master...they are the same object and watcher not start....
-        ctrl.currentNode = null;
-        ctrl.currentModuleProperties = null;
-        $scope.$digest();
-
-        //TODO remove all cytoscape logic like id() and move it to GraphManager methods
-        let selectedModule = (params && params.module) ? params.module.id() : null,
-            currentModuleType;
-
-        ctrl.currentNode = getModuleNode(selectedModule);
-        currentModuleType = (ctrl.currentNode && ctrl.currentNode.data) ? ctrl.currentNode.data.type : null;
-        ctrl.currentModuleProperties = SynthManager.getModuleProperties(currentModuleType);
+        const moduleId = (params && params.moduleId) ? params.moduleId : null;
+        ctrl.currentNode = getModule(moduleId);
         $scope.$digest();
         GraphManager.resizeGraph();
     }
 
     function moduleMoved (event, params) {
-        //TODO remove all cytoscape logic like id() and move it to GraphManager methods
-        let movedModule = (params && params.module) ? params.module : null;
-
-        //TODO update ctrl.modules with new position. also graph setting like zoom, pan??
-        console.log('moved', movedModule.id(), movedModule.position());
+        ////TODO method needed??
+        ////TODO remove all cytoscape logic like id() and move it to GraphManager methods
+        //let movedModule = (params && params.module) ? params.module : null;
+        //
+        ////TODO module position is already right set....
+        //
+        ////TODO update status saving graph setting like zoom, pan??
+        //console.log('moved', movedModule.id(), movedModule.position());
     }
 
     function linkModeToggle () {
@@ -130,9 +122,10 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     $rootScope.$on('MODULE_BUILD', createModule);
 
     //CONTROL PANEL EVENTS
-    $rootScope.$on('CTRL_MOD_SET_PROP', updateModule);
+    $rootScope.$on('CTRL_MOD_SET_PROP', setModuleProperty);
 
     //GRAPH EVENTS
+    $rootScope.$on('GRAPH_CREATED', initModules);
     $rootScope.$on('GRAPH_MOD_SELECTED', moduleSelected);
     $rootScope.$on('GRAPH_MOD_MOVED', moduleMoved);
     $rootScope.$on('GRAPH_LINK_MODE_TOGGLE', linkModeToggle);

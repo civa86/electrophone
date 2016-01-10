@@ -506,31 +506,33 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _DefaultProps = __webpack_require__(42);
+	var _DefaultProps = __webpack_require__(29);
 
 	exports.DefaultProps = _interopRequire(_DefaultProps);
 
-	//export {default as MasterProps} from './MasterProps'
+	var _MasterProps = __webpack_require__(33);
 
-	var _EnvelopeProps = __webpack_require__(30);
+	exports.MasterProps = _interopRequire(_MasterProps);
+
+	var _EnvelopeProps = __webpack_require__(31);
 
 	exports.EnvelopeProps = _interopRequire(_EnvelopeProps);
 
-	var _PanProps = __webpack_require__(37);
+	var _PanProps = __webpack_require__(39);
 
 	exports.PanProps = _interopRequire(_PanProps);
 
 	//SOUNDSOURCES
 
-	var _OscillatorProps = __webpack_require__(35);
+	var _OscillatorProps = __webpack_require__(37);
 
 	exports.OscillatorProps = _interopRequire(_OscillatorProps);
 
-	var _ModulatorProps = __webpack_require__(32);
+	var _ModulatorProps = __webpack_require__(34);
 
 	exports.ModulatorProps = _interopRequire(_ModulatorProps);
 
-	var _NoiseProps = __webpack_require__(34);
+	var _NoiseProps = __webpack_require__(36);
 
 	exports.NoiseProps = _interopRequire(_NoiseProps);
 
@@ -539,27 +541,27 @@
 
 	//EFFECTS
 
-	var _FilterProps = __webpack_require__(31);
+	var _FilterProps = __webpack_require__(32);
 
 	exports.FilterProps = _interopRequire(_FilterProps);
 
-	var _DelayProps = __webpack_require__(29);
+	var _DelayProps = __webpack_require__(30);
 
 	exports.DelayProps = _interopRequire(_DelayProps);
 
-	var _PingPongDelayProps = __webpack_require__(38);
+	var _PingPongDelayProps = __webpack_require__(40);
 
 	exports.PingPongDelayProps = _interopRequire(_PingPongDelayProps);
 
-	var _WahWahProps = __webpack_require__(40);
+	var _WahWahProps = __webpack_require__(42);
 
 	exports.WahWahProps = _interopRequire(_WahWahProps);
 
-	var _TremoloProps = __webpack_require__(39);
+	var _TremoloProps = __webpack_require__(41);
 
 	exports.TremoloProps = _interopRequire(_TremoloProps);
 
-	var _OverdriveProps = __webpack_require__(36);
+	var _OverdriveProps = __webpack_require__(38);
 
 	exports.OverdriveProps = _interopRequire(_OverdriveProps);
 
@@ -571,7 +573,7 @@
 
 	exports.BitcrusherProps = _interopRequire(_BitcrusherProps);
 
-	var _MoogFilterProps = __webpack_require__(33);
+	var _MoogFilterProps = __webpack_require__(35);
 
 	exports.MoogFilterProps = _interopRequire(_MoogFilterProps);
 
@@ -622,6 +624,7 @@
 	        fx = undefined;
 
 	    this.VARS = _libCoreConstants.CONST;
+	    this.TYPES = _libCoreConstants.TYPES;
 
 	    //Synth Module Creators
 	    var _iteratorNormalCompletion = true;
@@ -673,12 +676,13 @@
 	            tmp = undefined;
 
 	        result = methods.reduce(function (res, e) {
+	            //TODO refactor props as array?? you can sort it...otherwise use sort of keys and read...
 	            propName = e + 'Props';
 	            props = Props[propName] || {};
 	            props = Object.assign(props, Props.DefaultProps);
 
 	            tmp = {
-	                name: e,
+	                type: e,
 	                props: props
 	            };
 
@@ -861,7 +865,7 @@
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _tunajs = __webpack_require__(41);
+	var _tunajs = __webpack_require__(43);
 
 	var _tunajs2 = _interopRequireDefault(_tunajs);
 
@@ -2036,6 +2040,30 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
+	var DefaultProps = {
+	    link: {
+	        type: 'string',
+	        defaultValue: ''
+	    },
+	    level: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 100
+	    }
+	};
+
+	exports['default'] = DefaultProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
 	var DelayProps = {
 	    dry: {
 	        type: 'number',
@@ -2073,7 +2101,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2112,7 +2140,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2154,7 +2182,42 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 32 */
+/* 33 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var MasterProps = {
+	    attack: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 1
+	    },
+	    decay: {
+	        type: 'number',
+	        bounds: [0, 100],
+	        defaultValue: 1
+	    },
+	    sustain: {
+	        type: 'number',
+	        bounds: [1, 100],
+	        defaultValue: 100
+	    },
+	    release: {
+	        type: 'number',
+	        bounds: [0.001, 100],
+	        defaultValue: 5
+	    }
+	};
+
+	exports['default'] = MasterProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2185,7 +2248,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2215,7 +2278,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2237,7 +2300,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2265,7 +2328,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 36 */
+/* 38 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2305,7 +2368,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 37 */
+/* 39 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2325,7 +2388,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 38 */
+/* 40 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2370,7 +2433,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2405,7 +2468,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2454,7 +2517,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4639,30 +4702,6 @@
 	    };
 	})(this);
 
-
-/***/ },
-/* 42 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	var DefaultProps = {
-	    link: {
-	        type: 'string',
-	        defaultValue: ''
-	    },
-	    level: {
-	        type: 'number',
-	        bounds: [0, 100],
-	        defaultValue: 100
-	    }
-	};
-
-	exports['default'] = DefaultProps;
-	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

@@ -34,6 +34,7 @@ class WebSynth {
                 tmp;
 
             result = methods.reduce((res, e) => {
+                //TODO refactor props as array?? you can sort it...otherwise use sort of keys and read...
                 propName = e + 'Props';
                 props = Props[propName] || {};
                 props = Object.assign(props, Props.DefaultProps);

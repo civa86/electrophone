@@ -7,8 +7,7 @@ function GraphDirective ($rootScope, GraphManager) {
         replace: true,
         template: '<div id="graph" class="col-xs-12"></div>',
         scope: {
-            linkMode: '=',
-            appModules: '='
+            linkMode: '='
         },
         link: function ($scope, element) {
             let graphHeight = $(window).height() - $('header').height() - $('#menu').height(),
@@ -63,7 +62,7 @@ function GraphDirective ($rootScope, GraphManager) {
                 if (!$scope.linkMode) {
                     let ele = e.cyTarget,
                         selectedModule = GraphManager.selectNode(ele);
-                    $rootScope.$broadcast('GRAPH_MOD_SELECTED', { module: selectedModule });
+                    $rootScope.$broadcast('GRAPH_MOD_SELECTED', { moduleId: selectedModule });
                 }
             }
 
@@ -140,11 +139,11 @@ function GraphDirective ($rootScope, GraphManager) {
             function init () {
                 $(element).height(graphHeight);
 
-                GraphManager.createGraph(element, $scope.appModules, graphStyle).then(
+                GraphManager.createGraph(element, graphStyle).then(
                     function (graph) {
                         createLinkArea();
                         bindGraph(graph);
-                        GraphManager.resetGraph();
+                        $rootScope.$broadcast('GRAPH_CREATED');
                     }
                 );
             }
