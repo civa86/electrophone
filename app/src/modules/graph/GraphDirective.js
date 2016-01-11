@@ -80,18 +80,30 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                     startY = e.cyRenderedPosition.y;
                     sourceLinkNode = e.cyTarget;
                     targetLinkNode = null;
+
+                    if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
+                        $rootScope.$broadcast('GRAPH_SET_LINK_SOURCE', {
+                            linkSourceType: sourceLinkNode.data('type'),
+                            linkSourceId: sourceLinkNode.id()
+                        });
+                    }
                 }
             }
 
             function onTapOver (e) {
-                if ($scope.linkMode) {
+                if ($scope.linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id()  && isDragging) {
                     targetLinkNode = e.cyTarget;
+                    $rootScope.$broadcast('GRAPH_SET_LINK_TARGET', {
+                        linkTargetType: targetLinkNode.data('type'),
+                        linkTargetId: targetLinkNode.id()
+                    });
                 }
             }
 
             function onTapOut (e) {
-                if ($scope.linkMode) {
+                if ($scope.linkMode && targetLinkNode) {
                     targetLinkNode = null;
+                    $rootScope.$broadcast('GRAPH_SET_LINK_TARGET', null);
                 }
             }
 
@@ -110,7 +122,7 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                 }
             }
 
-            function onTapEnd (e) {
+            function onTapEnd () {
                 if ($scope.linkMode) {
                     mouseDown = false;
                     if (isDragging) {
@@ -123,6 +135,7 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                     }
                     sourceLinkNode = null;
                     targetLinkNode = null;
+                    $rootScope.$broadcast('GRAPH_RESET_LINKS');
                 }
             }
 

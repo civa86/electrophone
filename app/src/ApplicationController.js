@@ -5,13 +5,20 @@ import angular from 'angular';
 function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) {
     let ctrl = this;
 
+    function initLinks () {
+        ctrl.linkSource = '';
+        ctrl.linkTarget = '';
+    }
+
     function init () {
-        ctrl.graphReady = false;
         ctrl.linkMode = false;
+        ctrl.graphReady = false;
         ctrl.currentNode = null;
         ctrl.builderModuleList = SynthManager.listAllModules(true);
         //TODO refactor with obj??
         ctrl.modules = [];
+
+        initLinks();
     }
 
     function initModules () {
@@ -94,19 +101,49 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     }
 
     function linkModeToggle () {
-        ctrl.linkMode = !ctrl.linkMode;
-        GraphManager.setLinkMode(ctrl.linkMode);
+        if (ctrl.linkMode === true) {
+            linkModeOff(true);
+        } else {
+            linkModeOn(true);
+        }
     }
 
-    function linkModeOn () {
+    function linkModeOn (noDigest) {
         ctrl.linkMode = true;
         GraphManager.setLinkMode(ctrl.linkMode);
+        if (noDigest !== true) {
+            $scope.$digest();
+        }
+    }
+
+    function linkModeOff (noDigest) {
+        ctrl.linkMode = false;
+        GraphManager.setLinkMode(ctrl.linkMode);
+        ctrl.linkSource = '';
+        ctrl.linkTarget = '';
+        if (noDigest !== true) {
+            $scope.$digest();
+        }
+    }
+
+    function setLinkSource (event, params) {
+        const linkSourceType = (params && params.linkSourceType) ? params.linkSourceType : null,
+              linkSourceId = (params && params.linkSourceId) ? params.linkSourceId : null;
+
+        ctrl.linkSource = (linkSourceType && linkSourceId) ? linkSourceType + ' - ' + linkSourceId : '';
         $scope.$digest();
     }
 
-    function linkModeOff () {
-        ctrl.linkMode = false;
-        GraphManager.setLinkMode(ctrl.linkMode);
+    function setLinkTarget (event, params) {
+        const linkTargetType = (params && params.linkTargetType) ? params.linkTargetType : null,
+              linkTargetId = (params && params.linkTargetId) ? params.linkTargetId : null;
+
+        ctrl.linkTarget = (linkTargetType && linkTargetId) ? linkTargetType + ' - ' + linkTargetId : '';
+        $scope.$digest();
+    }
+
+    function resetLinks () {
+        initLinks();
         $scope.$digest();
     }
 
@@ -131,6 +168,9 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     $rootScope.$on('GRAPH_MOD_SELECTED', moduleSelected);
     $rootScope.$on('GRAPH_MOD_MOVED', moduleMoved);
     $rootScope.$on('GRAPH_LINK_MODE_TOGGLE', linkModeToggle);
+    $rootScope.$on('GRAPH_SET_LINK_SOURCE', setLinkSource);
+    $rootScope.$on('GRAPH_SET_LINK_TARGET', setLinkTarget);
+    $rootScope.$on('GRAPH_RESET_LINKS', resetLinks);
 
     //GLOBAL EVENTS
     $rootScope.$on('GLOBKEYS_SHIFT_DOWN', linkModeOn);

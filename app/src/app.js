@@ -33,7 +33,7 @@ angular.module('myApp', [
     ])
     .filter('nodename', function () {
         //TODO manage filters...
-        return (input) => (input) ? input.id : ' ... ';
+        return (input) => (input) ? input.type + ' - ' + input.id : ' ... ';
     })
     .controller('ApplicationController', [
         '$rootScope', '$scope',

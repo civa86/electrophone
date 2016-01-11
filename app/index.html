@@ -40,18 +40,26 @@
                         data-toggle="collapse" href="#menu">Menu
                 </button>
                 <button data-link-mode-button=""></button>
+
             </div>
             <div class="col-xs-6">
-                <button class="btn btn-info"
-                        role="tab"
-                        data-update-graph-btn=""
-                        data-toggle="tab" data-target="#module-builder">Add Node
-                </button>
-                <button class="btn btn-info"
-                        role="tab"
-                        data-update-graph-btn=""
-                        data-toggle="tab" data-target="#control-panel">{{appCtrl.currentNode | nodename}}
-                </button>
+                <div ng-show="appCtrl.linkMode">
+                    {{appCtrl.linkSource}}
+                    <span ng-show="appCtrl.linkTarget !== ''"> --> </span>
+                    {{appCtrl.linkTarget}}
+                </div>
+                <div ng-show="!appCtrl.linkMode">
+                    <button class="btn btn-info"
+                            role="tab"
+                            data-update-graph-btn=""
+                            data-toggle="tab" data-target="#module-builder">Add Node
+                    </button>
+                    <button class="btn btn-info"
+                            role="tab"
+                            data-update-graph-btn=""
+                            data-toggle="tab" data-target="#control-panel">{{appCtrl.currentNode | nodename}}
+                    </button>
+                </div>
             </div>
         </div>
     </header>
