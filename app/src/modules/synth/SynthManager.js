@@ -1,4 +1,6 @@
-import WebSynth from '../../../../src/WebSynth'
+'use strict';
+
+import WebSynth from '../../../../src/WebSynth';
 
 function SynthManager () {
     let synth = new WebSynth(),
@@ -24,7 +26,7 @@ function SynthManager () {
     }
 
     function updateModule (module) {
-        console.log('SYNTH::update module...', module)
+        console.log('SYNTH::update module...', module);
     }
 
     function getModuleProperties (type) {
@@ -52,4 +54,4 @@ function SynthManager () {
     return service;
 }
 
-export default SynthManager
+export default SynthManager;

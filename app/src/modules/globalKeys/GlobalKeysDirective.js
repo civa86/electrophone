@@ -1,4 +1,6 @@
-import angular from 'angular'
+'use strict';
+
+import angular from 'angular';
 
 function GlobalKeysDirective ($rootScope, $window) {
     return {
@@ -31,7 +33,7 @@ function GlobalKeysDirective ($rootScope, $window) {
 
             angular.element($window).on('resize', () => $rootScope.$broadcast('GLOB_WINDOW_RESIZE'));
         }
-    }
+    };
 }
 
-export default GlobalKeysDirective
+export default GlobalKeysDirective;

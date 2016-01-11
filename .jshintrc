@@ -2,6 +2,7 @@
   "esnext": true,
   "globalstrict": true,
   "globals": {
+    "console": false,
     "angular": false,
     "describe": false,
     "it": false,

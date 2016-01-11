@@ -1,5 +1,7 @@
-import $ from 'jquery'
-import cytoscape from 'cytoscape'
+'use strict';
+
+import $ from 'jquery';
+import cytoscape from 'cytoscape';
 
 function GraphManager ($q) {
     let service = {},
@@ -143,7 +145,7 @@ function GraphManager ($q) {
             };
 
             if (linkMode) {
-                e.classes = 'link-mode'
+                e.classes = 'link-mode';
             }
 
             ret = graph.add(e);
@@ -172,4 +174,4 @@ function GraphManager ($q) {
     return service;
 }
 
-export default GraphManager
+export default GraphManager;

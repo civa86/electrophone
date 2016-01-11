@@ -1,4 +1,6 @@
-import angular from 'angular'
+'use strict';
+
+import angular from 'angular';
 
 function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) {
     let ctrl = this;

@@ -1,5 +1,7 @@
-import $ from 'jquery'
-import tpl from './ControlPanelTpl.html'
+'use strict';
+
+import $ from 'jquery';
+import tpl from './ControlPanelTpl.html';
 
 function ControlPanelDirective ($rootScope) {
     return {
@@ -22,7 +24,7 @@ function ControlPanelDirective ($rootScope) {
 
             $scope.countProperties = countProperties;
         }
-    }
+    };
 }
 
-export default ControlPanelDirective
+export default ControlPanelDirective;

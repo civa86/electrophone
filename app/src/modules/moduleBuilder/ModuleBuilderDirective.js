@@ -1,3 +1,5 @@
+'use strict';
+
 function ModuleBuilderDirective ($rootScope) {
     return {
         restrict: 'EA',
@@ -12,11 +14,14 @@ function ModuleBuilderDirective ($rootScope) {
                                 'ng-click="buildModule(mod.type)">{{::mod.type}}</button>' +
                     '</div></div>',
         link: function ($scope) {
-            $scope.buildModule = function (type) {
+
+            function buildModule (type) {
                 $rootScope.$emit('MODULE_BUILD', { type: type });
             }
+
+            $scope.buildModule = buildModule;
         }
-    }
+    };
 }
 
-export default ModuleBuilderDirective
+export default ModuleBuilderDirective;

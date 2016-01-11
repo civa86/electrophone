@@ -1,7 +1,9 @@
-import $ from 'jquery'
-import graphStyle from './GraphStyle'
+'use strict';
 
-function GraphDirective ($rootScope, GraphManager) {
+import $ from 'jquery';
+import graphStyle from './GraphStyle';
+
+function GraphDirective ($rootScope, $window, GraphManager) {
     return {
         restrict: 'EA',
         replace: true,
@@ -10,7 +12,7 @@ function GraphDirective ($rootScope, GraphManager) {
             linkMode: '='
         },
         link: function ($scope, element) {
-            let graphHeight = $(window).height() - $('header').height() - $('#menu').height(),
+            let graphHeight = $($window).height() - $('header').height() - $('#menu').height(),
                 mouseDown,
                 isDragging,
                 sourceLinkNode,
@@ -150,7 +152,7 @@ function GraphDirective ($rootScope, GraphManager) {
 
             init();
         }
-    }
+    };
 }
 
-export default GraphDirective
+export default GraphDirective;

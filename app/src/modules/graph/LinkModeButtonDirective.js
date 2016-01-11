@@ -1,4 +1,6 @@
-import angular from 'angular'
+'use strict';
+
+import angular from 'angular';
 
 function LinkModeButtonDirective ($rootScope) {
     return {
@@ -11,10 +13,10 @@ function LinkModeButtonDirective ($rootScope) {
         scope: true,
         link: function ($scope) {
             $scope.toggleLinkMode = function () {
-                $rootScope.$broadcast('GRAPH_LINK_MODE_TOGGLE')
-            }
+                $rootScope.$broadcast('GRAPH_LINK_MODE_TOGGLE');
+            };
         }
-    }
+    };
 }
 
-export default LinkModeButtonDirective
+export default LinkModeButtonDirective;

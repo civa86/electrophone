@@ -1,3 +1,5 @@
+'use strict';
+
 function UpdateGraphBtnDirective (GraphManager) {
     return {
         restrict: 'A',
@@ -7,7 +9,7 @@ function UpdateGraphBtnDirective (GraphManager) {
             });
 
         }
-    }
+    };
 }
 
-export default UpdateGraphBtnDirective
+export default UpdateGraphBtnDirective;

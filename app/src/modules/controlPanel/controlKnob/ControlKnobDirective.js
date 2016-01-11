@@ -1,6 +1,8 @@
-import $ from 'jquery'
-import tpl from './ControlKnobTpl.html'
-import knob from 'jquery-knob'
+'use strict';
+
+import $ from 'jquery';
+import tpl from './ControlKnobTpl.html';
+import knob from 'jquery-knob';
 
 function ControlKnobDirective ($rootScope) {
     return {
@@ -42,7 +44,7 @@ function ControlKnobDirective ($rootScope) {
 
             init();
         }
-    }
+    };
 }
 
-export default ControlKnobDirective
+export default ControlKnobDirective;

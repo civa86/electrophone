@@ -3,9 +3,8 @@ var path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     autoprefixer = require('autoprefixer'),
+    workingDirectory = path.join(__dirname, 'app'),
     config = {};
-
-//TODO add ng-template loader....https://github.com/WearyMonkey/ngtemplate-loader
 
 //-------------- CONFIGURATION ------------------------
 if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1) {
@@ -53,15 +52,13 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'jscs-loader',
-                exclude: /node_modules|dist/
+                include: workingDirectory
+            },
+            {
+                test: /\.js$/,
+                loader: 'jshint-loader',
+                include: workingDirectory
             }
-            //TODO jshint
-            //,
-            //{
-            //    test: /\.js$/,
-            //    loader: 'jshint-loader',
-            //    exclude: /node_modules/
-            //}
         ],
         loaders: [
             {
