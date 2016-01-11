@@ -2,48 +2,29 @@
 
 Web Audio Modular Synthesizer
 
-## Library Development
+#### NPM Scripts
 
-npm script `lib-dev`. Watch mode. 
-
-Output file `dist/web-synth.js`
+Usage:
 
 ```bash
-$ npm install
-$ npm run lib-dev
+npm install
+npm run <script_name>
 ```
 
-## Web Application Development
+Scripts list:
 
-npm script `app-dev`. Watch mode. 
+| script name   | watch mode    | output file           |
+| :---------:   | :--------:    | :---------:           |
+| lib-dev       | yes           | dist/web-synth.js     |   
+| lib-build     | no            | dist/web-synth.min.js |   
+| app-dev       | yes           | publish/*/**          |
+| app-build     | no            | publish/*/**          |   
 
-Output directory `publish`
-
-```bash
-$ npm install
-$ npm run app-dev
-```
-
-## Library Building
-
-npm script `lib-build`.
-
-Output file `dist/web-synth.min.js`
-
-```bash
-$ npm install
-$ npm run lib-build
-```
-
-# Demo Page
-
-Trying dist version in a `<script>` browser tag
+#### Demo Page
 
 Open `demo/index.html` in a Web Browser
 
-# Web Application
-
-Web Application with Angular JS
+#### Web Application
 
 Open `publish/index.html` in a Web Browser
 
