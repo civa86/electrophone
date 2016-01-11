@@ -1,4 +1,5 @@
 'use strict';
+
 var path = require('path');
 
 module.exports = function (config) {
@@ -6,11 +7,11 @@ module.exports = function (config) {
         basePath: './',
 
         files: [
-            'src/**/*.spec.js'
+            'lib/**/*.spec.js'
         ],
 
         preprocessors: {
-            'src/**/*.spec.js': ['webpack']
+            'lib/**/*.spec.js': ['webpack']
         },
 
         singleRun: true,
