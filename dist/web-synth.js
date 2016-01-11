@@ -599,19 +599,19 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _libModules = __webpack_require__(6);
+	var _srcModules = __webpack_require__(6);
 
-	var Modules = _interopRequireWildcard(_libModules);
+	var Modules = _interopRequireWildcard(_srcModules);
 
-	var _libProperties = __webpack_require__(7);
+	var _srcProperties = __webpack_require__(7);
 
-	var Props = _interopRequireWildcard(_libProperties);
+	var Props = _interopRequireWildcard(_srcProperties);
 
-	var _libCoreConstants = __webpack_require__(1);
+	var _srcCoreConstants = __webpack_require__(1);
 
-	var _libSynth = __webpack_require__(9);
+	var _srcSynth = __webpack_require__(9);
 
-	var _libSynth2 = _interopRequireDefault(_libSynth);
+	var _srcSynth2 = _interopRequireDefault(_srcSynth);
 
 	var WebSynth = function WebSynth(props) {
 	    var _this = this;
@@ -619,12 +619,12 @@
 	    _classCallCheck(this, WebSynth);
 
 	    var properties = props || {},
-	        synth = new _libSynth2['default'](properties),
+	        synth = new _srcSynth2['default'](properties),
 	        methods = Object.keys(Modules),
 	        fx = undefined;
 
-	    this.VARS = _libCoreConstants.CONST;
-	    this.TYPES = _libCoreConstants.TYPES;
+	    this.VARS = _srcCoreConstants.CONST;
+	    this.TYPES = _srcCoreConstants.TYPES;
 
 	    //Synth Module Creators
 	    var _iteratorNormalCompletion = true;

@@ -1,6 +1,6 @@
 'use strict';
 
-import WebSynth from '../../../../src/WebSynth';
+import WebSynth from '../../../../lib/WebSynth';
 
 function SynthManager () {
     let synth = new WebSynth(),

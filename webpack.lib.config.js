@@ -1,5 +1,6 @@
 var path = require('path'),
     webpack = require('webpack'),
+    workingDirectory = path.join(__dirname, 'lib'),
     config = {};
 
 //-------------- CONFIGURATION ------------------------
@@ -24,7 +25,7 @@ if (process.argv && process.argv.length && process.argv.indexOf('-build') !== -1
 
 //-------------- EXPORT -------------------------------
 module.exports = {
-    entry: path.join(__dirname, 'src/index.js'),
+    entry: path.join(__dirname, 'lib/index.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: config.outputFile
@@ -35,22 +36,19 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'jscs-loader',
-                exclude: /node_modules/
+                include: workingDirectory
+            },
+            {
+                test: /\.js$/,
+                loader: 'jshint-loader',
+                include: workingDirectory
             }
-            //TODO jshint
-            //,
-            //{
-            //    test: /\.js$/,
-            //    loader: 'jshint-loader',
-            //    exclude: /node_modules/
-            //}
         ],
         loaders: [
             {
                 test: /\.js$/,
                 loaders: ['babel'],
-                exclude: /node_modules/,
-                include: __dirname
+                exclude: /node_modules/
 
             }
         ]
