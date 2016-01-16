@@ -12,18 +12,27 @@ function GlobalKeysDirective ($rootScope, $window) {
                     68: 'E'
                 };
 
-            angular.element($window).on('keydown', (e) => {
-                let keyCode = e.which || e.keyCode;
+            function getKeyCode (e) {
+                const keyCode = e.which || e.keyCode;
+                return keyCode;
+            }
+
+            angular.element($window).on('keydown keypress', (e) => {
+                const keyCode = getKeyCode(e);
 
                 if (e.shiftKey && keyCode === 16) {
                     $rootScope.$broadcast('GLOBKEYS_SHIFT_DOWN');
+                } else if (keyCode === 8) {
+                    e.preventDefault();
+                    $rootScope.$broadcast('GLOBKEYS_DELETE_PRESSED');
                 } else if (notes[keyCode]) {
                     $rootScope.$broadcast('GLOBKEYS_NOTE_DOWN', notes[keyCode]);
                 }
             });
 
             angular.element($window).on('keyup', (e) => {
-                let keyCode = e.which || e.keyCode;
+                const keyCode = getKeyCode(e);
+
                 if (keyCode === 16) {
                     $rootScope.$broadcast('GLOBKEYS_SHIFT_UP');
                 } else if (notes[keyCode]) {

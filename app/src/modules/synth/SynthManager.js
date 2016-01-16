@@ -28,6 +28,10 @@ function SynthManager () {
         }
     }
 
+    function destroyModule (id) {
+        synth.destroyModule(id);
+    }
+
     function updateModule (module) {
         console.log('SYNTH::update module...', module);
     }
@@ -61,6 +65,7 @@ function SynthManager () {
     service.listAllModules = listAllModules;
     service.listModules = listModules;
     service.createModule = createModule;
+    service.destroyModule = destroyModule;
     service.updateModule = updateModule;
     service.linkModules = linkModules;
     service.getModuleDefaultProperties = getModuleDefaultProperties;

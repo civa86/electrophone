@@ -27,8 +27,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
             id: 'master',
             type: 'Master'
         });
-
-        //TODO set master prop values with synth listModules....
         //GraphManager.resetGraph();
     }
 
@@ -73,6 +71,22 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
         //App module registration
         ctrl.modules.push(Object.assign({}, newModule, graphNode));
+    }
+
+    function destroyModule () {
+        if (ctrl.currentNode && ctrl.currentNode.id !== 'master') {
+            //Graph node deletion
+            GraphManager.deleteNode(ctrl.currentNode.id);
+
+            //Synth mod deletion
+            SynthManager.destroyModule(ctrl.currentNode.id);
+
+            //App module unregistration
+            ctrl.modules = ctrl.modules.filter((e) => e.id !== ctrl.currentNode.id);
+
+            ctrl.currentNode = null;
+            $scope.$digest();
+        }
     }
 
     function setModuleProperty (event, params) {
@@ -170,12 +184,10 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     }
 
     function playNote (e, note) {
-        console.log('play', note);
         SynthManager.play(note);
     }
 
     function stopNote (e, note) {
-        console.log('stop', note);
         SynthManager.stop(note);
     }
 
@@ -202,6 +214,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     $rootScope.$on('GLOBKEYS_SHIFT_UP', linkModeOff);
     $rootScope.$on('GLOBKEYS_NOTE_DOWN', playNote);
     $rootScope.$on('GLOBKEYS_NOTE_UP', stopNote);
+    $rootScope.$on('GLOBKEYS_DELETE_PRESSED', destroyModule);
 
     $rootScope.$on('GLOB_WINDOW_RESIZE', () => GraphManager.resetGraph());
 }

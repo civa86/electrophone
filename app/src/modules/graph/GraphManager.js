@@ -73,6 +73,18 @@ function GraphManager ($q) {
         }
     }
 
+    function deleteNode (id) {
+        let node;
+
+        if (graph) {
+            node = graph.$('#' + id);
+            if (node) {
+                removeElem(node);
+                //TODO check for linked edges??
+            }
+        }
+    }
+
     function removeElem (elem) {
         if (graph) {
             graph.remove(elem);
@@ -169,6 +181,7 @@ function GraphManager ($q) {
     service.selectNode = selectNode;
     service.addNode = addNode;
     service.addEdge = addEdge;
+    service.deleteNode = deleteNode;
     service.removeElem = removeElem;
 
     return service;
