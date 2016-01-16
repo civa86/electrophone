@@ -3,7 +3,7 @@
 import WebSynth from '../../../../lib/WebSynth';
 
 function SynthManager () {
-    let synth = new WebSynth(),
+    let synth = WebSynth(),
         octave = 4,
         service = {};
 

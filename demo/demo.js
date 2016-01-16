@@ -12,7 +12,7 @@
             WIDTH = notes[0].offsetWidth,
             HEIGHT = notes[0].offsetHeight * 5,
             canvasCtx = c.getContext('2d'),
-            synth = new WebSynth({
+            synth = WebSynth({
                 spectrum:       true,
                 updateSpectrum: function (dataArray) {
                     //console.log(dataArray);
