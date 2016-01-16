@@ -1,12 +1,17 @@
 # WebSynth
 
-Web Audio Modular Synthesizer
+Web Audio Modular Synthesizer Library
 
 #### NPM Scripts
+
+All Scripts are for development and building Application or Library. 
+
+Clone the full repository and run them.
 
 Usage:
 
 ```bash
+git clone https://github.com/civa86/web-synth.git
 npm install
 npm run <script_name>
 ```
