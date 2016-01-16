@@ -162,6 +162,8 @@ function GraphManager ($q) {
             }
 
             ret = graph.add(e);
+
+            //console.log(graph.zoom(), graph.pan());
         }
 
         resizeGraph();

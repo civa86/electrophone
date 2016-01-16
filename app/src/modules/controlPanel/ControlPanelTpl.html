@@ -6,8 +6,10 @@
     </div>
     <div class="row" ng-show="module">
         <div ng-repeat="(propName, prop) in module.props"
-             ng-class="countProperties()">
-            <div>{{propName | uppercase}}</div>
+             ng-class="countProperties()"
+            class="property-item">
+
+            <div class="prop-name">{{propName | uppercase}}</div>
 
             <div class="control-property" ng-switch on="prop.type">
 
@@ -18,7 +20,12 @@
                      data-prop-bounds="prop.bounds"
                      data-prop-name="propName"></div>
 
-                <div ng-switch-when="string"></div>
+                <div ng-switch-when="string"
+                     data-control-select=""
+                     data-module-id="module.id"
+                     data-prop-value="prop.currentValue"
+                     data-prop-bounds="prop.bounds"
+                     data-prop-name="propName"></div>
             </div>
         </div>
     </div>

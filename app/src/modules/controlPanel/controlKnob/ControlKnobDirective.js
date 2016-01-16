@@ -28,6 +28,7 @@ function ControlKnobDirective ($rootScope) {
 
             function onChange (v) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
+                    from: 'knob',
                     module: $scope.moduleId,
                     prop: $scope.propName,
                     value: v

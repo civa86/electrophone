@@ -90,13 +90,18 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     function setModuleProperty (event, params) {
         let module;
-        if (params && params.module && params.prop) {
+        const digestComponents = ['knob'];
+
+        if (params && params.module && params.prop && params.from) {
             module = getModule(params.module);
             if (module.props[params.prop]) {
                 module.props[params.prop].currentValue = params.value;
                 SynthManager.updateModule(module, params);
             }
-            $scope.$digest();
+
+            if (digestComponents.indexOf(params.from) !== -1) {
+                $scope.$digest();
+            }
         }
     }
 
