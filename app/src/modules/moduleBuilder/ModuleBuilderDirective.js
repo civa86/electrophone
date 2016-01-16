@@ -11,7 +11,7 @@ function ModuleBuilderDirective ($rootScope) {
                     '<div>' +
                         '<button ng-repeat="mod in modulesList" ' +
                                 'class="btn btn-info" ' +
-                                'ng-click="buildModule(mod.type)">{{::mod.type}}</button>' +
+                                'ng-click="buildModule(mod)">{{::mod}}</button>' +
                     '</div></div>',
         link: function ($scope) {
 

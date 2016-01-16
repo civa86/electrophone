@@ -36,25 +36,14 @@ function SynthManager () {
         synth.linkModules(source, target);
     }
 
-    function getModuleProperties (type) {
-        let allModules = listAllModules(),
-            filtered = allModules.filter((e) => e.type === type).pop(),
-            tmp = null,
-            ret = {};
-
-        //TODO use a mthod to get type props....don't cycle every time!!
-        console.log('----- MOD PROP ---', synth.getModuleProperties(type));
-
-        if (filtered) {
-            //TODO check on cloneDeepWith for removing link...
-            tmp = _.cloneDeep(filtered);
-            delete tmp.props.link;
-            //TODO lodash map??
-            Object.keys(tmp.props).forEach((e) => tmp.props[e].currentValue = tmp.props[e].defaultValue);
-            ret = tmp.props;
-        }
-
-        return ret;
+    function getModuleDefaultProperties (type) {
+        let moduleProps = _.cloneDeep(synth.getModulePropertiesSet(type));
+        delete moduleProps.link;
+        _.mapValues(moduleProps, e => {
+            e.currentValue = e.defaultValue;
+            return e;
+        });
+        return moduleProps;
     }
 
     function play (note) {
@@ -74,7 +63,7 @@ function SynthManager () {
     service.createModule = createModule;
     service.updateModule = updateModule;
     service.linkModules = linkModules;
-    service.getModuleProperties = getModuleProperties;
+    service.getModuleDefaultProperties = getModuleDefaultProperties;
     service.play = play;
     service.stop = stop;
 

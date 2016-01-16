@@ -58,7 +58,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
             }
             newModule.type = type;
             newModule.linkedTo = null;
-            newModule.props = SynthManager.getModuleProperties(type);
+            newModule.props = SynthManager.getModuleDefaultProperties(type);
         }
 
         //Graph node creation
