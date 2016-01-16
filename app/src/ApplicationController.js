@@ -94,11 +94,10 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
             module = getModule(params.module);
             if (module.props[params.prop]) {
                 module.props[params.prop].currentValue = params.value;
-                SynthManager.updateModule(module);
+                SynthManager.updateModule(module, params);
             }
             $scope.$digest();
         }
-        console.log(ctrl.modules);
     }
 
     function moduleSelected (event, params) {

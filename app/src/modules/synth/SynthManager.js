@@ -3,7 +3,7 @@
 import WebSynth from '../../../../lib/WebSynth';
 
 function SynthManager () {
-    let synth = WebSynth(),
+    let synth = new WebSynth(),
         octave = 4,
         service = {};
 
@@ -21,7 +21,7 @@ function SynthManager () {
 
     function createModule (module) {
         var props = {};
-        if (module.type && module.type !== synth.TYPES.MASTER) {
+        if (module && module.type && module.type !== synth.TYPES.MASTER) {
             Object.keys(module.props).forEach(e => props[e] = module.props[e].currentValue);
             props.link = null;
             synth.module(module.type, module.id, props);
@@ -32,8 +32,13 @@ function SynthManager () {
         synth.destroyModule(id);
     }
 
-    function updateModule (module) {
-        console.log('SYNTH::update module...', module);
+    function updateModule (module, params) {
+        let prop = {};
+        prop[params.prop] = params.value;
+        if (module && module.type) {
+            //TODO manage master...if params.prop != level....it is adsr update!!
+            synth.module(module.type, module.id, prop);
+        }
     }
 
     function linkModules (source, target) {
