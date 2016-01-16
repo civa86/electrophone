@@ -15,7 +15,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.graphReady = false;
         ctrl.currentNode = null;
         ctrl.builderModuleList = SynthManager.listAllModules(true);
-        //TODO refactor with obj??
         ctrl.modules = [];
 
         initLinks();
@@ -109,17 +108,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         GraphManager.resizeGraph();
     }
 
-    function moduleMoved (event, params) {
-        ////TODO method needed??
-        ////TODO remove all cytoscape logic like id() and move it to GraphManager methods
-        //let movedModule = (params && params.module) ? params.module : null;
-        //
-        ////TODO module position is already right set....
-        //
-        ////TODO update status saving graph setting like zoom, pan??
-        //console.log('moved', movedModule.id(), movedModule.position());
-    }
-
     function moduleLinked (event, params) {
         var source = null,
             target = null,
@@ -202,7 +190,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     //GRAPH EVENTS
     $rootScope.$on('GRAPH_CREATED', initModules);
     $rootScope.$on('GRAPH_MOD_SELECTED', moduleSelected);
-    $rootScope.$on('GRAPH_MOD_MOVED', moduleMoved);
     $rootScope.$on('GRAPH_MOD_LINK', moduleLinked);
     $rootScope.$on('GRAPH_LINK_MODE_TOGGLE', linkModeToggle);
     $rootScope.$on('GRAPH_SET_LINK_SOURCE', setLinkSource);

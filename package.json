@@ -45,7 +45,7 @@
     "test": "karma start karma.conf.js",
     "lib-dev": "webpack --config webpack.lib.config.js --colors",
     "lib-build": "webpack --config webpack.lib.config.js --colors -build",
-    "lib-dist": "npm run test; npm run lib-build",
+    "lib-dist": "npm test; npm run lib-build",
     "app-dev": "webpack --config webpack.app.config.js --colors",
     "app-build": "webpack --config webpack.app.config.js --colors -build"
   }

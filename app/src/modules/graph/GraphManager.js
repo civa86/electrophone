@@ -151,6 +151,7 @@ function GraphManager ($q) {
             ret;
 
         if (graph) {
+            //TODO do a positioning prevision...
             e.position = {
                 x: 100,
                 y: 100
