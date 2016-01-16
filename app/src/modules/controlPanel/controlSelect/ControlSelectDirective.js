@@ -17,7 +17,6 @@ function ControlSelectDirective ($rootScope) {
         link: function ($scope) {
             function changeValue (val) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
-                    from: 'select',
                     module: $scope.moduleId,
                     prop: $scope.propName,
                     value: val

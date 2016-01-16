@@ -45,13 +45,35 @@ function SynthManager () {
         synth.linkModules(source, target);
     }
 
+    function getMasterProperties () {
+        let moduleProps;
+        moduleProps = _.cloneDeep(synth.getModulePropertiesSet(synth.TYPES.ENVELOPE));
+        delete moduleProps.target;
+        return moduleProps;
+    }
+
+    function getModuleProperties (type) {
+        let moduleProps;
+        moduleProps = _.cloneDeep(synth.getModulePropertiesSet(type));
+        return moduleProps;
+    }
+
     function getModuleDefaultProperties (type) {
-        let moduleProps = _.cloneDeep(synth.getModulePropertiesSet(type));
+        let moduleProps;
+
+        if (type === synth.TYPES.MASTER) {
+            moduleProps = getMasterProperties();
+        } else {
+            moduleProps = getModuleProperties(type);
+        }
+
         delete moduleProps.link;
+
         _.mapValues(moduleProps, e => {
             e.currentValue = e.defaultValue;
             return e;
         });
+
         return moduleProps;
     }
 
