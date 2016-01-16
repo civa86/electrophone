@@ -130,6 +130,10 @@ function GraphDirective ($rootScope, $window, GraphManager) {
 
                         if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
                             GraphManager.addEdge(sourceLinkNode, targetLinkNode);
+                            $rootScope.$broadcast('GRAPH_MOD_LINK', {
+                                source: sourceLinkNode.id(),
+                                target: targetLinkNode.id()
+                            });
                         }
                         isDragging = false;
                     }

@@ -28,7 +28,7 @@ function GraphManager ($q) {
                     def.resolve(graph);
                 }
             };
-            cytoscape(Object.assign(config, graphStyle));
+            cytoscape(Object.assign({}, config, graphStyle));
         }
         return def.promise;
     }

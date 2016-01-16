@@ -57,15 +57,21 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
                 newModule.id = id;
             }
             newModule.type = type;
+            newModule.linkedTo = null;
             newModule.props = SynthManager.getModuleProperties(type);
         }
-        //Synth mod creation
-        SynthManager.createModule(newModule);
 
         //Graph node creation
         graphNode = GraphManager.addNode(getGraphNode(newModule), ctrl.linkMode);
 
-        //App module registerd
+        //Update module with graph data
+        newModule.id = graphNode.id;
+        newModule.position = graphNode.position;
+
+        //Synth mod creation
+        SynthManager.createModule(newModule);
+
+        //App module registration
         ctrl.modules.push(Object.assign({}, newModule, graphNode));
     }
 
@@ -98,6 +104,22 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         //
         ////TODO update status saving graph setting like zoom, pan??
         //console.log('moved', movedModule.id(), movedModule.position());
+    }
+
+    function moduleLinked (event, params) {
+        var source = null,
+            target = null,
+            mod = null;
+
+        if (params && params.source && params.target) {
+            source = params.source;
+            target = params.target;
+            mod = getModule(source);
+            if (mod) {
+                mod.linkedTo = target;
+                SynthManager.linkModules(source, target);
+            }
+        }
     }
 
     function linkModeToggle () {
@@ -149,10 +171,12 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     function playNote (e, note) {
         console.log('play', note);
+        SynthManager.play(note);
     }
 
     function stopNote (e, note) {
         console.log('stop', note);
+        SynthManager.stop(note);
     }
 
     init();
@@ -167,6 +191,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     $rootScope.$on('GRAPH_CREATED', initModules);
     $rootScope.$on('GRAPH_MOD_SELECTED', moduleSelected);
     $rootScope.$on('GRAPH_MOD_MOVED', moduleMoved);
+    $rootScope.$on('GRAPH_MOD_LINK', moduleLinked);
     $rootScope.$on('GRAPH_LINK_MODE_TOGGLE', linkModeToggle);
     $rootScope.$on('GRAPH_SET_LINK_SOURCE', setLinkSource);
     $rootScope.$on('GRAPH_SET_LINK_TARGET', setLinkTarget);

@@ -34,6 +34,7 @@
     "karma-webpack": "1.7.x",
     "tunajs": "0.4.x",
     "jquery": "1.11.x",
+    "lodash": "4.x",
     "angular": "1.4.x",
     "bootstrap": "3.3.x",
     "cytoscape": "2.5.x",

@@ -4,6 +4,7 @@ import WebSynth from '../../../../lib/WebSynth';
 
 function SynthManager () {
     let synth = new WebSynth(),
+        octave = 4,
         service = {};
 
     function listAllModules (withoutMaster) {
@@ -19,9 +20,11 @@ function SynthManager () {
     }
 
     function createModule (module) {
-        //TODO implement
+        var props = {};
         if (module.type && module.type !== synth.TYPES.MASTER) {
-            console.log('SYNTH::create module...', module);
+            Object.keys(module.props).forEach(e => props[e] = module.props[e].currentValue);
+            props.link = null;
+            synth.module(module.type, module.id, props);
         }
     }
 
@@ -29,15 +32,24 @@ function SynthManager () {
         console.log('SYNTH::update module...', module);
     }
 
+    function linkModules (source, target) {
+        synth.linkModules(source, target);
+    }
+
     function getModuleProperties (type) {
         let allModules = listAllModules(),
-            filtered = allModules.filter((e) => e.type === type),
+            filtered = allModules.filter((e) => e.type === type).pop(),
             tmp = null,
             ret = {};
 
-        if (filtered && filtered.length === 1) {
-            tmp = JSON.parse(JSON.stringify(filtered[0]));
+        //TODO use a mthod to get type props....don't cycle every time!!
+        console.log('----- MOD PROP ---', synth.getModuleProperties(type));
+
+        if (filtered) {
+            //TODO check on cloneDeepWith for removing link...
+            tmp = _.cloneDeep(filtered);
             delete tmp.props.link;
+            //TODO lodash map??
             Object.keys(tmp.props).forEach((e) => tmp.props[e].currentValue = tmp.props[e].defaultValue);
             ret = tmp.props;
         }
@@ -45,11 +57,26 @@ function SynthManager () {
         return ret;
     }
 
+    function play (note) {
+        //TODO calculate freq
+        let freq = 440;
+        synth.play(freq);
+    }
+
+    function stop (note) {
+        //TODO calculate freq
+        let freq = 440;
+        synth.stop(freq);
+    }
+
     service.listAllModules = listAllModules;
     service.listModules = listModules;
     service.createModule = createModule;
     service.updateModule = updateModule;
+    service.linkModules = linkModules;
     service.getModuleProperties = getModuleProperties;
+    service.play = play;
+    service.stop = stop;
 
     return service;
 }
