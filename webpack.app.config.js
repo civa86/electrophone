@@ -44,7 +44,10 @@ if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1)
 
 //-------------- EXPORT -------------------------------
 module.exports = {
-    entry:   path.join(__dirname, 'app/src/app.js'),
+    entry:   [
+        'babel-core/polyfill',
+        path.join(__dirname, 'app/src/app.js')
+    ],
     output:  {
         path:     path.join(__dirname, 'publish'),
         filename: config.outputFile
@@ -89,6 +92,14 @@ module.exports = {
             },
             {
                 test:   /\.(txt)$/,
+                loader: 'file?name=[name].[ext]'
+            },
+            {
+                test:   /\.js\.map$/,
+                loader: 'file?name=js/[name].[ext]'
+            },
+            {
+                test:   /\.css\.map$/,
                 loader: 'file?name=[name].[ext]'
             },
             {

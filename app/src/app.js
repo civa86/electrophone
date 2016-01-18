@@ -1,11 +1,15 @@
 'use strict';
 
 //ES6 BABEL POLYFILL
-import 'babel-polyfill';
+//import 'babel-polyfill';
 
 //TEXT FILES
 import '../humans.txt';
 import '../robots.txt';
+
+//MAP FILES
+import 'bootstrap/dist/css/bootstrap.css.map';
+import 'cytoscape/dist/cytoscape.js.map';
 
 //BOOTSTRAP
 import 'bootstrap/dist/css/bootstrap.css';
