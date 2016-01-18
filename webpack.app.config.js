@@ -20,6 +20,10 @@ if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1)
         }),
         new ExtractTextPlugin('screen.css')
     ];
+    config.jshintConfig = {
+        emitErrors: true,
+        failOnHint: true
+    }
 } else {
     console.log('/***** APPLICATION DEVELOPMENT ****/');
     config.watch = true;
@@ -32,6 +36,10 @@ if(process.argv && process.argv.length && process.argv.indexOf('-build') !== -1)
         }),
         new ExtractTextPlugin('screen.css')
     ];
+    config.jshintConfig = {
+        emitErrors: false,
+        failOnHint: false
+    }
 }
 
 //-------------- EXPORT -------------------------------
@@ -47,6 +55,7 @@ module.exports = {
             browsers: ['last 2 version']
         })
     ],
+    jshint: config.jshintConfig,
     module:  {
         preLoaders: [
             {

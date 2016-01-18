@@ -16,16 +16,6 @@ function ControlKnobDirective ($rootScope) {
             propName: '='
         },
         link: function ($scope, element) {
-
-            function init () {
-                $(element)
-                    .knob({
-                        min: $scope.propBounds[0],
-                        max: $scope.propBounds[1],
-                        change: onChange
-                    });
-            }
-
             function onChange (v) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
                     module: $scope.moduleId,
@@ -41,9 +31,18 @@ function ControlKnobDirective ($rootScope) {
                     .trigger('change');
             }
 
-            $scope.$watch('moduleId', setKnobValue);
+            function init () {
+                $(element)
+                    .knob({
+                        min: $scope.propBounds[0],
+                        max: $scope.propBounds[1],
+                        change: onChange
+                    });
+            }
 
             init();
+
+            $scope.$watch('moduleId', setKnobValue);
         }
     };
 }

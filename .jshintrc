@@ -1,11 +1,22 @@
 {
   "esnext": true,
   "globalstrict": true,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "undef": true,
+  "browser": true,
+
   "globals": {
     "window": false,
-    "console": false,
     "Uint8Array": false,
     "angular": false,
+    "$": false,
     "_": false
   }
 }

@@ -73,6 +73,12 @@ function GraphManager ($q) {
         }
     }
 
+    function removeElem (elem) {
+        if (graph) {
+            graph.remove(elem);
+        }
+    }
+
     function deleteNode (id) {
         let node;
 
@@ -82,12 +88,6 @@ function GraphManager ($q) {
                 removeElem(node);
                 //TODO check for linked edges??
             }
-        }
-    }
-
-    function removeElem (elem) {
-        if (graph) {
-            graph.remove(elem);
         }
     }
 

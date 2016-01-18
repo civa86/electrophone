@@ -10,16 +10,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.linkTarget = '';
     }
 
-    function init () {
-        ctrl.linkMode = false;
-        ctrl.graphReady = false;
-        ctrl.currentNode = null;
-        ctrl.builderModuleList = SynthManager.listAllModules(true);
-        ctrl.modules = [];
-
-        initLinks();
-    }
-
     function initModules () {
         //TODO introduce here loading presets etc..
         $rootScope.$emit('MODULE_BUILD', {
@@ -94,7 +84,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         if (params && params.module && params.prop) {
             module = getModule(params.module);
             if (module.props[params.prop] !== undefined) {
-                console.log('set prop', params);
+                //console.log('set prop', params);
                 module.props[params.prop].currentValue = params.value;
                 SynthManager.updateModule(module, params);
             }
@@ -128,14 +118,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         }
     }
 
-    function linkModeToggle () {
-        if (ctrl.linkMode === true) {
-            linkModeOff(true);
-        } else {
-            linkModeOn(true);
-        }
-    }
-
     function linkModeOn (noDigest) {
         ctrl.linkMode = true;
         GraphManager.setLinkMode(ctrl.linkMode);
@@ -151,6 +133,14 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         ctrl.linkTarget = '';
         if (noDigest !== true) {
             $scope.$digest();
+        }
+    }
+
+    function linkModeToggle () {
+        if (ctrl.linkMode === true) {
+            linkModeOff(true);
+        } else {
+            linkModeOn(true);
         }
     }
 
@@ -181,6 +171,16 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     function stopNote (e, note) {
         SynthManager.stop(note);
+    }
+
+    function init () {
+        ctrl.linkMode = false;
+        ctrl.graphReady = false;
+        ctrl.currentNode = null;
+        ctrl.builderModuleList = SynthManager.listAllModules(true);
+        ctrl.modules = [];
+
+        initLinks();
     }
 
     init();

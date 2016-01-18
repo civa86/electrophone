@@ -13,6 +13,10 @@ if (process.argv && process.argv.length && process.argv.indexOf('-build') !== -1
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({ minimize: true })
     ];
+    config.jshintConfig = {
+        emitErrors: true,
+        failOnHint: true
+    }
 } else {
     //Development Configuration
     console.log('/***** LIBRARY DEVELOPMENT ****/');
@@ -21,6 +25,10 @@ if (process.argv && process.argv.length && process.argv.indexOf('-build') !== -1
     config.plugins = [
         new webpack.optimize.OccurenceOrderPlugin()
     ];
+    config.jshintConfig = {
+        emitErrors: false,
+        failOnHint: false
+    }
 }
 
 //-------------- EXPORT -------------------------------
@@ -31,6 +39,7 @@ module.exports = {
         filename: config.outputFile
     },
     plugins: config.plugins,
+    jshint: config.jshintConfig,
     module: {
         preLoaders: [
             {
