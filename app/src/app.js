@@ -1,5 +1,8 @@
 'use strict';
 
+//ES6 BABEL POLYFILL
+import 'babel-polyfill';
+
 //TEXT FILES
 import '../humans.txt';
 import '../robots.txt';
