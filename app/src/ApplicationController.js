@@ -13,10 +13,10 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     function initModules () {
         //TODO introduce here loading presets etc..
         $rootScope.$emit('MODULE_BUILD', {
-            id: 'master',
-            type: 'Master'
+            id: GraphManager.getGraphMasterNodeId(),
+            type: SynthManager.getMasterType()
         });
-        //GraphManager.resetGraph();
+        GraphManager.resetGraph();
     }
 
     function getModule (moduleId) {
@@ -63,7 +63,7 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     }
 
     function destroyModule () {
-        if (ctrl.currentNode && ctrl.currentNode.id !== 'master') {
+        if (ctrl.currentNode && ctrl.currentNode.id !== GraphManager.getGraphMasterNodeId()) {
             //Graph node deletion
             GraphManager.deleteNode(ctrl.currentNode.id);
 
@@ -84,7 +84,6 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         if (params && params.module && params.prop) {
             module = getModule(params.module);
             if (module.props[params.prop] !== undefined) {
-                //console.log('set prop', params);
                 module.props[params.prop].currentValue = params.value;
                 SynthManager.updateModule(module, params);
             }

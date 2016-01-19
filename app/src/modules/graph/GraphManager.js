@@ -3,7 +3,7 @@
 import $ from 'jquery';
 import cytoscape from 'cytoscape';
 
-function GraphManager ($q) {
+function GraphManager ($q, GRAPH_MASTER_NODE) {
     let service = {},
         graph;
 
@@ -42,7 +42,8 @@ function GraphManager ($q) {
     function resetGraph () {
         if (graph) {
             graph.reset();
-            graph.center();
+            //TODO use centering??
+            //graph.center();
         }
     }
 
@@ -59,7 +60,7 @@ function GraphManager ($q) {
             graph.autoungrabify(mode);
             graph.nodes().forEach(function (e) {
                 if (mode) {
-                    if (e.id() === 'master') {
+                    if (e.id() === GRAPH_MASTER_NODE) {
                         e.addClass('link-mode-master');
                     } else {
                         e.addClass('link-mode');
@@ -151,6 +152,7 @@ function GraphManager ($q) {
             ret;
 
         if (graph) {
+            //TODO id elem.data.id === master....center it to the screen
             //TODO do a positioning prevision...
             e.position = {
                 x: 100,
@@ -186,6 +188,7 @@ function GraphManager ($q) {
     service.addEdge = addEdge;
     service.deleteNode = deleteNode;
     service.removeElem = removeElem;
+    service.getGraphMasterNodeId = () => GRAPH_MASTER_NODE;
 
     return service;
 }

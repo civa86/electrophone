@@ -3,7 +3,7 @@
 import $ from 'jquery';
 import graphStyle from './GraphStyle';
 
-function GraphDirective ($rootScope, $window, GraphManager) {
+function GraphDirective ($rootScope, $window, GRAPH_MASTER_NODE, GraphManager) {
     return {
         restrict: 'EA',
         replace: true,
@@ -76,7 +76,7 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                     sourceLinkNode = e.cyTarget;
                     targetLinkNode = null;
 
-                    if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
+                    if (sourceLinkNode && sourceLinkNode.id() !== GRAPH_MASTER_NODE) {
                         $rootScope.$broadcast('GRAPH_SET_LINK_SOURCE', {
                             linkSourceType: sourceLinkNode.data('type'),
                             linkSourceId: sourceLinkNode.id()
@@ -111,7 +111,7 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                     isDragging = true;
                     resetLinkArea();
 
-                    if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
+                    if (sourceLinkNode && sourceLinkNode.id() !== GRAPH_MASTER_NODE) {
                         drawLink(e.cyRenderedPosition.x, e.cyRenderedPosition.y);
                     }
                 }
@@ -123,7 +123,7 @@ function GraphDirective ($rootScope, $window, GraphManager) {
                     if (isDragging) {
                         resetLinkArea();
 
-                        if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
+                        if (sourceLinkNode && sourceLinkNode.id() !== GRAPH_MASTER_NODE && targetLinkNode) {
                             GraphManager.addEdge(sourceLinkNode, targetLinkNode);
                             $rootScope.$broadcast('GRAPH_MOD_LINK', {
                                 source: sourceLinkNode.id(),
