@@ -17,7 +17,7 @@ function ControlKnobDirective ($rootScope) {
         },
         link: function ($scope, element) {
             //TODO set step from properties conf .....
-
+            //TODO avoid editing of input? delete key has conflict...
             function onChange (v) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
                     module: $scope.moduleId,

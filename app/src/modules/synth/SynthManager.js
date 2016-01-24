@@ -7,6 +7,24 @@ function SynthManager () {
         octave = 4,
         service = {};
 
+    function getOctave () {
+        return octave;
+    }
+
+    function octaveIncrease () {
+        if (octave < 10) {
+            octave++;
+        }
+        return octave;
+    }
+
+    function octaveDecrease () {
+        if (octave  > 0) {
+            octave--;
+        }
+        return octave;
+    }
+
     function getModulePropsMapping (module, propName) {
         let ret = {};
         const modulePropsMapping = {
@@ -99,17 +117,18 @@ function SynthManager () {
     }
 
     function play (note) {
-        //TODO calculate freq
-        let freq = 440;
+        const freq = synth.getFrequency(note, octave);
         synth.play(freq);
     }
 
     function stop (note) {
-        //TODO calculate freq
-        let freq = 440;
+        const freq = synth.getFrequency(note, octave);
         synth.stop(freq);
     }
 
+    service.getOctave = getOctave;
+    service.octaveIncrease = octaveIncrease;
+    service.octaveDecrease = octaveDecrease;
     service.listAllModules = listAllModules;
     service.listModules = listModules;
     service.createModule = createModule;

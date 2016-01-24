@@ -172,10 +172,21 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
         SynthManager.stop(note);
     }
 
+    function octaveIncrease () {
+        ctrl.currentOctave = SynthManager.octaveIncrease();
+        $scope.$digest();
+    }
+
+    function octaveDecrease () {
+        ctrl.currentOctave = SynthManager.octaveDecrease();
+        $scope.$digest();
+    }
+
     function init () {
         ctrl.linkMode = false;
         ctrl.graphReady = false;
         ctrl.currentNode = null;
+        ctrl.currentOctave = SynthManager.getOctave();
         ctrl.builderModuleList = SynthManager.listAllModules(true);
         ctrl.modules = [];
 
@@ -204,6 +215,8 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
     $rootScope.$on('GLOBKEYS_SHIFT_UP', linkModeOff);
     $rootScope.$on('GLOBKEYS_NOTE_DOWN', playNote);
     $rootScope.$on('GLOBKEYS_NOTE_UP', stopNote);
+    $rootScope.$on('GLOBKEYS_OCTAVE_DECREASE', octaveDecrease);
+    $rootScope.$on('GLOBKEYS_OCTAVE_INCREASE', octaveIncrease);
     $rootScope.$on('GLOBKEYS_DELETE_PRESSED', destroyModule);
 
     $rootScope.$on('GLOB_WINDOW_RESIZE', () => GraphManager.resetGraph());
