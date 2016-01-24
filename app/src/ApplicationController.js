@@ -96,6 +96,8 @@ function ApplicationController ($rootScope, $scope, SynthManager, GraphManager) 
 
     function moduleSelected (event, params) {
         const moduleId = (params && params.moduleId) ? params.moduleId : null;
+        ctrl.currentNode = null;
+        $scope.$digest();
         ctrl.currentNode = getModule(moduleId);
         $scope.$digest();
         GraphManager.resizeGraph();
