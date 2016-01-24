@@ -16,6 +16,8 @@ function ControlKnobDirective ($rootScope) {
             propName: '='
         },
         link: function ($scope, element) {
+            //TODO set step from properties conf .....
+
             function onChange (v) {
                 $rootScope.$broadcast('CTRL_MOD_SET_PROP', {
                     module: $scope.moduleId,

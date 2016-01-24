@@ -99,7 +99,14 @@
 	    FILTER_HIGHSHELF: 'highshelf',
 	    FILTER_PEAKING: 'peaking',
 	    FILTER_NOTCH: 'notch',
-	    FILTER_ALLPASS: 'allpass'
+	    FILTER_ALLPASS: 'allpass',
+
+	    MODULATOR_TARGET_FREQ: 'frequency',
+	    MODULATOR_TARGET_DETUNE: 'detune',
+
+	    ENVELOPE_TARGET_GAIN: 'gain',
+	    ENVELOPE_TARGET_FREQ: 'frequency',
+	    ENVELOPE_TARGET_DETUNE: 'detune'
 	};
 	exports.CONST = CONST;
 
@@ -269,6 +276,8 @@
 	        this.setupProperties(props);
 
 	        this.createGain(this.level);
+
+	        //console.log(this.name, this);
 	    }
 
 	    _createClass(Module, [{
@@ -285,6 +294,7 @@
 	                propsHandler = this.toString() + 'Props',
 	                moduleProperties = undefined;
 
+	            //TODO assign properties configuration to class ....
 	            moduleProperties = Object.assign({}, Props.DefaultProps, Props[propsHandler]);
 	            Object.keys(moduleProperties).forEach(function (e) {
 	                _this.setProperty(e, properties[e], moduleProperties[e]);
@@ -299,7 +309,7 @@
 	    }, {
 	        key: 'setProperty',
 	        value: function setProperty(propKey, propVal, propConfig) {
-	            //TODO discover propConfig here....
+	            //TODO read  propConfig -> properties configuration to class ....
 	            this[propKey] = null;
 	            if (propConfig.type && typeof propVal === propConfig.type) {
 	                //TODO check propval && bounds....set a value...
@@ -345,7 +355,6 @@
 	            } else if (target === 'gain' && this.gain) {
 	                ret = this.envelope.gain;
 	            }
-
 	            return ret;
 	        }
 	    }]);
@@ -626,8 +635,7 @@
 	        TYPES: _srcCoreConstants.TYPES
 	    },
 	        properties = props || {},
-	        synth = new _srcSynth2['default'](properties),
-	        fx = undefined;
+	        synth = new _srcSynth2['default'](properties);
 
 	    function callModule(type) {
 	        return function (label, props) {
@@ -637,8 +645,11 @@
 	    }
 
 	    function init() {
-	        methods.forEach(function (type) {
-	            var fx = type.toLowerCase();
+	        var fx = undefined;
+	        methods.filter(function (e) {
+	            return e !== _srcCoreConstants.TYPES.MASTER;
+	        }).forEach(function (type) {
+	            fx = type.toLowerCase();
 	            factory[fx] = callModule(type);
 	        });
 	    }
@@ -646,6 +657,18 @@
 	    function module(type, label, props) {
 	        synth.module(type, label, props);
 	        return factory;
+	    }
+
+	    function master(level) {
+	        if (+level >= 0) {
+	            synth.module(_srcCoreConstants.TYPES.MASTER, _srcCoreConstants.CONST.MASTER, {
+	                level: level
+	            });
+	        }
+	    }
+
+	    function adsr(props) {
+	        synth.module(_srcCoreConstants.TYPES.ENVELOPE, _srcCoreConstants.CONST.ADSR, props);
 	    }
 
 	    function destroyModule(id) {
@@ -689,6 +712,8 @@
 	    init();
 
 	    factory.module = module;
+	    factory.master = master;
+	    factory.adsr = adsr;
 	    factory.destroyModule = destroyModule;
 	    factory.linkModules = linkModules;
 
@@ -1821,6 +1846,7 @@
 	        this.main = _AudioContext2['default'].createBufferSource();
 	        this.main.connect(this.envelope);
 
+	        this.main.detune.value = this.detune;
 	        this.setColor();
 	    }
 
@@ -1980,11 +2006,6 @@
 	    _createClass(Oscillator, [{
 	        key: 'setDetune',
 	        value: function setDetune() {
-	            if (this.detune > 1200) {
-	                this.detune = 1200;
-	            } else if (this.detune < -1200) {
-	                this.detune = -1200;
-	            }
 
 	            this.main.detune.value = this.detune;
 	        }
@@ -2131,36 +2152,40 @@
 
 /***/ },
 /* 31 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
+
+	var _coreConstants = __webpack_require__(1);
+
 	var EnvelopeProps = {
 	    target: {
 	        type: 'string',
-	        defaultValue: null
+	        bounds: [_coreConstants.CONST.ENVELOPE_TARGET_GAIN, _coreConstants.CONST.ENVELOPE_TARGET_FREQ, _coreConstants.CONST.ENVELOPE_TARGET_DETUNE],
+	        defaultValue: _coreConstants.CONST.ENVELOPE_TARGET_GAIN
 	    },
 	    attack: {
 	        type: 'number',
 	        bounds: [0, 100],
-	        defaultValue: 1
+	        defaultValue: 0
 	    },
 	    decay: {
 	        type: 'number',
-	        bounds: [0, 100],
+	        bounds: [1, 100],
 	        defaultValue: 1
 	    },
 	    sustain: {
 	        type: 'number',
-	        bounds: [1, 100],
+	        bounds: [0, 100],
 	        defaultValue: 100
 	    },
 	    release: {
 	        type: 'number',
-	        bounds: [0.001, 100],
+	        bounds: [0, 100],
 	        defaultValue: 5
 	    }
 	};
@@ -2224,14 +2249,16 @@
 	var _coreConstants = __webpack_require__(1);
 
 	var ModulatorProps = {
+	    //TODO check right freq values...
 	    freq: {
 	        type: 'number',
-	        bounds: [20, 20000],
-	        defaultValue: 440
+	        bounds: [1, 100],
+	        defaultValue: 5
 	    },
 	    target: {
 	        type: 'string',
-	        defaultValue: 'frequency'
+	        bounds: [_coreConstants.CONST.MODULATOR_TARGET_FREQ, _coreConstants.CONST.MODULATOR_TARGET_DETUNE],
+	        defaultValue: _coreConstants.CONST.MODULATOR_TARGET_FREQ
 	    },
 	    wave: {
 	        type: 'string',
@@ -2290,6 +2317,11 @@
 	        type: 'string',
 	        bounds: [_coreConstants.CONST.NOISE_BROWN, _coreConstants.CONST.NOISE_PINK, _coreConstants.CONST.NOISE_WHITE],
 	        defaultValue: _coreConstants.CONST.NOISE_WHITE
+	    },
+	    detune: {
+	        type: 'number',
+	        bounds: [-1200, 1200],
+	        defaultValue: 0
 	    }
 	};
 

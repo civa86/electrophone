@@ -31,7 +31,7 @@ function SynthManager () {
     function listAllModules (withoutMaster) {
         let ret = synth.listAllModules();
         if (withoutMaster === true) {
-            ret = ret.filter((e) => e.type !== synth.TYPES.MASTER);
+            ret = ret.filter(e => e !== synth.TYPES.MASTER);
         }
         return ret;
     }

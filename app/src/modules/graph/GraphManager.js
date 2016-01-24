@@ -89,6 +89,8 @@ function GraphManager ($q, GRAPH_MASTER_NODE) {
                 removeElem(node);
                 //TODO check for linked edges??
             }
+
+            resizeGraph();
         }
     }
 
