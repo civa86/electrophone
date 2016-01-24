@@ -102,88 +102,87 @@
                 level: 100,
                 link:  'OSC-A'
             })
-            //.modulator('FM-B', {
-            //    wave:  synth.VARS.WAVE_SINE,
-            //    freq:  5,
-            //    level: 100,
-            //    link:  'OSC-B'
-            //})
-            //.envelope('OSC-A-FREQ-ENV', {
-            //    link:    'OSC-A',
-            //    target:  'detune',
-            //    level:   20,
-            //    attack:  2,
-            //    decay:   1,
-            //    sustain: 100,
-            //    release: 10
-            //})
+            .modulator('FM-B', {
+                wave:  synth.VARS.WAVE_SINE,
+                freq:  5,
+                level: 100,
+                link:  'OSC-B'
+            })
+            .envelope('OSC-A-FREQ-ENV', {
+                link:    'OSC-A',
+                target:  'detune',
+                level:   20,
+                attack:  2,
+                decay:   1,
+                sustain: 100,
+                release: 10
+            })
             .oscillator('OSC-A', {
                 wave:  synth.VARS.WAVE_SQUARE,
                 level: 50,
-                detune: 0,
-                link:  synth.VARS.MASTER
+                link:  'PAN-A'
             })
-            //.pan('PAN-A', {
-            //    link:  'FILT1',
-            //    value: -1
-            //})
-            //.oscillator('OSC-B', {
-            //    wave:  synth.VARS.WAVE_SINE,
-            //    level: 100,
-            //    link:  'PAN-B'
-            //})
-            //.pan('PAN-B', {
-            //    link:  'FILT1',
-            //    value: 1
-            //})
-            //.modulator('FM-NOISE', {
-            //    wave:  synth.VARS.WAVE_SQUARE,
-            //    freq:  10,
-            //    level: 100,
-            //    link:  'NOISE-W'
-            //})
-            //.envelope('NOISE-ENV', {
-            //    link:    'NOISE-W',
-            //    target:  'gain',
-            //    level:   50,
-            //    attack:  1,
-            //    decay:   50,
-            //    sustain: 10,
-            //    release: 1
-            //})
-            //.noise('NOISE-W', {
-            //    level: 50,
-            //    link:  'FILT1'
-            //})
-            //.modulator('FM-FILT', {
-            //    wave:   synth.VARS.WAVE_SINE,
-            //    freq:   5,
-            //    level:  100,
-            //    link:   'FILT1',
-            //    target: 'detune'
-            //})
-            //.envelope('FILT1-DETUNE-ENV', {
-            //    link:    'FILT1',
-            //    target:  'detune',
-            //    level:   100,
-            //    attack:  1,
-            //    decay:   10,
-            //    sustain: 100,
-            //    release: 100
-            //})
-            //.filter('FILT1', {
-            //    filterType: synth.VARS.FILTER_LOWPASS,
-            //    freq: 500,
-            //    q:    10,
-            //    link: 'FX'
-            //})
-            //.cabinet('FX', {
-            //    link:        synth.VARS.MASTER,
-            //    makeupGain:  1,
-            //    impulsePath: './impulse/diffusor4.wav',
-            //    bypass:      0,
-            //    asd: 1
-            //})
+            .pan('PAN-A', {
+                link:  'FILT1',
+                value: -1
+            })
+            .oscillator('OSC-B', {
+                wave:  synth.VARS.WAVE_SINE,
+                level: 100,
+                link:  'PAN-B'
+            })
+            .pan('PAN-B', {
+                link:  'FILT1',
+                value: 1
+            })
+            .modulator('FM-NOISE', {
+                wave:  synth.VARS.WAVE_SQUARE,
+                freq:  10,
+                level: 100,
+                link:  'NOISE-W'
+            })
+            .envelope('NOISE-ENV', {
+                link:    'NOISE-W',
+                target:  'gain',
+                level:   50,
+                attack:  1,
+                decay:   50,
+                sustain: 10,
+                release: 1
+            })
+            .noise('NOISE-W', {
+                level: 50,
+                link:  'FILT1'
+            })
+            .modulator('FM-FILT', {
+                wave:   synth.VARS.WAVE_SINE,
+                freq:   5,
+                level:  100,
+                link:   'FILT1',
+                target: 'detune'
+            })
+            .envelope('FILT1-DETUNE-ENV', {
+                link:    'FILT1',
+                target:  'detune',
+                level:   100,
+                attack:  1,
+                decay:   10,
+                sustain: 100,
+                release: 100
+            })
+            .filter('FILT1', {
+                filterType: synth.VARS.FILTER_LOWPASS,
+                freq: 500,
+                q:    10,
+                link: 'FX'
+            })
+            .cabinet('FX', {
+                link:        synth.VARS.MASTER,
+                makeupGain:  1,
+                impulsePath: './impulse/diffusor4.wav',
+                bypass:      0,
+                asd: 1
+            })
             //.bitcrusher('FX', {
             //    link:        synth.VARS.MASTER
             //})
