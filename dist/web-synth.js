@@ -330,6 +330,8 @@
 
 	            this.envelope.connect(this.gain);
 	        }
+
+	        //TODO used method?
 	    }, {
 	        key: 'disconnect',
 	        value: function disconnect() {
@@ -630,6 +632,8 @@
 	var methods = Object.keys(Modules);
 
 	exports['default'] = function (props) {
+	    var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
 	    var factory = {
 	        VARS: _srcCoreConstants.CONST,
 	        TYPES: _srcCoreConstants.TYPES
@@ -709,6 +713,15 @@
 	        synth.stop(note);
 	    }
 
+	    function getFrequency(note, octave) {
+	        var octaveD = parseInt(octave, 10) - 4,
+	            noteD = notes.indexOf(note) - notes.indexOf('A'),
+	            delta = 12 * octaveD,
+	            exp = noteD + delta,
+	            freq = 440 * Math.pow(1.059463, exp);
+	        return parseFloat(freq.toFixed(3));
+	    }
+
 	    init();
 
 	    factory.module = module;
@@ -723,6 +736,8 @@
 
 	    factory.play = play;
 	    factory.stop = stop;
+
+	    factory.getFrequency = getFrequency;
 
 	    return factory;
 	};
