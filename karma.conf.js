@@ -20,27 +20,15 @@ module.exports = function (config) {
 
         browsers: ['Chrome'],
 
-        reporters: ['spec', 'coverage'],
-
-        coverageReporter: {
-            reporters: [
-                { type: 'html', dir: 'coverage/', subdir: '.' },
-                { type: 'text-summary' }
-            ]
-        },
+        reporters: ['spec'],
 
         webpack: {
             module: {
                 loaders: [
                     {
-                        test:    /\.spec\.js$/,
+                        test:    /\.js$/,
                         loaders: ['babel'],
                         exclude: /node_modules/
-                    },
-                    {
-                        test:    /\.js$/,
-                        loaders: ['isparta'],
-                        exclude: /node_modules|\.spec.js$/
                     }
                 ]
             }
@@ -50,7 +38,6 @@ module.exports = function (config) {
             'karma-chrome-launcher',
             'karma-spec-reporter',
             'karma-jasmine',
-            'karma-coverage',
             'karma-webpack'
         ],
 

@@ -6,6 +6,4 @@
 .vagrant
 
 node_modules
-coverage
-publish
 

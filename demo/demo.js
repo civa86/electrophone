@@ -120,21 +120,21 @@
             .oscillator('OSC-A', {
                 wave:  synth.VARS.WAVE_SQUARE,
                 level: 50,
-                link:  'PAN-A'
+                link:  'FILT1'
             })
-            .pan('PAN-A', {
-                link:  'FILT1',
-                value: -1
-            })
+            //.pan('PAN-A', {
+            //    link:  'FILT1',
+            //    value: -1
+            //})
             .oscillator('OSC-B', {
                 wave:  synth.VARS.WAVE_SINE,
                 level: 100,
-                link:  'PAN-B'
+                link:  'FILT1'
             })
-            .pan('PAN-B', {
-                link:  'FILT1',
-                value: 1
-            })
+            //.pan('PAN-B', {
+            //    link:  'FILT1',
+            //    value: 1
+            //})
             .modulator('FM-NOISE', {
                 wave:  synth.VARS.WAVE_SQUARE,
                 freq:  10,
@@ -190,7 +190,6 @@
             //    link:        synth.VARS.MASTER
             //})
         ;
-        console.log(synth.listModules());
 
         //TODO link to waves...
         //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/

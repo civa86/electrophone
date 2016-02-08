@@ -46,15 +46,15 @@
 
 	'use strict';
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
 	var _WebSynth = __webpack_require__(8);
 
 	var _WebSynth2 = _interopRequireDefault(_WebSynth);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var win = window || {};
 
-	win.WebSynth = _WebSynth2['default'];
+	win.WebSynth = _WebSynth2.default;
 
 /***/ },
 /* 1 */
@@ -62,10 +62,8 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	var TYPES = {
+	exports.__esModule = true;
+	var TYPES = exports.TYPES = {
 	    MASTER: 'Master',
 	    OSCILLATOR: 'Oscillator',
 	    MODULATOR: 'Modulator',
@@ -77,8 +75,7 @@
 	    ENVELOPE: 'Envelope'
 	};
 
-	exports.TYPES = TYPES;
-	var CONST = {
+	var CONST = exports.CONST = {
 	    MASTER: 'master',
 	    ADSR: 'adsr',
 
@@ -108,7 +105,6 @@
 	    ENVELOPE_TARGET_FREQ: 'frequency',
 	    ENVELOPE_TARGET_DETUNE: 'detune'
 	};
-	exports.CONST = CONST;
 
 /***/ },
 /* 2 */
@@ -116,9 +112,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var AudioCtx = window.AudioContext || window.webkitAudioContext,
 	    ctx = new AudioCtx(),
 	    deprecatedFn = {
@@ -132,8 +126,7 @@
 	    }
 	}
 
-	exports['default'] = ctx;
-	module.exports = exports['default'];
+	exports.default = ctx;
 
 /***/ },
 /* 3 */
@@ -141,98 +134,87 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _Constants = __webpack_require__(1);
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Module2 = __webpack_require__(4);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(1);
-
-	var _coreModule = __webpack_require__(4);
-
-	var _coreModule2 = _interopRequireDefault(_coreModule);
+	var _Module3 = _interopRequireDefault(_Module2);
 
 	var _EffectManager = __webpack_require__(10);
 
 	var _EffectManager2 = _interopRequireDefault(_EffectManager);
 
-	var Effect = (function (_Module) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Effect = function (_Module) {
 	    _inherits(Effect, _Module);
 
 	    function Effect(props, name) {
 	        _classCallCheck(this, Effect);
 
-	        _get(Object.getPrototypeOf(Effect.prototype), 'constructor', this).call(this, props, name);
-	        this.main = null;
-	        this.mainEffect = null;
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+
+	        _this.main = null;
+	        _this.mainEffect = null;
+	        return _this;
 	    }
 
-	    _createClass(Effect, [{
-	        key: 'setMainEffect',
-	        value: function setMainEffect(type, mainEffect, props) {
-	            //TODO set an array of main effects??
-	            this.main = new _EffectManager2['default'][type](props);
-	            this.mainEffect = this.main[mainEffect];
-	        }
-	    }, {
-	        key: 'setMainProperties',
-	        value: function setMainProperties(props) {
-	            var _this = this;
+	    Effect.prototype.setMainEffect = function setMainEffect(type, mainEffect, props) {
+	        //TODO set an array of main effects??
+	        this.main = new _EffectManager2.default[type](props);
+	        this.mainEffect = this.main[mainEffect];
+	    };
 
-	            Object.keys(props).forEach(function (e) {
-	                if (_this.main[e]) {
-	                    _this.main[e] = props[e];
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'createGain',
-	        value: function createGain() {
-	            return false;
-	        }
-	    }, {
-	        key: 'getLineIn',
-	        value: function getLineIn(sourceType, source) {
-	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
-	                return this.mainEffect[source.target];
-	            } else {
-	                return this.main.input;
+	    Effect.prototype.setMainProperties = function setMainProperties(props) {
+	        var _this2 = this;
+
+	        Object.keys(props).forEach(function (e) {
+	            if (_this2.main[e]) {
+	                _this2.main[e] = props[e];
 	            }
-	        }
-	    }, {
-	        key: 'getLineOut',
-	        value: function getLineOut() {
-	            return this.main.output;
-	        }
-	    }, {
-	        key: 'getEnvelopeTarget',
-	        value: function getEnvelopeTarget(target) {
-	            var ret = null;
+	        });
+	    };
 
-	            if (target === 'gain') {
-	                ret = this.main.output.gain;
-	            } else if (this.main && this.mainEffect && this.mainEffect[target]) {
-	                ret = this.main.filter[target];
-	            }
+	    Effect.prototype.createGain = function createGain() {
+	        return false;
+	    };
 
-	            return ret;
+	    Effect.prototype.getLineIn = function getLineIn(sourceType, source) {
+	        if (sourceType === _Constants.TYPES.MODULATOR) {
+	            return this.mainEffect[source.target];
+	        } else {
+	            return this.main.input;
 	        }
-	    }]);
+	    };
+
+	    Effect.prototype.getLineOut = function getLineOut() {
+	        return this.main.output;
+	    };
+
+	    Effect.prototype.getEnvelopeTarget = function getEnvelopeTarget(target) {
+	        var ret = null;
+
+	        if (target === 'gain') {
+	            ret = this.main.output.gain;
+	        } else if (this.main && this.mainEffect && this.mainEffect[target]) {
+	            ret = this.main.filter[target];
+	        }
+
+	        return ret;
+	    };
 
 	    return Effect;
-	})(_coreModule2['default']);
+	}(_Module3.default);
 
-	exports['default'] = Effect;
-	module.exports = exports['default'];
+	exports.default = Effect;
 
 /***/ },
 /* 4 */
@@ -240,17 +222,9 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 	var _lodash = __webpack_require__(42);
 
@@ -264,7 +238,13 @@
 
 	var Props = _interopRequireWildcard(_properties);
 
-	var Module = (function () {
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Module = function () {
 	    function Module(props, name) {
 	        _classCallCheck(this, Module);
 
@@ -280,92 +260,81 @@
 	        //console.log(this.name, this);
 	    }
 
-	    _createClass(Module, [{
-	        key: 'toString',
-	        value: function toString() {
-	            return this.name;
-	        }
-	    }, {
-	        key: 'setupProperties',
-	        value: function setupProperties(props) {
-	            var _this = this;
+	    Module.prototype.toString = function toString() {
+	        return this.name;
+	    };
 
-	            var properties = props || {},
-	                propsHandler = this.toString() + 'Props',
-	                moduleProperties = undefined;
+	    Module.prototype.setupProperties = function setupProperties(props) {
+	        var _this = this;
 
-	            //TODO assign properties configuration to class ....
-	            moduleProperties = Object.assign({}, Props.DefaultProps, Props[propsHandler]);
-	            Object.keys(moduleProperties).forEach(function (e) {
-	                _this.setProperty(e, properties[e], moduleProperties[e]);
-	            });
-	        }
-	    }, {
-	        key: 'updateProperties',
-	        value: function updateProperties(props) {
-	            //TODO apply properties update
-	            //console.log('ipdate props', this.toString(), props);
-	        }
-	    }, {
-	        key: 'setProperty',
-	        value: function setProperty(propKey, propVal, propConfig) {
-	            //TODO read  propConfig -> properties configuration to class ....
-	            this[propKey] = null;
-	            if (propConfig.type && typeof propVal === propConfig.type) {
-	                //TODO check propval && bounds....set a value...
-	                //TODO use _.inRange for numbers!
-	                this[propKey] = propVal;
-	            } else if (propConfig.defaultValue !== undefined) {
-	                this[propKey] = propConfig.defaultValue;
-	            }
-	        }
-	    }, {
-	        key: 'createGain',
-	        value: function createGain(level) {
-	            var l = level >= 0 ? level % 101 : 100;
-	            this.gain = _AudioContext2['default'].createGain();
-	            this.envelope = _AudioContext2['default'].createGain();
-	            this.gain.gain.value = l / 100;
-	            this.envelope.gain.value = 1;
+	        var properties = props || {},
+	            propsHandler = this.toString() + 'Props',
+	            moduleProperties = undefined;
 
-	            this.envelope.connect(this.gain);
-	        }
+	        //TODO assign properties configuration to class ....
+	        moduleProperties = Object.assign({}, Props.DefaultProps, Props[propsHandler]);
+	        Object.keys(moduleProperties).forEach(function (e) {
+	            _this.setProperty(e, properties[e], moduleProperties[e]);
+	        });
+	    };
 
-	        //TODO used method?
-	    }, {
-	        key: 'disconnect',
-	        value: function disconnect() {
-	            this.gain.disconnect();
-	        }
-	    }, {
-	        key: 'getLineIn',
-	        value: function getLineIn() {
-	            return this.main;
-	        }
-	    }, {
-	        key: 'getLineOut',
-	        value: function getLineOut() {
-	            return this.gain;
-	        }
-	    }, {
-	        key: 'getEnvelopeTarget',
-	        value: function getEnvelopeTarget(target) {
-	            var ret = null;
+	    Module.prototype.updateProperties = function updateProperties(props) {
+	        //TODO apply properties update
+	        //console.log('ipdate props', this.toString(), props);
+	    };
 
-	            if (this.main && this.main[target]) {
-	                ret = this.main[target];
-	            } else if (target === 'gain' && this.gain) {
-	                ret = this.envelope.gain;
-	            }
-	            return ret;
+	    Module.prototype.setProperty = function setProperty(propKey, propVal, propConfig) {
+	        //TODO read  propConfig -> properties configuration to class ....
+	        this[propKey] = null;
+	        if (propConfig.type && (typeof propVal === 'undefined' ? 'undefined' : _typeof(propVal)) === propConfig.type) {
+	            //TODO check propval && bounds....set a value...
+	            //TODO use _.inRange for numbers!
+	            this[propKey] = propVal;
+	        } else if (propConfig.defaultValue !== undefined) {
+	            this[propKey] = propConfig.defaultValue;
 	        }
-	    }]);
+	    };
+
+	    Module.prototype.createGain = function createGain(level) {
+	        var l = level >= 0 ? level % 101 : 100;
+	        this.gain = _AudioContext2.default.createGain();
+	        this.envelope = _AudioContext2.default.createGain();
+	        this.gain.gain.value = l / 100;
+	        this.envelope.gain.value = 1;
+
+	        this.envelope.connect(this.gain);
+	    };
+
+	    //TODO used method?
+
+
+	    Module.prototype.disconnect = function disconnect() {
+	        this.gain.disconnect();
+	    };
+
+	    Module.prototype.getLineIn = function getLineIn() {
+	        return this.main;
+	    };
+
+	    Module.prototype.getLineOut = function getLineOut() {
+	        return this.gain;
+	    };
+
+	    Module.prototype.getEnvelopeTarget = function getEnvelopeTarget(target) {
+	        var ret = null;
+
+	        if (this.main && this.main[target]) {
+	            ret = this.main[target];
+	        } else if (target === 'gain' && this.gain) {
+	            ret = this.envelope.gain;
+	        }
+	        return ret;
+	    };
 
 	    return Module;
-	})();
+	}();
 
-	exports['default'] = Module;
-	module.exports = exports['default'];
+	exports.default = Module;
 
 /***/ },
 /* 5 */
@@ -373,63 +342,54 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _Constants = __webpack_require__(1);
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Module2 = __webpack_require__(4);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Module3 = _interopRequireDefault(_Module2);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreConstants = __webpack_require__(1);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreModule = __webpack_require__(4);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coreModule2 = _interopRequireDefault(_coreModule);
-
-	var SoundSource = (function (_Module) {
+	var SoundSource = function (_Module) {
 	    _inherits(SoundSource, _Module);
 
 	    function SoundSource(props, name) {
 	        _classCallCheck(this, SoundSource);
 
-	        _get(Object.getPrototypeOf(SoundSource.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
 
-	        this.defaultLineInProperty = 'frequency';
+	        _this.defaultLineInProperty = 'frequency';
+	        return _this;
 	    }
 
-	    _createClass(SoundSource, [{
-	        key: 'noteOn',
-	        value: function noteOn() {
-	            this.main.start(0);
+	    SoundSource.prototype.noteOn = function noteOn() {
+	        this.main.start(0);
+	    };
+
+	    SoundSource.prototype.noteOff = function noteOff(release) {
+	        this.main.stop(release);
+	    };
+
+	    SoundSource.prototype.getLineIn = function getLineIn(sourceType, source) {
+	        if (sourceType === _Constants.TYPES.MODULATOR) {
+	            return this.main[source.target];
+	        } else {
+	            return this.main[this.defaultLineInProperty];
 	        }
-	    }, {
-	        key: 'noteOff',
-	        value: function noteOff(release) {
-	            this.main.stop(release);
-	        }
-	    }, {
-	        key: 'getLineIn',
-	        value: function getLineIn(sourceType, source) {
-	            if (sourceType === _coreConstants.TYPES.MODULATOR) {
-	                return this.main[source.target];
-	            } else {
-	                return this.main[this.defaultLineInProperty];
-	            }
-	        }
-	    }]);
+	    };
 
 	    return SoundSource;
-	})(_coreModule2['default']);
+	}(_Module3.default);
 
-	exports['default'] = SoundSource;
-	module.exports = exports['default'];
+	exports.default = SoundSource;
 
 /***/ },
 /* 6 */
@@ -437,84 +397,144 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
+	exports.__esModule = true;
 
 	var _Master = __webpack_require__(22);
 
-	exports.Master = _interopRequire(_Master);
+	Object.defineProperty(exports, 'Master', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Master).default;
+	  }
+	});
 
 	var _Envelope = __webpack_require__(21);
 
-	exports.Envelope = _interopRequire(_Envelope);
+	Object.defineProperty(exports, 'Envelope', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Envelope).default;
+	  }
+	});
 
 	var _Pan = __webpack_require__(23);
 
-	exports.Pan = _interopRequire(_Pan);
+	Object.defineProperty(exports, 'Pan', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Pan).default;
+	  }
+	});
 
-	//SOUNDSOURCES
+	var _Oscillator = __webpack_require__(26);
 
-	var _SoundSourcesOscillator = __webpack_require__(26);
+	Object.defineProperty(exports, 'Oscillator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Oscillator).default;
+	  }
+	});
 
-	exports.Oscillator = _interopRequire(_SoundSourcesOscillator);
+	var _Modulator = __webpack_require__(24);
 
-	var _SoundSourcesModulator = __webpack_require__(24);
+	Object.defineProperty(exports, 'Modulator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Modulator).default;
+	  }
+	});
 
-	exports.Modulator = _interopRequire(_SoundSourcesModulator);
+	var _Noise = __webpack_require__(25);
 
-	var _SoundSourcesNoise = __webpack_require__(25);
+	Object.defineProperty(exports, 'Noise', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Noise).default;
+	  }
+	});
 
-	exports.Noise = _interopRequire(_SoundSourcesNoise);
+	var _Filter = __webpack_require__(15);
 
-	//TODO implement
-	//Sampler
+	Object.defineProperty(exports, 'Filter', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Filter).default;
+	  }
+	});
 
-	//EFFECTS
+	var _Delay = __webpack_require__(14);
 
-	var _EffectsFilter = __webpack_require__(15);
+	Object.defineProperty(exports, 'Delay', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Delay).default;
+	  }
+	});
 
-	exports.Filter = _interopRequire(_EffectsFilter);
+	var _PingPongDelay = __webpack_require__(18);
 
-	var _EffectsDelay = __webpack_require__(14);
+	Object.defineProperty(exports, 'PingPongDelay', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PingPongDelay).default;
+	  }
+	});
 
-	exports.Delay = _interopRequire(_EffectsDelay);
+	var _WahWah = __webpack_require__(20);
 
-	var _EffectsPingPongDelay = __webpack_require__(18);
+	Object.defineProperty(exports, 'WahWah', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_WahWah).default;
+	  }
+	});
 
-	exports.PingPongDelay = _interopRequire(_EffectsPingPongDelay);
+	var _Tremolo = __webpack_require__(19);
 
-	var _EffectsWahWah = __webpack_require__(20);
+	Object.defineProperty(exports, 'Tremolo', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Tremolo).default;
+	  }
+	});
 
-	exports.WahWah = _interopRequire(_EffectsWahWah);
+	var _Overdrive = __webpack_require__(17);
 
-	var _EffectsTremolo = __webpack_require__(19);
+	Object.defineProperty(exports, 'Overdrive', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Overdrive).default;
+	  }
+	});
 
-	exports.Tremolo = _interopRequire(_EffectsTremolo);
+	var _Cabinet = __webpack_require__(13);
 
-	var _EffectsOverdrive = __webpack_require__(17);
+	Object.defineProperty(exports, 'Cabinet', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Cabinet).default;
+	  }
+	});
 
-	exports.Overdrive = _interopRequire(_EffectsOverdrive);
+	var _Bitcrusher = __webpack_require__(12);
 
-	var _EffectsCabinet = __webpack_require__(13);
+	Object.defineProperty(exports, 'Bitcrusher', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Bitcrusher).default;
+	  }
+	});
 
-	exports.Cabinet = _interopRequire(_EffectsCabinet);
+	var _MoogFilter = __webpack_require__(16);
 
-	var _EffectsBitcrusher = __webpack_require__(12);
+	Object.defineProperty(exports, 'MoogFilter', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_MoogFilter).default;
+	  }
+	});
 
-	exports.Bitcrusher = _interopRequire(_EffectsBitcrusher);
-
-	var _EffectsMoogFilter = __webpack_require__(16);
-
-	exports.MoogFilter = _interopRequire(_EffectsMoogFilter);
-
-	//TODO implement
-	//Convolver
-	//Compressor
-	//Phaser
-	//Chorus
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
 /* 7 */
@@ -522,84 +542,144 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
+	exports.__esModule = true;
 
 	var _DefaultProps = __webpack_require__(29);
 
-	exports.DefaultProps = _interopRequire(_DefaultProps);
+	Object.defineProperty(exports, 'DefaultProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_DefaultProps).default;
+	  }
+	});
 
 	var _EnvelopeProps = __webpack_require__(31);
 
-	exports.EnvelopeProps = _interopRequire(_EnvelopeProps);
+	Object.defineProperty(exports, 'EnvelopeProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_EnvelopeProps).default;
+	  }
+	});
 
 	var _PanProps = __webpack_require__(38);
 
-	exports.PanProps = _interopRequire(_PanProps);
-
-	//SOUNDSOURCES
+	Object.defineProperty(exports, 'PanProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PanProps).default;
+	  }
+	});
 
 	var _OscillatorProps = __webpack_require__(36);
 
-	exports.OscillatorProps = _interopRequire(_OscillatorProps);
+	Object.defineProperty(exports, 'OscillatorProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_OscillatorProps).default;
+	  }
+	});
 
 	var _ModulatorProps = __webpack_require__(33);
 
-	exports.ModulatorProps = _interopRequire(_ModulatorProps);
+	Object.defineProperty(exports, 'ModulatorProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_ModulatorProps).default;
+	  }
+	});
 
 	var _NoiseProps = __webpack_require__(35);
 
-	exports.NoiseProps = _interopRequire(_NoiseProps);
-
-	//TODO implement
-	//Sampler
-
-	//EFFECTS
+	Object.defineProperty(exports, 'NoiseProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_NoiseProps).default;
+	  }
+	});
 
 	var _FilterProps = __webpack_require__(32);
 
-	exports.FilterProps = _interopRequire(_FilterProps);
+	Object.defineProperty(exports, 'FilterProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_FilterProps).default;
+	  }
+	});
 
 	var _DelayProps = __webpack_require__(30);
 
-	exports.DelayProps = _interopRequire(_DelayProps);
+	Object.defineProperty(exports, 'DelayProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_DelayProps).default;
+	  }
+	});
 
 	var _PingPongDelayProps = __webpack_require__(39);
 
-	exports.PingPongDelayProps = _interopRequire(_PingPongDelayProps);
+	Object.defineProperty(exports, 'PingPongDelayProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PingPongDelayProps).default;
+	  }
+	});
 
 	var _WahWahProps = __webpack_require__(41);
 
-	exports.WahWahProps = _interopRequire(_WahWahProps);
+	Object.defineProperty(exports, 'WahWahProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_WahWahProps).default;
+	  }
+	});
 
 	var _TremoloProps = __webpack_require__(40);
 
-	exports.TremoloProps = _interopRequire(_TremoloProps);
+	Object.defineProperty(exports, 'TremoloProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_TremoloProps).default;
+	  }
+	});
 
 	var _OverdriveProps = __webpack_require__(37);
 
-	exports.OverdriveProps = _interopRequire(_OverdriveProps);
+	Object.defineProperty(exports, 'OverdriveProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_OverdriveProps).default;
+	  }
+	});
 
 	var _CabinetProps = __webpack_require__(28);
 
-	exports.CabinetProps = _interopRequire(_CabinetProps);
+	Object.defineProperty(exports, 'CabinetProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_CabinetProps).default;
+	  }
+	});
 
 	var _BitcrusherProps = __webpack_require__(27);
 
-	exports.BitcrusherProps = _interopRequire(_BitcrusherProps);
+	Object.defineProperty(exports, 'BitcrusherProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_BitcrusherProps).default;
+	  }
+	});
 
 	var _MoogFilterProps = __webpack_require__(34);
 
-	exports.MoogFilterProps = _interopRequire(_MoogFilterProps);
+	Object.defineProperty(exports, 'MoogFilterProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_MoogFilterProps).default;
+	  }
+	});
 
-	//TODO implement
-	//Convolver
-	//Compressor
-	//Phaser
-	//Chorus
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
 /* 8 */
@@ -607,39 +687,37 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _modules = __webpack_require__(6);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+	var Modules = _interopRequireWildcard(_modules);
 
-	var _srcModules = __webpack_require__(6);
+	var _properties = __webpack_require__(7);
 
-	var Modules = _interopRequireWildcard(_srcModules);
+	var Props = _interopRequireWildcard(_properties);
 
-	var _srcProperties = __webpack_require__(7);
+	var _Constants = __webpack_require__(1);
 
-	var Props = _interopRequireWildcard(_srcProperties);
+	var _Synth = __webpack_require__(9);
 
-	var _srcCoreConstants = __webpack_require__(1);
+	var _Synth2 = _interopRequireDefault(_Synth);
 
-	var _srcSynth = __webpack_require__(9);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _srcSynth2 = _interopRequireDefault(_srcSynth);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	var methods = Object.keys(Modules);
 
-	exports['default'] = function (props) {
+	exports.default = function (props) {
 	    var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 	    var factory = {
-	        VARS: _srcCoreConstants.CONST,
-	        TYPES: _srcCoreConstants.TYPES
+	        VARS: _Constants.CONST,
+	        TYPES: _Constants.TYPES
 	    },
 	        properties = props || {},
-	        synth = new _srcSynth2['default'](properties);
+	        synth = new _Synth2.default(properties);
 
 	    function callModule(type) {
 	        return function (label, props) {
@@ -651,7 +729,7 @@
 	    function init() {
 	        var fx = undefined;
 	        methods.filter(function (e) {
-	            return e !== _srcCoreConstants.TYPES.MASTER;
+	            return e !== _Constants.TYPES.MASTER;
 	        }).forEach(function (type) {
 	            fx = type.toLowerCase();
 	            factory[fx] = callModule(type);
@@ -665,14 +743,14 @@
 
 	    function master(level) {
 	        if (+level >= 0) {
-	            synth.module(_srcCoreConstants.TYPES.MASTER, _srcCoreConstants.CONST.MASTER, {
+	            synth.module(_Constants.TYPES.MASTER, _Constants.CONST.MASTER, {
 	                level: level
 	            });
 	        }
 	    }
 
 	    function adsr(props) {
-	        synth.module(_srcCoreConstants.TYPES.ENVELOPE, _srcCoreConstants.CONST.ADSR, props);
+	        synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, props);
 	    }
 
 	    function destroyModule(id) {
@@ -682,7 +760,7 @@
 	    }
 
 	    function linkModules(source, target) {
-	        if (source === _srcCoreConstants.CONST.MASTER) {
+	        if (source === _Constants.CONST.MASTER) {
 	            throw new Error('ERROR :: master can\'t be linked to any modules');
 	        }
 
@@ -742,35 +820,29 @@
 	    return factory;
 	};
 
-	module.exports = exports['default'];
-
 /***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreVoice = __webpack_require__(11);
+	var _Voice = __webpack_require__(11);
 
-	var _coreVoice2 = _interopRequireDefault(_coreVoice);
+	var _Voice2 = _interopRequireDefault(_Voice);
 
-	var Synth = (function () {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Synth = function () {
 	    function Synth(props) {
 	        _classCallCheck(this, Synth);
 
@@ -788,12 +860,12 @@
 	            this.createSpectrum();
 	        }
 
-	        this.module('Master', _coreConstants.CONST.MASTER, {
+	        this.module('Master', _Constants.CONST.MASTER, {
 	            level: 100
 	        });
 
-	        this.module('Envelope', _coreConstants.CONST.ADSR, {
-	            link: _coreConstants.CONST.MASTER,
+	        this.module('Envelope', _Constants.CONST.ADSR, {
+	            link: _Constants.CONST.MASTER,
 	            target: 'gain',
 	            level: 100,
 	            attack: null,
@@ -803,113 +875,104 @@
 	        });
 	    }
 
-	    _createClass(Synth, [{
-	        key: 'createSpectrum',
-	        value: function createSpectrum() {
-	            var SMOOTHING = 0.8,
-	                FFT_SIZE = 2048;
+	    Synth.prototype.createSpectrum = function createSpectrum() {
+	        var SMOOTHING = 0.8,
+	            FFT_SIZE = 2048;
 
-	            this.javascriptNode = _AudioContext2['default'].createScriptProcessor(2048, 1, 1);
-	            this.javascriptNode.connect(_AudioContext2['default'].destination);
+	        this.javascriptNode = _AudioContext2.default.createScriptProcessor(2048, 1, 1);
+	        this.javascriptNode.connect(_AudioContext2.default.destination);
 
-	            this.analyser = _AudioContext2['default'].createAnalyser();
-	            this.analyser.smoothingTimeConstant = SMOOTHING;
-	            this.analyser.fftSize = FFT_SIZE;
-	            this.analyser.minDecibels = -140;
-	            this.analyser.maxDecibels = 0;
+	        this.analyser = _AudioContext2.default.createAnalyser();
+	        this.analyser.smoothingTimeConstant = SMOOTHING;
+	        this.analyser.fftSize = FFT_SIZE;
+	        this.analyser.minDecibels = -140;
+	        this.analyser.maxDecibels = 0;
 
-	            this.analyser.connect(_AudioContext2['default'].destination);
+	        this.analyser.connect(_AudioContext2.default.destination);
+	    };
+
+	    Synth.prototype.module = function module(type, label, props) {
+	        if (!type || type.constructor !== String) {
+	            throw new Error('Synth Module :: missing type');
 	        }
-	    }, {
-	        key: 'module',
-	        value: function module(type, label, props) {
-	            if (!type || type.constructor !== String) {
-	                throw new Error('Synth Module :: missing type');
-	            }
 
-	            if (!label || label.constructor !== String) {
-	                throw new Error('Synth Module :: missing label');
-	            }
-
-	            if (!props || props.constructor !== Object) {
-	                throw new Error('Synth Module :: missing properties');
-	            }
-
-	            if (!this.modulesConfig[label]) {
-	                this.addModule(type, label, props);
-	            } else {
-	                this.updateModule(label, props);
-	            }
+	        if (!label || label.constructor !== String) {
+	            throw new Error('Synth Module :: missing label');
 	        }
-	    }, {
-	        key: 'addModule',
-	        value: function addModule(type, label, props) {
-	            this.modulesConfig[label] = {
-	                type: type,
-	                props: props
+
+	        if (!props || props.constructor !== Object) {
+	            throw new Error('Synth Module :: missing properties');
+	        }
+
+	        if (!this.modulesConfig[label]) {
+	            this.addModule(type, label, props);
+	        } else {
+	            this.updateModule(label, props);
+	        }
+	    };
+
+	    Synth.prototype.addModule = function addModule(type, label, props) {
+	        this.modulesConfig[label] = {
+	            type: type,
+	            props: props
+	        };
+	    };
+
+	    Synth.prototype.updateModule = function updateModule(label, props) {
+	        var _this = this;
+
+	        if (this.modulesConfig[label]) {
+	            Object.keys(props).forEach(function (e) {
+	                if (_this.modulesConfig[label].props[e] !== undefined) {
+	                    _this.modulesConfig[label].props[e] = props[e];
+	                }
+	            });
+
+	            Object.keys(this.voices).forEach(function (e) {
+	                _this.voices[e].updateModule(label, props);
+	            });
+	        }
+	    };
+
+	    Synth.prototype.play = function play(note) {
+	        var _this2 = this;
+
+	        var frequencyData = undefined;
+
+	        if (!this.voices[note]) {
+	            this.voices[note] = new _Voice2.default(note, this.modulesConfig, this.analyser);
+	            this.voices[note].noteOn();
+	        }
+	        if (this.spectrum === true && this.javascriptNode) {
+	            frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+
+	            this.javascriptNode.onaudioprocess = function () {
+	                _this2.analyser.getByteFrequencyData(frequencyData);
+	                if (_this2.updateSpectrum && typeof _this2.updateSpectrum === 'function') {
+	                    _this2.updateSpectrum(frequencyData);
+	                }
 	            };
 	        }
-	    }, {
-	        key: 'updateModule',
-	        value: function updateModule(label, props) {
-	            var _this = this;
+	    };
 
-	            if (this.modulesConfig[label]) {
-	                Object.keys(props).forEach(function (e) {
-	                    if (_this.modulesConfig[label].props[e] !== undefined) {
-	                        _this.modulesConfig[label].props[e] = props[e];
-	                    }
-	                });
-
-	                Object.keys(this.voices).forEach(function (e) {
-	                    _this.voices[e].updateModule(label, props);
-	                });
+	    Synth.prototype.stop = function stop(note) {
+	        if (this.voices[note]) {
+	            this.voices[note].noteOff();
+	            this.voices[note] = undefined;
+	            delete this.voices[note];
+	        }
+	        if (Object.keys(this.voices).length === 0 && this.spectrum === true && this.javascriptNode) {
+	            this.javascriptNode.onaudioprocess = null;
+	            if (this.resetSpectrum && typeof this.resetSpectrum === 'function') {
+	                this.resetSpectrum();
 	            }
 	        }
-	    }, {
-	        key: 'play',
-	        value: function play(note) {
-	            var _this2 = this;
-
-	            var frequencyData = undefined;
-
-	            if (!this.voices[note]) {
-	                this.voices[note] = new _coreVoice2['default'](note, this.modulesConfig, this.analyser);
-	                this.voices[note].noteOn();
-	            }
-	            if (this.spectrum === true && this.javascriptNode) {
-	                frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
-
-	                this.javascriptNode.onaudioprocess = function () {
-	                    _this2.analyser.getByteFrequencyData(frequencyData);
-	                    if (_this2.updateSpectrum && typeof _this2.updateSpectrum === 'function') {
-	                        _this2.updateSpectrum(frequencyData);
-	                    }
-	                };
-	            }
-	        }
-	    }, {
-	        key: 'stop',
-	        value: function stop(note) {
-	            if (this.voices[note]) {
-	                this.voices[note].noteOff();
-	                this.voices[note] = undefined;
-	                delete this.voices[note];
-	            }
-	            if (Object.keys(this.voices).length === 0 && this.spectrum === true && this.javascriptNode) {
-	                this.javascriptNode.onaudioprocess = null;
-	                if (this.resetSpectrum && typeof this.resetSpectrum === 'function') {
-	                    this.resetSpectrum();
-	                }
-	            }
-	        }
-	    }]);
+	    };
 
 	    return Synth;
-	})();
+	}();
 
-	exports['default'] = Synth;
-	module.exports = exports['default'];
+	exports.default = Synth;
 
 /***/ },
 /* 10 */
@@ -917,24 +980,21 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.__esModule = true;
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _tunajs = __webpack_require__(44);
+	var _tunajs = __webpack_require__(43);
 
 	var _tunajs2 = _interopRequireDefault(_tunajs);
 
-	var manager = new _tunajs2['default'](_AudioContext2['default']);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports['default'] = manager;
-	module.exports = exports['default'];
+	var manager = new _tunajs2.default(_AudioContext2.default);
+
+	exports.default = manager;
 
 /***/ },
 /* 11 */
@@ -942,17 +1002,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	exports.__esModule = true;
 
 	var _AudioContext = __webpack_require__(2);
 
@@ -968,7 +1018,13 @@
 
 	var _Constants = __webpack_require__(1);
 
-	var Voice = (function () {
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Voice = function () {
 	    function Voice(note, modulesConfig, analyser) {
 	        _classCallCheck(this, Voice);
 
@@ -983,124 +1039,116 @@
 	        this.linkModules();
 	    }
 
-	    _createClass(Voice, [{
-	        key: 'setupModules',
-	        value: function setupModules() {
-	            var _this = this;
+	    Voice.prototype.setupModules = function setupModules() {
+	        var _this = this;
 
-	            var modConf = undefined,
-	                m = undefined;
+	        var modConf = undefined,
+	            m = undefined;
 
-	            Object.keys(this.modulesConfig).forEach(function (mod) {
-	                modConf = _this.modulesConfig[mod];
-	                if (modConf.type && modConf.props) {
-	                    m = new Modules[modConf.type](modConf.props, modConf.type);
-	                    _this.modules[mod] = {
-	                        type: modConf.type,
-	                        instance: m
-	                    };
+	        Object.keys(this.modulesConfig).forEach(function (mod) {
+	            modConf = _this.modulesConfig[mod];
+	            if (modConf.type && modConf.props) {
+	                m = new Modules[modConf.type](modConf.props, modConf.type);
+	                _this.modules[mod] = {
+	                    type: modConf.type,
+	                    instance: m
+	                };
 
-	                    if (m.instance instanceof _SoundSource2['default']) {
-	                        _this.soundSources.push(m);
-	                    } else if (modConf.type === _Constants.TYPES.MASTER) {
-	                        _this.master = m;
-	                    }
+	                if (m.instance instanceof _SoundSource2.default) {
+	                    _this.soundSources.push(m);
+	                } else if (modConf.type === _Constants.TYPES.MASTER) {
+	                    _this.master = m;
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'updateModule',
-	        value: function updateModule(moduleId, props) {
-	            if (this.modules[moduleId] && this.modules[moduleId].instance) {
-	                this.modules[moduleId].instance.updateProperties(props);
 	            }
+	        });
+	    };
+
+	    Voice.prototype.updateModule = function updateModule(moduleId, props) {
+	        if (this.modules[moduleId] && this.modules[moduleId].instance) {
+	            this.modules[moduleId].instance.updateProperties(props);
 	        }
-	    }, {
-	        key: 'linkModules',
-	        value: function linkModules() {
-	            var _this2 = this;
+	    };
 
-	            Object.keys(this.modules).forEach(function (mod) {
-	                var currentModule = _this2.modules[mod].instance,
-	                    currentModuleType = _this2.modules[mod].type,
-	                    destinationModule = undefined,
-	                    source = undefined,
-	                    dest = undefined;
+	    Voice.prototype.linkModules = function linkModules() {
+	        var _this2 = this;
 
-	                if (currentModule.link) {
-	                    destinationModule = _this2.modules[currentModule.link];
-	                    if (destinationModule && destinationModule.instance) {
-	                        source = currentModule.getLineOut();
-	                        dest = destinationModule.instance.getLineIn(currentModuleType, currentModule);
-	                        //console.log(mod, source, currentModule.link, dest);
-	                        if (source && dest) {
-	                            source.connect(dest);
-	                        }
+	        Object.keys(this.modules).forEach(function (mod) {
+	            var currentModule = _this2.modules[mod].instance,
+	                currentModuleType = _this2.modules[mod].type,
+	                destinationModule = undefined,
+	                source = undefined,
+	                dest = undefined;
+
+	            if (currentModule.link) {
+	                destinationModule = _this2.modules[currentModule.link];
+	                if (destinationModule && destinationModule.instance) {
+	                    source = currentModule.getLineOut();
+	                    dest = destinationModule.instance.getLineIn(currentModuleType, currentModule);
+	                    //console.log(mod, source, currentModule.link, dest);
+	                    if (source && dest) {
+	                        source.connect(dest);
 	                    }
 	                }
-	            });
+	            }
+	        });
 
-	            this.master.lineOut(this.analyser);
-	        }
-	    }, {
-	        key: 'noteOn',
-	        value: function noteOn() {
-	            var _this3 = this;
+	        this.master.lineOut(this.analyser);
+	    };
 
-	            var m = undefined,
-	                dest = undefined;
+	    Voice.prototype.noteOn = function noteOn() {
+	        var _this3 = this;
 
-	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this3.modules[e].instance;
+	        var m = undefined,
+	            dest = undefined;
 
-	                if (typeof m.setEnvelope === 'function') {
-	                    dest = _this3.modules[m.link] ? _this3.modules[m.link].instance : null;
-	                    m.setEnvelope(dest);
-	                }
-	                if (typeof m.setNote === 'function') {
-	                    m.setNote(+_this3.note);
-	                }
-	            });
-	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this3.modules[e].instance;
-	                if (typeof m.noteOn === 'function') {
-	                    m.noteOn();
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'noteOff',
-	        value: function noteOff() {
-	            var _this4 = this;
+	        Object.keys(this.modules).forEach(function (e) {
+	            m = _this3.modules[e].instance;
 
-	            var release = 0,
-	                adsr = this.modules.adsr.instance,
-	                m = undefined,
-	                dest = undefined;
+	            if (typeof m.setEnvelope === 'function') {
+	                dest = _this3.modules[m.link] ? _this3.modules[m.link].instance : null;
+	                m.setEnvelope(dest);
+	            }
+	            if (typeof m.setNote === 'function') {
+	                m.setNote(+_this3.note);
+	            }
+	        });
+	        Object.keys(this.modules).forEach(function (e) {
+	            m = _this3.modules[e].instance;
+	            if (typeof m.noteOn === 'function') {
+	                m.noteOn();
+	            }
+	        });
+	    };
 
-	            release = adsr.getReleaseTime();
+	    Voice.prototype.noteOff = function noteOff() {
+	        var _this4 = this;
 
-	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this4.modules[e].instance;
-	                if (typeof m.resetEnvelope === 'function') {
-	                    dest = _this4.modules[m.link] ? _this4.modules[m.link].instance : null;
-	                    m.resetEnvelope(dest);
-	                }
-	            });
-	            Object.keys(this.modules).forEach(function (e) {
-	                m = _this4.modules[e].instance;
-	                if (typeof m.noteOff === 'function') {
-	                    m.noteOff(release);
-	                }
-	            });
-	        }
-	    }]);
+	        var release = 0,
+	            adsr = this.modules.adsr.instance,
+	            m = undefined,
+	            dest = undefined;
+
+	        release = adsr.getReleaseTime();
+
+	        Object.keys(this.modules).forEach(function (e) {
+	            m = _this4.modules[e].instance;
+	            if (typeof m.resetEnvelope === 'function') {
+	                dest = _this4.modules[m.link] ? _this4.modules[m.link].instance : null;
+	                m.resetEnvelope(dest);
+	            }
+	        });
+	        Object.keys(this.modules).forEach(function (e) {
+	            m = _this4.modules[e].instance;
+	            if (typeof m.noteOff === 'function') {
+	                m.noteOff(release);
+	            }
+	        });
+	    };
 
 	    return Voice;
-	})();
+	}();
 
-	exports['default'] = Voice;
-	module.exports = exports['default'];
+	exports.default = Voice;
 
 /***/ },
 /* 12 */
@@ -1108,45 +1156,43 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Bitcrusher = (function (_Effect) {
+	var Bitcrusher = function (_Effect) {
 	    _inherits(Bitcrusher, _Effect);
 
 	    function Bitcrusher(props, name) {
 	        _classCallCheck(this, Bitcrusher);
 
-	        _get(Object.getPrototypeOf(Bitcrusher.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Bitcrusher', 'output');
-	        this.setMainProperties({
-	            bits: this.bits,
-	            normfreq: this.normfreq,
-	            bufferSize: this.bufferSize
+	        _this.setMainEffect('Bitcrusher', 'output');
+	        _this.setMainProperties({
+	            bits: _this.bits,
+	            normfreq: _this.normfreq,
+	            bufferSize: _this.bufferSize
 	        });
+	        return _this;
 	    }
 
 	    return Bitcrusher;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Bitcrusher;
-	module.exports = exports['default'];
+	exports.default = Bitcrusher;
 
 /***/ },
 /* 13 */
@@ -1154,48 +1200,46 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Cabinet = (function (_Effect) {
+	var Cabinet = function (_Effect) {
 	    _inherits(Cabinet, _Effect);
 
 	    function Cabinet(props, name) {
 	        _classCallCheck(this, Cabinet);
 
-	        _get(Object.getPrototypeOf(Cabinet.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Cabinet', 'output', {
-	            impulsePath: this.impulsePath,
+	        _this.setMainEffect('Cabinet', 'output', {
+	            impulsePath: _this.impulsePath,
 	            makeupGain: 1
 	        });
-	        this.setMainProperties({
-	            impulsePath: this.impulsePath,
-	            makeupGain: this.makeupGain,
-	            bypass: this.bypass
+	        _this.setMainProperties({
+	            impulsePath: _this.impulsePath,
+	            makeupGain: _this.makeupGain,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return Cabinet;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Cabinet;
-	module.exports = exports['default'];
+	exports.default = Cabinet;
 
 /***/ },
 /* 14 */
@@ -1203,48 +1247,46 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Delay = (function (_Effect) {
+	var Delay = function (_Effect) {
 	    _inherits(Delay, _Effect);
 
 	    function Delay(props, name) {
 	        _classCallCheck(this, Delay);
 
-	        _get(Object.getPrototypeOf(Delay.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Delay', 'filter');
-	        this.setMainProperties({
-	            dryLevel: this.dry,
-	            wetLevel: this.wet,
-	            feedback: this.feedback,
-	            cutoff: this.cutoff,
-	            delayTime: this.delayTime,
-	            bypass: this.bypass
+	        _this.setMainEffect('Delay', 'filter');
+	        _this.setMainProperties({
+	            dryLevel: _this.dry,
+	            wetLevel: _this.wet,
+	            feedback: _this.feedback,
+	            cutoff: _this.cutoff,
+	            delayTime: _this.delayTime,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return Delay;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Delay;
-	module.exports = exports['default'];
+	exports.default = Delay;
 
 /***/ },
 /* 15 */
@@ -1252,47 +1294,45 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Filter = (function (_Effect) {
+	var Filter = function (_Effect) {
 	    _inherits(Filter, _Effect);
 
 	    function Filter(props, name) {
 	        _classCallCheck(this, Filter);
 
-	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Filter', 'filter');
-	        this.setMainProperties({
-	            frequency: this.freq,
-	            Q: this.q,
-	            gain: this.filterGain,
-	            filterType: this.filterType,
-	            bypass: this.bypass
+	        _this.setMainEffect('Filter', 'filter');
+	        _this.setMainProperties({
+	            frequency: _this.freq,
+	            Q: _this.q,
+	            gain: _this.filterGain,
+	            filterType: _this.filterType,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return Filter;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Filter;
-	module.exports = exports['default'];
+	exports.default = Filter;
 
 /***/ },
 /* 16 */
@@ -1300,45 +1340,43 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var MoogFilter = (function (_Effect) {
+	var MoogFilter = function (_Effect) {
 	    _inherits(MoogFilter, _Effect);
 
 	    function MoogFilter(props, name) {
 	        _classCallCheck(this, MoogFilter);
 
-	        _get(Object.getPrototypeOf(MoogFilter.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('MoogFilter', 'output');
-	        this.setMainProperties({
-	            cutoff: this.cutoff,
-	            resonance: this.resonance,
-	            bufferSize: this.bufferSize
+	        _this.setMainEffect('MoogFilter', 'output');
+	        _this.setMainProperties({
+	            cutoff: _this.cutoff,
+	            resonance: _this.resonance,
+	            bufferSize: _this.bufferSize
 	        });
+	        return _this;
 	    }
 
 	    return MoogFilter;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = MoogFilter;
-	module.exports = exports['default'];
+	exports.default = MoogFilter;
 
 /***/ },
 /* 17 */
@@ -1346,47 +1384,45 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Overdrive = (function (_Effect) {
+	var Overdrive = function (_Effect) {
 	    _inherits(Overdrive, _Effect);
 
 	    function Overdrive(props, name) {
 	        _classCallCheck(this, Overdrive);
 
-	        _get(Object.getPrototypeOf(Overdrive.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Overdrive', 'output');
-	        this.setMainProperties({
-	            outputGain: this.outputGain,
-	            drive: this.drive,
-	            curveAmount: this.curveAmount,
-	            algorithmIndex: this.algorithmIndex,
-	            bypass: this.bypass
+	        _this.setMainEffect('Overdrive', 'output');
+	        _this.setMainProperties({
+	            outputGain: _this.outputGain,
+	            drive: _this.drive,
+	            curveAmount: _this.curveAmount,
+	            algorithmIndex: _this.algorithmIndex,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return Overdrive;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Overdrive;
-	module.exports = exports['default'];
+	exports.default = Overdrive;
 
 /***/ },
 /* 18 */
@@ -1394,48 +1430,46 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var PingPongDelay = (function (_Effect) {
+	var PingPongDelay = function (_Effect) {
 	    _inherits(PingPongDelay, _Effect);
 
 	    function PingPongDelay(props, name) {
 	        _classCallCheck(this, PingPongDelay);
 
-	        _get(Object.getPrototypeOf(PingPongDelay.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('PingPongDelay', 'delayLeft');
-	        this.setMainProperties({
-	            dryLevel: this.dry,
-	            wetLevel: this.wet,
-	            feedback: this.feedback,
-	            delayTimeLeft: this.delayTimeLeft,
-	            delayTimeRight: this.delayTimeRight,
-	            bypass: this.bypass
+	        _this.setMainEffect('PingPongDelay', 'delayLeft');
+	        _this.setMainProperties({
+	            dryLevel: _this.dry,
+	            wetLevel: _this.wet,
+	            feedback: _this.feedback,
+	            delayTimeLeft: _this.delayTimeLeft,
+	            delayTimeRight: _this.delayTimeRight,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return PingPongDelay;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = PingPongDelay;
-	module.exports = exports['default'];
+	exports.default = PingPongDelay;
 
 /***/ },
 /* 19 */
@@ -1443,46 +1477,44 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Tremolo = (function (_Effect) {
+	var Tremolo = function (_Effect) {
 	    _inherits(Tremolo, _Effect);
 
 	    function Tremolo(props, name) {
 	        _classCallCheck(this, Tremolo);
 
-	        _get(Object.getPrototypeOf(Tremolo.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('Tremolo', 'output');
-	        this.setMainProperties({
-	            intensity: this.intensity,
-	            rate: this.rate,
-	            stereoPhase: this.stereoPhase,
-	            bypass: this.bypass
+	        _this.setMainEffect('Tremolo', 'output');
+	        _this.setMainProperties({
+	            intensity: _this.intensity,
+	            rate: _this.rate,
+	            stereoPhase: _this.stereoPhase,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return Tremolo;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = Tremolo;
-	module.exports = exports['default'];
+	exports.default = Tremolo;
 
 /***/ },
 /* 20 */
@@ -1490,49 +1522,47 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _Constants = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Effect2 = __webpack_require__(3);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _Effect3 = _interopRequireDefault(_Effect2);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _coreConstants = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _coreEffect = __webpack_require__(3);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	var _coreEffect2 = _interopRequireDefault(_coreEffect);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var WahWah = (function (_Effect) {
+	var WahWah = function (_Effect) {
 	    _inherits(WahWah, _Effect);
 
 	    function WahWah(props, name) {
 	        _classCallCheck(this, WahWah);
 
-	        _get(Object.getPrototypeOf(WahWah.prototype), 'constructor', this).call(this, props, name);
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
 
-	        this.setMainEffect('WahWah', 'filterBp');
-	        this.setMainProperties({
-	            automode: this.automode,
-	            baseFrequency: this.baseFrequency,
-	            excursionOctaves: this.excursionOctaves,
-	            sweep: this.sweep,
-	            resonance: this.resonance,
-	            sensitivity: this.sensitivity,
-	            bypass: this.bypass
+	        _this.setMainEffect('WahWah', 'filterBp');
+	        _this.setMainProperties({
+	            automode: _this.automode,
+	            baseFrequency: _this.baseFrequency,
+	            excursionOctaves: _this.excursionOctaves,
+	            sweep: _this.sweep,
+	            resonance: _this.resonance,
+	            sensitivity: _this.sensitivity,
+	            bypass: _this.bypass
 	        });
+	        return _this;
 	    }
 
 	    return WahWah;
-	})(_coreEffect2['default']);
+	}(_Effect3.default);
 
-	exports['default'] = WahWah;
-	module.exports = exports['default'];
+	exports.default = WahWah;
 
 /***/ },
 /* 21 */
@@ -1540,119 +1570,107 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	exports.__esModule = true;
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(4);
+	var _Module2 = __webpack_require__(4);
 
-	var _coreModule2 = _interopRequireDefault(_coreModule);
+	var _Module3 = _interopRequireDefault(_Module2);
 
-	var Envelope = (function (_Module) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Envelope = function (_Module) {
 	    _inherits(Envelope, _Module);
 
 	    function Envelope(props, name) {
 	        _classCallCheck(this, Envelope);
 
-	        _get(Object.getPrototypeOf(Envelope.prototype), 'constructor', this).call(this, props, name);
+	        return _possibleConstructorReturn(this, _Module.call(this, props, name));
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	    }
 
-	    _createClass(Envelope, [{
-	        key: 'createGain',
-	        value: function createGain() {
-	            return false;
+	    Envelope.prototype.createGain = function createGain() {
+	        return false;
+	    };
+
+	    Envelope.prototype.getReleaseTime = function getReleaseTime() {
+	        var now = _AudioContext2.default.currentTime,
+	            release = undefined;
+
+	        if (this.release) {
+	            release = now + this.release / 10.0;
+	        } else {
+	            release = now + 0.2;
 	        }
-	    }, {
-	        key: 'getReleaseTime',
-	        value: function getReleaseTime() {
-	            var now = _AudioContext2['default'].currentTime,
-	                release = undefined;
 
-	            if (this.release) {
-	                release = now + this.release / 10.0;
-	            } else {
-	                release = now + 0.2;
-	            }
+	        return release;
+	    };
 
-	            return release;
+	    Envelope.prototype.setEnvelope = function setEnvelope(dest) {
+	        var now = _AudioContext2.default.currentTime,
+	            envelope = this.level % 101,
+	            attackLevel = undefined,
+	            sustainLevel = undefined,
+	            attackEnd = this.attack / 20.0,
+	            t = undefined;
+
+	        if (this.target === 'gain') {
+	            attackLevel = envelope / 100;
+	            sustainLevel = this.sustain / 100.0;
+	        } else {
+	            attackLevel = envelope * 72; // Range: 0-7200: 6-octave range
+	            sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
 	        }
-	    }, {
-	        key: 'setEnvelope',
-	        value: function setEnvelope(dest) {
-	            var now = _AudioContext2['default'].currentTime,
-	                envelope = this.level % 101,
-	                attackLevel = undefined,
-	                sustainLevel = undefined,
-	                attackEnd = this.attack / 20.0,
-	                t = undefined;
 
-	            if (this.target === 'gain') {
-	                attackLevel = envelope / 100;
-	                sustainLevel = this.sustain / 100.0;
-	            } else {
-	                attackLevel = envelope * 72; // Range: 0-7200: 6-octave range
-	                sustainLevel = attackLevel * this.sustain / 100.0; // range: 0-7200
+	        if (!attackEnd) {
+	            attackEnd = 0.05; // tweak to get target decay to work properly
+	        }
+
+	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
+	            t = dest.getEnvelopeTarget(this.target);
+
+	            if (t) {
+	                t.setValueAtTime(0, now);
+	                t.linearRampToValueAtTime(attackLevel, now + attackEnd);
+	                t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
 	            }
+	        }
+	    };
 
-	            if (!attackEnd) {
-	                attackEnd = 0.05; // tweak to get target decay to work properly
-	            }
+	    Envelope.prototype.resetEnvelope = function resetEnvelope(dest) {
+	        var now = _AudioContext2.default.currentTime,
+	            t = undefined;
 
-	            if (dest && typeof dest.getEnvelopeTarget === 'function') {
-	                t = dest.getEnvelopeTarget(this.target);
+	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
+	            t = dest.getEnvelopeTarget(this.target);
 
-	                if (t) {
-	                    t.setValueAtTime(0, now);
-	                    t.linearRampToValueAtTime(attackLevel, now + attackEnd);
-	                    t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
+	            if (t) {
+	                t.cancelScheduledValues(now);
+	                if (this.target === 'gain') {
+	                    t.setValueAtTime(t.value, now);
 	                }
+	                t.setTargetAtTime(0, now, this.release / 100.0);
 	            }
 	        }
-	    }, {
-	        key: 'resetEnvelope',
-	        value: function resetEnvelope(dest) {
-	            var now = _AudioContext2['default'].currentTime,
-	                t = undefined;
+	    };
 
-	            if (dest && typeof dest.getEnvelopeTarget === 'function') {
-	                t = dest.getEnvelopeTarget(this.target);
-
-	                if (t) {
-	                    t.cancelScheduledValues(now);
-	                    if (this.target === 'gain') {
-	                        t.setValueAtTime(t.value, now);
-	                    }
-	                    t.setTargetAtTime(0, now, this.release / 100.0);
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'getLineOut',
-	        value: function getLineOut() {
-	            return false;
-	        }
-	    }]);
+	    Envelope.prototype.getLineOut = function getLineOut() {
+	        return false;
+	    };
 
 	    return Envelope;
-	})(_coreModule2['default']);
+	}(_Module3.default);
 
-	exports['default'] = Envelope;
-	module.exports = exports['default'];
+	exports.default = Envelope;
 
 /***/ },
 /* 22 */
@@ -1660,62 +1678,56 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	exports.__esModule = true;
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(4);
+	var _Module2 = __webpack_require__(4);
 
-	var _coreModule2 = _interopRequireDefault(_coreModule);
+	var _Module3 = _interopRequireDefault(_Module2);
 
-	var Master = (function (_Module) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Master = function (_Module) {
 	    _inherits(Master, _Module);
 
 	    function Master(props, name) {
 	        _classCallCheck(this, Master);
 
-	        _get(Object.getPrototypeOf(Master.prototype), 'constructor', this).call(this, props, name);
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
-	        this.main = _AudioContext2['default'].createGain();
-	        this.link = null;
+
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+
+	        _this.main = _AudioContext2.default.createGain();
+	        _this.link = null;
+	        return _this;
 	    }
 
-	    _createClass(Master, [{
-	        key: 'getLineIn',
-	        value: function getLineIn() {
-	            return this.main;
+	    Master.prototype.getLineIn = function getLineIn() {
+	        return this.main;
+	    };
+
+	    Master.prototype.lineOut = function lineOut(analyser) {
+	        this.main.connect(this.envelope);
+	        if (analyser) {
+	            this.gain.connect(analyser);
+	        } else {
+	            this.gain.connect(_AudioContext2.default.destination);
 	        }
-	    }, {
-	        key: 'lineOut',
-	        value: function lineOut(analyser) {
-	            this.main.connect(this.envelope);
-	            if (analyser) {
-	                this.gain.connect(analyser);
-	            } else {
-	                this.gain.connect(_AudioContext2['default'].destination);
-	            }
-	        }
-	    }]);
+	    };
 
 	    return Master;
-	})(_coreModule2['default']);
+	}(_Module3.default);
 
-	exports['default'] = Master;
-	module.exports = exports['default'];
+	exports.default = Master;
 
 /***/ },
 /* 23 */
@@ -1723,44 +1735,44 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	exports.__esModule = true;
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreModule = __webpack_require__(4);
+	var _Module2 = __webpack_require__(4);
 
-	var _coreModule2 = _interopRequireDefault(_coreModule);
+	var _Module3 = _interopRequireDefault(_Module2);
 
-	var Pan = (function (_Module) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Pan = function (_Module) {
 	    _inherits(Pan, _Module);
 
 	    function Pan(props, name) {
 	        _classCallCheck(this, Pan);
 
-	        _get(Object.getPrototypeOf(Pan.prototype), 'constructor', this).call(this, props, name);
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
-	        this.main = _AudioContext2['default'].createStereoPanner();
-	        this.main.pan.value = this.value;
-	        this.main.connect(this.envelope);
+
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+
+	        _this.main = _AudioContext2.default.createStereoPanner();
+	        _this.main.pan.value = _this.value;
+	        _this.main.connect(_this.envelope);
+	        return _this;
 	    }
 
 	    return Pan;
-	})(_coreModule2['default']);
+	}(_Module3.default);
 
-	exports['default'] = Pan;
-	module.exports = exports['default'];
+	exports.default = Pan;
 
 /***/ },
 /* 24 */
@@ -1768,56 +1780,51 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(5);
 
-	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
+	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 
-	var Modulator = (function (_SoundSource) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Modulator = function (_SoundSource) {
 	    _inherits(Modulator, _SoundSource);
 
 	    function Modulator(props, name) {
 	        _classCallCheck(this, Modulator);
 
-	        _get(Object.getPrototypeOf(Modulator.prototype), 'constructor', this).call(this, props, name);
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	        this.main = _AudioContext2['default'].createOscillator();
-	        this.main.type = this.wave;
-	        this.main.connect(this.envelope);
+
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+
+	        _this.main = _AudioContext2.default.createOscillator();
+	        _this.main.type = _this.wave;
+	        _this.main.connect(_this.envelope);
+	        return _this;
 	    }
 
-	    _createClass(Modulator, [{
-	        key: 'setNote',
-	        value: function setNote() {
-	            var f = this.freq % 11;
-	            this.main.frequency.value = f;
-	        }
-	    }]);
+	    Modulator.prototype.setNote = function setNote() {
+	        var f = this.freq % 11;
+	        this.main.frequency.value = f;
+	    };
 
 	    return Modulator;
-	})(_coreSoundSource2['default']);
+	}(_SoundSource3.default);
 
-	exports['default'] = Modulator;
-	module.exports = exports['default'];
+	exports.default = Modulator;
 
 /***/ },
 /* 25 */
@@ -1825,153 +1832,142 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(5);
 
-	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
+	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 
-	var Noise = (function (_SoundSource) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Noise = function (_SoundSource) {
 	    _inherits(Noise, _SoundSource);
 
 	    function Noise(props, name) {
 	        _classCallCheck(this, Noise);
 
-	        _get(Object.getPrototypeOf(Noise.prototype), 'constructor', this).call(this, props, name);
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	        this.defaultLineInProperty = 'detune';
-	        this.main = _AudioContext2['default'].createBufferSource();
-	        this.main.connect(this.envelope);
 
-	        this.main.detune.value = this.detune;
-	        this.setColor();
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+
+	        _this.defaultLineInProperty = 'detune';
+	        _this.main = _AudioContext2.default.createBufferSource();
+	        _this.main.connect(_this.envelope);
+
+	        _this.main.detune.value = _this.detune;
+	        _this.setColor();
+	        return _this;
 	    }
 
-	    _createClass(Noise, [{
-	        key: 'setColor',
-	        value: function setColor() {
-	            switch (this.color) {
-	                case _coreConstants.CONST.NOISE_WHITE:
-	                    this.main.buffer = this.white();
-	                    break;
-	                case _coreConstants.CONST.NOISE_PINK:
-	                    this.main.buffer = this.pink();
-	                    break;
-	                case _coreConstants.CONST.NOISE_BROWN:
-	                    this.main.buffer = this.brown();
-	                    break;
-	                default:
-	                    throw new Error('Invalid Noise color: ' + this.color);
-	            }
+	    Noise.prototype.setColor = function setColor() {
+	        switch (this.color) {
+	            case _Constants.CONST.NOISE_WHITE:
+	                this.main.buffer = this.white();
+	                break;
+	            case _Constants.CONST.NOISE_PINK:
+	                this.main.buffer = this.pink();
+	                break;
+	            case _Constants.CONST.NOISE_BROWN:
+	                this.main.buffer = this.brown();
+	                break;
+	            default:
+	                throw new Error('Invalid Noise color: ' + this.color);
 	        }
-	    }, {
-	        key: 'white',
-	        value: function white() {
-	            var noiseBuffer = this.getNoiseBuffer(),
-	                bufferSize = this.getBufferSize(),
-	                output = noiseBuffer.getChannelData(0);
+	    };
 
-	            for (var i = 0; i < bufferSize; i++) {
-	                output[i] = Math.random() * 2 - 1;
-	            }
+	    Noise.prototype.white = function white() {
+	        var noiseBuffer = this.getNoiseBuffer(),
+	            bufferSize = this.getBufferSize(),
+	            output = noiseBuffer.getChannelData(0);
 
-	            return noiseBuffer;
+	        for (var i = 0; i < bufferSize; i++) {
+	            output[i] = Math.random() * 2 - 1;
 	        }
-	    }, {
-	        key: 'pink',
-	        value: function pink() {
-	            var b0 = undefined,
-	                b1 = undefined,
-	                b2 = undefined,
-	                b3 = undefined,
-	                b4 = undefined,
-	                b5 = undefined,
-	                b6 = undefined,
-	                noiseBuffer = this.getNoiseBuffer(),
-	                bufferSize = this.getBufferSize(),
-	                output = noiseBuffer.getChannelData(0),
-	                white = undefined;
 
-	            b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+	        return noiseBuffer;
+	    };
 
-	            for (var i = 0; i < bufferSize; i++) {
-	                white = Math.random() * 2 - 1;
+	    Noise.prototype.pink = function pink() {
+	        var b0 = undefined,
+	            b1 = undefined,
+	            b2 = undefined,
+	            b3 = undefined,
+	            b4 = undefined,
+	            b5 = undefined,
+	            b6 = undefined,
+	            noiseBuffer = this.getNoiseBuffer(),
+	            bufferSize = this.getBufferSize(),
+	            output = noiseBuffer.getChannelData(0),
+	            white = undefined;
 
-	                b0 = 0.99886 * b0 + white * 0.0555179;
-	                b1 = 0.99332 * b1 + white * 0.0750759;
-	                b2 = 0.96900 * b2 + white * 0.1538520;
-	                b3 = 0.86650 * b3 + white * 0.3104856;
-	                b4 = 0.55000 * b4 + white * 0.5329522;
-	                b5 = -0.7616 * b5 - white * 0.0168980;
+	        b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
 
-	                output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-	                output[i] *= 0.11;
-	                b6 = white * 0.115926;
-	            }
+	        for (var i = 0; i < bufferSize; i++) {
+	            white = Math.random() * 2 - 1;
 
-	            return noiseBuffer;
+	            b0 = 0.99886 * b0 + white * 0.0555179;
+	            b1 = 0.99332 * b1 + white * 0.0750759;
+	            b2 = 0.96900 * b2 + white * 0.1538520;
+	            b3 = 0.86650 * b3 + white * 0.3104856;
+	            b4 = 0.55000 * b4 + white * 0.5329522;
+	            b5 = -0.7616 * b5 - white * 0.0168980;
+
+	            output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+	            output[i] *= 0.11;
+	            b6 = white * 0.115926;
 	        }
-	    }, {
-	        key: 'brown',
-	        value: function brown() {
-	            var noiseBuffer = this.getNoiseBuffer(),
-	                bufferSize = this.getBufferSize(),
-	                output = noiseBuffer.getChannelData(0),
-	                lastOut = 0.0,
-	                white = undefined;
 
-	            for (var i = 0; i < bufferSize; i++) {
-	                white = white = Math.random() * 2 - 1;
+	        return noiseBuffer;
+	    };
 
-	                output[i] = (lastOut + 0.02 * white) / 1.02;
-	                lastOut = output[i];
-	                output[i] *= 3.5;
-	            }
+	    Noise.prototype.brown = function brown() {
+	        var noiseBuffer = this.getNoiseBuffer(),
+	            bufferSize = this.getBufferSize(),
+	            output = noiseBuffer.getChannelData(0),
+	            lastOut = 0.0,
+	            white = undefined;
 
-	            return noiseBuffer;
+	        for (var i = 0; i < bufferSize; i++) {
+	            white = white = Math.random() * 2 - 1;
+
+	            output[i] = (lastOut + 0.02 * white) / 1.02;
+	            lastOut = output[i];
+	            output[i] *= 3.5;
 	        }
-	    }, {
-	        key: 'getBufferSize',
-	        value: function getBufferSize() {
-	            return 2 * _AudioContext2['default'].sampleRate;
-	        }
-	    }, {
-	        key: 'getNoiseBuffer',
-	        value: function getNoiseBuffer() {
-	            var bufferSize = this.getBufferSize(),
-	                noiseBuffer = _AudioContext2['default'].createBuffer(1, bufferSize, _AudioContext2['default'].sampleRate);
-	            return noiseBuffer;
-	        }
-	    }, {
-	        key: 'setNote',
-	        value: function setNote() {
-	            this.main.loop = true;
-	        }
-	    }]);
+
+	        return noiseBuffer;
+	    };
+
+	    Noise.prototype.getBufferSize = function getBufferSize() {
+	        return 2 * _AudioContext2.default.sampleRate;
+	    };
+
+	    Noise.prototype.getNoiseBuffer = function getNoiseBuffer() {
+	        var bufferSize = this.getBufferSize(),
+	            noiseBuffer = _AudioContext2.default.createBuffer(1, bufferSize, _AudioContext2.default.sampleRate);
+	        return noiseBuffer;
+	    };
+
+	    Noise.prototype.setNote = function setNote() {
+	        this.main.loop = true;
+	    };
 
 	    return Noise;
-	})(_coreSoundSource2['default']);
+	}(_SoundSource3.default);
 
-	exports['default'] = Noise;
-	module.exports = exports['default'];
+	exports.default = Noise;
 
 /***/ },
 /* 26 */
@@ -1979,63 +1975,57 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
 
-	var _coreSoundSource = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(5);
 
-	var _coreSoundSource2 = _interopRequireDefault(_coreSoundSource);
+	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 
-	var Oscillator = (function (_SoundSource) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Oscillator = function (_SoundSource) {
 	    _inherits(Oscillator, _SoundSource);
 
 	    function Oscillator(props, name) {
 	        _classCallCheck(this, Oscillator);
 
-	        _get(Object.getPrototypeOf(Oscillator.prototype), 'constructor', this).call(this, props, name);
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	        this.main = _AudioContext2['default'].createOscillator();
-	        this.main.type = this.wave;
-	        this.main.connect(this.envelope);
 
-	        this.setDetune();
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+
+	        _this.main = _AudioContext2.default.createOscillator();
+	        _this.main.type = _this.wave;
+	        _this.main.connect(_this.envelope);
+
+	        _this.setDetune();
+	        return _this;
 	    }
 
-	    _createClass(Oscillator, [{
-	        key: 'setDetune',
-	        value: function setDetune() {
+	    Oscillator.prototype.setDetune = function setDetune() {
 
-	            this.main.detune.value = this.detune;
-	        }
-	    }, {
-	        key: 'setNote',
-	        value: function setNote(note) {
-	            this.main.frequency.value = note;
-	        }
-	    }]);
+	        this.main.detune.value = this.detune;
+	    };
+
+	    Oscillator.prototype.setNote = function setNote(note) {
+	        this.main.frequency.value = note;
+	    };
 
 	    return Oscillator;
-	})(_coreSoundSource2['default']);
+	}(_SoundSource3.default);
 
-	exports['default'] = Oscillator;
-	module.exports = exports['default'];
+	exports.default = Oscillator;
 
 /***/ },
 /* 27 */
@@ -2043,9 +2033,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var BitcrusherProps = {
 	    bits: {
 	        type: 'number',
@@ -2064,8 +2052,7 @@
 	    }
 	};
 
-	exports['default'] = BitcrusherProps;
-	module.exports = exports['default'];
+	exports.default = BitcrusherProps;
 
 /***/ },
 /* 28 */
@@ -2073,9 +2060,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var CabinetProps = {
 	    makeupGain: {
 	        type: 'number',
@@ -2093,8 +2078,7 @@
 	    }
 	};
 
-	exports['default'] = CabinetProps;
-	module.exports = exports['default'];
+	exports.default = CabinetProps;
 
 /***/ },
 /* 29 */
@@ -2102,9 +2086,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var DefaultProps = {
 	    link: {
 	        type: 'string',
@@ -2117,8 +2099,7 @@
 	    }
 	};
 
-	exports['default'] = DefaultProps;
-	module.exports = exports['default'];
+	exports.default = DefaultProps;
 
 /***/ },
 /* 30 */
@@ -2126,9 +2107,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var DelayProps = {
 	    dry: {
 	        type: 'number',
@@ -2162,8 +2141,7 @@
 	    }
 	};
 
-	exports['default'] = DelayProps;
-	module.exports = exports['default'];
+	exports.default = DelayProps;
 
 /***/ },
 /* 31 */
@@ -2171,17 +2149,15 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var EnvelopeProps = {
 	    target: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.ENVELOPE_TARGET_GAIN, _coreConstants.CONST.ENVELOPE_TARGET_FREQ, _coreConstants.CONST.ENVELOPE_TARGET_DETUNE],
-	        defaultValue: _coreConstants.CONST.ENVELOPE_TARGET_GAIN
+	        bounds: [_Constants.CONST.ENVELOPE_TARGET_GAIN, _Constants.CONST.ENVELOPE_TARGET_FREQ, _Constants.CONST.ENVELOPE_TARGET_DETUNE],
+	        defaultValue: _Constants.CONST.ENVELOPE_TARGET_GAIN
 	    },
 	    attack: {
 	        type: 'number',
@@ -2205,8 +2181,7 @@
 	    }
 	};
 
-	exports['default'] = EnvelopeProps;
-	module.exports = exports['default'];
+	exports.default = EnvelopeProps;
 
 /***/ },
 /* 32 */
@@ -2214,11 +2189,9 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var FilterProps = {
 	    freq: {
@@ -2238,8 +2211,8 @@
 	    },
 	    filterType: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.FILTER_ALLPASS, _coreConstants.CONST.FILTER_BANDPASS, _coreConstants.CONST.FILTER_HIGHPASS, _coreConstants.CONST.FILTER_HIGHSHELF, _coreConstants.CONST.FILTER_LOWPASS, _coreConstants.CONST.FILTER_LOWSHELF, _coreConstants.CONST.FILTER_NOTCH, _coreConstants.CONST.FILTER_PEAKING],
-	        defaultValue: _coreConstants.CONST.FILTER_LOWPASS
+	        bounds: [_Constants.CONST.FILTER_ALLPASS, _Constants.CONST.FILTER_BANDPASS, _Constants.CONST.FILTER_HIGHPASS, _Constants.CONST.FILTER_HIGHSHELF, _Constants.CONST.FILTER_LOWPASS, _Constants.CONST.FILTER_LOWSHELF, _Constants.CONST.FILTER_NOTCH, _Constants.CONST.FILTER_PEAKING],
+	        defaultValue: _Constants.CONST.FILTER_LOWPASS
 	    },
 	    bypass: {
 	        type: 'number',
@@ -2248,8 +2221,7 @@
 	    }
 	};
 
-	exports['default'] = FilterProps;
-	module.exports = exports['default'];
+	exports.default = FilterProps;
 
 /***/ },
 /* 33 */
@@ -2257,11 +2229,9 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var ModulatorProps = {
 	    //TODO check right freq values...
@@ -2272,18 +2242,17 @@
 	    },
 	    target: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.MODULATOR_TARGET_FREQ, _coreConstants.CONST.MODULATOR_TARGET_DETUNE],
-	        defaultValue: _coreConstants.CONST.MODULATOR_TARGET_FREQ
+	        bounds: [_Constants.CONST.MODULATOR_TARGET_FREQ, _Constants.CONST.MODULATOR_TARGET_DETUNE],
+	        defaultValue: _Constants.CONST.MODULATOR_TARGET_FREQ
 	    },
 	    wave: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.WAVE_SINE, _coreConstants.CONST.WAVE_SQUARE, _coreConstants.CONST.WAVE_SAWTOOTH, _coreConstants.CONST.WAVE_TRIANLGE, _coreConstants.CONST.WAVE_CUSTOM],
-	        defaultValue: _coreConstants.CONST.WAVE_SINE
+	        bounds: [_Constants.CONST.WAVE_SINE, _Constants.CONST.WAVE_SQUARE, _Constants.CONST.WAVE_SAWTOOTH, _Constants.CONST.WAVE_TRIANLGE, _Constants.CONST.WAVE_CUSTOM],
+	        defaultValue: _Constants.CONST.WAVE_SINE
 	    }
 	};
 
-	exports['default'] = ModulatorProps;
-	module.exports = exports['default'];
+	exports.default = ModulatorProps;
 
 /***/ },
 /* 34 */
@@ -2291,9 +2260,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var MoogFilterProps = {
 	    cutoff: {
 	        type: 'number',
@@ -2312,8 +2279,7 @@
 	    }
 	};
 
-	exports['default'] = MoogFilterProps;
-	module.exports = exports['default'];
+	exports.default = MoogFilterProps;
 
 /***/ },
 /* 35 */
@@ -2321,17 +2287,15 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var NoiseProps = {
 	    color: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.NOISE_BROWN, _coreConstants.CONST.NOISE_PINK, _coreConstants.CONST.NOISE_WHITE],
-	        defaultValue: _coreConstants.CONST.NOISE_WHITE
+	        bounds: [_Constants.CONST.NOISE_BROWN, _Constants.CONST.NOISE_PINK, _Constants.CONST.NOISE_WHITE],
+	        defaultValue: _Constants.CONST.NOISE_WHITE
 	    },
 	    detune: {
 	        type: 'number',
@@ -2340,8 +2304,7 @@
 	    }
 	};
 
-	exports['default'] = NoiseProps;
-	module.exports = exports['default'];
+	exports.default = NoiseProps;
 
 /***/ },
 /* 36 */
@@ -2349,11 +2312,9 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 
-	var _coreConstants = __webpack_require__(1);
+	var _Constants = __webpack_require__(1);
 
 	var OscillatorProps = {
 	    detune: {
@@ -2363,13 +2324,12 @@
 	    },
 	    wave: {
 	        type: 'string',
-	        bounds: [_coreConstants.CONST.WAVE_SINE, _coreConstants.CONST.WAVE_SQUARE, _coreConstants.CONST.WAVE_SAWTOOTH, _coreConstants.CONST.WAVE_TRIANLGE, _coreConstants.CONST.WAVE_CUSTOM],
-	        defaultValue: _coreConstants.CONST.WAVE_SINE
+	        bounds: [_Constants.CONST.WAVE_SINE, _Constants.CONST.WAVE_SQUARE, _Constants.CONST.WAVE_SAWTOOTH, _Constants.CONST.WAVE_TRIANLGE, _Constants.CONST.WAVE_CUSTOM],
+	        defaultValue: _Constants.CONST.WAVE_SINE
 	    }
 	};
 
-	exports['default'] = OscillatorProps;
-	module.exports = exports['default'];
+	exports.default = OscillatorProps;
 
 /***/ },
 /* 37 */
@@ -2377,9 +2337,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var OverdriveProps = {
 	    outputGain: {
 	        type: 'number',
@@ -2408,8 +2366,7 @@
 	    }
 	};
 
-	exports['default'] = OverdriveProps;
-	module.exports = exports['default'];
+	exports.default = OverdriveProps;
 
 /***/ },
 /* 38 */
@@ -2417,9 +2374,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var PanProps = {
 	    value: {
 	        type: 'number',
@@ -2428,8 +2383,7 @@
 	    }
 	};
 
-	exports['default'] = PanProps;
-	module.exports = exports['default'];
+	exports.default = PanProps;
 
 /***/ },
 /* 39 */
@@ -2437,9 +2391,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var PingPongDelayProps = {
 	    dry: {
 	        type: 'number',
@@ -2473,8 +2425,7 @@
 	    }
 	};
 
-	exports['default'] = PingPongDelayProps;
-	module.exports = exports['default'];
+	exports.default = PingPongDelayProps;
 
 /***/ },
 /* 40 */
@@ -2482,9 +2433,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var TremoloProps = {
 	    intensity: {
 	        type: 'number',
@@ -2508,8 +2457,7 @@
 	    }
 	};
 
-	exports['default'] = TremoloProps;
-	module.exports = exports['default'];
+	exports.default = TremoloProps;
 
 /***/ },
 /* 41 */
@@ -2517,9 +2465,7 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
+	exports.__esModule = true;
 	var WahWahProps = {
 	    automode: {
 	        type: 'boolean',
@@ -2557,23 +2503,16 @@
 	    }
 	};
 
-	exports['default'] = WahWahProps;
-	module.exports = exports['default'];
+	exports.default = WahWahProps;
 
 /***/ },
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(43);
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
 	 * @license
-	 * lodash 4.0.0 (Custom Build) <https://lodash.com/>
-	 * Build: `lodash -d -o ./lodash.js`
+	 * lodash 4.3.0 (Custom Build) <https://lodash.com/>
+	 * Build: `lodash -d -o ./foo/lodash.js`
 	 * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -2585,7 +2524,7 @@
 	  var undefined;
 
 	  /** Used as the semantic version number. */
-	  var VERSION = '4.0.0';
+	  var VERSION = '4.3.0';
 
 	  /** Used to compose bitmasks for wrapper metadata. */
 	  var BIND_FLAG = 1,
@@ -2654,7 +2593,8 @@
 	      setTag = '[object Set]',
 	      stringTag = '[object String]',
 	      symbolTag = '[object Symbol]',
-	      weakMapTag = '[object WeakMap]';
+	      weakMapTag = '[object WeakMap]',
+	      weakSetTag = '[object WeakSet]';
 
 	  var arrayBufferTag = '[object ArrayBuffer]',
 	      float32Tag = '[object Float32Array]',
@@ -2735,7 +2675,8 @@
 
 	  /** Used to compose unicode character classes. */
 	  var rsAstralRange = '\\ud800-\\udfff',
-	      rsComboRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
+	      rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
+	      rsComboSymbolsRange = '\\u20d0-\\u20f0',
 	      rsDingbatRange = '\\u2700-\\u27bf',
 	      rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
 	      rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
@@ -2749,12 +2690,13 @@
 	  /** Used to compose unicode capture groups. */
 	  var rsAstral = '[' + rsAstralRange + ']',
 	      rsBreak = '[' + rsBreakRange + ']',
-	      rsCombo = '[' + rsComboRange + ']',
+	      rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
 	      rsDigits = '\\d+',
 	      rsDingbat = '[' + rsDingbatRange + ']',
 	      rsLower = '[' + rsLowerRange + ']',
 	      rsMisc = '[^' + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + ']',
-	      rsModifier = '(?:\\ud83c[\\udffb-\\udfff])',
+	      rsFitz = '\\ud83c[\\udffb-\\udfff]',
+	      rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
 	      rsNonAstral = '[^' + rsAstralRange + ']',
 	      rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
 	      rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
@@ -2771,14 +2713,17 @@
 	      rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
 	      rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
 
-	  /** Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks). */
+	  /**
+	   * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
+	   * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
+	   */
 	  var reComboMark = RegExp(rsCombo, 'g');
 
 	  /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-	  var reComplexSymbol = RegExp(rsSymbol + rsSeq, 'g');
+	  var reComplexSymbol = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
 	  /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-	  var reHasComplexSymbol = RegExp('[' + rsZWJ + rsAstralRange + rsComboRange + rsVarRange + ']');
+	  var reHasComplexSymbol = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
 
 	  /** Used to match non-compound words composed of alphanumeric characters. */
 	  var reBasicWord = /[a-zA-Z0-9]+/g;
@@ -2788,7 +2733,8 @@
 	    rsUpper + '?' + rsLower + '+(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
 	    rsUpperMisc + '+(?=' + [rsBreak, rsUpper + rsLowerMisc, '$'].join('|') + ')',
 	    rsUpper + '?' + rsLowerMisc + '+',
-	    rsDigits + '(?:' + rsLowerMisc + '+)?',
+	    rsUpper + '+',
+	    rsDigits,
 	    rsEmoji
 	  ].join('|'), 'g');
 
@@ -2797,8 +2743,8 @@
 
 	  /** Used to assign default `context` object properties. */
 	  var contextProps = [
-	    'Array', 'Date', 'Error', 'Float32Array', 'Float64Array', 'Function',
-	    'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
+	    'Array', 'Buffer', 'Date', 'Error', 'Float32Array', 'Float64Array',
+	    'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
 	    'Reflect', 'RegExp', 'Set', 'String', 'Symbol', 'TypeError', 'Uint8Array',
 	    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap', '_',
 	    'clearTimeout', 'isFinite', 'parseInt', 'setTimeout'
@@ -2963,11 +2909,11 @@
 	   * @private
 	   * @param {Function} func The function to invoke.
 	   * @param {*} thisArg The `this` binding of `func`.
-	   * @param {...*} [args] The arguments to invoke `func` with.
+	   * @param {...*} args The arguments to invoke `func` with.
 	   * @returns {*} Returns the result of `func`.
 	   */
 	  function apply(func, thisArg, args) {
-	    var length = args ? args.length : 0;
+	    var length = args.length;
 	    switch (length) {
 	      case 0: return func.call(thisArg);
 	      case 1: return func.call(thisArg, args[0]);
@@ -2975,6 +2921,27 @@
 	      case 3: return func.call(thisArg, args[0], args[1], args[2]);
 	    }
 	    return func.apply(thisArg, args);
+	  }
+
+	  /**
+	   * A specialized version of `baseAggregator` for arrays.
+	   *
+	   * @private
+	   * @param {Array} array The array to iterate over.
+	   * @param {Function} setter The function to set `accumulator` values.
+	   * @param {Function} iteratee The iteratee to transform keys.
+	   * @param {Object} accumulator The initial aggregated object.
+	   * @returns {Function} Returns `accumulator`.
+	   */
+	  function arrayAggregator(array, setter, iteratee, accumulator) {
+	    var index = -1,
+	        length = array.length;
+
+	    while (++index < length) {
+	      var value = array[index];
+	      setter(accumulator, value, iteratee(value), array);
+	    }
+	    return accumulator;
 	  }
 
 	  /**
@@ -3169,14 +3136,14 @@
 	   * @param {Array} array The array to iterate over.
 	   * @param {Function} iteratee The function invoked per iteration.
 	   * @param {*} [accumulator] The initial value.
-	   * @param {boolean} [initFromArray] Specify using the first element of `array` as the initial value.
+	   * @param {boolean} [initAccum] Specify using the first element of `array` as the initial value.
 	   * @returns {*} Returns the accumulated value.
 	   */
-	  function arrayReduce(array, iteratee, accumulator, initFromArray) {
+	  function arrayReduce(array, iteratee, accumulator, initAccum) {
 	    var index = -1,
 	        length = array.length;
 
-	    if (initFromArray && length) {
+	    if (initAccum && length) {
 	      accumulator = array[++index];
 	    }
 	    while (++index < length) {
@@ -3193,12 +3160,12 @@
 	   * @param {Array} array The array to iterate over.
 	   * @param {Function} iteratee The function invoked per iteration.
 	   * @param {*} [accumulator] The initial value.
-	   * @param {boolean} [initFromArray] Specify using the last element of `array` as the initial value.
+	   * @param {boolean} [initAccum] Specify using the last element of `array` as the initial value.
 	   * @returns {*} Returns the accumulated value.
 	   */
-	  function arrayReduceRight(array, iteratee, accumulator, initFromArray) {
+	  function arrayReduceRight(array, iteratee, accumulator, initAccum) {
 	    var length = array.length;
-	    if (initFromArray && length) {
+	    if (initAccum && length) {
 	      accumulator = array[--length];
 	    }
 	    while (length--) {
@@ -3260,7 +3227,7 @@
 	  /**
 	   * The base implementation of methods like `_.find` and `_.findKey`, without
 	   * support for iteratee shorthands, which iterates over `collection` using
-	   * the provided `eachFunc`.
+	   * `eachFunc`.
 	   *
 	   * @private
 	   * @param {Array|Object} collection The collection to search.
@@ -3328,21 +3295,20 @@
 
 	  /**
 	   * The base implementation of `_.reduce` and `_.reduceRight`, without support
-	   * for iteratee shorthands, which iterates over `collection` using the provided
-	   * `eachFunc`.
+	   * for iteratee shorthands, which iterates over `collection` using `eachFunc`.
 	   *
 	   * @private
 	   * @param {Array|Object} collection The collection to iterate over.
 	   * @param {Function} iteratee The function invoked per iteration.
 	   * @param {*} accumulator The initial value.
-	   * @param {boolean} initFromCollection Specify using the first or last element of `collection` as the initial value.
+	   * @param {boolean} initAccum Specify using the first or last element of `collection` as the initial value.
 	   * @param {Function} eachFunc The function to iterate over `collection`.
 	   * @returns {*} Returns the accumulated value.
 	   */
-	  function baseReduce(collection, iteratee, accumulator, initFromCollection, eachFunc) {
+	  function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
 	    eachFunc(collection, function(value, index, collection) {
-	      accumulator = initFromCollection
-	        ? (initFromCollection = false, value)
+	      accumulator = initAccum
+	        ? (initAccum = false, value)
 	        : iteratee(accumulator, value, index, collection);
 	    });
 	    return accumulator;
@@ -3736,6 +3702,7 @@
 	  /**
 	   * Gets the number of symbols in `string`.
 	   *
+	   * @private
 	   * @param {string} string The string to inspect.
 	   * @returns {number} Returns the string size.
 	   */
@@ -3799,14 +3766,14 @@
 	   * lodash.isFunction(lodash.bar);
 	   * // => true
 	   *
-	   * // using `context` to mock `Date#getTime` use in `_.now`
+	   * // Use `context` to mock `Date#getTime` use in `_.now`.
 	   * var mock = _.runInContext({
 	   *   'Date': function() {
 	   *     return { 'getTime': getTimeMock };
 	   *   }
 	   * });
 	   *
-	   * // or creating a suped-up `defer` in Node.js
+	   * // Create a suped-up `defer` in Node.js.
 	   * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
 	   */
 	  function runInContext(context) {
@@ -3851,14 +3818,15 @@
 	    );
 
 	    /** Built-in value references. */
-	    var _Symbol = context.Symbol,
+	    var Buffer = moduleExports ? context.Buffer : undefined,
 	        Reflect = context.Reflect,
+	        Symbol = context.Symbol,
 	        Uint8Array = context.Uint8Array,
 	        clearTimeout = context.clearTimeout,
 	        enumerate = Reflect ? Reflect.enumerate : undefined,
 	        getPrototypeOf = Object.getPrototypeOf,
 	        getOwnPropertySymbols = Object.getOwnPropertySymbols,
-	        iteratorSymbol = typeof (iteratorSymbol = _Symbol && _Symbol.iterator) == 'symbol' ? iteratorSymbol : undefined,
+	        iteratorSymbol = typeof (iteratorSymbol = Symbol && Symbol.iterator) == 'symbol' ? iteratorSymbol : undefined,
 	        propertyIsEnumerable = objectProto.propertyIsEnumerable,
 	        setTimeout = context.setTimeout,
 	        splice = arrayProto.splice;
@@ -3884,14 +3852,15 @@
 	    /** Used to store function metadata. */
 	    var metaMap = WeakMap && new WeakMap;
 
-	    /** Used to detect maps and sets. */
+	    /** Used to detect maps, sets, and weakmaps. */
 	    var mapCtorString = Map ? funcToString.call(Map) : '',
-	        setCtorString = Set ? funcToString.call(Set) : '';
+	        setCtorString = Set ? funcToString.call(Set) : '',
+	        weakMapCtorString = WeakMap ? funcToString.call(WeakMap) : '';
 
 	    /** Used to convert symbols to primitives and strings. */
-	    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
-	        symbolValueOf = _Symbol ? symbolProto.valueOf : undefined,
-	        symbolToString = _Symbol ? symbolProto.toString : undefined;
+	    var symbolProto = Symbol ? Symbol.prototype : undefined,
+	        symbolValueOf = Symbol ? symbolProto.valueOf : undefined,
+	        symbolToString = Symbol ? symbolProto.toString : undefined;
 
 	    /** Used to lookup unminified function names. */
 	    var realNames = {};
@@ -3939,47 +3908,48 @@
 	     * The chainable wrapper methods are:
 	     * `after`, `ary`, `assign`, `assignIn`, `assignInWith`, `assignWith`,
 	     * `at`, `before`, `bind`, `bindAll`, `bindKey`, `chain`, `chunk`, `commit`,
-	     * `compact`, `concat`, `conforms`,  `constant`, `countBy`, `create`, `curry`,
+	     * `compact`, `concat`, `conforms`, `constant`, `countBy`, `create`, `curry`,
 	     * `debounce`, `defaults`, `defaultsDeep`, `defer`, `delay`, `difference`,
-	     * `differenceBy`, `differenceWith`,  `drop`, `dropRight`, `dropRightWhile`,
+	     * `differenceBy`, `differenceWith`, `drop`, `dropRight`, `dropRightWhile`,
 	     * `dropWhile`, `fill`, `filter`, `flatten`, `flattenDeep`, `flip`, `flow`,
-	     * `flowRight`, `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`,
-	     * `forOwnRight`, `fromPairs`, `functions`, `functionsIn`, `groupBy`, `initial`,
-	     * `intersection`, `intersectionBy`, `intersectionWith`, invert`, `invokeMap`,
-	     * `iteratee`, `keyBy`, `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`,
-	     * `matches`, `matchesProperty`, `memoize`, `merge`, `mergeWith`, `method`,
-	     * `methodOf`, `mixin`, `negate`, `nthArg`, `omit`, `omitBy`, `once`, `orderBy`,
-	     * `over`, `overArgs`, `overEvery`, `overSome`, `partial`, `partialRight`,
-	     * `partition`, `pick`, `pickBy`, `plant`, `property`, `propertyOf`, `pull`,
-	     * `pullAll`, `pullAllBy`, `pullAt`, `push`, `range`, `rangeRight`, `rearg`,
-	     * `reject`, `remove`, `rest`, `reverse`, `sampleSize`, `set`, `setWith`,
-	     * `shuffle`, `slice`, `sort`, `sortBy`, `splice`, `spread`, `tail`, `take`,
-	     * `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`, `thru`,
-	     * `toArray`, `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`, `transform`,
-	     * `unary`, `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`, `uniqWith`,
-	     * `unset`, `unshift`, `unzip`, `unzipWith`, `values`, `valuesIn`, `without`,
-	     * `wrap`, `xor`, `xorBy`, `xorWith`, `zip`, `zipObject`, and `zipWith`
+	     * `flowRight`, `fromPairs`, `functions`, `functionsIn`, `groupBy`, `initial`,
+	     * `intersection`, `intersectionBy`, `intersectionWith`, `invert`, `invertBy`,
+	     * `invokeMap`, `iteratee`, `keyBy`, `keys`, `keysIn`, `map`, `mapKeys`,
+	     * `mapValues`, `matches`, `matchesProperty`, `memoize`, `merge`, `mergeWith`,
+	     * `method`, `methodOf`, `mixin`, `negate`, `nthArg`, `omit`, `omitBy`, `once`,
+	     * `orderBy`, `over`, `overArgs`, `overEvery`, `overSome`, `partial`,
+	     * `partialRight`, `partition`, `pick`, `pickBy`, `plant`, `property`,
+	     * `propertyOf`, `pull`, `pullAll`, `pullAllBy`, `pullAt`, `push`, `range`,
+	     * `rangeRight`, `rearg`, `reject`, `remove`, `rest`, `reverse`, `sampleSize`,
+	     * `set`, `setWith`, `shuffle`, `slice`, `sort`, `sortBy`, `splice`, `spread`,
+	     * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`,
+	     * `thru`, `toArray`, `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`,
+	     * `transform`, `unary`, `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`,
+	     * `uniqWith`, `unset`, `unshift`, `unzip`, `unzipWith`, `values`, `valuesIn`,
+	     * `without`, `wrap`, `xor`, `xorBy`, `xorWith`, `zip`, `zipObject`,
+	     * `zipObjectDeep`, and `zipWith`
 	     *
 	     * The wrapper methods that are **not** chainable by default are:
 	     * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
 	     * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `deburr`, `endsWith`, `eq`,
 	     * `escape`, `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`,
-	     * `findLast`, `findLastIndex`, `findLastKey`, `floor`, `get`, `gt`, `gte`,
-	     * `has`, `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`,
-	     * `invoke`, `isArguments`, `isArray`, `isArrayLike`, `isArrayLikeObject`,
-	     * `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isEqualWith`,
-	     * `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`, `isMatch`,
-	     * `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`, `isNumber`,
-	     * `isObject`, `isObjectLike`, `isPlainObject`, `isRegExp`, `isSafeInteger`,
-	     * `isString`, `isUndefined`, `isTypedArray`, `join`, `kebabCase`, `last`,
-	     * `lastIndexOf`, `lowerCase`, `lowerFirst`, `lt`, `lte`, `max`, `maxBy`,
-	     * `mean`, `min`, `minBy`, `noConflict`, `noop`, `now`, `pad`, `padEnd`,
-	     * `padStart`, `parseInt`, `pop`, `random`, `reduce`, `reduceRight`, `repeat`,
-	     * `result`, `round`, `runInContext`, `sample`, `shift`, `size`, `snakeCase`,
-	     * `some`, `sortedIndex`, `sortedIndexBy`, `sortedLastIndex`, `sortedLastIndexBy`,
-	     * `startCase`, `startsWith`, `subtract`, `sum`, sumBy`, `template`, `times`,
-	     * `toLower`, `toInteger`, `toLength`, `toNumber`, `toSafeInteger`, toString`,
-	     * `toUpper`, `trim`, `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`,
+	     * `findLast`, `findLastIndex`, `findLastKey`, `floor`, `forEach`, `forEachRight`,
+	     * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
+	     * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
+	     * `isArguments`, `isArray`, `isArrayLike`, `isArrayLikeObject`, `isBoolean`,
+	     * `isDate`, `isElement`, `isEmpty`, `isEqual`, `isEqualWith`, `isError`,
+	     * `isFinite`, `isFunction`, `isInteger`, `isLength`, `isMatch`, `isMatchWith`,
+	     * `isNaN`, `isNative`, `isNil`, `isNull`, `isNumber`, `isObject`, `isObjectLike`,
+	     * `isPlainObject`, `isRegExp`, `isSafeInteger`, `isString`, `isUndefined`,
+	     * `isTypedArray`, `join`, `kebabCase`, `last`, `lastIndexOf`, `lowerCase`,
+	     * `lowerFirst`, `lt`, `lte`, `max`, `maxBy`, `mean`, `min`, `minBy`,
+	     * `noConflict`, `noop`, `now`, `pad`, `padEnd`, `padStart`, `parseInt`,
+	     * `pop`, `random`, `reduce`, `reduceRight`, `repeat`, `result`, `round`,
+	     * `runInContext`, `sample`, `shift`, `size`, `snakeCase`, `some`, `sortedIndex`,
+	     * `sortedIndexBy`, `sortedLastIndex`, `sortedLastIndexBy`, `startCase`,
+	     * `startsWith`, `subtract`, `sum`, `sumBy`, `template`, `times`, `toLower`,
+	     * `toInteger`, `toLength`, `toNumber`, `toSafeInteger`, `toString`, `toUpper`,
+	     * `trim`, `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`,
 	     * `upperCase`, `upperFirst`, `value`, and `words`
 	     *
 	     * @name _
@@ -3995,11 +3965,11 @@
 	     *
 	     * var wrapped = _([1, 2, 3]);
 	     *
-	     * // returns an unwrapped value
+	     * // Returns an unwrapped value.
 	     * wrapped.reduce(_.add);
 	     * // => 6
 	     *
-	     * // returns a wrapped value
+	     * // Returns a wrapped value.
 	     * var squares = wrapped.map(square);
 	     *
 	     * _.isArray(squares);
@@ -4690,6 +4660,24 @@
 	    }
 
 	    /**
+	     * Aggregates elements of `collection` on `accumulator` with keys transformed
+	     * by `iteratee` and values set by `setter`.
+	     *
+	     * @private
+	     * @param {Array|Object} collection The collection to iterate over.
+	     * @param {Function} setter The function to set `accumulator` values.
+	     * @param {Function} iteratee The iteratee to transform keys.
+	     * @param {Object} accumulator The initial aggregated object.
+	     * @returns {Function} Returns `accumulator`.
+	     */
+	    function baseAggregator(collection, setter, iteratee, accumulator) {
+	      baseEach(collection, function(value, key, collection) {
+	        setter(accumulator, value, iteratee(value), collection);
+	      });
+	      return accumulator;
+	    }
+
+	    /**
 	     * The base implementation of `_.assign` without support for multiple sources
 	     * or `customizer` functions.
 	     *
@@ -4777,6 +4765,9 @@
 	        var tag = getTag(value),
 	            isFunc = tag == funcTag || tag == genTag;
 
+	        if (isBuffer(value)) {
+	          return cloneBuffer(value, isDeep);
+	        }
 	        if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
 	          if (isHostObject(value)) {
 	            return object ? value : {};
@@ -4862,7 +4853,7 @@
 	     * @private
 	     * @param {Function} func The function to delay.
 	     * @param {number} wait The number of milliseconds to delay invocation.
-	     * @param {Object} args The arguments provide to `func`.
+	     * @param {Object} args The arguments to provide to `func`.
 	     * @returns {number} Returns the timer id.
 	     */
 	    function baseDelay(func, wait, args) {
@@ -5107,7 +5098,7 @@
 
 	    /**
 	     * The base implementation of `_.functions` which creates an array of
-	     * `object` function property names filtered from those provided.
+	     * `object` function property names filtered from `props`.
 	     *
 	     * @private
 	     * @param {Object} object The object to inspect.
@@ -5236,9 +5227,26 @@
 	    }
 
 	    /**
+	     * The base implementation of `_.invert` and `_.invertBy` which inverts
+	     * `object` with values transformed by `iteratee` and set by `setter`.
+	     *
+	     * @private
+	     * @param {Object} object The object to iterate over.
+	     * @param {Function} setter The function to set `accumulator` values.
+	     * @param {Function} iteratee The iteratee to transform values.
+	     * @param {Object} accumulator The initial inverted object.
+	     * @returns {Function} Returns `accumulator`.
+	     */
+	    function baseInverter(object, setter, iteratee, accumulator) {
+	      baseForOwn(object, function(value, key, object) {
+	        setter(accumulator, iteratee(value), key, object);
+	      });
+	      return accumulator;
+	    }
+
+	    /**
 	     * The base implementation of `_.invoke` without support for individual
 	     * method arguments.
-	     *
 	     *
 	     * @private
 	     * @param {Object} object The object to query.
@@ -5382,7 +5390,10 @@
 	          var stack = new Stack,
 	              result = customizer ? customizer(objValue, srcValue, key, object, source, stack) : undefined;
 
-	          if (!(result === undefined ? baseIsEqual(srcValue, objValue, customizer, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG, stack) : result)) {
+	          if (!(result === undefined
+	                ? baseIsEqual(srcValue, objValue, customizer, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG, stack)
+	                : result
+	              )) {
 	            return false;
 	          }
 	        }
@@ -5518,10 +5529,11 @@
 	     * @private
 	     * @param {Object} object The destination object.
 	     * @param {Object} source The source object.
+	     * @param {number} srcIndex The index of `source`.
 	     * @param {Function} [customizer] The function to customize merged values.
 	     * @param {Object} [stack] Tracks traversed source values and their merged counterparts.
 	     */
-	    function baseMerge(object, source, customizer, stack) {
+	    function baseMerge(object, source, srcIndex, customizer, stack) {
 	      if (object === source) {
 	        return;
 	      }
@@ -5533,7 +5545,7 @@
 	        }
 	        if (isObject(srcValue)) {
 	          stack || (stack = new Stack);
-	          baseMergeDeep(object, source, key, baseMerge, customizer, stack);
+	          baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
 	        }
 	        else {
 	          var newValue = customizer ? customizer(object[key], srcValue, (key + ''), object, source, stack) : undefined;
@@ -5554,14 +5566,15 @@
 	     * @param {Object} object The destination object.
 	     * @param {Object} source The source object.
 	     * @param {string} key The key of the value to merge.
+	     * @param {number} srcIndex The index of `source`.
 	     * @param {Function} mergeFunc The function to merge values.
 	     * @param {Function} [customizer] The function to customize assigned values.
 	     * @param {Object} [stack] Tracks traversed source values and their merged counterparts.
 	     */
-	    function baseMergeDeep(object, source, key, mergeFunc, customizer, stack) {
+	    function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
 	      var objValue = object[key],
 	          srcValue = source[key],
-	          stacked = stack.get(srcValue) || stack.get(objValue);
+	          stacked = stack.get(srcValue);
 
 	      if (stacked) {
 	        assignMergeValue(object, key, stacked);
@@ -5573,24 +5586,38 @@
 	      if (isCommon) {
 	        newValue = srcValue;
 	        if (isArray(srcValue) || isTypedArray(srcValue)) {
-	          newValue = isArray(objValue)
-	            ? objValue
-	            : ((isArrayLikeObject(objValue)) ? copyArray(objValue) : baseClone(srcValue));
+	          if (isArray(objValue)) {
+	            newValue = srcIndex ? copyArray(objValue) : objValue;
+	          }
+	          else if (isArrayLikeObject(objValue)) {
+	            newValue = copyArray(objValue);
+	          }
+	          else {
+	            isCommon = false;
+	            newValue = baseClone(srcValue);
+	          }
 	        }
 	        else if (isPlainObject(srcValue) || isArguments(srcValue)) {
-	          newValue = isArguments(objValue)
-	            ? toPlainObject(objValue)
-	            : (isObject(objValue) ? objValue : baseClone(srcValue));
+	          if (isArguments(objValue)) {
+	            newValue = toPlainObject(objValue);
+	          }
+	          else if (!isObject(objValue) || (srcIndex && isFunction(objValue))) {
+	            isCommon = false;
+	            newValue = baseClone(srcValue);
+	          }
+	          else {
+	            newValue = srcIndex ? baseClone(objValue) : objValue;
+	          }
 	        }
 	        else {
-	          isCommon = isFunction(srcValue);
+	          isCommon = false;
 	        }
 	      }
 	      stack.set(srcValue, newValue);
 
 	      if (isCommon) {
 	        // Recursively merge objects and arrays (susceptible to call stack limits).
-	        mergeFunc(newValue, srcValue, customizer, stack);
+	        mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
 	      }
 	      assignMergeValue(object, key, newValue);
 	    }
@@ -5654,7 +5681,7 @@
 	    function basePickBy(object, predicate) {
 	      var result = {};
 	      baseForIn(object, function(value, key) {
-	        if (predicate(value)) {
+	        if (predicate(value, key)) {
 	          result[key] = value;
 	        }
 	      });
@@ -6177,18 +6204,58 @@
 	    }
 
 	    /**
-	     * Creates a clone of `buffer`.
+	     * This base implementation of `_.zipObject` which assigns values using `assignFunc`.
 	     *
 	     * @private
-	     * @param {ArrayBuffer} buffer The array buffer to clone.
+	     * @param {Array} props The property names.
+	     * @param {Array} values The property values.
+	     * @param {Function} assignFunc The function to assign values.
+	     * @returns {Object} Returns the new object.
+	     */
+	    function baseZipObject(props, values, assignFunc) {
+	      var index = -1,
+	          length = props.length,
+	          valsLength = values.length,
+	          result = {};
+
+	      while (++index < length) {
+	        assignFunc(result, props[index], index < valsLength ? values[index] : undefined);
+	      }
+	      return result;
+	    }
+
+	    /**
+	     * Creates a clone of  `buffer`.
+	     *
+	     * @private
+	     * @param {Buffer} buffer The buffer to clone.
+	     * @param {boolean} [isDeep] Specify a deep clone.
+	     * @returns {Buffer} Returns the cloned buffer.
+	     */
+	    function cloneBuffer(buffer, isDeep) {
+	      if (isDeep) {
+	        return buffer.slice();
+	      }
+	      var Ctor = buffer.constructor,
+	          result = new Ctor(buffer.length);
+
+	      buffer.copy(result);
+	      return result;
+	    }
+
+	    /**
+	     * Creates a clone of `arrayBuffer`.
+	     *
+	     * @private
+	     * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
 	     * @returns {ArrayBuffer} Returns the cloned array buffer.
 	     */
-	    function cloneBuffer(buffer) {
-	      var Ctor = buffer.constructor,
-	          result = new Ctor(buffer.byteLength),
+	    function cloneArrayBuffer(arrayBuffer) {
+	      var Ctor = arrayBuffer.constructor,
+	          result = new Ctor(arrayBuffer.byteLength),
 	          view = new Uint8Array(result);
 
-	      view.set(new Uint8Array(buffer));
+	      view.set(new Uint8Array(arrayBuffer));
 	      return result;
 	    }
 
@@ -6239,7 +6306,7 @@
 	     * @returns {Object} Returns the cloned symbol object.
 	     */
 	    function cloneSymbol(symbol) {
-	      return _Symbol ? Object(symbolValueOf.call(symbol)) : {};
+	      return Symbol ? Object(symbolValueOf.call(symbol)) : {};
 	    }
 
 	    /**
@@ -6254,7 +6321,7 @@
 	      var buffer = typedArray.buffer,
 	          Ctor = typedArray.constructor;
 
-	      return new Ctor(isDeep ? cloneBuffer(buffer) : buffer, typedArray.byteOffset, typedArray.length);
+	      return new Ctor(isDeep ? cloneArrayBuffer(buffer) : buffer, typedArray.byteOffset, typedArray.length);
 	    }
 
 	    /**
@@ -6393,29 +6460,16 @@
 	     * Creates a function like `_.groupBy`.
 	     *
 	     * @private
-	     * @param {Function} setter The function to set keys and values of the accumulator object.
-	     * @param {Function} [initializer] The function to initialize the accumulator object.
+	     * @param {Function} setter The function to set accumulator values.
+	     * @param {Function} [initializer] The accumulator object initializer.
 	     * @returns {Function} Returns the new aggregator function.
 	     */
 	    function createAggregator(setter, initializer) {
 	      return function(collection, iteratee) {
-	        var result = initializer ? initializer() : {};
-	        iteratee = getIteratee(iteratee);
+	        var func = isArray(collection) ? arrayAggregator : baseAggregator,
+	            accumulator = initializer ? initializer() : {};
 
-	        if (isArray(collection)) {
-	          var index = -1,
-	              length = collection.length;
-
-	          while (++index < length) {
-	            var value = collection[index];
-	            setter(result, value, iteratee(value), collection);
-	          }
-	        } else {
-	          baseEach(collection, function(value, key, collection) {
-	            setter(result, value, iteratee(value), collection);
-	          });
-	        }
-	        return result;
+	        return func(collection, setter, getIteratee(iteratee), accumulator);
 	      };
 	    }
 
@@ -6442,7 +6496,7 @@
 	        while (++index < length) {
 	          var source = sources[index];
 	          if (source) {
-	            assigner(object, source, customizer);
+	            assigner(object, source, index, customizer);
 	          }
 	        }
 	        return object;
@@ -6605,7 +6659,7 @@
 	            index = length,
 	            args = Array(length),
 	            fn = (this && this !== root && this instanceof wrapper) ? Ctor : func,
-	            placeholder = wrapper.placeholder;
+	            placeholder = lodash.placeholder || wrapper.placeholder;
 
 	        while (index--) {
 	          args[index] = arguments[index];
@@ -6721,7 +6775,7 @@
 	          args = composeArgsRight(args, partialsRight, holdersRight);
 	        }
 	        if (isCurry || isCurryRight) {
-	          var placeholder = wrapper.placeholder,
+	          var placeholder = lodash.placeholder || wrapper.placeholder,
 	              argsHolders = replaceHolders(args, placeholder);
 
 	          length -= argsHolders.length;
@@ -6746,6 +6800,20 @@
 	        return fn.apply(thisBinding, args);
 	      }
 	      return wrapper;
+	    }
+
+	    /**
+	     * Creates a function like `_.invertBy`.
+	     *
+	     * @private
+	     * @param {Function} setter The function to set accumulator values.
+	     * @param {Function} toIteratee The function to resolve iteratees.
+	     * @returns {Function} Returns the new inverter function.
+	     */
+	    function createInverter(setter, toIteratee) {
+	      return function(object, iteratee) {
+	        return baseInverter(object, setter, toIteratee(iteratee), {});
+	      };
 	    }
 
 	    /**
@@ -7127,7 +7195,7 @@
 	            equalFunc(convert(object), convert(other), customizer, bitmask | UNORDERED_COMPARE_FLAG);
 
 	        case symbolTag:
-	          return !!_Symbol && (symbolValueOf.call(object) == symbolValueOf.call(other));
+	          return !!Symbol && (symbolValueOf.call(object) == symbolValueOf.call(other));
 	      }
 	      return false;
 	    }
@@ -7147,7 +7215,6 @@
 	     */
 	    function equalObjects(object, other, equalFunc, customizer, bitmask, stack) {
 	      var isPartial = bitmask & PARTIAL_COMPARE_FLAG,
-	          isUnordered = bitmask & UNORDERED_COMPARE_FLAG,
 	          objProps = keys(object),
 	          objLength = objProps.length,
 	          othProps = keys(other),
@@ -7159,8 +7226,7 @@
 	      var index = objLength;
 	      while (index--) {
 	        var key = objProps[index];
-	        if (!(isPartial ? key in other : baseHas(other, key)) ||
-	            !(isUnordered || key == othProps[index])) {
+	        if (!(isPartial ? key in other : baseHas(other, key))) {
 	          return false;
 	        }
 	      }
@@ -7230,7 +7296,7 @@
 	    function getFuncName(func) {
 	      var result = (func.name + ''),
 	          array = realNames[result],
-	          length = array ? array.length : 0;
+	          length = hasOwnProperty.call(realNames, result) ? array.length : 0;
 
 	      while (length--) {
 	        var data = array[length],
@@ -7323,19 +7389,20 @@
 	      return objectToString.call(value);
 	    }
 
-	    // Fallback for IE 11 providing `toStringTag` values for maps and sets.
-	    if ((Map && getTag(new Map) != mapTag) || (Set && getTag(new Set) != setTag)) {
+	    // Fallback for IE 11 providing `toStringTag` values for maps, sets, and weakmaps.
+	    if ((Map && getTag(new Map) != mapTag) ||
+	        (Set && getTag(new Set) != setTag) ||
+	        (WeakMap && getTag(new WeakMap) != weakMapTag)) {
 	      getTag = function(value) {
 	        var result = objectToString.call(value),
 	            Ctor = result == objectTag ? value.constructor : null,
 	            ctorString = typeof Ctor == 'function' ? funcToString.call(Ctor) : '';
 
 	        if (ctorString) {
-	          if (ctorString == mapCtorString) {
-	            return mapTag;
-	          }
-	          if (ctorString == setCtorString) {
-	            return setTag;
+	          switch (ctorString) {
+	            case mapCtorString: return mapTag;
+	            case setCtorString: return setTag;
+	            case weakMapCtorString: return weakMapTag;
 	          }
 	        }
 	        return result;
@@ -7392,8 +7459,11 @@
 	          result = hasFunc(object, path);
 	        }
 	      }
-	      return result || (isLength(object && object.length) && isIndex(path, object.length) &&
-	        (isArray(object) || isString(object) || isArguments(object)));
+	      var length = object ? object.length : undefined;
+	      return result || (
+	        !!length && isLength(length) && isIndex(path, length) &&
+	        (isArray(object) || isString(object) || isArguments(object))
+	      );
 	    }
 
 	    /**
@@ -7423,6 +7493,9 @@
 	     * @returns {Object} Returns the initialized clone.
 	     */
 	    function initCloneObject(object) {
+	      if (isPrototype(object)) {
+	        return {};
+	      }
 	      var Ctor = object.constructor;
 	      return baseCreate(isFunction(Ctor) ? Ctor.prototype : undefined);
 	    }
@@ -7443,7 +7516,7 @@
 	      var Ctor = object.constructor;
 	      switch (tag) {
 	        case arrayBufferTag:
-	          return cloneBuffer(object);
+	          return cloneArrayBuffer(object);
 
 	        case boolTag:
 	        case dateTag:
@@ -7482,13 +7555,15 @@
 	     */
 	    function indexKeys(object) {
 	      var length = object ? object.length : undefined;
-	      return (isLength(length) && (isArray(object) || isString(object) || isArguments(object)))
-	        ? baseTimes(length, String)
-	        : null;
+	      if (isLength(length) &&
+	          (isArray(object) || isString(object) || isArguments(object))) {
+	        return baseTimes(length, String);
+	      }
+	      return null;
 	    }
 
 	    /**
-	     * Checks if the provided arguments are from an iteratee call.
+	     * Checks if the given arguments are from an iteratee call.
 	     *
 	     * @private
 	     * @param {*} value The potential iteratee value argument.
@@ -7671,9 +7746,9 @@
 	    function mergeDefaults(objValue, srcValue, key, object, source, stack) {
 	      if (isObject(objValue) && isObject(srcValue)) {
 	        stack.set(srcValue, objValue);
-	        baseMerge(objValue, srcValue, mergeDefaults, stack);
+	        baseMerge(objValue, srcValue, undefined, mergeDefaults, stack);
 	      }
-	      return objValue === undefined ? baseClone(srcValue) : objValue;
+	      return objValue;
 	    }
 
 	    /**
@@ -7887,13 +7962,16 @@
 	     * // => [1]
 	     */
 	    var concat = rest(function(array, values) {
+	      if (!isArray(array)) {
+	        array = array == null ? [] : [Object(array)];
+	      }
 	      values = baseFlatten(values);
-	      return arrayConcat(isArray(array) ? array : [Object(array)], values);
+	      return arrayConcat(array, values);
 	    });
 
 	    /**
 	     * Creates an array of unique `array` values not included in the other
-	     * provided arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	     * given arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons.
 	     *
 	     * @static
@@ -7930,7 +8008,7 @@
 	     * _.differenceBy([3.1, 2.2, 1.3], [4.4, 2.5], Math.floor);
 	     * // => [3.1, 1.3]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.differenceBy([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x');
 	     * // => [{ 'x': 2 }]
 	     */
@@ -8062,15 +8140,15 @@
 	     * _.dropRightWhile(users, function(o) { return !o.active; });
 	     * // => objects for ['barney']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.dropRightWhile(users, { 'user': 'pebbles', 'active': false });
 	     * // => objects for ['barney', 'fred']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.dropRightWhile(users, ['active', false]);
 	     * // => objects for ['barney']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.dropRightWhile(users, 'active');
 	     * // => objects for ['barney', 'fred', 'pebbles']
 	     */
@@ -8102,15 +8180,15 @@
 	     * _.dropWhile(users, function(o) { return !o.active; });
 	     * // => objects for ['pebbles']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.dropWhile(users, { 'user': 'barney', 'active': false });
 	     * // => objects for ['fred', 'pebbles']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.dropWhile(users, ['active', false]);
 	     * // => objects for ['pebbles']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.dropWhile(users, 'active');
 	     * // => objects for ['barney', 'fred', 'pebbles']
 	     */
@@ -8181,15 +8259,15 @@
 	     * _.findIndex(users, function(o) { return o.user == 'barney'; });
 	     * // => 0
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.findIndex(users, { 'user': 'fred', 'active': false });
 	     * // => 1
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.findIndex(users, ['active', false]);
 	     * // => 0
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.findIndex(users, 'active');
 	     * // => 2
 	     */
@@ -8220,15 +8298,15 @@
 	     * _.findLastIndex(users, function(o) { return o.user == 'pebbles'; });
 	     * // => 2
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.findLastIndex(users, { 'user': 'barney', 'active': true });
 	     * // => 0
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.findLastIndex(users, ['active', false]);
 	     * // => 2
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.findLastIndex(users, 'active');
 	     * // => 0
 	     */
@@ -8236,31 +8314,6 @@
 	      return (array && array.length)
 	        ? baseFindIndex(array, getIteratee(predicate, 3), true)
 	        : -1;
-	    }
-
-	    /**
-	     * Creates an array of flattened values by running each element in `array`
-	     * through `iteratee` and concating its result to the other mapped values.
-	     * The iteratee is invoked with three arguments: (value, index|key, array).
-	     *
-	     * @static
-	     * @memberOf _
-	     * @category Array
-	     * @param {Array} array The array to iterate over.
-	     * @param {Function|Object|string} [iteratee=_.identity] The function invoked per iteration.
-	     * @returns {Array} Returns the new array.
-	     * @example
-	     *
-	     * function duplicate(n) {
-	     *   return [n, n];
-	     * }
-	     *
-	     * _.flatMap([1, 2], duplicate);
-	     * // => [1, 1, 2, 2]
-	     */
-	    function flatMap(array, iteratee) {
-	      var length = array ? array.length : 0;
-	      return length ? baseFlatten(arrayMap(array, getIteratee(iteratee, 3))) : [];
 	    }
 
 	    /**
@@ -8320,7 +8373,7 @@
 
 	      while (++index < length) {
 	        var pair = pairs[index];
-	        baseSet(result, pair[0], pair[1]);
+	        result[pair[0]] = pair[1];
 	      }
 	      return result;
 	    }
@@ -8350,8 +8403,7 @@
 	     * Gets the index at which the first occurrence of `value` is found in `array`
 	     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons. If `fromIndex` is negative, it's used as the offset
-	     * from the end of `array`. If `array` is sorted providing `true` for `fromIndex`
-	     * performs a faster binary search.
+	     * from the end of `array`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -8365,7 +8417,7 @@
 	     * _.indexOf([1, 2, 1, 2], 2);
 	     * // => 1
 	     *
-	     * // using `fromIndex`
+	     * // Search from the `fromIndex`.
 	     * _.indexOf([1, 2, 1, 2], 2, 2);
 	     * // => 3
 	     */
@@ -8399,8 +8451,8 @@
 	    }
 
 	    /**
-	     * Creates an array of unique values that are included in all of the provided
-	     * arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	     * Creates an array of unique values that are included in all given arrays
+	     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons.
 	     *
 	     * @static
@@ -8409,6 +8461,7 @@
 	     * @param {...Array} [arrays] The arrays to inspect.
 	     * @returns {Array} Returns the new array of shared values.
 	     * @example
+	     *
 	     * _.intersection([2, 1], [4, 2], [1, 2]);
 	     * // => [2]
 	     */
@@ -8435,7 +8488,7 @@
 	     * _.intersectionBy([2.1, 1.2], [4.3, 2.4], Math.floor);
 	     * // => [2.1]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.intersectionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
 	     * // => [{ 'x': 1 }]
 	     */
@@ -8538,7 +8591,7 @@
 	     * _.lastIndexOf([1, 2, 1, 2], 2);
 	     * // => 3
 	     *
-	     * // using `fromIndex`
+	     * // Search from the `fromIndex`.
 	     * _.lastIndexOf([1, 2, 1, 2], 2, 2);
 	     * // => 1
 	     */
@@ -8564,7 +8617,7 @@
 	    }
 
 	    /**
-	     * Removes all provided values from `array` using
+	     * Removes all given values from `array` using
 	     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons.
 	     *
@@ -8601,7 +8654,7 @@
 	     *
 	     * var array = [1, 2, 3, 1, 2, 3];
 	     *
-	     * _.pull(array, [2, 3]);
+	     * _.pullAll(array, [2, 3]);
 	     * console.log(array);
 	     * // => [1, 1]
 	     */
@@ -8613,7 +8666,7 @@
 
 	    /**
 	     * This method is like `_.pullAll` except that it accepts `iteratee` which is
-	     * invoked for each element of `array` and `values` to to generate the criterion
+	     * invoked for each element of `array` and `values` to generate the criterion
 	     * by which uniqueness is computed. The iteratee is invoked with one argument: (value).
 	     *
 	     * **Note:** Unlike `_.differenceBy`, this method mutates `array`.
@@ -8725,6 +8778,7 @@
 	     * **Note:** This method mutates `array` and is based on
 	     * [`Array#reverse`](https://mdn.io/Array/reverse).
 	     *
+	     * @static
 	     * @memberOf _
 	     * @category Array
 	     * @returns {Array} Returns `array`.
@@ -8813,7 +8867,7 @@
 	     * _.sortedIndexBy(['thirty', 'fifty'], 'forty', _.propertyOf(dict));
 	     * // => 1
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.sortedIndexBy([{ 'x': 4 }, { 'x': 5 }], { 'x': 4 }, 'x');
 	     * // => 0
 	     */
@@ -8881,7 +8935,7 @@
 	     * @returns {number} Returns the index at which `value` should be inserted into `array`.
 	     * @example
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.sortedLastIndexBy([{ 'x': 4 }, { 'x': 5 }], { 'x': 4 }, 'x');
 	     * // => 1
 	     */
@@ -8948,7 +9002,7 @@
 	     * @example
 	     *
 	     * _.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.floor);
-	     * // => [1.1, 2.2]
+	     * // => [1.1, 2.3]
 	     */
 	    function sortedUniqBy(array, iteratee) {
 	      return (array && array.length)
@@ -9061,15 +9115,15 @@
 	     * _.takeRightWhile(users, function(o) { return !o.active; });
 	     * // => objects for ['fred', 'pebbles']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.takeRightWhile(users, { 'user': 'pebbles', 'active': false });
 	     * // => objects for ['pebbles']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.takeRightWhile(users, ['active', false]);
 	     * // => objects for ['fred', 'pebbles']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.takeRightWhile(users, 'active');
 	     * // => []
 	     */
@@ -9101,15 +9155,15 @@
 	     * _.takeWhile(users, function(o) { return !o.active; });
 	     * // => objects for ['barney', 'fred']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.takeWhile(users, { 'user': 'barney', 'active': false });
 	     * // => objects for ['barney']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.takeWhile(users, ['active', false]);
 	     * // => objects for ['barney', 'fred']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.takeWhile(users, 'active');
 	     * // => []
 	     */
@@ -9120,8 +9174,8 @@
 	    }
 
 	    /**
-	     * Creates an array of unique values, in order, from all of the provided arrays
-	     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	     * Creates an array of unique values, in order, from all given arrays using
+	     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons.
 	     *
 	     * @static
@@ -9154,7 +9208,7 @@
 	     * _.unionBy([2.1, 1.2], [4.3, 2.4], Math.floor);
 	     * // => [2.1, 1.2, 4.3]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.unionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
 	     * // => [{ 'x': 1 }, { 'x': 2 }]
 	     */
@@ -9231,7 +9285,7 @@
 	     * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
 	     * // => [2.1, 1.2]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.uniqBy([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x');
 	     * // => [{ 'x': 1 }, { 'x': 2 }]
 	     */
@@ -9332,7 +9386,7 @@
 	    }
 
 	    /**
-	     * Creates an array excluding all provided values using
+	     * Creates an array excluding all given values using
 	     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	     * for equality comparisons.
 	     *
@@ -9355,7 +9409,7 @@
 
 	    /**
 	     * Creates an array of unique values that is the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
-	     * of the provided arrays.
+	     * of the given arrays.
 	     *
 	     * @static
 	     * @memberOf _
@@ -9387,7 +9441,7 @@
 	     * _.xorBy([2.1, 1.2], [4.3, 2.4], Math.floor);
 	     * // => [1.2, 4.3]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.xorBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
 	     * // => [{ 'x': 2 }]
 	     */
@@ -9455,19 +9509,29 @@
 	     * @returns {Object} Returns the new object.
 	     * @example
 	     *
-	     * _.zipObject(['fred', 'barney'], [30, 40]);
-	     * // => { 'fred': 30, 'barney': 40 }
+	     * _.zipObject(['a', 'b'], [1, 2]);
+	     * // => { 'a': 1, 'b': 2 }
 	     */
 	    function zipObject(props, values) {
-	      var index = -1,
-	          length = props ? props.length : 0,
-	          valsLength = values ? values.length : 0,
-	          result = {};
+	      return baseZipObject(props || [], values || [], assignValue);
+	    }
 
-	      while (++index < length) {
-	        baseSet(result, props[index], index < valsLength ? values[index] : undefined);
-	      }
-	      return result;
+	    /**
+	     * This method is like `_.zipObject` except that it supports property paths.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Array
+	     * @param {Array} [props=[]] The property names.
+	     * @param {Array} [values=[]] The property values.
+	     * @returns {Object} Returns the new object.
+	     * @example
+	     *
+	     * _.zipObjectDeep(['a.b[0].c', 'a.b[1].d'], [1, 2]);
+	     * // => { 'a': { 'b': [{ 'c': 1 }, { 'd': 2 }] } }
+	     */
+	    function zipObjectDeep(props, values) {
+	      return baseZipObject(props || [], values || [], baseSet);
 	    }
 
 	    /**
@@ -9532,10 +9596,9 @@
 	    }
 
 	    /**
-	     * This method invokes `interceptor` and returns `value`. The interceptor is
-	     * invoked with one argument; (value). The purpose of this method is to "tap into"
-	     * a method chain in order to perform operations on intermediate results within
-	     * the chain.
+	     * This method invokes `interceptor` and returns `value`. The interceptor
+	     * is invoked with one argument; (value). The purpose of this method is to
+	     * "tap into" a method chain in order to modify intermediate results.
 	     *
 	     * @static
 	     * @memberOf _
@@ -9547,6 +9610,7 @@
 	     *
 	     * _([1, 2, 3])
 	     *  .tap(function(array) {
+	     *    // Mutate input array.
 	     *    array.pop();
 	     *  })
 	     *  .reverse()
@@ -9560,6 +9624,8 @@
 
 	    /**
 	     * This method is like `_.tap` except that it returns the result of `interceptor`.
+	     * The purpose of this method is to "pass thru" values replacing intermediate
+	     * results in a method chain.
 	     *
 	     * @static
 	     * @memberOf _
@@ -9635,11 +9701,11 @@
 	     *   { 'user': 'fred',   'age': 40 }
 	     * ];
 	     *
-	     * // without explicit chaining
+	     * // A sequence without explicit chaining.
 	     * _(users).head();
 	     * // => { 'user': 'barney', 'age': 36 }
 	     *
-	     * // with explicit chaining
+	     * // A sequence with explicit chaining.
 	     * _(users)
 	     *   .chain()
 	     *   .head()
@@ -9683,7 +9749,7 @@
 	    /**
 	     * This method is the wrapper version of `_.flatMap`.
 	     *
-	     * @static
+	     * @name flatMap
 	     * @memberOf _
 	     * @category Seq
 	     * @param {Function|Object|string} [iteratee=_.identity] The function invoked per iteration.
@@ -9834,7 +9900,7 @@
 	     *
 	     * @name value
 	     * @memberOf _
-	     * @alias run, toJSON, valueOf
+	     * @alias toJSON, valueOf
 	     * @category Seq
 	     * @returns {*} Returns the resolved unwrapped value.
 	     * @example
@@ -9858,7 +9924,7 @@
 	     * @memberOf _
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee invoked per element.
+	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
@@ -9894,15 +9960,15 @@
 	     *   { 'user': 'fred',   'active': false }
 	     * ];
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.every(users, { 'user': 'barney', 'active': false });
 	     * // => false
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.every(users, ['active', false]);
 	     * // => true
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.every(users, 'active');
 	     * // => false
 	     */
@@ -9935,15 +10001,15 @@
 	     * _.filter(users, function(o) { return !o.active; });
 	     * // => objects for ['fred']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.filter(users, { 'age': 36, 'active': true });
 	     * // => objects for ['barney']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.filter(users, ['active', false]);
 	     * // => objects for ['fred']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.filter(users, 'active');
 	     * // => objects for ['barney']
 	     */
@@ -9974,15 +10040,15 @@
 	     * _.find(users, function(o) { return o.age < 40; });
 	     * // => object for 'barney'
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.find(users, { 'age': 1, 'active': true });
 	     * // => object for 'pebbles'
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.find(users, ['active', false]);
 	     * // => object for 'fred'
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.find(users, 'active');
 	     * // => object for 'barney'
 	     */
@@ -10019,6 +10085,30 @@
 	        return index > -1 ? collection[index] : undefined;
 	      }
 	      return baseFind(collection, predicate, baseEachRight);
+	    }
+
+	    /**
+	     * Creates an array of flattened values by running each element in `collection`
+	     * through `iteratee` and concating its result to the other mapped values.
+	     * The iteratee is invoked with three arguments: (value, index|key, collection).
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Collection
+	     * @param {Array|Object} collection The collection to iterate over.
+	     * @param {Function|Object|string} [iteratee=_.identity] The function invoked per iteration.
+	     * @returns {Array} Returns the new flattened array.
+	     * @example
+	     *
+	     * function duplicate(n) {
+	     *   return [n, n];
+	     * }
+	     *
+	     * _.flatMap([1, 2], duplicate);
+	     * // => [1, 1, 2, 2]
+	     */
+	    function flatMap(collection, iteratee) {
+	      return baseFlatten(map(collection, iteratee));
 	    }
 
 	    /**
@@ -10082,21 +10172,21 @@
 	    /**
 	     * Creates an object composed of keys generated from the results of running
 	     * each element of `collection` through `iteratee`. The corresponding value
-	     * of each key is an array of the elements responsible for generating the key.
+	     * of each key is an array of elements responsible for generating the key.
 	     * The iteratee is invoked with one argument: (value).
 	     *
 	     * @static
 	     * @memberOf _
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee invoked per element.
+	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
 	     * _.groupBy([6.1, 4.2, 6.3], Math.floor);
 	     * // => { '4': [4.2], '6': [6.1, 6.3] }
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.groupBy(['one', 'two', 'three'], 'length');
 	     * // => { '3': ['one', 'two'], '5': ['three'] }
 	     */
@@ -10194,22 +10284,22 @@
 	     * @memberOf _
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee invoked per element.
+	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
-	     * var keyData = [
+	     * var array = [
 	     *   { 'dir': 'left', 'code': 97 },
 	     *   { 'dir': 'right', 'code': 100 }
 	     * ];
 	     *
-	     * _.keyBy(keyData, 'dir');
-	     * // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
-	     *
-	     * _.keyBy(keyData, function(o) {
+	     * _.keyBy(array, function(o) {
 	     *   return String.fromCharCode(o.code);
 	     * });
 	     * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
+	     *
+	     * _.keyBy(array, 'dir');
+	     * // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
 	     */
 	    var keyBy = createAggregator(function(result, value, key) {
 	      result[key] = value;
@@ -10241,18 +10331,18 @@
 	     *   return n * n;
 	     * }
 	     *
-	     * _.map([1, 2], square);
-	     * // => [3, 6]
+	     * _.map([4, 8], square);
+	     * // => [16, 64]
 	     *
-	     * _.map({ 'a': 1, 'b': 2 }, square);
-	     * // => [3, 6] (iteration order is not guaranteed)
+	     * _.map({ 'a': 4, 'b': 8 }, square);
+	     * // => [16, 64] (iteration order is not guaranteed)
 	     *
 	     * var users = [
 	     *   { 'user': 'barney' },
 	     *   { 'user': 'fred' }
 	     * ];
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.map(users, 'user');
 	     * // => ['barney', 'fred']
 	     */
@@ -10284,7 +10374,7 @@
 	     *   { 'user': 'barney', 'age': 36 }
 	     * ];
 	     *
-	     * // sort by `user` in ascending order and by `age` in descending order
+	     * // Sort by `user` in ascending order and by `age` in descending order.
 	     * _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
 	     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
 	     */
@@ -10304,9 +10394,9 @@
 
 	    /**
 	     * Creates an array of elements split into two groups, the first of which
-	     * contains elements `predicate` returns truthy for, while the second of which
-	     * contains elements `predicate` returns falsey for. The predicate is invoked
-	     * with three arguments: (value, index|key, collection).
+	     * contains elements `predicate` returns truthy for, the second of which
+	     * contains elements `predicate` returns falsey for. The predicate is
+	     * invoked with one argument: (value).
 	     *
 	     * @static
 	     * @memberOf _
@@ -10325,15 +10415,15 @@
 	     * _.partition(users, function(o) { return o.active; });
 	     * // => objects for [['fred'], ['barney', 'pebbles']]
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.partition(users, { 'age': 1, 'active': false });
 	     * // => objects for [['pebbles'], ['barney', 'fred']]
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.partition(users, ['active', false]);
 	     * // => objects for [['barney', 'pebbles'], ['fred']]
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.partition(users, 'active');
 	     * // => objects for [['fred'], ['barney', 'pebbles']]
 	     */
@@ -10345,7 +10435,7 @@
 	     * Reduces `collection` to a value which is the accumulated result of running
 	     * each element in `collection` through `iteratee`, where each successive
 	     * invocation is supplied the return value of the previous. If `accumulator`
-	     * is not provided the first element of `collection` is used as the initial
+	     * is not given the first element of `collection` is used as the initial
 	     * value. The iteratee is invoked with four arguments:
 	     * (accumulator, value, index|key, collection).
 	     *
@@ -10367,7 +10457,7 @@
 	     *
 	     * _.reduce([1, 2], function(sum, n) {
 	     *   return sum + n;
-	     * });
+	     * }, 0);
 	     * // => 3
 	     *
 	     * _.reduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
@@ -10378,9 +10468,9 @@
 	     */
 	    function reduce(collection, iteratee, accumulator) {
 	      var func = isArray(collection) ? arrayReduce : baseReduce,
-	          initFromCollection = arguments.length < 3;
+	          initAccum = arguments.length < 3;
 
-	      return func(collection, getIteratee(iteratee, 4), accumulator, initFromCollection, baseEach);
+	      return func(collection, getIteratee(iteratee, 4), accumulator, initAccum, baseEach);
 	    }
 
 	    /**
@@ -10405,9 +10495,9 @@
 	     */
 	    function reduceRight(collection, iteratee, accumulator) {
 	      var func = isArray(collection) ? arrayReduceRight : baseReduce,
-	          initFromCollection = arguments.length < 3;
+	          initAccum = arguments.length < 3;
 
-	      return func(collection, getIteratee(iteratee, 4), accumulator, initFromCollection, baseEachRight);
+	      return func(collection, getIteratee(iteratee, 4), accumulator, initAccum, baseEachRight);
 	    }
 
 	    /**
@@ -10430,15 +10520,15 @@
 	     * _.reject(users, function(o) { return !o.active; });
 	     * // => objects for ['fred']
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.reject(users, { 'age': 40, 'active': true });
 	     * // => objects for ['barney']
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.reject(users, ['active', false]);
 	     * // => objects for ['fred']
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.reject(users, 'active');
 	     * // => objects for ['barney']
 	     */
@@ -10471,7 +10561,8 @@
 	    }
 
 	    /**
-	     * Gets `n` random elements from `collection`.
+	     * Gets `n` random elements at unique keys from `collection` up to the
+	     * size of `collection`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -10481,8 +10572,11 @@
 	     * @returns {Array} Returns the random elements.
 	     * @example
 	     *
-	     * _.sampleSize([1, 2, 3, 4], 2);
+	     * _.sampleSize([1, 2, 3], 2);
 	     * // => [3, 1]
+	     *
+	     * _.sampleSize([1, 2, 3], 4);
+	     * // => [2, 3, 1]
 	     */
 	    function sampleSize(collection, n) {
 	      var index = -1,
@@ -10573,15 +10667,15 @@
 	     *   { 'user': 'fred',   'active': false }
 	     * ];
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.some(users, { 'user': 'barney', 'active': false });
 	     * // => false
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.some(users, ['active', false]);
 	     * // => true
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.some(users, 'active');
 	     * // => true
 	     */
@@ -10781,7 +10875,7 @@
 	     * bound('!');
 	     * // => 'hi fred!'
 	     *
-	     * // using placeholders
+	     * // Bound with placeholders.
 	     * var bound = _.bind(greet, object, _, '!');
 	     * bound('hi');
 	     * // => 'hi fred!'
@@ -10789,7 +10883,9 @@
 	    var bind = rest(function(func, thisArg, partials) {
 	      var bitmask = BIND_FLAG;
 	      if (partials.length) {
-	        var holders = replaceHolders(partials, bind.placeholder);
+	        var placeholder = lodash.placeholder || bind.placeholder,
+	            holders = replaceHolders(partials, placeholder);
+
 	        bitmask |= PARTIAL_FLAG;
 	      }
 	      return createWrapper(func, bitmask, thisArg, partials, holders);
@@ -10834,7 +10930,7 @@
 	     * bound('!');
 	     * // => 'hiya fred!'
 	     *
-	     * // using placeholders
+	     * // Bound with placeholders.
 	     * var bound = _.bindKey(object, 'greet', _, '!');
 	     * bound('hi');
 	     * // => 'hiya fred!'
@@ -10842,7 +10938,9 @@
 	    var bindKey = rest(function(object, key, partials) {
 	      var bitmask = BIND_FLAG | BIND_KEY_FLAG;
 	      if (partials.length) {
-	        var holders = replaceHolders(partials, bindKey.placeholder);
+	        var placeholder = lodash.placeholder || bindKey.placeholder,
+	            holders = replaceHolders(partials, placeholder);
+
 	        bitmask |= PARTIAL_FLAG;
 	      }
 	      return createWrapper(key, bitmask, object, partials, holders);
@@ -10884,14 +10982,14 @@
 	     * curried(1, 2, 3);
 	     * // => [1, 2, 3]
 	     *
-	     * // using placeholders
+	     * // Curried with placeholders.
 	     * curried(1)(_, 3)(2);
 	     * // => [1, 2, 3]
 	     */
 	    function curry(func, arity, guard) {
 	      arity = guard ? undefined : arity;
 	      var result = createWrapper(func, CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
-	      result.placeholder = curry.placeholder;
+	      result.placeholder = lodash.placeholder || curry.placeholder;
 	      return result;
 	    }
 
@@ -10928,14 +11026,14 @@
 	     * curried(1, 2, 3);
 	     * // => [1, 2, 3]
 	     *
-	     * // using placeholders
+	     * // Curried with placeholders.
 	     * curried(3)(1, _)(2);
 	     * // => [1, 2, 3]
 	     */
 	    function curryRight(func, arity, guard) {
 	      arity = guard ? undefined : arity;
 	      var result = createWrapper(func, CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
-	      result.placeholder = curryRight.placeholder;
+	      result.placeholder = lodash.placeholder || curryRight.placeholder;
 	      return result;
 	    }
 
@@ -10950,7 +11048,7 @@
 	     * to the debounced function return the result of the last `func` invocation.
 	     *
 	     * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
-	     * on the trailing edge of the timeout only if the the debounced function is
+	     * on the trailing edge of the timeout only if the debounced function is
 	     * invoked more than once during the `wait` timeout.
 	     *
 	     * See [David Corbacho's article](http://drupalmotion.com/article/debounce-and-throttle-visual-explanation)
@@ -10971,21 +11069,21 @@
 	     * @returns {Function} Returns the new debounced function.
 	     * @example
 	     *
-	     * // avoid costly calculations while the window size is in flux
+	     * // Avoid costly calculations while the window size is in flux.
 	     * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
 	     *
-	     * // invoke `sendMail` when clicked, debouncing subsequent calls
+	     * // Invoke `sendMail` when clicked, debouncing subsequent calls.
 	     * jQuery(element).on('click', _.debounce(sendMail, 300, {
 	     *   'leading': true,
 	     *   'trailing': false
 	     * }));
 	     *
-	     * // ensure `batchLog` is invoked once after 1 second of debounced calls
+	     * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
 	     * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
 	     * var source = new EventSource('/stream');
 	     * jQuery(source).on('message', debounced);
 	     *
-	     * // cancel a trailing debounced invocation
+	     * // Cancel the trailing debounced invocation.
 	     * jQuery(window).on('popstate', debounced.cancel);
 	     */
 	    function debounce(func, wait, options) {
@@ -11066,7 +11164,7 @@
 	        if (maxWait === false) {
 	          var leadingCall = leading && !timeoutId;
 	        } else {
-	          if (!maxTimeoutId && !leading) {
+	          if (!lastCalled && !maxTimeoutId && !leading) {
 	            lastCalled = stamp;
 	          }
 	          var remaining = maxWait - (stamp - lastCalled),
@@ -11118,7 +11216,7 @@
 	     * _.defer(function(text) {
 	     *   console.log(text);
 	     * }, 'deferred');
-	     * // logs 'deferred' after one or more milliseconds
+	     * // => logs 'deferred' after one or more milliseconds
 	     */
 	    var defer = rest(function(func, args) {
 	      return baseDelay(func, 1, args);
@@ -11201,12 +11299,12 @@
 	     * values(object);
 	     * // => [1, 2]
 	     *
-	     * // modifying the result cache
+	     * // Modify the result cache.
 	     * values.cache.set(object, ['a', 'b']);
 	     * values(object);
 	     * // => ['a', 'b']
 	     *
-	     * // replacing `_.memoize.Cache`
+	     * // Replace `_.memoize.Cache`.
 	     * _.memoize.Cache = WeakMap;
 	     */
 	    function memoize(func, resolver) {
@@ -11351,13 +11449,15 @@
 	     * sayHelloTo('fred');
 	     * // => 'hello fred'
 	     *
-	     * // using placeholders
+	     * // Partially applied with placeholders.
 	     * var greetFred = _.partial(greet, _, 'fred');
 	     * greetFred('hi');
 	     * // => 'hi fred'
 	     */
 	    var partial = rest(function(func, partials) {
-	      var holders = replaceHolders(partials, partial.placeholder);
+	      var placeholder = lodash.placeholder || partial.placeholder,
+	          holders = replaceHolders(partials, placeholder);
+
 	      return createWrapper(func, PARTIAL_FLAG, undefined, partials, holders);
 	    });
 
@@ -11387,13 +11487,15 @@
 	     * greetFred('hi');
 	     * // => 'hi fred'
 	     *
-	     * // using placeholders
+	     * // Partially applied with placeholders.
 	     * var sayHelloTo = _.partialRight(greet, 'hello', _);
 	     * sayHelloTo('fred');
 	     * // => 'hello fred'
 	     */
 	    var partialRight = rest(function(func, partials) {
-	      var holders = replaceHolders(partials, partialRight.placeholder);
+	      var placeholder = lodash.placeholder || partialRight.placeholder,
+	          holders = replaceHolders(partials, placeholder);
+
 	      return createWrapper(func, PARTIAL_RIGHT_FLAG, undefined, partials, holders);
 	    });
 
@@ -11484,6 +11586,7 @@
 	     * @memberOf _
 	     * @category Function
 	     * @param {Function} func The function to spread arguments over.
+	     * @param {number} [start=0] The start position of the spread.
 	     * @returns {Function} Returns the new function.
 	     * @example
 	     *
@@ -11494,7 +11597,6 @@
 	     * say(['fred', 'hello']);
 	     * // => 'fred says hello'
 	     *
-	     * // with a Promise
 	     * var numbers = Promise.all([
 	     *   Promise.resolve(40),
 	     *   Promise.resolve(36)
@@ -11505,13 +11607,20 @@
 	     * }));
 	     * // => a Promise of 76
 	     */
-	    function spread(func) {
+	    function spread(func, start) {
 	      if (typeof func != 'function') {
 	        throw new TypeError(FUNC_ERROR_TEXT);
 	      }
-	      return function(array) {
-	        return apply(func, this, array);
-	      };
+	      start = start === undefined ? 0 : nativeMax(toInteger(start), 0);
+	      return rest(function(args) {
+	        var array = args[start],
+	            otherArgs = args.slice(0, start);
+
+	        if (array) {
+	          arrayPush(otherArgs, array);
+	        }
+	        return apply(func, this, otherArgs);
+	      });
 	    }
 
 	    /**
@@ -11525,7 +11634,7 @@
 	     * result of the last `func` invocation.
 	     *
 	     * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
-	     * on the trailing edge of the timeout only if the the throttled function is
+	     * on the trailing edge of the timeout only if the throttled function is
 	     * invoked more than once during the `wait` timeout.
 	     *
 	     * See [David Corbacho's article](http://drupalmotion.com/article/debounce-and-throttle-visual-explanation)
@@ -11544,14 +11653,14 @@
 	     * @returns {Function} Returns the new throttled function.
 	     * @example
 	     *
-	     * // avoid excessively updating the position while scrolling
+	     * // Avoid excessively updating the position while scrolling.
 	     * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
 	     *
-	     * // invoke `renewToken` when the click event is fired, but not more than once every 5 minutes
+	     * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
 	     * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
 	     * jQuery(element).on('click', throttled);
 	     *
-	     * // cancel a trailing throttled invocation
+	     * // Cancel the trailing throttled invocation.
 	     * jQuery(window).on('popstate', throttled.cancel);
 	     */
 	    function throttle(func, wait, options) {
@@ -11646,7 +11755,7 @@
 	     * This method is like `_.clone` except that it accepts `customizer` which
 	     * is invoked to produce the cloned value. If `customizer` returns `undefined`
 	     * cloning is handled by the method instead. The `customizer` is invoked with
-	     * up to five arguments; (value [, index|key, object, stack]).
+	     * up to four arguments; (value [, index|key, object, stack]).
 	     *
 	     * @static
 	     * @memberOf _
@@ -11662,7 +11771,7 @@
 	     *   }
 	     * }
 	     *
-	     * var el = _.clone(document.body, customizer);
+	     * var el = _.cloneWith(document.body, customizer);
 	     *
 	     * console.log(el === document.body);
 	     * // => false
@@ -11712,7 +11821,7 @@
 	     *   }
 	     * }
 	     *
-	     * var el = _.cloneDeep(document.body, customizer);
+	     * var el = _.cloneDeepWith(document.body, customizer);
 	     *
 	     * console.log(el === document.body);
 	     * // => false
@@ -11855,6 +11964,27 @@
 	    var isArray = Array.isArray;
 
 	    /**
+	     * Checks if `value` is classified as an `ArrayBuffer` object.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @type Function
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	     * @example
+	     *
+	     * _.isArrayBuffer(new ArrayBuffer(2));
+	     * // => true
+	     *
+	     * _.isArrayBuffer(new Array(2));
+	     * // => false
+	     */
+	    function isArrayBuffer(value) {
+	      return isObjectLike(value) && objectToString.call(value) == arrayBufferTag;
+	    }
+
+	    /**
 	     * Checks if `value` is array-like. A value is considered array-like if it's
 	     * not a function and has a `value.length` that's an integer greater than or
 	     * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
@@ -11934,6 +12064,26 @@
 	    }
 
 	    /**
+	     * Checks if `value` is a buffer.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+	     * @example
+	     *
+	     * _.isBuffer(new Buffer(2));
+	     * // => true
+	     *
+	     * _.isBuffer(new Uint8Array(2));
+	     * // => false
+	     */
+	    var isBuffer = !Buffer ? constant(false) : function(value) {
+	      return value instanceof Buffer;
+	    };
+
+	    /**
 	     * Checks if `value` is classified as a `Date` object.
 	     *
 	     * @static
@@ -12001,9 +12151,16 @@
 	     * // => false
 	     */
 	    function isEmpty(value) {
-	      return (!isObjectLike(value) || isFunction(value.splice))
-	        ? !size(value)
-	        : !keys(value).length;
+	      if (isArrayLike(value) &&
+	          (isArray(value) || isString(value) || isFunction(value.splice) || isArguments(value))) {
+	        return !value.length;
+	      }
+	      for (var key in value) {
+	        if (hasOwnProperty.call(value, key)) {
+	          return false;
+	        }
+	      }
+	      return true;
 	    }
 
 	    /**
@@ -12040,7 +12197,7 @@
 	    /**
 	     * This method is like `_.isEqual` except that it accepts `customizer` which is
 	     * invoked to compare values. If `customizer` returns `undefined` comparisons are
-	     * handled by the method instead. The `customizer` is invoked with up to seven arguments:
+	     * handled by the method instead. The `customizer` is invoked with up to six arguments:
 	     * (objValue, othValue [, index|key, object, other, stack]).
 	     *
 	     * @static
@@ -12228,8 +12385,6 @@
 	     * // => false
 	     */
 	    function isObject(value) {
-	      // Avoid a V8 JIT bug in Chrome 19-20.
-	      // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
 	      var type = typeof value;
 	      return !!value && (type == 'object' || type == 'function');
 	    }
@@ -12262,6 +12417,26 @@
 	    }
 
 	    /**
+	     * Checks if `value` is classified as a `Map` object.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	     * @example
+	     *
+	     * _.isMap(new Map);
+	     * // => true
+	     *
+	     * _.isMap(new WeakMap);
+	     * // => false
+	     */
+	    function isMap(value) {
+	      return isObjectLike(value) && getTag(value) == mapTag;
+	    }
+
+	    /**
 	     * Performs a deep comparison between `object` and `source` to determine if
 	     * `object` contains equivalent property values.
 	     *
@@ -12290,7 +12465,7 @@
 	    /**
 	     * This method is like `_.isMatch` except that it accepts `customizer` which
 	     * is invoked to compare values. If `customizer` returns `undefined` comparisons
-	     * are handled by the method instead. The `customizer` is invoked with three
+	     * are handled by the method instead. The `customizer` is invoked with five
 	     * arguments: (objValue, srcValue, index|key, object, source).
 	     *
 	     * @static
@@ -12547,6 +12722,26 @@
 	    }
 
 	    /**
+	     * Checks if `value` is classified as a `Set` object.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	     * @example
+	     *
+	     * _.isSet(new Set);
+	     * // => true
+	     *
+	     * _.isSet(new WeakSet);
+	     * // => false
+	     */
+	    function isSet(value) {
+	      return isObjectLike(value) && getTag(value) == setTag;
+	    }
+
+	    /**
 	     * Checks if `value` is classified as a `String` primitive or object.
 	     *
 	     * @static
@@ -12626,6 +12821,46 @@
 	     */
 	    function isUndefined(value) {
 	      return value === undefined;
+	    }
+
+	    /**
+	     * Checks if `value` is classified as a `WeakMap` object.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	     * @example
+	     *
+	     * _.isWeakMap(new WeakMap);
+	     * // => true
+	     *
+	     * _.isWeakMap(new Map);
+	     * // => false
+	     */
+	    function isWeakMap(value) {
+	      return isObjectLike(value) && getTag(value) == weakMapTag;
+	    }
+
+	    /**
+	     * Checks if `value` is classified as a `WeakSet` object.
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Lang
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	     * @example
+	     *
+	     * _.isWeakSet(new WeakSet);
+	     * // => true
+	     *
+	     * _.isWeakSet(new Set);
+	     * // => false
+	     */
+	    function isWeakSet(value) {
+	      return isObjectLike(value) && objectToString.call(value) == weakSetTag;
 	    }
 
 	    /**
@@ -12761,7 +12996,7 @@
 	     * @memberOf _
 	     * @category Lang
 	     * @param {*} value The value to convert.
-	     * @return {number} Returns the converted integer.
+	     * @returns {number} Returns the converted integer.
 	     * @example
 	     *
 	     * _.toLength(3);
@@ -12900,7 +13135,7 @@
 	        return '';
 	      }
 	      if (isSymbol(value)) {
-	        return _Symbol ? symbolToString.call(value) : '';
+	        return Symbol ? symbolToString.call(value) : '';
 	      }
 	      var result = (value + '');
 	      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
@@ -13002,7 +13237,7 @@
 	     * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
 	     * // => { 'a': 1, 'b': 2 }
 	     */
-	    var assignInWith = createAssigner(function(object, source, customizer) {
+	    var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
 	      copyObjectWith(source, keysIn(source), object, customizer);
 	    });
 
@@ -13032,7 +13267,7 @@
 	     * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
 	     * // => { 'a': 1, 'b': 2 }
 	     */
-	    var assignWith = createAssigner(function(object, source, customizer) {
+	    var assignWith = createAssigner(function(object, source, srcIndex, customizer) {
 	      copyObjectWith(source, keys(source), object, customizer);
 	    });
 
@@ -13062,7 +13297,7 @@
 
 	    /**
 	     * Creates an object that inherits from the `prototype` object. If a `properties`
-	     * object is provided its own enumerable properties are assigned to the created object.
+	     * object is given its own enumerable properties are assigned to the created object.
 	     *
 	     * @static
 	     * @memberOf _
@@ -13165,15 +13400,15 @@
 	     * _.findKey(users, function(o) { return o.age < 40; });
 	     * // => 'barney' (iteration order is not guaranteed)
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.findKey(users, { 'age': 1, 'active': true });
 	     * // => 'pebbles'
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.findKey(users, ['active', false]);
 	     * // => 'fred'
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.findKey(users, 'active');
 	     * // => 'barney'
 	     */
@@ -13202,15 +13437,15 @@
 	     * _.findLastKey(users, function(o) { return o.age < 40; });
 	     * // => returns 'pebbles' assuming `_.findKey` returns 'barney'
 	     *
-	     * // using the `_.matches` iteratee shorthand
+	     * // The `_.matches` iteratee shorthand.
 	     * _.findLastKey(users, { 'age': 36, 'active': true });
 	     * // => 'barney'
 	     *
-	     * // using the `_.matchesProperty` iteratee shorthand
+	     * // The `_.matchesProperty` iteratee shorthand.
 	     * _.findLastKey(users, ['active', false]);
 	     * // => 'fred'
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.findLastKey(users, 'active');
 	     * // => 'pebbles'
 	     */
@@ -13475,14 +13710,12 @@
 	    /**
 	     * Creates an object composed of the inverted keys and values of `object`.
 	     * If `object` contains duplicate values, subsequent values overwrite property
-	     * assignments of previous values unless `multiVal` is `true`.
+	     * assignments of previous values.
 	     *
 	     * @static
 	     * @memberOf _
 	     * @category Object
 	     * @param {Object} object The object to invert.
-	     * @param {boolean} [multiVal] Allow multiple values per key.
-	     * @param- {Object} [guard] Enables use as an iteratee for functions like `_.map`.
 	     * @returns {Object} Returns the new inverted object.
 	     * @example
 	     *
@@ -13490,27 +13723,43 @@
 	     *
 	     * _.invert(object);
 	     * // => { '1': 'c', '2': 'b' }
-	     *
-	     * // with `multiVal`
-	     * _.invert(object, true);
-	     * // => { '1': ['a', 'c'], '2': ['b'] }
 	     */
-	    function invert(object, multiVal, guard) {
-	      return arrayReduce(keys(object), function(result, key) {
-	        var value = object[key];
-	        if (multiVal && !guard) {
-	          if (hasOwnProperty.call(result, value)) {
-	            result[value].push(key);
-	          } else {
-	            result[value] = [key];
-	          }
-	        }
-	        else {
-	          result[value] = key;
-	        }
-	        return result;
-	      }, {});
-	    }
+	    var invert = createInverter(function(result, value, key) {
+	      result[value] = key;
+	    }, constant(identity));
+
+	    /**
+	     * This method is like `_.invert` except that the inverted object is generated
+	     * from the results of running each element of `object` through `iteratee`.
+	     * The corresponding inverted value of each inverted key is an array of keys
+	     * responsible for generating the inverted value. The iteratee is invoked
+	     * with one argument: (value).
+	     *
+	     * @static
+	     * @memberOf _
+	     * @category Object
+	     * @param {Object} object The object to invert.
+	     * @param {Function|Object|string} [iteratee=_.identity] The iteratee invoked per element.
+	     * @returns {Object} Returns the new inverted object.
+	     * @example
+	     *
+	     * var object = { 'a': 1, 'b': 2, 'c': 1 };
+	     *
+	     * _.invertBy(object);
+	     * // => { '1': ['a', 'c'], '2': ['b'] }
+	     *
+	     * _.invertBy(object, function(value) {
+	     *   return 'group' + value;
+	     * });
+	     * // => { 'group1': ['a', 'c'], 'group2': ['b'] }
+	     */
+	    var invertBy = createInverter(function(result, value, key) {
+	      if (hasOwnProperty.call(result, value)) {
+	        result[value].push(key);
+	      } else {
+	        result[value] = [key];
+	      }
+	    }, getIteratee);
 
 	    /**
 	     * Invokes the method at `path` of `object`.
@@ -13669,7 +13918,7 @@
 	     * _.mapValues(users, function(o) { return o.age; });
 	     * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.mapValues(users, 'age');
 	     * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
 	     */
@@ -13712,8 +13961,8 @@
 	     * _.merge(users, ages);
 	     * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
 	     */
-	    var merge = createAssigner(function(object, source) {
-	      baseMerge(object, source);
+	    var merge = createAssigner(function(object, source, srcIndex) {
+	      baseMerge(object, source, srcIndex);
 	    });
 
 	    /**
@@ -13722,6 +13971,8 @@
 	     * properties. If `customizer` returns `undefined` merging is handled by the
 	     * method instead. The `customizer` is invoked with seven arguments:
 	     * (objValue, srcValue, key, object, source, stack).
+	     *
+	     * **Note:** This method mutates `object`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -13751,8 +14002,8 @@
 	     * _.mergeWith(object, other, customizer);
 	     * // => { 'fruits': ['apple', 'banana'], 'vegetables': ['beet', 'carrot'] }
 	     */
-	    var mergeWith = createAssigner(function(object, source, customizer) {
-	      baseMerge(object, source, customizer);
+	    var mergeWith = createAssigner(function(object, source, srcIndex, customizer) {
+	      baseMerge(object, source, srcIndex, customizer);
 	    });
 
 	    /**
@@ -13800,9 +14051,9 @@
 	     * // => { 'b': '2' }
 	     */
 	    function omitBy(object, predicate) {
-	      predicate = getIteratee(predicate);
-	      return basePickBy(object, function(value) {
-	        return !predicate(value);
+	      predicate = getIteratee(predicate, 2);
+	      return basePickBy(object, function(value, key) {
+	        return !predicate(value, key);
 	      });
 	    }
 
@@ -13829,7 +14080,7 @@
 
 	    /**
 	     * Creates an object composed of the `object` properties `predicate` returns
-	     * truthy for. The predicate is invoked with one argument: (value).
+	     * truthy for. The predicate is invoked with two arguments: (value, key).
 	     *
 	     * @static
 	     * @memberOf _
@@ -13845,7 +14096,7 @@
 	     * // => { 'a': 1, 'c': 3 }
 	     */
 	    function pickBy(object, predicate) {
-	      return object == null ? {} : basePickBy(object, getIteratee(predicate));
+	      return object == null ? {} : basePickBy(object, getIteratee(predicate, 2));
 	    }
 
 	    /**
@@ -13896,6 +14147,8 @@
 	     * are created for all other missing properties. Use `_.setWith` to customize
 	     * `path` creation.
 	     *
+	     * **Note:** This method mutates `object`.
+	     *
 	     * @static
 	     * @memberOf _
 	     * @category Object
@@ -13924,6 +14177,8 @@
 	     * invoked to produce the objects of `path`.  If `customizer` returns `undefined`
 	     * path creation is handled by the method instead. The `customizer` is invoked
 	     * with three arguments: (nsValue, key, nsObject).
+	     *
+	     * **Note:** This method mutates `object`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -14011,12 +14266,12 @@
 	     * _.transform([2, 3, 4], function(result, n) {
 	     *   result.push(n *= n);
 	     *   return n % 2 == 0;
-	     * });
+	     * }, []);
 	     * // => [4, 9]
 	     *
 	     * _.transform({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
 	     *   (result[value] || (result[value] = [])).push(key);
-	     * });
+	     * }, {});
 	     * // => { '1': ['a', 'c'], '2': ['b'] }
 	     */
 	    function transform(object, iteratee, accumulator) {
@@ -14043,6 +14298,8 @@
 
 	    /**
 	     * Removes the property at `path` of `object`.
+	     *
+	     * **Note:** This method mutates `object`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -14612,7 +14869,7 @@
 	     * `undefined` or `0`, a `radix` of `10` is used unless `value` is a hexadecimal,
 	     * in which case a `radix` of `16` is used.
 	     *
-	     * **Note:** This method aligns with the [ES5 implementation](https://es5.github.io/#E)
+	     * **Note:** This method aligns with the [ES5 implementation](https://es5.github.io/#x15.1.2.2)
 	     * of `parseInt`.
 	     *
 	     * @static
@@ -14806,7 +15063,7 @@
 	     * in "interpolate" delimiters, HTML-escape interpolated data properties in
 	     * "escape" delimiters, and execute JavaScript in "evaluate" delimiters. Data
 	     * properties may be accessed as free variables in the template. If a setting
-	     * object is provided it takes precedence over `_.templateSettings` values.
+	     * object is given it takes precedence over `_.templateSettings` values.
 	     *
 	     * **Note:** In the development build `_.template` utilizes
 	     * [sourceURLs](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl)
@@ -14833,54 +15090,54 @@
 	     * @returns {Function} Returns the compiled template function.
 	     * @example
 	     *
-	     * // using the "interpolate" delimiter to create a compiled template
+	     * // Use the "interpolate" delimiter to create a compiled template.
 	     * var compiled = _.template('hello <%= user %>!');
 	     * compiled({ 'user': 'fred' });
 	     * // => 'hello fred!'
 	     *
-	     * // using the HTML "escape" delimiter to escape data property values
+	     * // Use the HTML "escape" delimiter to escape data property values.
 	     * var compiled = _.template('<b><%- value %></b>');
 	     * compiled({ 'value': '<script>' });
 	     * // => '<b>&lt;script&gt;</b>'
 	     *
-	     * // using the "evaluate" delimiter to execute JavaScript and generate HTML
+	     * // Use the "evaluate" delimiter to execute JavaScript and generate HTML.
 	     * var compiled = _.template('<% _.forEach(users, function(user) { %><li><%- user %></li><% }); %>');
 	     * compiled({ 'users': ['fred', 'barney'] });
 	     * // => '<li>fred</li><li>barney</li>'
 	     *
-	     * // using the internal `print` function in "evaluate" delimiters
+	     * // Use the internal `print` function in "evaluate" delimiters.
 	     * var compiled = _.template('<% print("hello " + user); %>!');
 	     * compiled({ 'user': 'barney' });
 	     * // => 'hello barney!'
 	     *
-	     * // using the ES delimiter as an alternative to the default "interpolate" delimiter
+	     * // Use the ES delimiter as an alternative to the default "interpolate" delimiter.
 	     * var compiled = _.template('hello ${ user }!');
 	     * compiled({ 'user': 'pebbles' });
 	     * // => 'hello pebbles!'
 	     *
-	     * // using custom template delimiters
+	     * // Use custom template delimiters.
 	     * _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
 	     * var compiled = _.template('hello {{ user }}!');
 	     * compiled({ 'user': 'mustache' });
 	     * // => 'hello mustache!'
 	     *
-	     * // using backslashes to treat delimiters as plain text
+	     * // Use backslashes to treat delimiters as plain text.
 	     * var compiled = _.template('<%= "\\<%- value %\\>" %>');
 	     * compiled({ 'value': 'ignored' });
 	     * // => '<%- value %>'
 	     *
-	     * // using the `imports` option to import `jQuery` as `jq`
+	     * // Use the `imports` option to import `jQuery` as `jq`.
 	     * var text = '<% jq.each(users, function(user) { %><li><%- user %></li><% }); %>';
 	     * var compiled = _.template(text, { 'imports': { 'jq': jQuery } });
 	     * compiled({ 'users': ['fred', 'barney'] });
 	     * // => '<li>fred</li><li>barney</li>'
 	     *
-	     * // using the `sourceURL` option to specify a custom sourceURL for the template
+	     * // Use the `sourceURL` option to specify a custom sourceURL for the template.
 	     * var compiled = _.template('hello <%= user %>!', { 'sourceURL': '/basic/greeting.jst' });
 	     * compiled(data);
 	     * // => find the source of "greeting.jst" under the Sources tab or Resources panel of the web inspector
 	     *
-	     * // using the `variable` option to ensure a with-statement isn't used in the compiled template
+	     * // Use the `variable` option to ensure a with-statement isn't used in the compiled template.
 	     * var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
 	     * compiled.source;
 	     * // => function(data) {
@@ -14889,8 +15146,8 @@
 	     * //   return __p;
 	     * // }
 	     *
-	     * // using the `source` property to inline compiled templates for meaningful
-	     * // line numbers in error messages and a stack trace
+	     * // Use the `source` property to inline compiled templates for meaningful
+	     * // line numbers in error messages and stack traces.
 	     * fs.writeFileSync(path.join(cwd, 'jst.js'), '\
 	     *   var JST = {\
 	     *     "main": ' + _.template(mainText).source + '\
@@ -15337,7 +15594,7 @@
 	     * @returns {*} Returns the `func` result or error object.
 	     * @example
 	     *
-	     * // avoid throwing errors for invalid selectors
+	     * // Avoid throwing errors for invalid selectors.
 	     * var elements = _.attempt(function(selector) {
 	     *   return document.querySelectorAll(selector);
 	     * }, '>_>');
@@ -15350,7 +15607,7 @@
 	      try {
 	        return apply(func, undefined, args);
 	      } catch (e) {
-	        return isError(e) ? e : new Error(e);
+	        return isObject(e) ? e : new Error(e);
 	      }
 	    });
 
@@ -15404,7 +15661,7 @@
 	     *   [_.matches({ 'a': 1 }),           _.constant('matches A')],
 	     *   [_.conforms({ 'b': _.isNumber }), _.constant('matches B')],
 	     *   [_.constant(true),                _.constant('no match')]
-	     * ])
+	     * ]);
 	     *
 	     * func({ 'a': 1, 'b': 2 });
 	     * // => 'matches A'
@@ -15484,9 +15741,9 @@
 	    }
 
 	    /**
-	     * Creates a function that returns the result of invoking the provided
-	     * functions with the `this` binding of the created function, where each
-	     * successive invocation is supplied the return value of the previous.
+	     * Creates a function that returns the result of invoking the given functions
+	     * with the `this` binding of the created function, where each successive
+	     * invocation is supplied the return value of the previous.
 	     *
 	     * @static
 	     * @memberOf _
@@ -15507,7 +15764,7 @@
 
 	    /**
 	     * This method is like `_.flow` except that it creates a function that
-	     * invokes the provided functions from right to left.
+	     * invokes the given functions from right to left.
 	     *
 	     * @static
 	     * @memberOf _
@@ -15527,7 +15784,7 @@
 	    var flowRight = createFlow(true);
 
 	    /**
-	     * This method returns the first argument provided to it.
+	     * This method returns the first argument given to it.
 	     *
 	     * @static
 	     * @memberOf _
@@ -15563,7 +15820,7 @@
 	     *   { 'user': 'fred',   'age': 40 }
 	     * ];
 	     *
-	     * // create custom iteratee shorthands
+	     * // Create custom iteratee shorthands.
 	     * _.iteratee = _.wrap(_.iteratee, function(callback, func) {
 	     *   var p = /^(\S+)\s*([<>])\s*(\S+)$/.exec(func);
 	     *   return !p ? callback(func) : function(object) {
@@ -15575,9 +15832,7 @@
 	     * // => [{ 'user': 'fred', 'age': 40 }]
 	     */
 	    function iteratee(func) {
-	      return (isObjectLike(func) && !isArray(func))
-	        ? matches(func)
-	        : baseIteratee(func);
+	      return baseIteratee(typeof func == 'function' ? func : baseClone(func, true));
 	    }
 
 	    /**
@@ -15775,7 +16030,9 @@
 	     * var lodash = _.noConflict();
 	     */
 	    function noConflict() {
-	      root._ = oldDash;
+	      if (root._ === this) {
+	        root._ = oldDash;
+	      }
 	      return this;
 	    }
 
@@ -15940,8 +16197,7 @@
 	     * Creates an array of numbers (positive and/or negative) progressing from
 	     * `start` up to, but not including, `end`. A step of `-1` is used if a negative
 	     * `start` is specified without an `end` or `step`. If `end` is not specified
-	     * it's set to `start` with `start` then set to `0`.  If `end` is less than
-	     * `start` a zero-length range is created unless a negative `step` is specified.
+	     * it's set to `start` with `start` then set to `0`.
 	     *
 	     * **Note:** JavaScript follows the IEEE-754 standard for resolving
 	     * floating-point values which can produce unexpected results.
@@ -16080,7 +16336,7 @@
 	    }
 
 	    /**
-	     * Generates a unique ID. If `prefix` is provided the ID is appended to it.
+	     * Generates a unique ID. If `prefix` is given the ID is appended to it.
 	     *
 	     * @static
 	     * @memberOf _
@@ -16118,6 +16374,9 @@
 	     */
 	    function add(augend, addend) {
 	      var result;
+	      if (augend === undefined && addend === undefined) {
+	        return 0;
+	      }
 	      if (augend !== undefined) {
 	        result = augend;
 	      }
@@ -16209,10 +16468,10 @@
 	     *
 	     * var objects = [{ 'n': 1 }, { 'n': 2 }];
 	     *
-	     * _.maxBy(objects, function(o) { return o.a; });
+	     * _.maxBy(objects, function(o) { return o.n; });
 	     * // => { 'n': 2 }
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.maxBy(objects, 'n');
 	     * // => { 'n': 2 }
 	     */
@@ -16277,10 +16536,10 @@
 	     *
 	     * var objects = [{ 'n': 1 }, { 'n': 2 }];
 	     *
-	     * _.minBy(objects, function(o) { return o.a; });
+	     * _.minBy(objects, function(o) { return o.n; });
 	     * // => { 'n': 1 }
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.minBy(objects, 'n');
 	     * // => { 'n': 1 }
 	     */
@@ -16328,6 +16587,9 @@
 	     */
 	    function subtract(minuend, subtrahend) {
 	      var result;
+	      if (minuend === undefined && subtrahend === undefined) {
+	        return 0;
+	      }
 	      if (minuend !== undefined) {
 	        result = minuend;
 	      }
@@ -16353,7 +16615,7 @@
 	    function sum(array) {
 	      return (array && array.length)
 	        ? baseSum(array, identity)
-	        : undefined;
+	        : 0;
 	    }
 
 	    /**
@@ -16374,14 +16636,14 @@
 	     * _.sumBy(objects, function(o) { return o.n; });
 	     * // => 20
 	     *
-	     * // using the `_.property` iteratee shorthand
+	     * // The `_.property` iteratee shorthand.
 	     * _.sumBy(objects, 'n');
 	     * // => 20
 	     */
 	    function sumBy(array, iteratee) {
 	      return (array && array.length)
 	        ? baseSum(array, getIteratee(iteratee))
-	        : undefined;
+	        : 0;
 	    }
 
 	    /*------------------------------------------------------------------------*/
@@ -16470,6 +16732,7 @@
 	    lodash.intersectionBy = intersectionBy;
 	    lodash.intersectionWith = intersectionWith;
 	    lodash.invert = invert;
+	    lodash.invertBy = invertBy;
 	    lodash.invokeMap = invokeMap;
 	    lodash.iteratee = iteratee;
 	    lodash.keyBy = keyBy;
@@ -16558,11 +16821,10 @@
 	    lodash.xorWith = xorWith;
 	    lodash.zip = zip;
 	    lodash.zipObject = zipObject;
+	    lodash.zipObjectDeep = zipObjectDeep;
 	    lodash.zipWith = zipWith;
 
 	    // Add aliases.
-	    lodash.each = forEach;
-	    lodash.eachRight = forEachRight;
 	    lodash.extend = assignIn;
 	    lodash.extendWith = assignInWith;
 
@@ -16614,9 +16876,11 @@
 	    lodash.invoke = invoke;
 	    lodash.isArguments = isArguments;
 	    lodash.isArray = isArray;
+	    lodash.isArrayBuffer = isArrayBuffer;
 	    lodash.isArrayLike = isArrayLike;
 	    lodash.isArrayLikeObject = isArrayLikeObject;
 	    lodash.isBoolean = isBoolean;
+	    lodash.isBuffer = isBuffer;
 	    lodash.isDate = isDate;
 	    lodash.isElement = isElement;
 	    lodash.isEmpty = isEmpty;
@@ -16627,6 +16891,7 @@
 	    lodash.isFunction = isFunction;
 	    lodash.isInteger = isInteger;
 	    lodash.isLength = isLength;
+	    lodash.isMap = isMap;
 	    lodash.isMatch = isMatch;
 	    lodash.isMatchWith = isMatchWith;
 	    lodash.isNaN = isNaN;
@@ -16639,10 +16904,13 @@
 	    lodash.isPlainObject = isPlainObject;
 	    lodash.isRegExp = isRegExp;
 	    lodash.isSafeInteger = isSafeInteger;
+	    lodash.isSet = isSet;
 	    lodash.isString = isString;
 	    lodash.isSymbol = isSymbol;
 	    lodash.isTypedArray = isTypedArray;
 	    lodash.isUndefined = isUndefined;
+	    lodash.isWeakMap = isWeakMap;
+	    lodash.isWeakSet = isWeakSet;
 	    lodash.join = join;
 	    lodash.kebabCase = kebabCase;
 	    lodash.last = last;
@@ -16705,6 +16973,8 @@
 	    lodash.upperFirst = upperFirst;
 
 	    // Add aliases.
+	    lodash.each = forEach;
+	    lodash.eachRight = forEachRight;
 	    lodash.first = head;
 
 	    mixin(lodash, (function() {
@@ -16971,10 +17241,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)(module), (function() { return this; }())))
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -19161,7 +19431,7 @@
 
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
