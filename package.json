@@ -27,6 +27,7 @@
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "1.7.x",
     "lodash": "4.0.x",
+    "stereo-panner-shim": "0.1.4",
     "tunajs": "0.4.x",
     "webpack": "1.9.x"
   },
