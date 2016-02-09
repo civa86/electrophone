@@ -33,8 +33,8 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "lib::dev": "webpack --config webpack.lib.config.js --colors",
-    "lib::build": "webpack --config webpack.lib.config.js --colors -build",
-    "lib::dist": "npm test; npm run lib-build"
+    "lib::dev": "webpack --config webpack.config.js --colors",
+    "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile",
+    "lib::dist": "npm test; npm run lib::build"
   }
 }
