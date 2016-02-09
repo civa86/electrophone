@@ -43,7 +43,8 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.0",
     "tunajs": "0.4.x",
-    "webpack": "^1.9.11"
+    "webpack": "^1.9.11",
+    "stereo-panner-shim": "0.1.4"
   },
   "scripts": {
     "test": "karma start karma.conf.js",
