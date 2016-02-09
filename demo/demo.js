@@ -120,21 +120,21 @@
             .oscillator('OSC-A', {
                 wave:  synth.VARS.WAVE_SQUARE,
                 level: 50,
-                link:  'FILT1'
+                link:  'PAN-A'
             })
-            //.pan('PAN-A', {
-            //    link:  'FILT1',
-            //    value: -1
-            //})
+            .pan('PAN-A', {
+                link:  'FILT1',
+                value: -1
+            })
             .oscillator('OSC-B', {
                 wave:  synth.VARS.WAVE_SINE,
                 level: 100,
-                link:  'FILT1'
+                link:  'PAN-B'
             })
-            //.pan('PAN-B', {
-            //    link:  'FILT1',
-            //    value: 1
-            //})
+            .pan('PAN-B', {
+                link:  'FILT1',
+                value: 1
+            })
             .modulator('FM-NOISE', {
                 wave:  synth.VARS.WAVE_SQUARE,
                 freq:  10,
