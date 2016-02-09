@@ -48,6 +48,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+	__webpack_require__(46);
+
 	var _WebSynth = __webpack_require__(8);
 
 	var _WebSynth2 = _interopRequireDefault(_WebSynth);
@@ -295,7 +297,7 @@
 	                moduleProperties = undefined;
 
 	            //TODO assign properties configuration to class ....
-	            moduleProperties = Object.assign({}, Props.DefaultProps, Props[propsHandler]);
+	            moduleProperties = _lodash2['default'].assign({}, Props.DefaultProps, Props[propsHandler]);
 	            Object.keys(moduleProperties).forEach(function (e) {
 	                _this.setProperty(e, properties[e], moduleProperties[e]);
 	            });
@@ -405,6 +407,13 @@
 	    }
 
 	    _createClass(SoundSource, [{
+	        key: 'setDetune',
+	        value: function setDetune() {
+	            if (this.main && this.main.detune) {
+	                this.main.detune.value = this.detune;
+	            }
+	        }
+	    }, {
 	        key: 'noteOn',
 	        value: function noteOn() {
 	            this.main.start(0);
@@ -629,6 +638,10 @@
 
 	var _srcSynth2 = _interopRequireDefault(_srcSynth);
 
+	var _lodash = __webpack_require__(42);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var methods = Object.keys(Modules);
 
 	exports['default'] = function (props) {
@@ -702,7 +715,7 @@
 
 	    function getModulePropertiesSet(type) {
 	        var p = Props[type + 'Props'] || {};
-	        return Object.assign({}, p, Props.DefaultProps);
+	        return _lodash2['default'].assign({}, p, Props.DefaultProps);
 	    }
 
 	    function play(note) {
@@ -1861,7 +1874,7 @@
 	        this.main = _AudioContext2['default'].createBufferSource();
 	        this.main.connect(this.envelope);
 
-	        this.main.detune.value = this.detune;
+	        this.setDetune();
 	        this.setColor();
 	    }
 
@@ -2019,12 +2032,6 @@
 	    }
 
 	    _createClass(Oscillator, [{
-	        key: 'setDetune',
-	        value: function setDetune() {
-
-	            this.main.detune.value = this.detune;
-	        }
-	    }, {
 	        key: 'setNote',
 	        value: function setNote(note) {
 	            this.main.frequency.value = note;
@@ -19174,6 +19181,184 @@
 		}
 		return module;
 	}
+
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+
+	var AudioContext = global.AudioContext || global.webkitAudioContext;
+	var StereoPannerNode = __webpack_require__(49);
+
+	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
+	  AudioContext.prototype.createStereoPanner = function() {
+	    return new StereoPannerNode(this);
+	  };
+	}
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 47 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var WS_CURVE_SIZE = 4096;
+	var curveL = new Float32Array(WS_CURVE_SIZE);
+	var curveR = new Float32Array(WS_CURVE_SIZE);
+
+	(function() {
+	  for (var i = 0; i < WS_CURVE_SIZE; i++) {
+	    curveL[i] = Math.cos((i / WS_CURVE_SIZE) * Math.PI * 0.5);
+	    curveR[i] = Math.sin((i / WS_CURVE_SIZE) * Math.PI * 0.5);
+	  }
+	})();
+
+	module.exports = {
+	  L: curveL,
+	  R: curveR,
+	};
+
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+
+	var curve = __webpack_require__(47);
+
+	/**
+	 *  StereoPannerImpl
+	 *  +--------------------------------+  +------------------------+
+	 *  | ChannelSplitter(inlet)         |  | BufferSourceNode(_dc1) |
+	 *  +--------------------------------+  | buffer: [ 1, 1 ]       |
+	 *    |                            |    | loop: true             |
+	 *    |                            |    +------------------------+
+	 *    |                            |       |
+	 *    |                            |  +----------------+
+	 *    |                            |  | GainNode(_pan) |
+	 *    |                            |  | gain: 0(pan)   |
+	 *    |                            |  +----------------+
+	 *    |                            |    |
+	 *    |    +-----------------------|----+
+	 *    |    |                       |    |
+	 *    |  +----------------------+  |  +----------------------+
+	 *    |  | WaveShaperNode(_wsL) |  |  | WaveShaperNode(_wsR) |
+	 *    |  | curve: curveL        |  |  | curve: curveR        |
+	 *    |  +----------------------+  |  +----------------------+
+	 *    |               |            |               |
+	 *    |               |            |               |
+	 *    |               |            |               |
+	 *  +--------------+  |          +--------------+  |
+	 *  | GainNode(_L) |  |          | GainNode(_R) |  |
+	 *  | gain: 0    <----+          | gain: 0    <----+
+	 *  +--------------+             +--------------+
+	 *    |                            |
+	 *  +--------------------------------+
+	 *  | ChannelMergerNode(outlet)      |
+	 *  +--------------------------------+
+	 */
+	function StereoPannerImpl(audioContext) {
+	  this.audioContext = audioContext;
+	  this.inlet = audioContext.createChannelSplitter(2);
+	  this._pan = audioContext.createGain();
+	  this.pan = this._pan.gain;
+	  this._wsL = audioContext.createWaveShaper();
+	  this._wsR = audioContext.createWaveShaper();
+	  this._L = audioContext.createGain();
+	  this._R = audioContext.createGain();
+	  this.outlet = audioContext.createChannelMerger(2);
+
+	  this.inlet.channelCount = 2;
+	  this.inlet.channelCountMode = "explicit";
+	  this._pan.gain.value = 0;
+	  this._wsL.curve = curve.L;
+	  this._wsR.curve = curve.R;
+	  this._L.gain.value = 0;
+	  this._R.gain.value = 0;
+
+	  this.inlet.connect(this._L, 0);
+	  this.inlet.connect(this._R, 1);
+	  this._L.connect(this.outlet, 0, 0);
+	  this._R.connect(this.outlet, 0, 1);
+	  this._pan.connect(this._wsL);
+	  this._pan.connect(this._wsR);
+	  this._wsL.connect(this._L.gain);
+	  this._wsR.connect(this._R.gain);
+
+	  this._isConnected = false;
+	  this._dc1buffer = null;
+	  this._dc1 = null;
+	}
+
+	StereoPannerImpl.prototype.connect = function(destination) {
+	  var audioContext = this.audioContext;
+	  if (!this._isConnected) {
+	    this._isConnected = true;
+	    this._dc1buffer = audioContext.createBuffer(1, 2, audioContext.sampleRate);
+	    this._dc1buffer.getChannelData(0).set([ 1, 1 ]);
+
+	    this._dc1 = audioContext.createBufferSource();
+	    this._dc1.buffer = this._dc1buffer;
+	    this._dc1.loop = true;
+	    this._dc1.start(audioContext.currentTime);
+	    this._dc1.connect(this._pan);
+	  }
+	  global.AudioNode.prototype.connect.call(this.outlet, destination);
+	};
+
+	StereoPannerImpl.prototype.disconnect = function() {
+	  var audioContext = this.audioContext;
+	  if (this._isConnected) {
+	    this._isConnected = false;
+	    this._dc1.stop(audioContext.currentTime);
+	    this._dc1.disconnect();
+	    this._dc1 = null;
+	    this._dc1buffer = null;
+	  }
+	  global.AudioNode.prototype.disconnect.call(this.outlet);
+	};
+
+	module.exports = StereoPannerImpl;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var StereoPannerImpl = __webpack_require__(48);
+
+	function StereoPanner(audioContext) {
+	  var impl = new StereoPannerImpl(audioContext);
+
+	  Object.defineProperties(impl.inlet, {
+	    pan: {
+	      value: impl.pan,
+	      enumerable: true
+	    },
+	    connect: {
+	      value: function(node) {
+	        return impl.connect(node);
+	      }
+	    },
+	    disconnect: {
+	      value: function() {
+	        return impl.disconnect();
+	      }
+	    }
+	  });
+
+	  return impl.inlet;
+	}
+
+	module.exports = StereoPanner;
 
 
 /***/ }
