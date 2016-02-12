@@ -17,10 +17,8 @@
     "babel-preset-stage-0": "6.3.x",
     "jscs": "2.8.x",
     "jscs-loader": "0.2.x",
-
-    "jshint": "^2.9.1",
-    "jshint-loader": "0.8.x",
-
+    "eslint": "1.10.x",
+    "eslint-loader": "1.2.x",
     "karma": "0.13.x",
     "karma-chrome-launcher": "0.2.x",
     "karma-jasmine": "0.3.x",

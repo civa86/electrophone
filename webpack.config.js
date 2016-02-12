@@ -5,7 +5,8 @@
         webpack = require('webpack'),
         OutputFileName,
         pluginsSet,
-        watchEnabled;
+        watchEnabled,
+        emitLintErrors;
 
     if (process.env.NODE_ENV === 'production') {
         //Build Configuration
@@ -17,6 +18,7 @@
             new webpack.optimize.UglifyJsPlugin({ minimize: true })
         ];
         watchEnabled = false;
+        emitLintErrors = true;
 
     } else {
         //Development Configuration
@@ -27,6 +29,7 @@
             new webpack.optimize.OccurenceOrderPlugin()
         ];
         watchEnabled = true;
+        emitLintErrors = false;
     }
 
     module.exports = {
@@ -36,16 +39,14 @@
             filename: OutputFileName
         },
         plugins: pluginsSet,
+        resolveLoader: {
+            fallback: path.join(__dirname, 'node_modules')
+        },
         module: {
             preLoaders: [
                 {
                     test: /\.js$/,
-                    loader: 'jscs-loader',
-                    include: path.join(__dirname, 'lib')
-                },
-                {
-                    test: /\.js$/,
-                    loader: 'jshint-loader',
+                    loaders: ['eslint-loader', 'jscs-loader'],
                     include: path.join(__dirname, 'lib')
                 }
             ],
@@ -57,6 +58,17 @@
 
                 }
             ]
+        },
+        eslint: {
+            configFile: '.eslintrc',
+            emitError: emitLintErrors,
+            emitWarning: !emitLintErrors,
+            failOnWarning: emitLintErrors,
+            failOnError: emitLintErrors
+        },
+        jscs: {
+            emitErrors: emitLintErrors,
+            failOnHint: emitLintErrors
         },
         watch: watchEnabled
     };
