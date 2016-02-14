@@ -1,33 +1,46 @@
 import * as actionTypes from '../constants/ActionTypes';
 
-export function increment () {
+function increment () {
     return {
         type: actionTypes.INCREMENT_COUNTER
     };
 }
 
-export function decrement () {
+function decrement () {
     return {
         type: actionTypes.DECREMENT_COUNTER
     };
 }
 
-export function incrementIfOdd () {
-    return (dispatch, getState) => {
-        const { counter } = getState();
-
-        if (counter % 2 === 0) {
-            return;
-        }
-
-        dispatch(increment());
+function addAudioNode (node) {
+    return {
+        type: actionTypes.ADD_AUDIO_NODE,
+        id: node.id
     };
 }
 
-export function incrementAsync () {
-    return dispatch => {
-        setTimeout(() => {
-            dispatch(increment());
-        }, 1000);
+function setAudioNodeSelection (node, isSelected) {
+    return {
+        type: actionTypes.SET_AUDIO_NODE_SELECTION,
+        node,
+        isSelected
+    }
+}
+
+function setLinkMode (mode) {
+    return {
+        type: actionTypes.SET_LINK_MODE,
+        mode
     };
 }
+
+function toggleLinkMode () {
+    return {
+        type: actionTypes.TOGGLE_LINK_MODE
+    };
+}
+
+export {
+    increment, decrement,
+    addAudioNode, setAudioNodeSelection, setLinkMode, toggleLinkMode
+};

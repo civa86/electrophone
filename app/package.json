@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "Web Graph UI - React + Redux",
   "main": "server.js",
-  "scripts": {
-    "app::dev": "node server.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/civa86/web-synth.git"
@@ -37,5 +34,10 @@
     "chai": "3.5.x",
     "webpack": "1.9.x",
     "webpack-dev-server": "1.9.x"
+  },
+  "scripts": {
+    "test": "mocha ./src/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test:watch": "npm test -- --watch",
+    "app::dev": "node server.js"
   }
 }
