@@ -8,9 +8,18 @@ class App extends Component {
         const { synth, dispatch } = this.props;
         return (
             <div>
-                <p>{synth}</p>
-                <button onClick={() => dispatch(SynthActions.increment())}>increment</button>
-                <button onClick={() => dispatch(SynthActions.decrement())}>decrement</button>
+                {synth.modules.map(e =>
+                    <p key={e.id} onClick={() => dispatch(
+                        SynthActions.setAudioNodeSelection(e.id, !e.isSelected)
+                    )}>
+                        {e.id} - {e.isSelected ? 'V' : 'X'}
+                    </p>
+                )}
+                <button onClick={() => dispatch(
+                    SynthActions.addAudioNode({ id: 'ele' + synth.modules.length })
+                )}>
+                    add
+                </button>
             </div>
         );
     }

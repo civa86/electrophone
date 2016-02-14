@@ -1,17 +1,5 @@
 import * as actionTypes from '../constants/ActionTypes';
 
-function increment () {
-    return {
-        type: actionTypes.INCREMENT_COUNTER
-    };
-}
-
-function decrement () {
-    return {
-        type: actionTypes.DECREMENT_COUNTER
-    };
-}
-
 function addAudioNode (node) {
     return {
         type: actionTypes.ADD_AUDIO_NODE,
@@ -41,6 +29,8 @@ function toggleLinkMode () {
 }
 
 export {
-    increment, decrement,
-    addAudioNode, setAudioNodeSelection, setLinkMode, toggleLinkMode
+    addAudioNode,
+    setAudioNodeSelection,
+    setLinkMode,
+    toggleLinkMode
 };
