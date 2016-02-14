@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as actions from '../actions/SynthActions';
 import * as actionTypes from '../constants/ActionTypes';
 
-describe('audioNode actions', () => {
+describe('Synth actions', () => {
     it('should create an action addAudioNode', () => {
         const expectedAction = {
             type: actionTypes.ADD_AUDIO_NODE,
