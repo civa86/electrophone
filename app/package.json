@@ -13,25 +13,29 @@
   "license": "MIT",
   "homepage": "",
   "dependencies": {
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
-    "react-redux": "^4.1.0",
-    "redux": "^3.1.1",
-    "redux-thunk": "^1.0.3"
+    "react": "0.14.x",
+    "react-dom": "0.14.x",
+    "redux": "3.1.x",
+    "react-redux": "4.1.x",
+    "redux-thunk": "1.0.x"
   },
   "devDependencies": {
-    "babel-cli": "^6.3.17",
-    "babel-core": "^6.3.17",
-    "babel-loader": "^6.2.0",
-    "babel-preset-es2015-loose": "^6.1.3",
-    "babel-preset-react": "6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
-    "node-libs-browser": "^0.5.2",
-    "react-hot-loader": "^1.3.0",
-    "redux-devtools": "^3.0.1",
-    "redux-devtools-log-monitor": "^1.0.2",
-    "redux-devtools-dock-monitor": "^1.0.1",
-    "webpack": "^1.9.11",
-    "webpack-dev-server": "^1.9.0"
+    "babel-cli": "6.3.x",
+    "babel-core": "6.3.x",
+    "babel-loader": "6.2.x",
+    "babel-preset-es2015-loose": "6.1.x",
+    "babel-preset-stage-0": "6.3.x",
+    "babel-preset-react": "6.3.x",
+    "babel-polyfill": "6.3.x",
+    "node-libs-browser": "0.5.x",
+    "react-hot-loader": "1.3.x",
+    "redux-devtools": "3.0.x",
+    "redux-devtools-log-monitor": "1.0.x",
+    "redux-devtools-dock-monitor": "1.0.x",
+    "lodash": "4.0.x",
+    "mocha": "2.4.x",
+    "chai": "3.5.x",
+    "webpack": "1.9.x",
+    "webpack-dev-server": "1.9.x"
   }
 }
