@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "no-alert": [2],
+    "no-console": [2],
+    "curly": [2, "all"],
+    "eqeqeq": [2],
+    "guard-for-in": [2],
+    "no-unused-vars": [2, {
+      "vars": "all",
+      "varsIgnorePattern": "^React$",
+      "args": "after-used"
+    }]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true,
+    "experimentalObjectRestSpread": true
+  },
+  "plugins": [
+    "react"
+  ]
+}

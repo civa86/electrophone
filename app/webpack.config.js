@@ -8,7 +8,8 @@
         devtoolValue,
         entry,
         output,
-        pluginsSet;
+        pluginsSet,
+        emitLintErrors;
 
     if (process.env.NODE_ENV === 'production') {
         //Build Configuration
@@ -34,6 +35,7 @@
                 'process.env.NODE_ENV': '"production"'
             })
         ];
+        emitLintErrors = true;
 
     } else {
         //Development Configuration
@@ -57,6 +59,7 @@
             }),
             new ExtractTextPlugin('screen.css')
         ];
+        emitLintErrors = false;
     }
 
     module.exports = {
@@ -73,6 +76,13 @@
             fallback: path.join(__dirname, 'node_modules')
         },
         module: {
+            preLoaders: [
+                {
+                    test: /\.js$/,
+                    loaders: ['eslint-loader'],
+                    include: path.join(__dirname, 'src')
+                }
+            ],
             loaders: [
                 {
                     test: /\.js$/,
@@ -90,6 +100,13 @@
                 }
             ],
             noParse: [ /cytoscape/ ]
+        },
+        eslint: {
+            configFile: '.eslintrc',
+            emitError: emitLintErrors,
+            emitWarning: !emitLintErrors,
+            failOnWarning: emitLintErrors,
+            failOnError: emitLintErrors
         }
     };
 })(module);

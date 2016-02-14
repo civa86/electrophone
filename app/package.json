@@ -29,6 +29,9 @@
     "redux-devtools": "3.0.x",
     "redux-devtools-log-monitor": "1.0.x",
     "redux-devtools-dock-monitor": "1.0.x",
+    "eslint": "^1.10.",
+    "eslint-loader": "1.2.x",
+    "eslint-plugin-react": "3.16.x",
     "file-loader": "0.8.x",
     "less": "2.5.x",
     "less-loader": "2.2.x",
@@ -44,7 +47,7 @@
     "webpack-dev-server": "1.9.x"
   },
   "scripts": {
-    "test": "mocha ./src/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test": "mocha ./src/**/*.spec.js ./src/components/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test:watch": "npm test -- --watch",
     "app::dev": "node server.js",
     "app::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile",

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as SynthActions from '../actions/SynthActions';
+//Components
 import Graph from '../components/Graph';
+import GlobalKeys from '../components/GlobalKeys';
 
 class App extends Component {
     render () {
@@ -30,6 +32,7 @@ class App extends Component {
                        linkMode={synth.linkMode}
                        actions={graphActions}
                 />
+                <GlobalKeys />
             </div>
         );
     }

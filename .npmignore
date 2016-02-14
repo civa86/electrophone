@@ -1,10 +1,2 @@
 app
 demo
-lib
-.gitignore
-.jscsrc
-.jshintrc
-.babelrc
-karma.conf.js
-webpack.lib.config.js
-webpack-configuration.js
