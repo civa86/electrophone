@@ -65,7 +65,7 @@
 	'use strict';
 
 	exports.__esModule = true;
-	var TYPES = exports.TYPES = {
+	var TYPES = {
 	    MASTER: 'Master',
 	    OSCILLATOR: 'Oscillator',
 	    MODULATOR: 'Modulator',
@@ -75,9 +75,8 @@
 	    CHORUS: 'Chorus',
 	    DELAY: 'Delay',
 	    ENVELOPE: 'Envelope'
-	};
-
-	var CONST = exports.CONST = {
+	},
+	    CONST = {
 	    MASTER: 'master',
 	    ADSR: 'adsr',
 
@@ -107,6 +106,9 @@
 	    ENVELOPE_TARGET_FREQ: 'frequency',
 	    ENVELOPE_TARGET_DETUNE: 'detune'
 	};
+
+	exports.TYPES = TYPES;
+	exports.CONST = CONST;
 
 /***/ },
 /* 2 */
@@ -280,7 +282,7 @@
 	        });
 	    };
 
-	    Module.prototype.updateProperties = function updateProperties(props) {
+	    Module.prototype.updateProperties = function updateProperties() /*props*/{
 	        //TODO apply properties update
 	        //console.log('ipdate props', this.toString(), props);
 	    };
@@ -15453,10 +15455,6 @@
 
 	exports.__esModule = true;
 
-	var _AudioContext = __webpack_require__(2);
-
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-
 	var _modules = __webpack_require__(6);
 
 	var Modules = _interopRequireWildcard(_modules);
@@ -15467,9 +15465,9 @@
 
 	var _Constants = __webpack_require__(1);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15607,8 +15605,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _Effect2 = __webpack_require__(3);
 
 	var _Effect3 = _interopRequireDefault(_Effect2);
@@ -15650,8 +15646,6 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	var _Constants = __webpack_require__(1);
 
 	var _Effect2 = __webpack_require__(3);
 
@@ -15698,8 +15692,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _Effect2 = __webpack_require__(3);
 
 	var _Effect3 = _interopRequireDefault(_Effect2);
@@ -15745,8 +15737,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _Effect2 = __webpack_require__(3);
 
 	var _Effect3 = _interopRequireDefault(_Effect2);
@@ -15791,8 +15781,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _Effect2 = __webpack_require__(3);
 
 	var _Effect3 = _interopRequireDefault(_Effect2);
@@ -15834,8 +15822,6 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	var _Constants = __webpack_require__(1);
 
 	var _Effect2 = __webpack_require__(3);
 
@@ -15880,8 +15866,6 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	var _Constants = __webpack_require__(1);
 
 	var _Effect2 = __webpack_require__(3);
 
@@ -15928,8 +15912,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _Effect2 = __webpack_require__(3);
 
 	var _Effect3 = _interopRequireDefault(_Effect2);
@@ -15972,8 +15954,6 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	var _Constants = __webpack_require__(1);
 
 	var _Effect2 = __webpack_require__(3);
 
@@ -16231,8 +16211,6 @@
 
 	exports.__esModule = true;
 
-	var _Constants = __webpack_require__(1);
-
 	var _AudioContext = __webpack_require__(2);
 
 	var _AudioContext2 = _interopRequireDefault(_AudioContext);
@@ -16425,8 +16403,6 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	var _Constants = __webpack_require__(1);
 
 	var _AudioContext = __webpack_require__(2);
 
