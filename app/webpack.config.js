@@ -3,6 +3,7 @@
 
     var path = require('path'),
         webpack = require('webpack'),
+        HtmlWebpackPlugin = require('html-webpack-plugin'),
         ExtractTextPlugin = require('extract-text-webpack-plugin'),
         devtoolValue,
         entry,
@@ -24,11 +25,14 @@
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin(),
             new webpack.optimize.UglifyJsPlugin({ minimize: true }),
-            //new HtmlWebpackPlugin({
-            //    template: path.join(__dirname, 'app/index.html'),
-            //    inject: 'body'
-            //}),
-            new ExtractTextPlugin('screen.css')
+            new HtmlWebpackPlugin({
+                template: path.join(__dirname, 'index.html'),
+                inject: 'body'
+            }),
+            new ExtractTextPlugin('css/screen.css'),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': '"production"'
+            })
         ];
 
     } else {
@@ -43,11 +47,14 @@
         ];
         output = {
             path: path.join(__dirname, 'dist'),
-            filename: 'bundle.js',
-            publicPath: '/static/'
+            filename: 'bundle.js'
         };
         pluginsSet = [
             new webpack.HotModuleReplacementPlugin(),
+            new HtmlWebpackPlugin({
+                template: path.join(__dirname, 'index.html'),
+                inject: 'body'
+            }),
             new ExtractTextPlugin('screen.css')
         ];
     }
@@ -59,7 +66,7 @@
         plugins: pluginsSet,
         resolve: {
             alias: {
-                'web-synth': path.join(__dirname, '..', 'dist') + '/web-synth.js'
+                'web-synth': path.join(__dirname, '..', 'dist', 'web-synth.js')
             }
         },
         resolveLoader: {

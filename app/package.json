@@ -33,6 +33,7 @@
     "less-loader": "2.2.x",
     "css-loader": "0.23.x",
     "style-loader": "0.13.x",
+    "html-webpack-plugin": "1.6.x",
     "extract-text-webpack-plugin": "0.9.x",
     "lodash": "4.0.x",
     "mocha": "2.4.x",
