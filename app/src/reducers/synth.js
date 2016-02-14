@@ -7,7 +7,7 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
 
         case actionTypes.ADD_AUDIO_NODE : {
             const newModules = [...state.modules, {
-                id: action.id + '',
+                id: action.id + '', //TODO remove when safe....
                 isSelected: false,
                 link: null
             }];

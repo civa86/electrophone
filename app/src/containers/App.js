@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as SynthActions from '../actions/SynthActions';
+import Graph from '../components/Graph';
 
 class App extends Component {
     render () {
-        const { synth, dispatch } = this.props;
+        const
+            { synth, dispatch } = this.props,
+            graphActions = {
+                onClickHandler: (node, isSeletected) => dispatch(SynthActions.setAudioNodeSelection(node, isSeletected))
+            };
+
         return (
             <div>
                 {synth.modules.map(e =>
@@ -20,6 +26,10 @@ class App extends Component {
                 )}>
                     add
                 </button>
+                <Graph modules={synth.modules}
+                       linkMode={synth.linkMode}
+                       actions={graphActions}
+                />
             </div>
         );
     }
