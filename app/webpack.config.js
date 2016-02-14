@@ -26,11 +26,13 @@ module.exports = {
         fallback: path.join(__dirname, 'node_modules')
     },
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loaders: ['react-hot', 'babel'],
-            exclude: /node_modules/,
-            include: path.join(__dirname, 'src')
-        }]
+        loaders: [
+            {
+                test: /\.js$/,
+                loaders: ['react-hot', 'babel'],
+                exclude: /node_modules/,
+                include: path.join(__dirname, 'src')
+            }
+        ]
     }
 };
