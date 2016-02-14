@@ -83,6 +83,10 @@
                 {
                     test: /\.less$/,
                     loader: ExtractTextPlugin.extract('style', 'css!less')
+                },
+                {
+                    test:   /\.(txt)$/,
+                    loader: 'file?name=[name].[ext]'
                 }
             ],
             noParse: [ /cytoscape/ ]

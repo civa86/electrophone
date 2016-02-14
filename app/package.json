@@ -29,6 +29,7 @@
     "redux-devtools": "3.0.x",
     "redux-devtools-log-monitor": "1.0.x",
     "redux-devtools-dock-monitor": "1.0.x",
+    "file-loader": "0.8.x",
     "less": "2.5.x",
     "less-loader": "2.2.x",
     "css-loader": "0.23.x",
