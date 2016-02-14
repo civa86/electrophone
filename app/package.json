@@ -29,6 +29,11 @@
     "redux-devtools": "3.0.x",
     "redux-devtools-log-monitor": "1.0.x",
     "redux-devtools-dock-monitor": "1.0.x",
+    "less": "2.5.x",
+    "less-loader": "2.2.x",
+    "css-loader": "0.23.x",
+    "style-loader": "0.13.x",
+    "extract-text-webpack-plugin": "0.9.x",
     "lodash": "4.0.x",
     "mocha": "2.4.x",
     "chai": "3.5.x",
@@ -39,6 +44,8 @@
   "scripts": {
     "test": "mocha ./src/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test:watch": "npm test -- --watch",
-    "app::dev": "node server.js"
+    "app::dev": "node server.js",
+    "app::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile",
+    "app::dist": "npm test; npm run app::build"
   }
 }
