@@ -8,6 +8,10 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
         case actionTypes.ADD_AUDIO_NODE : {
             const newModules = [...state.modules, {
                 id: action.id + '', //TODO remove when safe....
+                position: {
+                    x: 100,
+                    y: 100
+                },
                 isSelected: false,
                 link: null
             }];
@@ -24,6 +28,24 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
                 return {
                     ...e,
                     isSelected: action.isSelected
+                };
+            });
+
+            return _.assign({}, state, { modules: newModules });
+        }
+
+        case actionTypes.SET_POSITIONS : {
+            const newModules = state.modules.map(e => {
+                if (e.id !== action.nodeId) {
+                    return e;
+                }
+
+                return {
+                    ...e,
+                    position: {
+                        x: action.nodePos.x,
+                        y: action.nodePos.y
+                    }
                 };
             });
 

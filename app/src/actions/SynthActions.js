@@ -28,9 +28,19 @@ function toggleLinkMode () {
     };
 }
 
+function setPositions (nodeId, nodePos, graphPos) {
+    return {
+        type: actionTypes.SET_POSITIONS,
+        nodeId,
+        nodePos,
+        graphPos
+    }
+}
+
 export {
     addAudioNode,
     setAudioNodeSelection,
     setLinkMode,
-    toggleLinkMode
+    toggleLinkMode,
+    setPositions
 };

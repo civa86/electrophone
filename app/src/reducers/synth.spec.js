@@ -1,6 +1,12 @@
 import { expect } from 'chai';
-import { addAudioNode, setAudioNodeSelection, setLinkMode, toggleLinkMode } from '../actions/SynthActions';
 import synth from './synth';
+import {
+    addAudioNode,
+    setAudioNodeSelection,
+    setLinkMode,
+    toggleLinkMode,
+    setPositions
+} from '../actions/SynthActions';
 
 describe('Synth reducer', () => {
     let state = synth();
@@ -35,5 +41,14 @@ describe('Synth reducer', () => {
         state = synth(state, setAudioNodeSelection('ele1', true));
         selectedNode = state.modules.filter(e => e.id === 'ele1').pop();
         expect(selectedNode.isSelected).to.equal(true);
+    });
+
+    it('should set positions', () => {
+        let selectedNode;
+
+        state = synth(state, setPositions('ele1', { x: 100, y: 100 }, { x: 300, y: 300 }));
+        selectedNode = state.modules.filter(e => e.id === 'ele1').pop();
+        expect(selectedNode.position.x).to.equal(100);
+        expect(selectedNode.position.y).to.equal(100);
     });
 });

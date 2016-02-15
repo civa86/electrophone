@@ -36,4 +36,14 @@ describe('Synth actions', () => {
         };
         expect(actions.toggleLinkMode()).to.deep.equal(expectedAction);
     });
+
+    it('should create an action setPositions', () => {
+        const expectedAction = {
+            type: actionTypes.SET_POSITIONS,
+            nodeId: 'ele1',
+            nodePos: { x: 100, y: 100 },
+            graphPos: { x: 300, y: 300 }
+        };
+        expect(actions.setPositions('ele1', { x: 100, y: 100 }, { x: 300, y: 300 })).to.deep.equal(expectedAction);
+    });
 });

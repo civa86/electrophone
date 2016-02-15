@@ -57,6 +57,14 @@ const GraphService = (graphLibrary) => {
         }
     }
 
+    function onFreeHandler (e) {
+        const node = e.cyTarget;
+        if (!linkMode) {
+            //TODO refactor graph pan...zoom....move from here?
+            actions.onFreeHandler(node.id(), node.position(), graph.pan());
+        }
+    }
+
     function onTapStart (e) {
         if (linkMode) {
             mouseDown = true;
@@ -137,6 +145,7 @@ const GraphService = (graphLibrary) => {
         resetLinkStatus();
 
         graph.on('click', 'node', onClickHandler);
+        graph.on('free', 'node', onFreeHandler);
         graph.on('tapstart', 'node', onTapStart);
         //graph.on('tapdragover', 'node', onTapOver);
         //graph.on('tapdragout', 'node', onTapOut);
@@ -152,6 +161,10 @@ const GraphService = (graphLibrary) => {
                 group: 'nodes',
                 data: {
                     id: e.id
+                },
+                position: {
+                    x: e.position.x,
+                    y: e.position.y
                 }
             }));
 
@@ -162,8 +175,13 @@ const GraphService = (graphLibrary) => {
 
             bindGraph();
             resize();
+
+            graph.pan({ x: 0, y: 0 });
+            graph.zoom(1);
+
+
             //TODO avoid call reset...use props to set right zoom and node positions....
-            reset();
+            //reset();
         } else {
             throw new Error('Missing Graph Library');
         }
@@ -182,6 +200,10 @@ const GraphService = (graphLibrary) => {
                         group: 'nodes',
                         data: {
                             id: e.id
+                        },
+                        position: {
+                            x: e.position.x,
+                            y: e.position.y
                         }
                     });
                 } else if (node.length === 1) {

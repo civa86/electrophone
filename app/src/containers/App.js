@@ -15,7 +15,7 @@ class App extends Component {
                 up: () => dispatch(SynthActions.setLinkMode(false))
             },
             note: {
-                //TODO manage playing notes in redux...also octave...
+                //TODO manage playing notes in redux...also octave......
                 down: (note) => console.log('play', note),
                 up: (note) => console.log('stop', note)
             },
@@ -41,7 +41,12 @@ class App extends Component {
         const
             { synth, dispatch } = this.props,
             graphActions = {
-                onClickHandler: (node, isSeletected) => dispatch(SynthActions.setAudioNodeSelection(node, isSeletected))
+                onClickHandler: (node, isSeletected) => {
+                    return dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                },
+                onFreeHandler: (nodeId, nodePosition, graphPosition) => {
+                    return dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPosition));
+                }
             };
 
         return (
