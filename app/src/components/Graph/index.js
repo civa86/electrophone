@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import GraphService from './GraphService'
+import cytoscape from 'cytoscape';
 
-const graph = GraphService();
+//Graph Service
+import GraphService from './GraphService'
+const graph = GraphService(cytoscape);
 
 class Graph extends Component {
 
@@ -20,7 +22,7 @@ class Graph extends Component {
         $canvas.style.top = 0;
         $canvas.style.left = 0;
         $canvas.style.zIndex = '999';
-        graph.createGraph(node, $canvas.getContext('2d'), this.props.actions);
+        graph.createGraph(node, $canvas.getContext('2d'), this.props.actions, this.props.modules);
     }
 
     componentWillReceiveProps (newProps) {

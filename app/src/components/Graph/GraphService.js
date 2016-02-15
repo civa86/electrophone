@@ -1,7 +1,7 @@
-import cytoscape from 'cytoscape';
 import style from './GraphStyle';
 
-const GraphService = () => {
+const GraphService = (graphLibrary) => {
+    const graphLib = graphLibrary;
     let graph = null,
         linkAreaCtx = null,
         linkMode = false,
@@ -17,6 +17,12 @@ const GraphService = () => {
     function resize () {
         if (graph) {
             graph.resize();
+        }
+    }
+
+    function reset () {
+        if (graph) {
+            graph.reset();
         }
     }
 
@@ -138,20 +144,29 @@ const GraphService = () => {
         graph.on('tapend', onTapEnd);
     }
 
-    function createGraph (domNode, linkAreaContext, applicationActions) {
-        const config = {
-            container: domNode,
-            ready: function () {
-                graph = this;
-                domElement = domNode;
-                linkAreaCtx = linkAreaContext;
-                actions = Object.assign({}, applicationActions);
-                bindGraph();
-            }
-        };
-        cytoscape(Object.assign({}, config, style));
+    function createGraph (domNode, linkAreaContext, applicationActions, initialNodes = []) {
+        const config = { ...style, container: domNode };
+        if (graphLib && typeof graphLib === 'function') {
+            config.elements = initialNodes.map(e => ({
+                //TODO refactor using a method....same of line 173
+                group: 'nodes',
+                data: {
+                    id: e.id
+                }
+            }));
 
-        resize();
+            graph = graphLib(config);
+            domElement = domNode;
+            linkAreaCtx = linkAreaContext;
+            actions = { ...applicationActions };
+
+            bindGraph();
+            resize();
+            //TODO avoid call reset...use props to set right zoom and node positions....
+            reset();
+        } else {
+            throw new Error('Missing Graph Library');
+        }
 
     }
 
@@ -163,6 +178,7 @@ const GraphService = () => {
 
                 if (node.length === 0) {
                     graph.add({
+                        // TODO refactor above...
                         group: 'nodes',
                         data: {
                             id: e.id
@@ -211,8 +227,9 @@ const GraphService = () => {
     }
 
     return {
-        resize,
         createGraph,
+        resize,
+        reset,
         refreshNodes,
         setLinkMode
     }

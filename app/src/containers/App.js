@@ -7,6 +7,36 @@ import Graph from '../components/Graph';
 import GlobalKeys from '../components/GlobalKeys';
 
 class App extends Component {
+    getKeyboardMapping () {
+        const { dispatch } = this.props;
+        return {
+            linkMode: {
+                down: () => dispatch(SynthActions.setLinkMode(true)),
+                up: () => dispatch(SynthActions.setLinkMode(false))
+            },
+            note: {
+                //TODO manage playing notes in redux...also octave...
+                down: (note) => console.log('play', note),
+                up: (note) => console.log('stop', note)
+            },
+            //TODO octave...z x etc...
+            notes: {
+                65: 'C',    //a
+                87: 'C#',   //w
+                83: 'D',    //s
+                69: 'D#',   //e
+                68: 'E',    //d
+                70: 'F',    //f
+                84: 'F#',   //t
+                71: 'G',    //g
+                89: 'G#',   //y
+                72: 'A',    //h
+                85: 'A#',   //u
+                74: 'B'     //j
+            }
+        };
+    }
+
     render () {
         const
             { synth, dispatch } = this.props,
@@ -28,11 +58,14 @@ class App extends Component {
                 )}>
                     add
                 </button>
+                <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
+                    LINK MODE
+                </button>
                 <Graph modules={synth.modules}
                        linkMode={synth.linkMode}
                        actions={graphActions}
                 />
-                <GlobalKeys />
+                <GlobalKeys keyboardMapping={this.getKeyboardMapping()} />
             </div>
         );
     }
