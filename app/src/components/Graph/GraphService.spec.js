@@ -2,10 +2,13 @@ import { expect } from 'chai';
 
 import GraphService from './GraphService';
 
+// MOCK LIB
+let state = null;
+
 const grapLibMock = () => {
     return {
         on: (e, elem, fx) => null,
-        resize: () => null,
+        resize: () => state = 'resizeCalled',
         reset: () => null
     };
 };
@@ -30,10 +33,15 @@ describe('GraphService library', () => {
         expect(graph.resize).to.be.a('function');
     });
 
+    it('should call resize method on library', () => {
+        graph.resize();
+        expect(state).to.equal('resizeCalled');
+        state = null;
+    });
+
     it('should have a reset method', () => {
         expect(graph.reset).to.be.a('function');
     });
-
 
     it('should have a refreshNodes method', () => {
         expect(graph.refreshNodes).to.be.a('function');
