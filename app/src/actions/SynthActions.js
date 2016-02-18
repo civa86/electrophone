@@ -7,6 +7,13 @@ function addAudioNode (node) {
     };
 }
 
+function removeNode (id) {
+    return {
+        type: actionTypes.REMOVE_NODE,
+        id: id
+    };
+}
+
 function setAudioNodeSelection (node, isSelected) {
     return {
         type: actionTypes.SET_AUDIO_NODE_SELECTION,
@@ -37,8 +44,10 @@ function setPositions (nodeId, nodePos, graphPos) {
     }
 }
 
+//TODO refactor names....no audio...
 export {
     addAudioNode,
+    removeNode,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,

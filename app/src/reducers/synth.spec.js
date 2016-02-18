@@ -1,15 +1,35 @@
+
 import { expect } from 'chai';
 import synth from './synth';
 import {
     addAudioNode,
+    removeNode,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
     setPositions
 } from '../actions/SynthActions';
 
+const deepFreeze = (obj) => {
+    // Retrieve the property names defined on obj
+    const propNames = Object.getOwnPropertyNames(obj);
+
+    // Freeze properties before freezing self
+    propNames.forEach(name => {
+        const prop = obj[name];
+
+        // Freeze prop if it is an object
+        if (typeof prop === 'object' && prop !== null) {
+            deepFreeze(prop);
+        }
+    });
+
+    // Freeze self (no-op if already frozen)
+    return Object.freeze(obj);
+};
+
 describe('Synth reducer', () => {
-    let state = synth();
+    let state = deepFreeze(synth());
 
     it('should have an initial state', () => {
         expect(state.modules).to.deep.equal([]);
@@ -30,6 +50,15 @@ describe('Synth reducer', () => {
 
     it('should add an audio node', () => {
         state = synth(state, addAudioNode({ id: 'ele1' }));
+        expect(state.modules.length).to.equal(1);
+        expect(state.modules[0].id).to.equal('ele1');
+        expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
+
+    it('should remove an audio node', () => {
+        state = synth(state, addAudioNode({ id: 'ele2' }));
+        expect(state.modules.length).to.equal(2);
+        state = synth(state, removeNode('ele2'));
         expect(state.modules.length).to.equal(1);
         expect(state.modules[0].id).to.equal('ele1');
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));

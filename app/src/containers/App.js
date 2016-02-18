@@ -15,7 +15,7 @@ class App extends Component {
                 up: () => dispatch(SynthActions.setLinkMode(false))
             },
             note: {
-                //TODO manage playing notes in redux...also octave......
+                //TODO manage playing notes in redux...also octave....
                 down: (note) => console.log('play', note),
                 up: (note) => console.log('stop', note)
             },
@@ -37,6 +37,16 @@ class App extends Component {
         };
     }
 
+    getMaxNodeId () {
+        const { synth } = this.props,
+            max = synth.modules.reduce((result, e) => {
+                const idInt = parseInt(e.id.replace('ele', ''), 10);
+                return Math.max(result, idInt);
+            }, 0);
+
+        return max + 1;
+    }
+
     render () {
         const
             { synth, dispatch } = this.props,
@@ -56,10 +66,16 @@ class App extends Component {
                         SynthActions.setAudioNodeSelection(e.id, !e.isSelected)
                     )}>
                         {e.id} - {e.isSelected ? 'V' : 'X'}
+
+                        <button onClick={() => dispatch(
+                            SynthActions.removeNode(e.id)
+                        )}>
+                            delete
+                        </button>
                     </p>
                 )}
                 <button onClick={() => dispatch(
-                    SynthActions.addAudioNode({ id: 'ele' + synth.modules.length })
+                    SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() })
                 )}>
                     add
                 </button>

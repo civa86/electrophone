@@ -9,7 +9,19 @@ const grapLibMock = () => {
     return {
         on: (e, elem, fx) => null,
         resize: () => state = 'resizeCalled',
-        reset: () => null
+        reset: () => state = 'resetCalled',
+        pan: () => state = 'panCalled',
+        zoom: () => state = 'zoomCalled',
+        add: () => state = 'addCalled',
+        remove: () => state = 'removeCalled',
+        nodes: () => [],
+        $: () => {
+            return {
+                addClass: () => null,
+                removeClass: () => null,
+                length: 0
+            }
+        }
     };
 };
 
@@ -41,6 +53,12 @@ describe('GraphService library', () => {
 
     it('should have a reset method', () => {
         expect(graph.reset).to.be.a('function');
+    });
+
+    it('should call reset method on library', () => {
+        graph.reset();
+        expect(state).to.equal('resetCalled');
+        state = null;
     });
 
     it('should have a refreshNodes method', () => {

@@ -84,25 +84,25 @@ const GraphService = (graphLibrary) => {
         }
     }
 
-    //function onTapOver (e) {
-    //    if (linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id()  && isDragging) {
-    //        targetLinkNode = e.cyTarget;
-    //
-    //        //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', {
-    //        //    linkTargetType: targetLinkNode.data('type'),
-    //        //    linkTargetId: targetLinkNode.id()
-    //        //});
-    //        //actions.onSetLinkTarget();
-    //    }
-    //}
-    //
-    //function onTapOut (e) {
-    //    if (linkMode && targetLinkNode) {
-    //        targetLinkNode = null;
-    //        //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', null);
-    //        //actions.onSetLinkTarget(null);
-    //    }
-    //}
+    function onTapOver (e) {
+        if (linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id()  && isDragging) {
+            targetLinkNode = e.cyTarget;
+
+            //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', {
+            //    linkTargetType: targetLinkNode.data('type'),
+            //    linkTargetId: targetLinkNode.id()
+            //});
+            //actions.onSetLinkTarget();
+        }
+    }
+
+    function onTapOut (e) {
+        if (linkMode && targetLinkNode) {
+            targetLinkNode = null;
+            //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', null);
+            //actions.onSetLinkTarget(null);
+        }
+    }
 
     function onTapDrag (e) {
         if (
@@ -125,7 +125,7 @@ const GraphService = (graphLibrary) => {
             mouseDown = false;
             if (isDragging) {
                 resetLinkArea();
-                //TODO check master....
+                //TODO check master...
                 if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
                     console.log('link', sourceLinkNode, targetLinkNode);
                     //GraphManager.addEdge(sourceLinkNode, targetLinkNode);
@@ -147,8 +147,8 @@ const GraphService = (graphLibrary) => {
         graph.on('click', 'node', onClickHandler);
         graph.on('free', 'node', onFreeHandler);
         graph.on('tapstart', 'node', onTapStart);
-        //graph.on('tapdragover', 'node', onTapOver);
-        //graph.on('tapdragout', 'node', onTapOut);
+        graph.on('tapdragover', 'node', onTapOver);
+        graph.on('tapdragout', 'node', onTapOut);
         graph.on('tapdrag', onTapDrag);
         graph.on('tapend', onTapEnd);
     }
@@ -156,18 +156,6 @@ const GraphService = (graphLibrary) => {
     function createGraph (domNode, linkAreaContext, applicationActions, initialNodes = []) {
         const config = { ...style, container: domNode };
         if (graphLib && typeof graphLib === 'function') {
-            config.elements = initialNodes.map(e => ({
-                //TODO refactor using a method....same of line 173
-                group: 'nodes',
-                data: {
-                    id: e.id
-                },
-                position: {
-                    x: e.position.x,
-                    y: e.position.y
-                }
-            }));
-
             graph = graphLib(config);
             domElement = domNode;
             linkAreaCtx = linkAreaContext;
@@ -175,13 +163,11 @@ const GraphService = (graphLibrary) => {
 
             bindGraph();
             resize();
+            //graph.pan({ x: 0, y: 0 });
+            //graph.zoom(1);
 
-            graph.pan({ x: 0, y: 0 });
-            graph.zoom(1);
+            refreshNodes(initialNodes);
 
-
-            //TODO avoid call reset...use props to set right zoom and node positions....
-            //reset();
         } else {
             throw new Error('Missing Graph Library');
         }
