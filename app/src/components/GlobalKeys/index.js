@@ -2,60 +2,64 @@ import React, { Component } from 'react';
 
 class GlobalKeys extends Component {
 
+    constructor (props) {
+        super(props);
+
+        this.onKeyDown = (e) => {
+            const charCode = this.getKeyCode(e),
+                { keyboardMapping } = this.props;
+
+            if (
+                keyboardMapping.linkMode &&
+                typeof keyboardMapping.linkMode.down === 'function' &&
+                e.shiftKey &&
+                charCode === 16
+            ) {
+                keyboardMapping.linkMode.down();
+
+            } else if (charCode === 8) {
+                e.preventDefault();
+            } else if (
+                keyboardMapping.note &&
+                typeof keyboardMapping.note.down === 'function' &&
+                keyboardMapping.notes &&
+                keyboardMapping.notes[charCode]
+            ) {
+                keyboardMapping.note.down(keyboardMapping.notes[charCode]);
+            }
+        };
+
+        this.onKeyUp = (e) => {
+            const charCode = this.getKeyCode(e),
+                { keyboardMapping } = this.props;
+
+            if (
+                keyboardMapping.linkMode &&
+                typeof keyboardMapping.linkMode.up === 'function' &&
+                charCode === 16
+            ) {
+                keyboardMapping.linkMode.up();
+            } else if (
+                keyboardMapping.deleteNodes &&
+                typeof keyboardMapping.deleteNodes === 'function' &&
+                charCode === 8
+            ) {
+                keyboardMapping.deleteNodes();
+            } else if (
+                keyboardMapping.note &&
+                typeof keyboardMapping.note.up === 'function' &&
+                keyboardMapping.notes &&
+                keyboardMapping.notes[charCode]
+            ) {
+                keyboardMapping.note.up(keyboardMapping.notes[charCode]);
+            }
+        };
+    }
+
     getKeyCode (e) {
         const keyCode = e.which || e.keyCode;
         return keyCode;
     }
-
-    onKeyDown = (e) => {
-        const charCode = this.getKeyCode(e),
-            { keyboardMapping } = this.props;
-
-        if (
-            keyboardMapping.linkMode &&
-            typeof keyboardMapping.linkMode.down === 'function' &&
-            e.shiftKey &&
-            charCode === 16
-        ) {
-            keyboardMapping.linkMode.down();
-
-        } else if (charCode === 8) {
-            e.preventDefault();
-        } else if (
-            keyboardMapping.note &&
-            typeof keyboardMapping.note.down === 'function' &&
-            keyboardMapping.notes &&
-            keyboardMapping.notes[charCode]
-        ) {
-            keyboardMapping.note.down(keyboardMapping.notes[charCode]);
-        }
-    };
-
-    onKeyUp = (e) => {
-        const charCode = this.getKeyCode(e),
-            { keyboardMapping } = this.props;
-
-        if (
-            keyboardMapping.linkMode &&
-            typeof keyboardMapping.linkMode.up === 'function' &&
-            charCode === 16
-        ) {
-            keyboardMapping.linkMode.up();
-        } else if (
-            keyboardMapping.deleteNodes &&
-            typeof keyboardMapping.deleteNodes === 'function' &&
-            charCode === 8
-        ) {
-            keyboardMapping.deleteNodes();
-        } else if (
-            keyboardMapping.note &&
-            typeof keyboardMapping.note.up === 'function' &&
-            keyboardMapping.notes &&
-            keyboardMapping.notes[charCode]
-        ) {
-            keyboardMapping.note.up(keyboardMapping.notes[charCode]);
-        }
-    };
 
     componentDidMount () {
         window.addEventListener('keydown', this.onKeyDown);

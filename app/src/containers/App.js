@@ -15,6 +15,7 @@ class App extends Component {
                 up: () => dispatch(SynthActions.setLinkMode(false))
             },
             deleteNodes: () => {
+                //TODO pay attention on master...
                 const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
                 return dispatch(SynthActions.removeNodes(selectedNodes));
             },
