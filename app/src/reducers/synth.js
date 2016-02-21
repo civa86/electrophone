@@ -23,11 +23,12 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
                 modules: [
                     ...state.modules,
                     {
-                        id: action.id + '', //TODO remove when safe....
+                        id: action.id,
                         position: {
                             x: 100,
                             y: 100
                         },
+                        isMaster: false,
                         isSelected: false,
                         link: null
                     }

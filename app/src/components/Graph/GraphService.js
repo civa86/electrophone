@@ -180,7 +180,8 @@ const GraphService = (graphLibrary) => {
                         // TODO refactor above...
                         group: 'nodes',
                         data: {
-                            id: e.id
+                            id: e.id,
+                            isMaster: e.isMaster
                         },
                         position: {
                             x: e.position.x,
