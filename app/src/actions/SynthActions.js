@@ -14,6 +14,13 @@ function removeNode (id) {
     };
 }
 
+function removeNodes (nodes) {
+    return {
+        type: actionTypes.REMOVE_NODES,
+        nodes: nodes
+    };
+}
+
 function setAudioNodeSelection (node, isSelected) {
     return {
         type: actionTypes.SET_AUDIO_NODE_SELECTION,
@@ -48,6 +55,7 @@ function setPositions (nodeId, nodePos, graphPos) {
 export {
     addAudioNode,
     removeNode,
+    removeNodes,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,

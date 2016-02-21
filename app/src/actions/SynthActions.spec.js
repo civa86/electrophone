@@ -21,6 +21,14 @@ describe('Synth actions', () => {
         expect(actions.removeNode('ele1')).to.deep.equal(expectedAction);
     });
 
+    it('should create an action removeNodes', () => {
+        const expectedAction = {
+            type: actionTypes.REMOVE_NODES,
+            nodes: ['ele1', 'ele2']
+        };
+        expect(actions.removeNodes(['ele1', 'ele2'])).to.deep.equal(expectedAction);
+    });
+
     it('should create an action setAudioNodeSelection', () => {
         const expectedAction = {
             type: actionTypes.SET_AUDIO_NODE_SELECTION,

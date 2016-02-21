@@ -29,6 +29,13 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
             };
         }
 
+        case actionTypes.REMOVE_NODES : {
+            return {
+                ...state,
+                modules: state.modules.filter(e => action.nodes.indexOf(e.id) === -1)
+            };
+        }
+
         case actionTypes.SET_AUDIO_NODE_SELECTION : {
             return {
                 ...state,

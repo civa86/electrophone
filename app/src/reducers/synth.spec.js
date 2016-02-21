@@ -4,6 +4,7 @@ import synth from './synth';
 import {
     addAudioNode,
     removeNode,
+    removeNodes,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
@@ -59,6 +60,17 @@ describe('Synth reducer', () => {
         state = synth(state, addAudioNode({ id: 'ele2' }));
         expect(state.modules.length).to.equal(2);
         state = synth(state, removeNode('ele2'));
+        expect(state.modules.length).to.equal(1);
+        expect(state.modules[0].id).to.equal('ele1');
+        expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
+
+    it('should remove an array of audio node', () => {
+        state = synth(state, addAudioNode({ id: 'ele3' }));
+        expect(state.modules.length).to.equal(2);
+        state = synth(state, addAudioNode({ id: 'ele4' }));
+        expect(state.modules.length).to.equal(3);
+        state = synth(state, removeNodes(['ele3', 'ele4']));
         expect(state.modules.length).to.equal(1);
         expect(state.modules[0].id).to.equal('ele1');
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));

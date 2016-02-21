@@ -19,6 +19,8 @@ class GlobalKeys extends Component {
         ) {
             keyboardMapping.linkMode.down();
 
+        } else if (charCode === 8) {
+            e.preventDefault();
         } else if (
             keyboardMapping.note &&
             typeof keyboardMapping.note.down === 'function' &&
@@ -39,6 +41,12 @@ class GlobalKeys extends Component {
             charCode === 16
         ) {
             keyboardMapping.linkMode.up();
+        } else if (
+            keyboardMapping.deleteNodes &&
+            typeof keyboardMapping.deleteNodes === 'function' &&
+            charCode === 8
+        ) {
+            keyboardMapping.deleteNodes();
         } else if (
             keyboardMapping.note &&
             typeof keyboardMapping.note.up === 'function' &&

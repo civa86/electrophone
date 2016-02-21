@@ -8,11 +8,15 @@ import GlobalKeys from '../components/GlobalKeys';
 
 class App extends Component {
     getKeyboardMapping () {
-        const { dispatch } = this.props;
+        const { synth, dispatch } = this.props;
         return {
             linkMode: {
                 down: () => dispatch(SynthActions.setLinkMode(true)),
                 up: () => dispatch(SynthActions.setLinkMode(false))
+            },
+            deleteNodes: () => {
+                const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
+                return dispatch(SynthActions.removeNodes(selectedNodes));
             },
             note: {
                 //TODO manage playing notes in redux...also octave....
