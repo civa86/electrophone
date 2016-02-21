@@ -19,6 +19,7 @@ const grapLibMock = () => {
             return {
                 addClass: () => null,
                 removeClass: () => null,
+                connectedEdges: () => [],
                 length: 0
             }
         }

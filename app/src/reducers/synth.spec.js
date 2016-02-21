@@ -5,6 +5,7 @@ import {
     addAudioNode,
     removeNode,
     removeNodes,
+    linkNodes,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
@@ -73,6 +74,19 @@ describe('Synth reducer', () => {
         state = synth(state, removeNodes(['ele3', 'ele4']));
         expect(state.modules.length).to.equal(1);
         expect(state.modules[0].id).to.equal('ele1');
+        expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
+
+    it('should link nodes', () => {
+        state = synth(state, addAudioNode({ id: 'ele2' }));
+        expect(state.modules.length).to.equal(2);
+        state = synth(state, linkNodes('ele1', 'ele2'));
+        expect(state.modules[0].id).to.equal('ele1');
+        expect(state.modules[0].link).to.equal('ele2');
+        state = synth(state, removeNode('ele2'));
+        expect(state.modules.length).to.equal(1);
+        expect(state.modules[0].id).to.equal('ele1');
+        expect(state.modules[0].link).to.equal(null);
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 

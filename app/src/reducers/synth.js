@@ -2,6 +2,19 @@ import * as actionTypes from '../constants/ActionTypes';
 
 function synth (state = { modules: [], linkMode: false }, action = {}) {
 
+    const cleanNodeLinks = (nodes) => {
+        return nodes.map(e => {
+            if (e.link === null || nodes.filter(ec => ec.id === e.link).length === 1) {
+                return e;
+            }
+
+            return {
+                ...e,
+                link: null
+            };
+        });
+    };
+
     switch (action.type) {
 
         case actionTypes.ADD_AUDIO_NODE : {
@@ -23,16 +36,34 @@ function synth (state = { modules: [], linkMode: false }, action = {}) {
         }
 
         case actionTypes.REMOVE_NODE : {
+            const filtered = state.modules.filter(e => e.id !== action.id);
             return {
                 ...state,
-                modules: state.modules.filter(e => e.id !== action.id)
+                modules: cleanNodeLinks(filtered)
             };
         }
 
         case actionTypes.REMOVE_NODES : {
+            const filtered = state.modules.filter(e => action.nodes.indexOf(e.id) === -1);
             return {
                 ...state,
-                modules: state.modules.filter(e => action.nodes.indexOf(e.id) === -1)
+                modules: cleanNodeLinks(filtered)
+            };
+        }
+
+        case actionTypes.LINK_NODES : {
+            return {
+                ...state,
+                modules: state.modules.map(e => {
+                    if (e.id !== action.source) {
+                        return e;
+                    }
+
+                    return {
+                        ...e,
+                        link: action.dest
+                    };
+                })
             };
         }
 

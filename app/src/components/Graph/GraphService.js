@@ -127,12 +127,7 @@ const GraphService = (graphLibrary) => {
                 resetLinkArea();
                 //TODO check master...
                 if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
-                    console.log('link', sourceLinkNode, targetLinkNode);
-                    //GraphManager.addEdge(sourceLinkNode, targetLinkNode);
-                    //$rootScope.$broadcast('GRAPH_MOD_LINK', {
-                    //    source: sourceLinkNode.id(),
-                    //    target: targetLinkNode.id()
-                    //});
+                    actions.linkHandler(sourceLinkNode.id(), targetLinkNode.id());
                 }
                 isDragging = false;
             }
@@ -193,11 +188,31 @@ const GraphService = (graphLibrary) => {
                         }
                     });
                 } else if (node.length === 1) {
-                    // UPDATE LINK, SELECTION on else???
+                    //TODO create methodes...
+                    // UPDATE SELECTION
                     if (e.isSelected === true) {
                         node.addClass('selected');
                     } else {
                         node.removeClass('selected');
+                    }
+
+                    //UPDATE EDGES
+                    if (e.link) {
+                        let edgesFromSource = node.connectedEdges();
+                        if (edgesFromSource.length > 0) {
+                            edgesFromSource.forEach((edge) => {
+                                if (edge.source().id() === node.id()) {
+                                    graph.remove(edge);
+                                }
+                            });
+                        }
+                        graph.add({
+                            group: 'edges',
+                            data: {
+                                source: node.id(),
+                                target: e.link
+                            }
+                        });
                     }
                 }
             });

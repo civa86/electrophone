@@ -21,6 +21,14 @@ function removeNodes (nodes) {
     };
 }
 
+function linkNodes (source, dest) {
+    return {
+        type: actionTypes.LINK_NODES,
+        source: source,
+        dest: dest
+    };
+}
+
 function setAudioNodeSelection (node, isSelected) {
     return {
         type: actionTypes.SET_AUDIO_NODE_SELECTION,
@@ -56,6 +64,7 @@ export {
     addAudioNode,
     removeNode,
     removeNodes,
+    linkNodes,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,

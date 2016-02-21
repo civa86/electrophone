@@ -61,6 +61,9 @@ class App extends Component {
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPosition) => {
                     return dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPosition));
+                },
+                linkHandler: (sourceNodeId, destNodeId) => {
+                    return dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
             };
 
