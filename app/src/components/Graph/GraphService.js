@@ -96,7 +96,7 @@ const GraphService = (graphLibrary) => {
         }
     }
 
-    function onTapOut (e) {
+    function onTapOut () {
         if (linkMode && targetLinkNode) {
             targetLinkNode = null;
             //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', null);

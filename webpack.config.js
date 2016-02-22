@@ -49,7 +49,7 @@
             preLoaders: [
                 {
                     test: /\.js$/,
-                    loaders: ['eslint-loader', 'jscs-loader'],
+                    loaders: ['eslint-loader'],
                     include: path.join(__dirname, 'lib')
                 }
             ],

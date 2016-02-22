@@ -102,11 +102,14 @@
             noParse: [ /cytoscape/ ]
         },
         eslint: {
-            configFile: '.eslintrc',
+            configFile: '../.eslintrc',
             emitError: emitLintErrors,
             emitWarning: !emitLintErrors,
             failOnWarning: emitLintErrors,
-            failOnError: emitLintErrors
+            failOnError: emitLintErrors,
+            plugins: [
+                "react"
+            ]
         }
     };
 })(module);
