@@ -9,7 +9,8 @@ import {
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
-    setPositions
+    setPositions,
+    setGraphPan
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -36,6 +37,9 @@ describe('Synth reducer', () => {
     it('should have an initial state', () => {
         expect(state.modules).to.deep.equal([]);
         expect(state.linkMode).to.equal(false);
+        expect(state.graph.pan.x).to.equal(0);
+        expect(state.graph.pan.y).to.equal(0);
+        expect(state.graph.zoom).to.equal(1);
     });
 
     it('should set link mode on', () => {
@@ -101,9 +105,15 @@ describe('Synth reducer', () => {
     it('should set positions', () => {
         let selectedNode;
 
-        state = synth(state, setPositions('ele1', { x: 100, y: 100 }, { x: 300, y: 300 }));
+        state = synth(state, setPositions('ele1', { x: 100, y: 100 }));
         selectedNode = state.modules.filter(e => e.id === 'ele1').pop();
         expect(selectedNode.position.x).to.equal(100);
         expect(selectedNode.position.y).to.equal(100);
+    });
+
+    it('should set graph pan', () => {
+        state = synth(state, setGraphPan({ x: 100, y: 100 }));
+        expect(state.graph.pan.x).to.equal(100);
+        expect(state.graph.pan.y).to.equal(100);
     });
 });

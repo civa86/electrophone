@@ -50,12 +50,18 @@ function toggleLinkMode () {
     };
 }
 
-function setPositions (nodeId, nodePos, graphPos) {
+function setPositions (nodeId, nodePos) {
     return {
         type: actionTypes.SET_POSITIONS,
         nodeId,
-        nodePos,
-        graphPos
+        nodePos
+    }
+}
+
+function setGraphPan (pan) {
+    return {
+        type: actionTypes.SET_GRAPH_PAN,
+        pan
     }
 }
 
@@ -68,5 +74,6 @@ export {
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
-    setPositions
+    setPositions,
+    setGraphPan
 };

@@ -58,11 +58,14 @@ class App extends Component {
                 onClickHandler: (node, isSeletected) => {
                     return dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
                 },
-                onFreeHandler: (nodeId, nodePosition, graphPosition) => {
-                    return dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPosition));
+                onFreeHandler: (nodeId, nodePosition) => {
+                    return dispatch(SynthActions.setPositions(nodeId, nodePosition));
                 },
                 linkHandler: (sourceNodeId, destNodeId) => {
                     return dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
+                },
+                onPanHandler: (pan) => {
+                    return dispatch(SynthActions.setGraphPan(pan));
                 }
             };
 

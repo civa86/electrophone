@@ -136,6 +136,10 @@ const GraphService = (graphLibrary) => {
         }
     }
 
+    function onPan () {
+        actions.onPanHandler(graph.pan());
+    }
+
     function bindGraph () {
         resetLinkStatus();
 
@@ -146,6 +150,7 @@ const GraphService = (graphLibrary) => {
         graph.on('tapdragout', 'node', onTapOut);
         graph.on('tapdrag', onTapDrag);
         graph.on('tapend', onTapEnd);
+        graph.on('pan', onPan);
     }
 
     function createGraph (domNode, linkAreaContext, applicationActions, initialNodes = []) {
@@ -158,8 +163,6 @@ const GraphService = (graphLibrary) => {
 
             bindGraph();
             resize();
-            //graph.pan({ x: 0, y: 0 });
-            //graph.zoom(1);
 
             refreshNodes(initialNodes);
 
@@ -225,6 +228,10 @@ const GraphService = (graphLibrary) => {
                     graph.remove(e);
                 }
             });
+
+            //TODO set graph positions...
+            //graph.pan({ x: 0, y: 0 });
+            //graph.zoom(1);
 
             resize();
         }
