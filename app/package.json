@@ -27,7 +27,7 @@
     "chai": "3.5.x",
     "css-loader": "0.23.x",
     "cytoscape": "2.5.x",
-    "eslint": "^1.10.",
+    "eslint": "1.10.x",
     "eslint-loader": "1.2.x",
     "eslint-plugin-react": "3.16.x",
     "extract-text-webpack-plugin": "0.9.x",
