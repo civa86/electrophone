@@ -54,6 +54,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//TODO remove lodash and use spread object operator....
+
+
 	var win = window || {};
 
 	win.WebSynth = _WebSynth2.default;
