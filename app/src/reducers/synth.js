@@ -88,14 +88,20 @@ function synth (state = initState, action = {}) {
         case actionTypes.SET_LINK_MODE : {
             return {
                 ...state,
-                linkMode: action.mode
+                graph: {
+                    ...state.graph,
+                    linkMode: action.mode
+                }
             };
         }
 
         case actionTypes.TOGGLE_LINK_MODE : {
             return {
                 ...state,
-                linkMode: !state.linkMode
+                graph: {
+                    ...state.graph,
+                    linkMode: !state.graph.linkMode
+                }
             };
         }
 

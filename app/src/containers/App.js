@@ -52,7 +52,8 @@ class App extends Component {
     }
 
     addModule () {
-        this.props.dispatch(SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() }));
+        const { dispatch } = this.props;
+        dispatch(SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() }));
     }
 
     render () {
@@ -60,13 +61,13 @@ class App extends Component {
             { synth, dispatch } = this.props,
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
-                    return dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                    dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
-                    return dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
+                    dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
                 },
                 linkHandler: (sourceNodeId, destNodeId) => {
-                    return dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
+                    dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
             };
 
@@ -92,7 +93,6 @@ class App extends Component {
                     LINK MODE
                 </button>
                 <Graph graphState={synth}
-                       linkMode={synth.linkMode}
                        actions={graphActions}
                 />
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>

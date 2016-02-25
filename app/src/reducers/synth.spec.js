@@ -42,13 +42,13 @@ describe('Synth reducer', () => {
 
     it('should set link mode on', () => {
         state = synth(state, setLinkMode(true));
-        expect(state.linkMode).to.equal(true);
+        expect(state.graph.linkMode).to.equal(true);
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 
     it('should toggle link mode', () => {
         state = synth(state, toggleLinkMode());
-        expect(state.linkMode).to.equal(false);
+        expect(state.graph.linkMode).to.equal(false);
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 

@@ -1,7 +1,7 @@
 const initState = {
     modules: [],
-    linkMode: false,
     graph: {
+        linkMode: false,
         pan: {
             x: 0,
             y: 0

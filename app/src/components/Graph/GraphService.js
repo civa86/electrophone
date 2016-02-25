@@ -215,7 +215,7 @@ const GraphService = (graphLibrary) => {
     function refreshGraph (graphState) {
         const newNodes = graphState.modules || [],
             newGraph = graphState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
-            newLinkMode = graphState.linkMode || false;
+            newLinkMode = newGraph.linkMode || false;
 
         if (graph) {
             //ADD
