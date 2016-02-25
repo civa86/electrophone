@@ -12,7 +12,8 @@ const GraphService = (graphLibrary) => {
         sourceLinkNode,
         targetLinkNode,
         startX,
-        startY;
+        startY,
+        currentGraph;
 
     function resize () {
         if (graph) {
@@ -126,6 +127,16 @@ const GraphService = (graphLibrary) => {
     }
 
     function onTapEnd () {
+        const currentPan = graph.pan();
+        if (currentPan.x !== currentGraph.pan.x || currentPan.y !== currentGraph.pan.y) {
+            actions.onFreeHandler(
+                null,
+                null,
+                graph.pan(),
+                graph.zoom()
+            );
+        }
+
         if (linkMode) {
             mouseDown = false;
             if (isDragging) {
@@ -216,6 +227,8 @@ const GraphService = (graphLibrary) => {
         const newNodes = graphState.modules || [],
             newGraph = graphState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
             newLinkMode = newGraph.linkMode || false;
+
+        currentGraph = newGraph;
 
         if (graph) {
             //ADD

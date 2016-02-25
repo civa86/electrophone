@@ -19,7 +19,7 @@ class App extends Component {
                 return dispatch(SynthActions.removeNodes(selectedNodes));
             },
             note: {
-                //TODO manage playing notes in redux...also octave...
+                //TODO manage playing notes in redux...also octave.....
                 down: (note) => console.log('play', note),
                 up: (note) => console.log('stop', note)
             },
