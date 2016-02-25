@@ -22,12 +22,11 @@ class Graph extends Component {
         $canvas.style.top = 0;
         $canvas.style.left = 0;
         $canvas.style.zIndex = '999';
-        graph.createGraph(node, $canvas.getContext('2d'), this.props.actions, this.props.modules);
+        graph.createGraph(node, $canvas.getContext('2d'), this.props.actions, this.props.graphState);
     }
 
     componentWillReceiveProps (newProps) {
-        graph.refreshNodes(newProps.modules);
-        graph.setLinkMode(newProps.linkMode);
+        graph.refreshGraph(newProps.graphState);
     }
 
     render () {

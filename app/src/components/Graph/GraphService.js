@@ -61,7 +61,12 @@ const GraphService = (graphLibrary) => {
         const node = e.cyTarget;
         if (!linkMode) {
             //TODO refactor graph pan...zoom....move from here?
-            actions.onFreeHandler(node.id(), node.position(), graph.pan());
+            actions.onFreeHandler(
+                node.id(),
+                node.position(),
+                graph.pan(),
+                graph.zoom()
+            );
         }
     }
 
@@ -85,7 +90,7 @@ const GraphService = (graphLibrary) => {
     }
 
     function onTapOver (e) {
-        if (linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id()  && isDragging) {
+        if (linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id() && isDragging) {
             targetLinkNode = e.cyTarget;
 
             //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', {
@@ -136,8 +141,18 @@ const GraphService = (graphLibrary) => {
         }
     }
 
+    function onZoom () {
+        if (actions && actions.onZoomHandler && typeof actions.onZoomHandler === 'function') {
+            actions.onZoomHandler(graph.zoom());
+        }
+    }
+
     function onPan () {
-        actions.onPanHandler(graph.pan());
+        if (actions && actions.onPanHandler && typeof actions.onPanHandler === 'function') {
+            actions.onPanHandler({
+                ...graph.pan()
+            });
+        }
     }
 
     function bindGraph () {
@@ -150,10 +165,11 @@ const GraphService = (graphLibrary) => {
         graph.on('tapdragout', 'node', onTapOut);
         graph.on('tapdrag', onTapDrag);
         graph.on('tapend', onTapEnd);
+        graph.on('zoom', onZoom);
         graph.on('pan', onPan);
     }
 
-    function createGraph (domNode, linkAreaContext, applicationActions, initialNodes = []) {
+    function createGraph (domNode, linkAreaContext, applicationActions, graphState = {}) {
         const config = { ...style, container: domNode };
         if (graphLib && typeof graphLib === 'function') {
             graph = graphLib(config);
@@ -162,9 +178,13 @@ const GraphService = (graphLibrary) => {
             actions = { ...applicationActions };
 
             bindGraph();
+            graph.minZoom(0.2);
+            graph.maxZoom(4);
+            graph.pan({ x: 0, y: 0 });
+            graph.zoom(1);
             resize();
 
-            refreshNodes(initialNodes);
+            refreshGraph(graphState);
 
         } else {
             throw new Error('Missing Graph Library');
@@ -172,7 +192,31 @@ const GraphService = (graphLibrary) => {
 
     }
 
-    function refreshNodes (newNodes) {
+    function setLinkMode (mode) {
+        if (graph) {
+            linkMode = mode;
+            graph.autoungrabify(mode);
+            graph.nodes().forEach(function (e) {
+                if (mode) {
+                    if (e.id() === 'master') {
+                        e.addClass('link-mode-master');
+                    } else {
+                        e.addClass('link-mode');
+                    }
+                } else {
+                    e.removeClass('link-mode-master');
+                    e.removeClass('link-mode');
+                }
+            });
+            resize();
+        }
+    }
+
+    function refreshGraph (graphState) {
+        const newNodes = graphState.modules || [],
+            newGraph = graphState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
+            newLinkMode = graphState.linkMode || false;
+
         if (graph) {
             //ADD
             newNodes.forEach(e => {
@@ -229,30 +273,11 @@ const GraphService = (graphLibrary) => {
                 }
             });
 
-            //TODO set graph positions...
-            //graph.pan({ x: 0, y: 0 });
-            //graph.zoom(1);
+            graph.zoom(newGraph.zoom);
+            graph.pan(newGraph.pan);
 
-            resize();
-        }
-    }
+            setLinkMode(newLinkMode);
 
-    function setLinkMode (mode) {
-        if (graph) {
-            linkMode = mode;
-            graph.autoungrabify(mode);
-            graph.nodes().forEach(function (e) {
-                if (mode) {
-                    if (e.id() === 'master') {
-                        e.addClass('link-mode-master');
-                    } else {
-                        e.addClass('link-mode');
-                    }
-                } else {
-                    e.removeClass('link-mode-master');
-                    e.removeClass('link-mode');
-                }
-            });
             resize();
         }
     }
@@ -261,8 +286,8 @@ const GraphService = (graphLibrary) => {
         createGraph,
         resize,
         reset,
-        refreshNodes,
-        setLinkMode
+        setLinkMode,
+        refreshGraph
     }
 
 };

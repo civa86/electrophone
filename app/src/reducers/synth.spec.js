@@ -1,6 +1,7 @@
 
 import { expect } from 'chai';
 import synth from './synth';
+import initState from './initState';
 import {
     addAudioNode,
     removeNode,
@@ -10,7 +11,8 @@ import {
     setLinkMode,
     toggleLinkMode,
     setPositions,
-    setGraphPan
+    setGraphPan,
+    setGraphZoom
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -35,11 +37,7 @@ describe('Synth reducer', () => {
     let state = deepFreeze(synth());
 
     it('should have an initial state', () => {
-        expect(state.modules).to.deep.equal([]);
-        expect(state.linkMode).to.equal(false);
-        expect(state.graph.pan.x).to.equal(0);
-        expect(state.graph.pan.y).to.equal(0);
-        expect(state.graph.zoom).to.equal(1);
+        expect(state).to.deep.equal(initState);
     });
 
     it('should set link mode on', () => {
@@ -105,7 +103,17 @@ describe('Synth reducer', () => {
     it('should set positions', () => {
         let selectedNode;
 
-        state = synth(state, setPositions('ele1', { x: 100, y: 100 }));
+        state = synth(state, setPositions(
+            'ele1',
+            { x: 100, y: 100 },
+            { x: 100, y: 100 },
+            3
+        ));
+
+        expect(state.graph.pan.x).to.equal(100);
+        expect(state.graph.pan.y).to.equal(100);
+        expect(state.graph.zoom).to.equal(3);
+
         selectedNode = state.modules.filter(e => e.id === 'ele1').pop();
         expect(selectedNode.position.x).to.equal(100);
         expect(selectedNode.position.y).to.equal(100);
@@ -115,5 +123,10 @@ describe('Synth reducer', () => {
         state = synth(state, setGraphPan({ x: 100, y: 100 }));
         expect(state.graph.pan.x).to.equal(100);
         expect(state.graph.pan.y).to.equal(100);
+    });
+
+    it('should set graph zoom', () => {
+        state = synth(state, setGraphZoom(1));
+        expect(state.graph.zoom).to.equal(1);
     });
 });

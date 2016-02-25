@@ -66,9 +66,16 @@ describe('Synth actions', () => {
         const expectedAction = {
             type: actionTypes.SET_POSITIONS,
             nodeId: 'ele1',
-            nodePos: { x: 100, y: 100 }
+            nodePos: { x: 100, y: 100 },
+            graphPan: { x: 100, y: 100 },
+            graphZoom: 3
         };
-        expect(actions.setPositions('ele1', { x: 100, y: 100 })).to.deep.equal(expectedAction);
+        expect(actions.setPositions(
+            'ele1',
+            { x: 100, y: 100 },
+            { x: 100, y: 100 },
+            3
+        )).to.deep.equal(expectedAction);
     });
 
     it('should create an action setGraphPan', () => {
@@ -77,5 +84,13 @@ describe('Synth actions', () => {
             pan: { x: 100, y: 100 }
         };
         expect(actions.setGraphPan({ x: 100, y: 100 })).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action setGraphZoom', () => {
+        const expectedAction = {
+            type: actionTypes.SET_GRAPH_ZOOM,
+            zoom: 1
+        };
+        expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
     });
 });

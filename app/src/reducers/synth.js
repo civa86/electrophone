@@ -1,6 +1,7 @@
 import * as actionTypes from '../constants/ActionTypes';
+import initState from './initState';
 
-function synth (state = { modules: [], linkMode: false, graph: { pan: { x: 0, y: 0 }, zoom: 1 } }, action = {}) {
+function synth (state = initState, action = {}) {
 
     const cleanNodeLinks = (nodes) => {
         return nodes.map(e => {
@@ -101,6 +102,14 @@ function synth (state = { modules: [], linkMode: false, graph: { pan: { x: 0, y:
         case actionTypes.SET_POSITIONS : {
             return {
                 ...state,
+                graph: {
+                    ...state.graph,
+                    pan: {
+                        x: action.graphPan.x,
+                        y: action.graphPan.y
+                    },
+                    zoom: action.graphZoom
+                },
                 modules: state.modules.map(e => {
                     if (e.id !== action.nodeId) {
                         return e;
@@ -126,6 +135,16 @@ function synth (state = { modules: [], linkMode: false, graph: { pan: { x: 0, y:
                         x: action.pan.x,
                         y: action.pan.y
                     }
+                }
+            };
+        }
+
+        case actionTypes.SET_GRAPH_ZOOM : {
+            return {
+                ...state,
+                graph: {
+                    ...state.graph,
+                    zoom: action.zoom
                 }
             };
         }

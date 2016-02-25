@@ -19,7 +19,7 @@ class App extends Component {
                 return dispatch(SynthActions.removeNodes(selectedNodes));
             },
             note: {
-                //TODO manage playing notes in redux...also octave....
+                //TODO manage playing notes in redux...also octave...
                 down: (note) => console.log('play', note),
                 up: (note) => console.log('stop', note)
             },
@@ -51,6 +51,10 @@ class App extends Component {
         return max + 1;
     }
 
+    addModule () {
+        this.props.dispatch(SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() }));
+    }
+
     render () {
         const
             { synth, dispatch } = this.props,
@@ -58,14 +62,11 @@ class App extends Component {
                 onClickHandler: (node, isSeletected) => {
                     return dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
                 },
-                onFreeHandler: (nodeId, nodePosition) => {
-                    return dispatch(SynthActions.setPositions(nodeId, nodePosition));
+                onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
+                    return dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
                 },
                 linkHandler: (sourceNodeId, destNodeId) => {
                     return dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
-                },
-                onPanHandler: (pan) => {
-                    return dispatch(SynthActions.setGraphPan(pan));
                 }
             };
 
@@ -84,19 +85,17 @@ class App extends Component {
                         </button>
                     </p>
                 )}
-                <button onClick={() => dispatch(
-                    SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() })
-                )}>
+                <button onClick={() => this.addModule()}>
                     add
                 </button>
                 <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
                     LINK MODE
                 </button>
-                <Graph modules={synth.modules}
+                <Graph graphState={synth}
                        linkMode={synth.linkMode}
                        actions={graphActions}
                 />
-                <GlobalKeys keyboardMapping={this.getKeyboardMapping()} />
+                <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         );
     }

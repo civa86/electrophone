@@ -50,11 +50,13 @@ function toggleLinkMode () {
     };
 }
 
-function setPositions (nodeId, nodePos) {
+function setPositions (nodeId, nodePos, graphPan, graphZoom) {
     return {
         type: actionTypes.SET_POSITIONS,
         nodeId,
-        nodePos
+        nodePos,
+        graphPan,
+        graphZoom
     }
 }
 
@@ -62,6 +64,13 @@ function setGraphPan (pan) {
     return {
         type: actionTypes.SET_GRAPH_PAN,
         pan
+    }
+}
+
+function setGraphZoom (zoom) {
+    return {
+        type: actionTypes.SET_GRAPH_ZOOM,
+        zoom
     }
 }
 
@@ -75,5 +84,6 @@ export {
     setLinkMode,
     toggleLinkMode,
     setPositions,
-    setGraphPan
+    setGraphPan,
+    setGraphZoom
 };

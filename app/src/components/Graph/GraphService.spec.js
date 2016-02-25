@@ -12,9 +12,12 @@ const grapLibMock = () => {
         reset: () => state = 'resetCalled',
         pan: () => state = 'panCalled',
         zoom: () => state = 'zoomCalled',
+        minZoom: () => state = 'minZoomCalled',
+        maxZoom: () => state = 'maxZoomCalled',
         add: () => state = 'addCalled',
         remove: () => state = 'removeCalled',
         nodes: () => [],
+        autoungrabify: () => state = 'autoungrabifyCalled',
         $: () => {
             return {
                 addClass: () => null,
@@ -62,8 +65,8 @@ describe('GraphService library', () => {
         state = null;
     });
 
-    it('should have a refreshNodes method', () => {
-        expect(graph.refreshNodes).to.be.a('function');
+    it('should have a refreshGraph method', () => {
+        expect(graph.refreshGraph).to.be.a('function');
     });
 
     it('should have a setLinkMode method', () => {
