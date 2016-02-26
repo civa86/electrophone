@@ -4,6 +4,7 @@ import * as SynthActions from '../actions/SynthActions';
 //Components
 import Graph from '../components/Graph';
 import GlobalKeys from '../components/GlobalKeys';
+import LocalCache from '../components/LocalCache';
 
 class App extends Component {
     getKeyboardMapping () {
@@ -96,6 +97,7 @@ class App extends Component {
                        actions={graphActions}
                 />
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
+                <LocalCache synth={synth}/>
             </div>
         );
     }

@@ -248,33 +248,36 @@ const GraphService = (graphLibrary) => {
                             y: e.position.y
                         }
                     });
-                } else if (node.length === 1) {
-                    //TODO create methodes...
-                    // UPDATE SELECTION
-                    if (e.isSelected === true) {
-                        node.addClass('selected');
-                    } else {
-                        node.removeClass('selected');
-                    }
+                }
+            });
+            newNodes.forEach(e => {
+                const node = graph.$('#' + e.id);
 
-                    //UPDATE EDGES
-                    if (e.link) {
-                        let edgesFromSource = node.connectedEdges();
-                        if (edgesFromSource.length > 0) {
-                            edgesFromSource.forEach((edge) => {
-                                if (edge.source().id() === node.id()) {
-                                    graph.remove(edge);
-                                }
-                            });
-                        }
-                        graph.add({
-                            group: 'edges',
-                            data: {
-                                source: node.id(),
-                                target: e.link
+                //TODO create methodes...
+                // UPDATE SELECTION
+                if (e.isSelected === true) {
+                    node.addClass('selected');
+                } else {
+                    node.removeClass('selected');
+                }
+
+                //UPDATE EDGES
+                if (e.link) {
+                    let edgesFromSource = node.connectedEdges();
+                    if (edgesFromSource.length > 0) {
+                        edgesFromSource.forEach((edge) => {
+                            if (edge.source().id() === node.id()) {
+                                graph.remove(edge);
                             }
                         });
                     }
+                    graph.add({
+                        group: 'edges',
+                        data: {
+                            source: node.id(),
+                            target: e.link
+                        }
+                    });
                 }
             });
 
