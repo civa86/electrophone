@@ -12,7 +12,9 @@ import {
     toggleLinkMode,
     setPositions,
     setGraphPan,
-    setGraphZoom
+    setGraphZoom,
+    loadState,
+    resetState
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -128,5 +130,17 @@ describe('Synth reducer', () => {
     it('should set graph zoom', () => {
         state = synth(state, setGraphZoom(1));
         expect(state.graph.zoom).to.equal(1);
+    });
+
+    it('should load a full state', () => {
+        state = synth(state, loadState(initState));
+        expect(state).to.deep.equal(initState);
+    });
+
+    it('should reset state', () => {
+        state = synth(state, addAudioNode({ id: 'ele1' }));
+        expect(state.modules.length).to.equal(1);
+        state = synth(state, resetState());
+        expect(state).to.deep.equal(initState);
     });
 });

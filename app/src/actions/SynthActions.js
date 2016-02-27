@@ -74,6 +74,19 @@ function setGraphZoom (zoom) {
     }
 }
 
+function loadState (state) {
+    return {
+        type: actionTypes.LOAD_STATE,
+        state
+    }
+}
+
+function resetState () {
+    return {
+        type: actionTypes.RESET_STATE
+    }
+}
+
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -85,5 +98,7 @@ export {
     toggleLinkMode,
     setPositions,
     setGraphPan,
-    setGraphZoom
+    setGraphZoom,
+    loadState,
+    resetState
 };

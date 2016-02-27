@@ -93,4 +93,17 @@ describe('Synth actions', () => {
         };
         expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
     });
+
+    it('should create an action loadState', () => {
+        const expectedAction = {
+            type: actionTypes.LOAD_STATE,
+            state: { a: 1, b:2 }
+        };
+        expect(actions.loadState({ a: 1, b:2 })).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action resetState', () => {
+        const expectedAction = { type: actionTypes.RESET_STATE };
+        expect(actions.resetState()).to.deep.equal(expectedAction);
+    });
 });

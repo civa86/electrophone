@@ -4,7 +4,10 @@ import * as SynthActions from '../actions/SynthActions';
 //Components
 import Graph from '../components/Graph';
 import GlobalKeys from '../components/GlobalKeys';
-import LocalCache from '../components/LocalCache';
+import localCacheService from '../services/localCache';
+
+const localCache = localCacheService();
+const localCacheKey = 'webSynth';
 
 class App extends Component {
     getKeyboardMapping () {
@@ -93,11 +96,20 @@ class App extends Component {
                 <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
                     LINK MODE
                 </button>
+                |
+                <button onClick={() => localCache.saveState(localCacheKey, synth)}>
+                    SAVE SYNTH
+                </button>
+                <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
+                    LOAD SYNTH
+                </button>
+                <button onClick={() => dispatch(SynthActions.resetState())}>
+                    RESET SYNTH
+                </button>
                 <Graph graphState={synth}
                        actions={graphActions}
                 />
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
-                <LocalCache synth={synth}/>
             </div>
         );
     }

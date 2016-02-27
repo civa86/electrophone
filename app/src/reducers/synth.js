@@ -155,6 +155,13 @@ function synth (state = initState, action = {}) {
             };
         }
 
+        case actionTypes.LOAD_STATE : {
+            return { ...action.state };
+        }
+        case actionTypes.RESET_STATE : {
+            return { ...initState };
+        }
+
         default:
             return state;
 
