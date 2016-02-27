@@ -261,6 +261,9 @@ const GraphService = (graphLibrary) => {
                     node.removeClass('selected');
                 }
 
+                //UPDATE POSITION!!!
+                node.position({ x: e.position.x, y: e.position.y });
+
                 //UPDATE EDGES
                 if (e.link) {
                     let edgesFromSource = node.connectedEdges();

@@ -5,9 +5,13 @@ import * as SynthActions from '../actions/SynthActions';
 import Graph from '../components/Graph';
 import GlobalKeys from '../components/GlobalKeys';
 import localCacheService from '../services/localCache';
+import screenService from '../services/screen';
 
-const localCache = localCacheService();
-const localCacheKey = 'webSynth';
+const
+    localCache = localCacheService(),
+    screen = screenService(),
+    localCacheKey = 'webSynth',
+    headerHeight = 70;
 
 class App extends Component {
     getKeyboardMapping () {
@@ -46,7 +50,8 @@ class App extends Component {
     }
 
     getMaxNodeId () {
-        const { synth } = this.props,
+        const
+            { synth } = this.props,
             max = synth.modules.reduce((result, e) => {
                 const idInt = parseInt(e.id.replace('ele', ''), 10);
                 return Math.max(result, idInt);
@@ -58,6 +63,13 @@ class App extends Component {
     addModule () {
         const { dispatch } = this.props;
         dispatch(SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() }));
+    }
+
+    getGraphHeight () {
+        const
+            windowSize = screen.getWindowSize(),
+            graphHeight = windowSize.height - headerHeight;
+        return graphHeight;
     }
 
     render () {
@@ -77,38 +89,44 @@ class App extends Component {
 
         return (
             <div>
-                {synth.modules.map(e =>
-                    <p key={e.id} onClick={() => dispatch(
+                <div id="header" style={{height: headerHeight}}>
+                    <button onClick={() => this.addModule()}>
+                        add
+                    </button>
+                    <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
+                        LINK MODE
+                    </button>
+                    <button onClick={() => localCache.saveState(localCacheKey, synth)}>
+                        SAVE SYNTH
+                    </button>
+                    <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
+                        LOAD SYNTH
+                    </button>
+                    <button onClick={() => dispatch(SynthActions.resetState())}>
+                        RESET SYNTH
+                    </button>
+                </div>
+                <div id="graph-panel">
+                    <Graph state={synth}
+                           height={this.getGraphHeight()}
+                           actions={graphActions}
+                    />
+                </div>
+                <div id="control-panel" style={{display: 'none'}}>
+                    {synth.modules.map(e =>
+                        <p key={e.id} onClick={() => dispatch(
                         SynthActions.setAudioNodeSelection(e.id, !e.isSelected)
                     )}>
-                        {e.id} - {e.isSelected ? 'V' : 'X'}
+                            {e.id} - {e.isSelected ? 'V' : 'X'}
 
-                        <button onClick={() => dispatch(
+                            <button onClick={() => dispatch(
                             SynthActions.removeNode(e.id)
                         )}>
-                            delete
-                        </button>
-                    </p>
-                )}
-                <button onClick={() => this.addModule()}>
-                    add
-                </button>
-                <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
-                    LINK MODE
-                </button>
-                |
-                <button onClick={() => localCache.saveState(localCacheKey, synth)}>
-                    SAVE SYNTH
-                </button>
-                <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
-                    LOAD SYNTH
-                </button>
-                <button onClick={() => dispatch(SynthActions.resetState())}>
-                    RESET SYNTH
-                </button>
-                <Graph graphState={synth}
-                       actions={graphActions}
-                />
+                                delete
+                            </button>
+                        </p>
+                    )}
+                </div>
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         );

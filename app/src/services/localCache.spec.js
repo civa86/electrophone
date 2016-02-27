@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import localCacheService from './localCache';
 
-describe('GraphService library', () => {
+describe('localCache Service library', () => {
     const localCache = localCacheService();
 
     it('should exist and it is an object', () => {

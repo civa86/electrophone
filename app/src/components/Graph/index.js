@@ -10,10 +10,11 @@ class Graph extends Component {
 
     componentDidMount () {
         const node = ReactDOM.findDOMNode(this),
-            graphHeight = 300,
-            $canvas = document.createElement('canvas');
+            $canvas = document.createElement('canvas'),
+            { actions, state, height } = this.props;
 
-        node.style.height = graphHeight + 'px';
+        console.log('set he', height);
+        node.style.height = height + 'px';
 
         node.appendChild($canvas);
         $canvas.setAttribute('width', node.offsetWidth);
@@ -22,11 +23,16 @@ class Graph extends Component {
         $canvas.style.top = 0;
         $canvas.style.left = 0;
         $canvas.style.zIndex = '999';
-        graph.createGraph(node, $canvas.getContext('2d'), this.props.actions, this.props.graphState);
+        graph.createGraph(
+            node,
+            $canvas.getContext('2d'),
+            actions,
+            state
+        );
     }
 
     componentWillReceiveProps (newProps) {
-        graph.refreshGraph(newProps.graphState);
+        graph.refreshGraph(newProps.state);
     }
 
     render () {
