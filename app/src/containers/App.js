@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as SynthActions from '../actions/SynthActions';
-//Components
+
+// Components
 import Graph from '../components/Graph';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
+
+// Services
 import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
