@@ -17,6 +17,8 @@
     "babel-preset-stage-0": "6.3.x",
     "eslint": "1.10.x",
     "eslint-loader": "1.2.x",
+    "esdoc": "0.4.x",
+    "esdoc-es7-plugin": "0.0.3",
     "karma": "0.13.x",
     "karma-chrome-launcher": "0.2.x",
     "karma-jasmine": "0.3.x",
@@ -31,6 +33,7 @@
     "test": "karma start karma.conf.js",
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile",
-    "lib::dist": "npm test; npm run lib::build"
+    "lib::dist": "npm test; npm run lib::build",
+    "lib::docs": "esdoc -c esdoc.json"
   }
 }
