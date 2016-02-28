@@ -14,7 +14,9 @@ import {
     setGraphPan,
     setGraphZoom,
     loadState,
-    resetState
+    resetState,
+    octaveIncrease,
+    octaveDecrease
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -142,5 +144,15 @@ describe('Synth reducer', () => {
         expect(state.modules.length).to.equal(1);
         state = synth(state, resetState());
         expect(state).to.deep.equal(initState);
+    });
+
+    it('should increase octave', () => {
+        state = synth(state, octaveIncrease());
+        expect(state.octave).to.equal(5);
+    });
+
+    it('should decrease octave', () => {
+        state = synth(state, octaveDecrease());
+        expect(state.octave).to.equal(4);
     });
 });

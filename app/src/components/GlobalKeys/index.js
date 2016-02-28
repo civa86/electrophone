@@ -8,7 +8,7 @@ class GlobalKeys extends Component {
         this.onKeyDown = (event) => {
             const charCode = this.getKeyCode(event),
                 { keyboardMapping } = this.props;
-
+console.log(charCode)
             keyboardMapping.forEach(e => {
                 if (e.keys.indexOf(charCode) !== -1 && typeof e.down === 'function') {
                     e.down(event, charCode);

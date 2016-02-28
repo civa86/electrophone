@@ -20,12 +20,22 @@ class App extends Component {
 
         return [
             {
-                keys: [16],
+                keys: [16], //SHIFT
                 down: () => dispatch(SynthActions.setLinkMode(true)),
                 up: () => dispatch(SynthActions.setLinkMode(false))
             },
             {
-                keys: [8],
+                keys: [90], //Z
+                down: () => dispatch(SynthActions.octaveDecrease()),
+                up: () => false
+            },
+            {
+                keys: [88], //X
+                down: () => dispatch(SynthActions.octaveIncrease()),
+                up: () => false
+            },
+            {
+                keys: [8], //DELETE
                 down: (e) => e.preventDefault(),
                 up: () => {
                     const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
@@ -94,6 +104,8 @@ class App extends Component {
                     <button onClick={() => dispatch(SynthActions.resetState())}>
                         RESET SYNTH
                     </button>
+
+                    OCTAVE: {synth.octave}
                 </div>
                 <div id="graph-panel">
                     <Graph state={synth}

@@ -158,15 +158,31 @@ function synth (state = initState, action = {}) {
         case actionTypes.LOAD_STATE : {
             return { ...action.state };
         }
+
         case actionTypes.RESET_STATE : {
             return { ...initState };
+        }
+
+        case actionTypes.OCTAVE_INCREASE : {
+            const octave = (state.octave < 10) ? state.octave + 1 : state.octave;
+            return {
+                ...state,
+                octave
+            };
+        }
+
+        case actionTypes.OCTAVE_DECREASE : {
+            const octave = (state.octave > 0) ? state.octave - 1 : state.octave;
+            return {
+                ...state,
+                octave
+            };
         }
 
         default:
             return state;
 
     }
-
 }
 
 export default synth;

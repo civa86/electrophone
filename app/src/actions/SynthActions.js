@@ -87,6 +87,18 @@ function resetState () {
     }
 }
 
+function octaveIncrease () {
+    return {
+        type: actionTypes.OCTAVE_INCREASE
+    }
+}
+
+function octaveDecrease () {
+    return {
+        type: actionTypes.OCTAVE_DECREASE
+    }
+}
+
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -100,5 +112,7 @@ export {
     setGraphPan,
     setGraphZoom,
     loadState,
-    resetState
+    resetState,
+    octaveIncrease,
+    octaveDecrease
 };

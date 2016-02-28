@@ -106,4 +106,14 @@ describe('Synth actions', () => {
         const expectedAction = { type: actionTypes.RESET_STATE };
         expect(actions.resetState()).to.deep.equal(expectedAction);
     });
+
+    it('should create an action octaveIncrease', () => {
+        const expectedAction = { type: actionTypes.OCTAVE_INCREASE };
+        expect(actions.octaveIncrease()).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action octaveDecrease', () => {
+        const expectedAction = { type: actionTypes.OCTAVE_DECREASE };
+        expect(actions.octaveDecrease()).to.deep.equal(expectedAction);
+    });
 });
