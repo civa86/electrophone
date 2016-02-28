@@ -91,6 +91,7 @@ class App extends Component {
         if (!master) {
             this.createMasterNode();
         }
+        this.currentPanel = 'graph';
 
     }
 
@@ -127,21 +128,35 @@ class App extends Component {
                     <button onClick={() => dispatch(SynthActions.resetState())}>
                         RESET SYNTH
                     </button>
-
+                    <br/>
                     OCTAVE: {synth.octave}
+                    <br/>
+                    <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
+                        GRAPH PANEL
+                    </button>
+
+                    <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
+                        CONTROL PANEL
+                    </button>
+
                 </div>
-                <div id="graph-panel">
+                <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
                     <Graph state={synth}
                            height={this.getGraphHeight()}
                            actions={graphActions}
                     />
                 </div>
-                <div id="control-panel" style={{ display: 'none' }}>
+                <div id="control-panel" style={{ display: (synth.viewPanel === 'control') ? 'block' : 'none' }}>
                     {synth.modules.map(e =>
                         <p key={e.id} onClick={() => dispatch(SynthActions.setAudioNodeSelection(e.id, !e.isSelected))}>
                             {e.id} - {e.isSelected ? 'V' : 'X'}
 
-                            <button onClick={() => dispatch(SynthActions.removeNode(e.id))}>delete</button>
+                            {(() => {
+                                if (!e.isMaster) {
+                                    return <button onClick={() => dispatch(SynthActions.removeNode(e.id))}>delete</button>
+                                }
+
+                            })()}
                         </p>
                     )}
                 </div>

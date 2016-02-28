@@ -16,7 +16,8 @@ import {
     loadState,
     resetState,
     octaveIncrease,
-    octaveDecrease
+    octaveDecrease,
+    setViewPanel
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -155,5 +156,10 @@ describe('Synth reducer', () => {
     it('should decrease octave', () => {
         state = synth(state, octaveDecrease());
         expect(state.octave).to.equal(4);
+    });
+
+    it('should set the view panel', () => {
+        state = synth(state, setViewPanel('control'));
+        expect(state.viewPanel).to.equal('control');
     });
 });

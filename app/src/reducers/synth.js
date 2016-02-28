@@ -179,6 +179,13 @@ function synth (state = initState, action = {}) {
             };
         }
 
+        case actionTypes.SET_VIEW_PANEL : {
+            return {
+                ...state,
+                viewPanel: action.panel
+            };
+        }
+
         default:
             return state;
 

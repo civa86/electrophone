@@ -8,7 +8,8 @@ const initState = {
         },
         zoom: 1
     },
-    octave: 4
+    octave: 4,
+    viewPanel: 'graph'
 };
 
 export default initState;

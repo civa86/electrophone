@@ -100,6 +100,13 @@ function octaveDecrease () {
     }
 }
 
+function setViewPanel (panel) {
+    return {
+        type: actionTypes.SET_VIEW_PANEL,
+        panel
+    }
+}
+
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -115,5 +122,6 @@ export {
     loadState,
     resetState,
     octaveIncrease,
-    octaveDecrease
+    octaveDecrease,
+    setViewPanel
 };

@@ -118,4 +118,12 @@ describe('Synth actions', () => {
         const expectedAction = { type: actionTypes.OCTAVE_DECREASE };
         expect(actions.octaveDecrease()).to.deep.equal(expectedAction);
     });
+
+    it('should create an action setViewPanel', () => {
+        const expectedAction = {
+            type: actionTypes.SET_VIEW_PANEL,
+            panel: 'test'
+        };
+        expect(actions.setViewPanel('test')).to.deep.equal(expectedAction);
+    });
 });
