@@ -15,22 +15,18 @@ const
     localCache = localCacheService(),
     screen = screenService(),
     localCacheKey = 'webSynth',
-    nodePrefix = 'ele',
+    nodePrefix = 'node',
     headerHeight = 70;
 
 class App extends Component {
-    componentDidMount () {
-        const { synth, dispatch } = this.props;
-        let master = synth.modules.filter(e => e.isMaster).pop();
-        if (!master) {
-            dispatch(SynthActions.addAudioNode(
-                {
-                    id: nodePrefix + '0',
-                    isMaster: true
-                }
-            ));
-        }
-
+    createMasterNode () {
+        const { dispatch } = this.props;
+        dispatch(SynthActions.addAudioNode(
+            {
+                id: nodePrefix + '0',
+                isMaster: true
+            }
+        ));
     }
 
     getKeyboardMapping () {
@@ -87,6 +83,15 @@ class App extends Component {
             windowSize = screen.getWindowSize(),
             graphHeight = windowSize.height - headerHeight;
         return graphHeight;
+    }
+
+    componentDidMount () {
+        const { synth } = this.props;
+        let master = synth.modules.filter(e => e.isMaster).pop();
+        if (!master) {
+            this.createMasterNode();
+        }
+
     }
 
     render () {
