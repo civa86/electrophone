@@ -46,6 +46,8 @@
 
 	'use strict';
 
+	exports.__esModule = true;
+
 	__webpack_require__(43);
 
 	var _WebSynth = __webpack_require__(9);
@@ -54,12 +56,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//TODO remove lodash and use spread object operator....
-
-
 	var win = window || {};
 
 	win.WebSynth = _WebSynth2.default;
+
+	exports.default = _WebSynth2.default;
 
 /***/ },
 /* 1 */
@@ -15136,6 +15137,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	//TODO remove lodash and use spread object operator....
 
 	exports.__esModule = true;
 

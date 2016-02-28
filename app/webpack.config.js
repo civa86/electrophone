@@ -69,7 +69,7 @@
         plugins: pluginsSet,
         resolve: {
             alias: {
-                'web-synth': path.join(__dirname, '..', 'dist', 'web-synth.js')
+                'web-synth': path.join(__dirname, '..', 'lib')
             }
         },
         resolveLoader: {
@@ -89,6 +89,11 @@
                     loaders: ['react-hot', 'babel'],
                     exclude: /node_modules/,
                     include: path.join(__dirname, 'src')
+                },
+                {
+                    test: /\.js$/,
+                    loaders: ['babel'],
+                    include: path.join(__dirname, '..', 'lib')
                 },
                 {
                     test: /\.less$/,

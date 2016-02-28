@@ -7,7 +7,8 @@ const initState = {
             y: 0
         },
         zoom: 1
-    }
+    },
+    octave: 4
 };
 
 export default initState;

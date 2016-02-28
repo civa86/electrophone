@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as SynthActions from '../actions/SynthActions';
 //Components
 import Graph from '../components/Graph';
+import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
@@ -16,20 +17,7 @@ const
 class App extends Component {
     getKeyboardMapping () {
         const { synth, dispatch } = this.props;
-            //notes: {
-            //    65: 'C',    //a
-            //    87: 'C#',   //w
-            //    83: 'D',    //s
-            //    69: 'D#',   //e
-            //    68: 'E',    //d
-            //    70: 'F',    //f
-            //    84: 'F#',   //t
-            //    71: 'G',    //g
-            //    89: 'G#',   //y
-            //    72: 'A',    //h
-            //    85: 'A#',   //u
-            //    74: 'B'     //j
-            //}
+
         return [
             {
                 keys: [16],
@@ -122,6 +110,7 @@ class App extends Component {
                         </p>
                     )}
                 </div>
+                <Synth state={synth} />
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         );
