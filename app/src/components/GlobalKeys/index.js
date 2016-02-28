@@ -5,59 +5,31 @@ class GlobalKeys extends Component {
     constructor (props) {
         super(props);
 
-        this.onKeyDown = (e) => {
-            const charCode = this.getKeyCode(e),
+        this.onKeyDown = (event) => {
+            const charCode = this.getKeyCode(event),
                 { keyboardMapping } = this.props;
 
-            if (
-                keyboardMapping.linkMode &&
-                typeof keyboardMapping.linkMode.down === 'function' &&
-                e.shiftKey &&
-                charCode === 16
-            ) {
-                keyboardMapping.linkMode.down();
-
-            } else if (charCode === 8) {
-                e.preventDefault();
-            } else if (
-                keyboardMapping.note &&
-                typeof keyboardMapping.note.down === 'function' &&
-                keyboardMapping.notes &&
-                keyboardMapping.notes[charCode]
-            ) {
-                keyboardMapping.note.down(keyboardMapping.notes[charCode]);
-            }
+            keyboardMapping.forEach(e => {
+                if (e.keys.indexOf(charCode) !== -1 && typeof e.down === 'function') {
+                    e.down(event, charCode);
+                }
+            });
         };
 
-        this.onKeyUp = (e) => {
-            const charCode = this.getKeyCode(e),
+        this.onKeyUp = (event) => {
+            const charCode = this.getKeyCode(event),
                 { keyboardMapping } = this.props;
 
-            if (
-                keyboardMapping.linkMode &&
-                typeof keyboardMapping.linkMode.up === 'function' &&
-                charCode === 16
-            ) {
-                keyboardMapping.linkMode.up();
-            } else if (
-                keyboardMapping.deleteNodes &&
-                typeof keyboardMapping.deleteNodes === 'function' &&
-                charCode === 8
-            ) {
-                keyboardMapping.deleteNodes();
-            } else if (
-                keyboardMapping.note &&
-                typeof keyboardMapping.note.up === 'function' &&
-                keyboardMapping.notes &&
-                keyboardMapping.notes[charCode]
-            ) {
-                keyboardMapping.note.up(keyboardMapping.notes[charCode]);
-            }
+            keyboardMapping.forEach(e => {
+                if (e.keys.indexOf(charCode) !== -1 && typeof e.up === 'function') {
+                    e.up(event, charCode);
+                }
+            });
         };
     }
 
-    getKeyCode (e) {
-        const keyCode = e.which || e.keyCode;
+    getKeyCode (event) {
+        const keyCode = event.which || event.keyCode;
         return keyCode;
     }
 

@@ -19,7 +19,6 @@ const localCache = () => {
     }
 
     function saveState (stateName, state) {
-        console.log(stateName, state);
         if (hasStorage) {
             setItem(stateName, state);
         }

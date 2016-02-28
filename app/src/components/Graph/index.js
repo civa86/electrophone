@@ -13,7 +13,6 @@ class Graph extends Component {
             $canvas = document.createElement('canvas'),
             { actions, state, height } = this.props;
 
-        console.log('set he', height);
         node.style.height = height + 'px';
 
         node.appendChild($canvas);

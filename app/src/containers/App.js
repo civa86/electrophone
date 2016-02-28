@@ -16,37 +16,38 @@ const
 class App extends Component {
     getKeyboardMapping () {
         const { synth, dispatch } = this.props;
-        return {
-            linkMode: {
+            //notes: {
+            //    65: 'C',    //a
+            //    87: 'C#',   //w
+            //    83: 'D',    //s
+            //    69: 'D#',   //e
+            //    68: 'E',    //d
+            //    70: 'F',    //f
+            //    84: 'F#',   //t
+            //    71: 'G',    //g
+            //    89: 'G#',   //y
+            //    72: 'A',    //h
+            //    85: 'A#',   //u
+            //    74: 'B'     //j
+            //}
+        return [
+            {
+                keys: [16],
                 down: () => dispatch(SynthActions.setLinkMode(true)),
                 up: () => dispatch(SynthActions.setLinkMode(false))
             },
-            deleteNodes: () => {
-                //TODO pay attention on master...
-                const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
-                return dispatch(SynthActions.removeNodes(selectedNodes));
-            },
-            note: {
-                //TODO manage playing notes in redux...also octave.....
-                down: (note) => console.log('play', note),
-                up: (note) => console.log('stop', note)
-            },
-            //TODO octave...z x etc...
-            notes: {
-                65: 'C',    //a
-                87: 'C#',   //w
-                83: 'D',    //s
-                69: 'D#',   //e
-                68: 'E',    //d
-                70: 'F',    //f
-                84: 'F#',   //t
-                71: 'G',    //g
-                89: 'G#',   //y
-                72: 'A',    //h
-                85: 'A#',   //u
-                74: 'B'     //j
+            {
+                keys: [8],
+                down: (e) => e.preventDefault(),
+                up: () => {
+                    const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
+                    if (selectedNodes.length > 0) {
+                        dispatch(SynthActions.removeNodes(selectedNodes));
+                    }
+
+                }
             }
-        };
+        ]
     }
 
     getMaxNodeId () {
@@ -89,7 +90,7 @@ class App extends Component {
 
         return (
             <div>
-                <div id="header" style={{height: headerHeight}}>
+                <div id="header" style={{ height: headerHeight }}>
                     <button onClick={() => this.addModule()}>
                         add
                     </button>
@@ -112,18 +113,12 @@ class App extends Component {
                            actions={graphActions}
                     />
                 </div>
-                <div id="control-panel" style={{display: 'none'}}>
+                <div id="control-panel" style={{ display: 'none' }}>
                     {synth.modules.map(e =>
-                        <p key={e.id} onClick={() => dispatch(
-                        SynthActions.setAudioNodeSelection(e.id, !e.isSelected)
-                    )}>
+                        <p key={e.id} onClick={() => dispatch(SynthActions.setAudioNodeSelection(e.id, !e.isSelected))}>
                             {e.id} - {e.isSelected ? 'V' : 'X'}
 
-                            <button onClick={() => dispatch(
-                            SynthActions.removeNode(e.id)
-                        )}>
-                                delete
-                            </button>
+                            <button onClick={() => dispatch(SynthActions.removeNode(e.id))}>delete</button>
                         </p>
                     )}
                 </div>
