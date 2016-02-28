@@ -3,7 +3,8 @@ import * as actionTypes from '../constants/ActionTypes';
 function addAudioNode (node) {
     return {
         type: actionTypes.ADD_AUDIO_NODE,
-        id: node.id
+        id: node.id,
+        isMaster: node.isMaster
     };
 }
 

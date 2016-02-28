@@ -15,9 +15,24 @@ const
     localCache = localCacheService(),
     screen = screenService(),
     localCacheKey = 'webSynth',
+    nodePrefix = 'ele',
     headerHeight = 70;
 
 class App extends Component {
+    componentDidMount () {
+        const { synth, dispatch } = this.props;
+        let master = synth.modules.filter(e => e.isMaster).pop();
+        if (!master) {
+            dispatch(SynthActions.addAudioNode(
+                {
+                    id: nodePrefix + '0',
+                    isMaster: true
+                }
+            ));
+        }
+
+    }
+
     getKeyboardMapping () {
         const { synth, dispatch } = this.props;
 
@@ -41,7 +56,7 @@ class App extends Component {
                 keys: [8], //DELETE
                 down: (e) => e.preventDefault(),
                 up: () => {
-                    const selectedNodes = synth.modules.filter(e => e.isSelected).map(e => e.id);
+                    const selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
                     if (selectedNodes.length > 0) {
                         dispatch(SynthActions.removeNodes(selectedNodes));
                     }
@@ -55,7 +70,7 @@ class App extends Component {
         const
             { synth } = this.props,
             max = synth.modules.reduce((result, e) => {
-                const idInt = parseInt(e.id.replace('ele', ''), 10);
+                const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
                 return Math.max(result, idInt);
             }, 0);
 
@@ -64,7 +79,7 @@ class App extends Component {
 
     addModule () {
         const { dispatch } = this.props;
-        dispatch(SynthActions.addAudioNode({ id: 'ele' + this.getMaxNodeId() }));
+        dispatch(SynthActions.addAudioNode({ id: nodePrefix + this.getMaxNodeId() }));
     }
 
     getGraphHeight () {
@@ -132,10 +147,10 @@ class App extends Component {
     }
 }
 
-function select (state) {
+function mapStateToProps (state) {
     return {
         synth: state.synth
     };
 }
 
-export default connect(select)(App);
+export default connect(mapStateToProps)(App);

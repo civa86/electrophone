@@ -25,11 +25,11 @@ function synth (state = initState, action = {}) {
                     ...state.modules,
                     {
                         id: action.id,
+                        isMaster: action.isMaster || false,
                         position: {
                             x: 100,
                             y: 100
                         },
-                        isMaster: false,
                         isSelected: false,
                         link: null
                     }

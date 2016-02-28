@@ -119,8 +119,7 @@ const GraphService = (graphLibrary) => {
             isDragging = true;
             resetLinkArea();
 
-            //TODO check master....
-            if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
+            if (sourceLinkNode && sourceLinkNode.data('isMaster') === false) {
                 drawLink(e.cyRenderedPosition.x, e.cyRenderedPosition.y);
             }
         }
@@ -141,8 +140,7 @@ const GraphService = (graphLibrary) => {
             mouseDown = false;
             if (isDragging) {
                 resetLinkArea();
-                //TODO check master...
-                if (sourceLinkNode && sourceLinkNode.id() !== 'master' && targetLinkNode) {
+                if (sourceLinkNode && sourceLinkNode.data('isMaster') === false && targetLinkNode) {
                     actions.linkHandler(sourceLinkNode.id(), targetLinkNode.id());
                 }
                 isDragging = false;
@@ -209,7 +207,7 @@ const GraphService = (graphLibrary) => {
             graph.autoungrabify(mode);
             graph.nodes().forEach(function (e) {
                 if (mode) {
-                    if (e.id() === 'master') {
+                    if (e.data('isMaster') === true) {
                         e.addClass('link-mode-master');
                     } else {
                         e.addClass('link-mode');
@@ -259,6 +257,11 @@ const GraphService = (graphLibrary) => {
                     node.addClass('selected');
                 } else {
                     node.removeClass('selected');
+                }
+
+                //SET MASTER CLASS
+                if (e.isMaster && !node.hasClass('isMaster')) {
+                    node.addClass('isMaster');
                 }
 
                 //UPDATE POSITION!!!

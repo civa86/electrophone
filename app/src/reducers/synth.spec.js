@@ -56,10 +56,11 @@ describe('Synth reducer', () => {
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 
-    it('should add an audio node', () => {
-        state = synth(state, addAudioNode({ id: 'ele1' }));
+    it('should add an audio node, the master', () => {
+        state = synth(state, addAudioNode({ id: 'ele1', isMaster: true }));
         expect(state.modules.length).to.equal(1);
         expect(state.modules[0].id).to.equal('ele1');
+        expect(state.modules[0].isMaster).to.equal(true);
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 

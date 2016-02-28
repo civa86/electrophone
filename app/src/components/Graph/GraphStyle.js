@@ -21,7 +21,7 @@ const style = {
             }
         },
         {
-            selector: 'node#master',
+            selector: 'node.isMaster',
             style: {
                 width: 100,
                 height: 100,
