@@ -6,7 +6,7 @@ import GlobalKeys from '../GlobalKeys';
 //TODO check for spectrum and others init props of synth....pass them from App!!
 //TODO wrtie a synth maanger?
 const
-    synth = WebSynth(),
+    synth = new WebSynth(),
     noteMapping = {
         65: 'C',    //a
         87: 'C#',   //w
@@ -25,7 +25,7 @@ const
 class Synth extends Component {
 
     componentDidMount () {
-
+        console.log(synth.getModules());
     }
 
     componentWillReceiveProps (newProps) {
@@ -39,16 +39,16 @@ class Synth extends Component {
                 keys: Object.keys(noteMapping).map(Number),
                 down: (event, key) => {
                     if (noteMapping[key]) {
-                        console.log(synth.getFrequency(noteMapping[key], state.octave), state.octave);
+                        console.log(WebSynth.getFrequency(noteMapping[key], state.octave), state.octave);
                         synth.play(
-                            synth.getFrequency(noteMapping[key], state.octave)
+                            WebSynth.getFrequency(noteMapping[key], state.octave)
                         );
                     }
                 },
                 up: (event, key) => {
                     if (noteMapping[key]) {
                         synth.stop(
-                            synth.getFrequency(noteMapping[key], state.octave)
+                            WebSynth.getFrequency(noteMapping[key], state.octave)
                         );
                     }
                 }

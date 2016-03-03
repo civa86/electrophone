@@ -57,7 +57,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var win = window || {};
-
 	win.WebSynth = _WebSynth2.default;
 
 	exports.default = _WebSynth2.default;
@@ -15137,9 +15136,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	//TODO remove lodash and use spread object operator....
 
 	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _modules = __webpack_require__(6);
 
@@ -15151,130 +15151,210 @@
 
 	var _Constants = __webpack_require__(1);
 
+	var _TypeDefinition = __webpack_require__(49);
+
+	var _TypeDefinition2 = _interopRequireDefault(_TypeDefinition);
+
 	var _Synth = __webpack_require__(10);
 
 	var _Synth2 = _interopRequireDefault(_Synth);
-
-	var _lodash = __webpack_require__(8);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var methods = Object.keys(Modules);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	exports.default = function (props) {
-	    var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+	var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+	    methods = Object.keys(Modules);
 
-	    var factory = {
-	        VARS: _Constants.CONST,
-	        TYPES: _Constants.TYPES
-	    },
-	        properties = props || {},
-	        synth = new _Synth2.default(properties);
+	/**
+	 * WebSynth Library
+	 * @example
+	 * const synth = new WebSynth();
+	 */
 
-	    function callModule(type) {
-	        return function (label, props) {
-	            synth.module(type, label, props);
-	            return factory;
-	        };
+	var WebSynth = function () {
+	    /**
+	     * Create a playable synthesizer instance
+	     * @param {WebSynthProperties} [properties]
+	     */
+
+	    function WebSynth(props) {
+	        _classCallCheck(this, WebSynth);
+
+	        var properties = props || {};
+	        this.synth = new _Synth2.default(properties);
 	    }
 
-	    function init() {
-	        var fx = undefined;
-	        methods.filter(function (e) {
-	            return e !== _Constants.TYPES.MASTER;
-	        }).forEach(function (type) {
-	            fx = type.toLowerCase();
-	            factory[fx] = callModule(type);
-	        });
-	    }
+	    /**
+	     * Start playing the input frequency
+	     * @param {number} frequency=0 - the number of frequency
+	     */
 
-	    function module(type, label, props) {
-	        synth.module(type, label, props);
-	        return factory;
-	    }
 
-	    function master(level) {
-	        if (+level >= 0) {
-	            synth.module(_Constants.TYPES.MASTER, _Constants.CONST.MASTER, {
-	                level: level
-	            });
-	        }
-	    }
+	    WebSynth.prototype.play = function play() {
+	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 
-	    function adsr(props) {
-	        synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, props);
-	    }
+	        this.synth.play(frequency);
+	    };
 
-	    function destroyModule(id) {
-	        //TODO check on deletion of voices...you can remove sounds runtime
-	        delete synth.modulesConfig[id];
-	        return factory;
-	    }
+	    /**
+	     * Stop playing the input frequency
+	     * @param {number} frequency=0 - the number of frequency
+	     */
 
-	    function linkModules(source, target) {
-	        if (source === _Constants.CONST.MASTER) {
-	            throw new Error('ERROR :: master can\'t be linked to any modules');
-	        }
 
-	        if (synth.modulesConfig[source] && synth.modulesConfig[target]) {
-	            synth.modulesConfig[source].props.link = target;
-	        }
-	        return factory;
-	    }
+	    WebSynth.prototype.stop = function stop() {
+	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 
-	    function listAllModules() {
-	        return methods;
-	    }
+	        this.synth.stop(frequency);
+	    };
 
-	    function listModules() {
-	        return synth.modulesConfig;
-	    }
+	    WebSynth.prototype.getModules = function getModules() {
+	        return _extends({}, this.synth.modulesConfig);
+	    };
 
-	    function getModulePropertiesSet(type) {
-	        var p = Props[type + 'Props'] || {};
-	        return _lodash2.default.assign({}, p, Props.DefaultProps);
-	    }
+	    WebSynth.describeModules = function describeModules() {
+	        return [].concat(methods).filter(function (e) {
+	            return e !== '__esModule';
+	        }).reduce(function (result, e) {
+	            var moduleProps = Props[e + 'Props'] || {};
+	            return [].concat(result, [{
+	                name: e,
+	                properties: _extends({}, moduleProps, Props.DefaultProps)
+	            }]);
+	        }, []);
+	    };
 
-	    function play(note) {
-	        synth.play(note);
-	    }
-
-	    function stop(note) {
-	        synth.stop(note);
-	    }
-
-	    function getFrequency(note, octave) {
+	    WebSynth.getFrequency = function getFrequency(note, octave) {
 	        var octaveD = parseInt(octave, 10) - 4,
 	            noteD = notes.indexOf(note) - notes.indexOf('A'),
 	            delta = 12 * octaveD,
 	            exp = noteD + delta,
 	            freq = 440 * Math.pow(1.059463, exp);
 	        return parseFloat(freq.toFixed(3));
-	    }
+	    };
 
-	    init();
+	    return WebSynth;
+	}();
 
-	    factory.module = module;
-	    factory.master = master;
-	    factory.adsr = adsr;
-	    factory.destroyModule = destroyModule;
-	    factory.linkModules = linkModules;
+	WebSynth.CONST = _Constants.CONST;
+	WebSynth.TYPES = _Constants.TYPES;
 
-	    factory.listAllModules = listAllModules;
-	    factory.listModules = listModules;
-	    factory.getModulePropertiesSet = getModulePropertiesSet;
+	exports.default = WebSynth;
 
-	    factory.play = play;
-	    factory.stop = stop;
-
-	    factory.getFrequency = getFrequency;
-
-	    return factory;
-	};
+	//export default (props) => {
+	//    const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+	//
+	//    let factory = {
+	//            VARS: CONST,
+	//            TYPES: TYPES
+	//        },
+	//        properties = props || {},
+	//        synth = new Synth(properties);
+	//
+	//    function callModule (type) {
+	//        return (label, props) => {
+	//            synth.module(type, label, props);
+	//            return factory;
+	//        };
+	//    }
+	//
+	//    function init () {
+	//        let fx;
+	//        methods
+	//            .filter(e => e !== TYPES.MASTER)
+	//            .forEach(type => {
+	//                fx = type.toLowerCase();
+	//                factory[fx] = callModule(type);
+	//            });
+	//    }
+	//
+	//    function module (type, label, props) {
+	//        synth.module(type, label, props);
+	//        return factory;
+	//    }
+	//
+	//    function master (level) {
+	//        if (+level >= 0) {
+	//            synth.module(TYPES.MASTER, CONST.MASTER, {
+	//                level: level
+	//            });
+	//        }
+	//    }
+	//
+	//    function adsr (props) {
+	//        synth.module(TYPES.ENVELOPE, CONST.ADSR, props);
+	//    }
+	//
+	//    function destroyModule (id) {
+	//        //TODO check on deletion of voices...you can remove sounds runtime
+	//        //TODO run deletion on synth....
+	//        delete synth.modulesConfig[id];
+	//        return factory;
+	//    }
+	//
+	//    function linkModules (source, target) {
+	//        if (source === CONST.MASTER) {
+	//            throw new Error('ERROR :: master can\'t be linked to any modules');
+	//        }
+	//
+	//        if (synth.modulesConfig[source] && synth.modulesConfig[target]) {
+	//            synth.modulesConfig[source].props.link = target;
+	//        }
+	//        return factory;
+	//    }
+	//
+	//    function listAllModules () {
+	//        return methods;
+	//    }
+	//
+	//    function listModules () {
+	//        return synth.modulesConfig;
+	//    }
+	//
+	//    function getModulePropertiesSet (type) {
+	//        const p = Props[type + 'Props'] || {};
+	//        return _.assign({}, p, Props.DefaultProps);
+	//    }
+	//
+	//    function play (note) {
+	//        synth.play(note);
+	//    }
+	//
+	//    function stop (note) {
+	//        synth.stop(note);
+	//    }
+	//
+	//    function getFrequency (note, octave) {
+	//        const octaveD = parseInt(octave, 10) - 4,
+	//            noteD = notes.indexOf(note) - notes.indexOf('A'),
+	//            delta = 12 * octaveD,
+	//            exp = (noteD + delta),
+	//            freq = 440 * Math.pow(1.059463, exp);
+	//        return parseFloat(freq.toFixed(3));
+	//    }
+	//
+	//    init();
+	//
+	//    factory.module = module;
+	//    factory.master = master;
+	//    factory.adsr = adsr;
+	//    factory.destroyModule = destroyModule;
+	//    factory.linkModules = linkModules;
+	//
+	//    factory.listAllModules = listAllModules;
+	//    factory.listModules = listModules;
+	//    factory.getModulePropertiesSet = getModulePropertiesSet;
+	//
+	//    factory.play = play;
+	//    factory.stop = stop;
+	//
+	//    factory.getFrequency = getFrequency;
+	//
+	//    return factory;
+	//};
 
 /***/ },
 /* 10 */
@@ -19310,6 +19390,18 @@
 		return module;
 	}
 
+
+/***/ },
+/* 49 */
+/***/ function(module, exports) {
+
+	/**
+	 * @typedef {Object} WebSynthProperties
+	 * @property {boolean} spectrum - set if there is a spectrum attached.
+	 * @property {function} updateSpectrum - on receive data callback.
+	 * @property {function} resetSpectrum - on stop data callback.
+	 */
+	"use strict";
 
 /***/ }
 /******/ ]);

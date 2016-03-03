@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as SynthActions from '../actions/SynthActions';
+import WebSynth from 'web-synth';
 
 // Components
 import Graph from '../components/Graph';
@@ -16,7 +17,10 @@ const
     screen = screenService(),
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
+    synthModules = WebSynth.describeModules(),
     headerHeight = 70;
+
+console.log(synthModules);
 
 class App extends Component {
     createMasterNode () {
@@ -75,7 +79,10 @@ class App extends Component {
 
     addModule () {
         const { dispatch } = this.props;
-        dispatch(SynthActions.addAudioNode({ id: nodePrefix + this.getMaxNodeId() }));
+        dispatch(SynthActions.addAudioNode({
+            id: nodePrefix + this.getMaxNodeId(),
+            isMaster: false
+        }));
     }
 
     getGraphHeight () {
@@ -91,8 +98,6 @@ class App extends Component {
         if (!master) {
             this.createMasterNode();
         }
-        this.currentPanel = 'graph';
-
     }
 
     render () {
@@ -153,7 +158,9 @@ class App extends Component {
 
                             {(() => {
                                 if (!e.isMaster) {
-                                    return <button onClick={() => dispatch(SynthActions.removeNode(e.id))}>delete</button>
+                                    return <button onClick={
+                                        () => dispatch(SynthActions.removeNode(e.id))
+                                    }>delete</button>
                                 }
 
                             })()}
