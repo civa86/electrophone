@@ -25,6 +25,8 @@ function synth (state = initState, action = {}) {
                     ...state.modules,
                     {
                         id: action.id,
+                        type: action.moduleType,
+                        properties: action.moduleProps,
                         isMaster: action.isMaster || false,
                         position: {
                             x: 100,

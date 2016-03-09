@@ -4,7 +4,9 @@ function addAudioNode (node) {
     return {
         type: actionTypes.ADD_AUDIO_NODE,
         id: node.id,
-        isMaster: node.isMaster
+        isMaster: node.isMaster,
+        moduleType: node.type,
+        moduleProps: { ...node.properties }
     };
 }
 

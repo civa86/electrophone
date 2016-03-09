@@ -20,8 +20,6 @@ const
     synthModules = WebSynth.describeModules(),
     headerHeight = 70;
 
-console.log(synthModules);
-
 class App extends Component {
     createMasterNode () {
         const { dispatch } = this.props;
@@ -77,9 +75,13 @@ class App extends Component {
         return max + 1;
     }
 
-    addModule () {
-        const { dispatch } = this.props;
+    addModule (type) {
+        const
+            { dispatch } = this.props,
+            newModule = synthModules.filter(e => e.type === type).pop();
+
         dispatch(SynthActions.addAudioNode({
+            ...newModule,
             id: nodePrefix + this.getMaxNodeId(),
             isMaster: false
         }));
@@ -92,13 +94,13 @@ class App extends Component {
         return graphHeight;
     }
 
-    componentDidMount () {
-        const { synth } = this.props;
-        let master = synth.modules.filter(e => e.isMaster).pop();
-        if (!master) {
-            this.createMasterNode();
-        }
-    }
+    //componentDidMount () {
+    //    //const { synth } = this.props;
+    //    //let master = synth.modules.filter(e => e.isMaster).pop();
+    //    //if (!master) {
+    //    //    this.createMasterNode();
+    //    //}
+    //}
 
     render () {
         const
@@ -118,9 +120,6 @@ class App extends Component {
         return (
             <div>
                 <div id="header" style={{ height: headerHeight }}>
-                    <button onClick={() => this.addModule()}>
-                        add
-                    </button>
                     <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
                         LINK MODE
                     </button>
@@ -136,6 +135,10 @@ class App extends Component {
                     <br/>
                     OCTAVE: {synth.octave}
                     <br/>
+                    <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
+                        ADD MODULE
+                    </button>
+
                     <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
                         GRAPH PANEL
                     </button>
@@ -145,6 +148,16 @@ class App extends Component {
                     </button>
 
                 </div>
+                <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
+                    {synthModules.map(e => {
+                        if (e.type !== WebSynth.TYPES.MASTER) {
+                            return <button key={e.type} onClick={() => this.addModule(e.type)}>
+                                {e.type}
+                            </button>
+                        }
+                    })}
+                </div>
+
                 <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
                     <Graph state={synth}
                            height={this.getGraphHeight()}

@@ -24,9 +24,9 @@ const
 
 class Synth extends Component {
 
-    componentDidMount () {
-        console.log(synth.getModules());
-    }
+    //componentDidMount () {
+    //    console.log(synth.getModules());
+    //}
 
     componentWillReceiveProps (newProps) {
         console.log('synth component', newProps.state);
@@ -39,7 +39,6 @@ class Synth extends Component {
                 keys: Object.keys(noteMapping).map(Number),
                 down: (event, key) => {
                     if (noteMapping[key]) {
-                        console.log(WebSynth.getFrequency(noteMapping[key], state.octave), state.octave);
                         synth.play(
                             WebSynth.getFrequency(noteMapping[key], state.octave)
                         );

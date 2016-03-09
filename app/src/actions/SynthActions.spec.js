@@ -7,11 +7,21 @@ describe('Synth actions', () => {
         const expectedAction = {
             type: actionTypes.ADD_AUDIO_NODE,
             id: 'ele1',
-            isMaster: true
+            isMaster: true,
+            moduleType: 'Type',
+            moduleProps: {
+                a: 'a',
+                b: 'b'
+            }
         };
         expect(actions.addAudioNode({
             id: 'ele1',
-            isMaster: true
+            isMaster: true,
+            type: 'Type',
+            properties: {
+                a: 'a',
+                b: 'b'
+            }
         })).to.deep.equal(expectedAction);
     });
 
