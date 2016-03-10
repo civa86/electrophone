@@ -26,7 +26,10 @@ function synth (state = initState, action = {}) {
                     {
                         id: action.id,
                         type: action.moduleType,
-                        properties: action.moduleProps,
+                        properties: [ ...action.moduleProps ].map(prop => ({
+                            ...prop,
+                            value: (prop) ? prop.defaultValue : null
+                        })),
                         isMaster: action.isMaster || false,
                         position: {
                             x: 100,

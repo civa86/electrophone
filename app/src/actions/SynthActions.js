@@ -6,7 +6,7 @@ function addAudioNode (node) {
         id: node.id,
         isMaster: node.isMaster,
         moduleType: node.type,
-        moduleProps: { ...node.properties }
+        moduleProps: [ ...node.properties ]
     };
 }
 

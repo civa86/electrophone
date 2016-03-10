@@ -8,6 +8,9 @@ import Graph from '../components/Graph';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 
+//Panels
+import ControlPanel from '../components/ControlPanel';
+
 // Services
 import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
@@ -159,28 +162,20 @@ class App extends Component {
                 </div>
 
                 <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
-                    <Graph state={synth}
-                           height={this.getGraphHeight()}
-                           actions={graphActions}
+                    <Graph
+                        state={synth}
+                        height={this.getGraphHeight()}
+                        actions={graphActions}
                     />
                 </div>
-                <div id="control-panel" style={{ display: (synth.viewPanel === 'control') ? 'block' : 'none' }}>
-                    {synth.modules.map(e =>
-                        <p key={e.id} onClick={() => dispatch(SynthActions.setAudioNodeSelection(e.id, !e.isSelected))}>
-                            {e.id} - {e.isSelected ? 'V' : 'X'}
 
-                            {(() => {
-                                if (!e.isMaster) {
-                                    return <button onClick={
-                                        () => dispatch(SynthActions.removeNode(e.id))
-                                    }>delete</button>
-                                }
+                <ControlPanel
+                    isVisible={synth.viewPanel === 'control'}
+                    modules={synth.modules}
+                />
 
-                            })()}
-                        </p>
-                    )}
-                </div>
                 <Synth state={synth} />
+
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         );

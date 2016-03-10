@@ -3,33 +3,46 @@ const initState = {
         {
             id: 'node0',
             type: 'Master',
-            properties: {
-                level: {
+            properties: [
+                {
+                    name: 'level',
                     type: 'number',
                     bounds: [0, 100],
-                    defaultValue: 100
+                    defaultValue: 100,
+                    value: 100
                 },
-                attack: {
+                {
+                    name: 'attack',
                     type: 'number',
                     bounds: [0, 100],
-                    defaultValue: 0
+                    defaultValue: 0,
+                    value: 0
+
                 },
-                decay: {
+                {
+                    name: 'decay',
                     type: 'number',
                     bounds: [1, 100],
-                    defaultValue: 1
+                    defaultValue: 1,
+                    value: 1
+
                 },
-                sustain: {
+                {
+                    name: 'sustain',
                     type: 'number',
                     bounds: [0, 100],
-                    defaultValue: 100
+                    defaultValue: 100,
+                    value: 100
                 },
-                release: {
+                {
+                    name: 'release',
                     type: 'number',
                     bounds: [0, 100],
-                    defaultValue: 5
+                    defaultValue: 5,
+                    value: 5
                 }
-            },
+
+            ],
             isMaster: true,
             isSelected: false,
             link: null,

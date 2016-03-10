@@ -9,19 +9,13 @@ describe('Synth actions', () => {
             id: 'ele1',
             isMaster: true,
             moduleType: 'Type',
-            moduleProps: {
-                a: 'a',
-                b: 'b'
-            }
+            moduleProps: [{ name: 'a', value: 1 }]
         };
         expect(actions.addAudioNode({
             id: 'ele1',
             isMaster: true,
             type: 'Type',
-            properties: {
-                a: 'a',
-                b: 'b'
-            }
+            properties: [{ name: 'a', value: 1 }]
         })).to.deep.equal(expectedAction);
     });
 
@@ -109,9 +103,9 @@ describe('Synth actions', () => {
     it('should create an action loadState', () => {
         const expectedAction = {
             type: actionTypes.LOAD_STATE,
-            state: { a: 1, b:2 }
+            state: { a: 1, b: 2 }
         };
-        expect(actions.loadState({ a: 1, b:2 })).to.deep.equal(expectedAction);
+        expect(actions.loadState({ a: 1, b: 2 })).to.deep.equal(expectedAction);
     });
 
     it('should create an action resetState', () => {
