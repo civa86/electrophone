@@ -1,6 +1,6 @@
 (function (module) {
     'use strict';
-
+    //TODO understand how to separate package.json dependency from build...
     var path = require('path'),
         webpack = require('webpack'),
         HtmlWebpackPlugin = require('html-webpack-plugin'),
@@ -100,8 +100,20 @@
                     loader: ExtractTextPlugin.extract('style', 'css!less')
                 },
                 {
+                    test:   /\.css$/,
+                    loader: ExtractTextPlugin.extract('style', 'css')
+                },
+                {
                     test:   /\.(txt)$/,
                     loader: 'file?name=[name].[ext]'
+                },
+                {
+                    test:   /\.(woff|woff2|ttf|eot)$/,
+                    loader: 'file?name=assets/fonts/[name].[ext]'
+                },
+                {
+                    test:   /\.(png|jpg|jpeg|gif|svg)$/,
+                    loader: 'file?name=assets/img/[name].[ext]'
                 }
             ],
             noParse: [ /cytoscape/ ]

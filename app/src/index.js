@@ -7,6 +7,10 @@ import Root from './containers/Root';
 import '../humans.txt';
 import '../robots.txt';
 
+//BOOTSTRAP
+import 'bootstrap/dist/css/bootstrap.css';
+import 'imports?jQuery=jquery!bootstrap/dist/js/bootstrap';
+
 // STYLE
 import '../less/screen.less';
 

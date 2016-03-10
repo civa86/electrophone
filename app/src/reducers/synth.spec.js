@@ -1,4 +1,3 @@
-
 import { expect } from 'chai';
 import synth from './synth';
 import initState from './initState';
@@ -145,6 +144,7 @@ describe('Synth reducer', () => {
         expect(state.modules.length).to.equal(2);
         state = synth(state, resetState());
         expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
     });
 
     it('should increase octave', () => {

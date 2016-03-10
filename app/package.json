@@ -14,7 +14,9 @@
     "react-dom": "0.14.x",
     "redux": "3.1.x",
     "react-redux": "4.1.x",
-    "redux-thunk": "1.0.x"
+    "redux-thunk": "1.0.x",
+    "jquery": "1.x",
+    "bootstrap": "3.3.x"
   },
   "devDependencies": {
     "babel-cli": "6.3.x",
@@ -32,6 +34,7 @@
     "eslint-plugin-react": "3.16.x",
     "extract-text-webpack-plugin": "0.9.x",
     "file-loader": "0.8.x",
+    "imports-loader": "0.6.x",
     "html-webpack-plugin": "1.6.x",
     "less": "2.5.x",
     "less-loader": "2.2.x",
