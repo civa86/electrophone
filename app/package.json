@@ -1,6 +1,6 @@
 {
   "name": "web-synth-ui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Web Graph UI - React + Redux",
   "main": "server.js",
   "repository": {
