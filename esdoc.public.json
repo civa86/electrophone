@@ -1,0 +1,9 @@
+{
+  "source": "./lib/",
+  "includes": ["^(WebSynth|TypeDefinition)\\.js$"],
+  "destination": "./app/dist/docs",
+  "title": "WebSynth Documentation",
+  "plugins": [
+    {"name": "esdoc-es7-plugin"}
+  ]
+}

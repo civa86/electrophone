@@ -34,6 +34,7 @@
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "lib::dist": "npm test; npm run lib::build",
-    "lib::docs": "esdoc -c esdoc.json"
+    "lib::docs": "esdoc -c esdoc.json",
+    "lib::docs::public": "esdoc -c esdoc.public.json"
   }
 }
