@@ -1,10 +1,12 @@
 # WebSynth
 
-STATUS: `DEVELOPMENT`
-DEMO: [civa86.github.io/web-synth](https://civa86.github.io/web-synth)
-
 Web Audio Modular Synthesizer Library
 
+STATUS: `DEVELOPMENT`
+
+DEMO: [civa86.github.io/web-synth](https://civa86.github.io/web-synth)
+
+[![Build Status](https://travis-ci.org/civa86/web-synth.svg?branch=master)](https://travis-ci.org/civa86/web-synth)
 
 #### NPM Scripts
 
