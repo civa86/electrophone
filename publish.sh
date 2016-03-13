@@ -1,4 +1,5 @@
 #!/bin/bash
+#TODO bump version of package.json!!
 
 echo "/***** INSTALL LIBRARY DEPENDENCIES ****/"
 npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed' ; exit 1; }
