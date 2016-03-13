@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!--[if lt IE 7]>
-<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
-<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
-<html lang="en" ng-app="myApp" id="ng-app" class="no-js lt-ie9"> <![endif]-->
+<html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html ng-app="myApp" id="ng-app" class="no-js"><!--<![endif]-->
+<html class="no-js"><!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,66 +29,7 @@
     <meta property="og:description" content="">
     <meta property="og:image" content="">
 </head>
-<body ng-cloak="">
-<div id="main-wrapper" ng-controller="ApplicationController as appCtrl" data-global-keys="">
-    <header class="container-fluid">
-        <div class="row">
-            <div class="col-xs-6">
-                <div>
-                    OCTAVE: {{appCtrl.currentOctave}}
-                </div>
-                <button class="btn btn-info"
-                        type="button"
-                        data-update-graph-btn=""
-                        data-toggle="collapse" href="#menu">Menu
-                </button>
-                <button data-link-mode-button=""></button>
-
-            </div>
-            <div class="col-xs-6">
-                <div ng-show="appCtrl.linkMode">
-                    {{appCtrl.linkSource}}
-                    <span ng-show="appCtrl.linkTarget !== ''"> --> </span>
-                    {{appCtrl.linkTarget}}
-                </div>
-                <div ng-show="!appCtrl.linkMode">
-                    <button class="btn btn-info"
-                            role="tab"
-                            data-update-graph-btn=""
-                            data-toggle="tab" data-target="#module-builder">Add Node
-                    </button>
-                    <button class="btn btn-info"
-                            role="tab"
-                            data-update-graph-btn=""
-                            data-toggle="tab" data-target="#control-panel">{{appCtrl.currentNode | nodename}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-    <section id="menu" class="container-fluid collapse in">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="tab-content">
-                    <div data-module-builder=""
-                         data-modules-list="appCtrl.builderModuleList"></div>
-
-                    <div role="tabpanel" class="tab-pane" id="control-panel">
-                        <div data-control-panel=""
-                             data-module="appCtrl.currentNode"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="content" class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12">
-                <div data-graph=""
-                     data-link-mode="appCtrl.linkMode"></div>
-            </div>
-        </div>
-    </section>
-</div>
+<body>
+<div id="root"></div>
 </body>
 </html>

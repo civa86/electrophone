@@ -1,0 +1,59 @@
+{
+  "name": "web-synth-ui",
+  "version": "0.0.0",
+  "description": "Web Graph UI - React + Redux",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/civa86/web-synth.git"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "react": "0.14.x",
+    "react-dom": "0.14.x",
+    "redux": "3.1.x",
+    "react-redux": "4.1.x",
+    "redux-thunk": "1.0.x",
+    "jquery": "1.x",
+    "bootstrap": "3.3.x"
+  },
+  "devDependencies": {
+    "babel-cli": "6.3.x",
+    "babel-core": "6.3.x",
+    "babel-loader": "6.2.x",
+    "babel-polyfill": "6.3.x",
+    "babel-preset-es2015-loose": "6.1.x",
+    "babel-preset-react": "6.3.x",
+    "babel-preset-stage-0": "6.3.x",
+    "chai": "3.5.x",
+    "css-loader": "0.23.x",
+    "cytoscape": "2.5.x",
+    "eslint": "1.10.x",
+    "eslint-loader": "1.2.x",
+    "eslint-plugin-react": "3.16.x",
+    "extract-text-webpack-plugin": "0.9.x",
+    "file-loader": "0.8.x",
+    "imports-loader": "0.6.x",
+    "html-webpack-plugin": "1.6.x",
+    "less": "2.5.x",
+    "less-loader": "2.2.x",
+    "lodash": "4.0.x",
+    "mocha": "2.4.x",
+    "node-libs-browser": "0.5.x",
+    "react-hot-loader": "1.3.x",
+    "redux-devtools": "3.0.x",
+    "redux-devtools-dock-monitor": "1.0.x",
+    "redux-devtools-log-monitor": "1.0.x",
+    "style-loader": "0.13.x",
+    "webpack": "1.9.x",
+    "webpack-dev-server": "1.9.x"
+  },
+  "scripts": {
+    "test": "mocha ./src/**/*.spec.js ./src/components/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test:watch": "npm test -- --watch",
+    "app::dev": "node server.js",
+    "app::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile",
+    "app::dist": "npm test; npm run app::build"
+  }
+}

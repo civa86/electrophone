@@ -190,7 +190,6 @@
             //    link:        synth.VARS.MASTER
             //})
         ;
-        console.log(synth.listModules());
 
         //TODO link to waves...
         //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/

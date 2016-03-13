@@ -4,8 +4,6 @@
 *.iml
 *.log
 .vagrant
-
+docs
 node_modules
-coverage
-publish
 

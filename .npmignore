@@ -1,11 +1,2 @@
 app
-coverage
 demo
-lib
-publish
-.gitignore
-.jscsrc
-.jshintrc
-karma.conf.js
-webpack.app.config.js
-webpack.lib.config.js
