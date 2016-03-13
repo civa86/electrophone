@@ -1,7 +1,7 @@
 const initState = {
     modules: [
         {
-            id: 'node0',
+            id: 'master',
             type: 'Master',
             properties: [
                 {

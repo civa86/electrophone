@@ -24,14 +24,6 @@ const
 
 class Synth extends Component {
 
-    //componentDidMount () {
-    //    console.log(synth.getModules());
-    //}
-
-    componentWillReceiveProps (newProps) {
-        console.log('synth component', newProps.state);
-    }
-
     getKeyboardMapping () {
         const { state } = this.props;
         return [
@@ -53,6 +45,76 @@ class Synth extends Component {
                 }
             }
         ]
+    }
+
+    refreshModules (modules) {
+        const currentModules = synth.getModules();
+
+        modules.forEach(e => {
+            if (e.isMaster) {
+                this.updateMaster(e.properties);
+            } else {
+                if (currentModules[e.id]) {
+                    this.updateModule(e.id, e.properties, e.link);
+                } else {
+                    this.createModule(e.id, e.type, e.properties, e.link)
+                }
+            }
+        });
+    }
+
+    refreshLinks (modules) {
+        modules.forEach(e => {
+            if (!e.isMaster && e.link) {
+                synth.linkModules(e.id, e.link);
+            }
+        });
+    }
+
+    updateMaster (props) {
+        synth.master(
+            props
+                .filter(e => e.name === 'level')
+                .reduce((res, p) => {
+                    res[p.name] = p.value;
+                    return res;
+                }, {}));
+
+        synth.adsr(
+            props
+                .filter(e => e.name !== 'level')
+                .reduce((res, p) => {
+                    res[p.name] = p.value;
+                    return res;
+                }, {}));
+    }
+
+    updateModule (id, props) {
+        synth.update(
+            id,
+            props.reduce((res, p) => {
+                res[p.name] = p.value;
+                return res;
+            }, {})
+        );
+    }
+
+    createModule (id, type, props) {
+        synth.create(
+            id,
+            type,
+            props.reduce((res, p) => {
+                res[p.name] = p.value;
+                return res;
+            }, {})
+        );
+    }
+
+    componentWillReceiveProps (newProps) {
+        if (newProps && newProps.state && newProps.state.modules) {
+            this.refreshModules(newProps.state.modules);
+            this.refreshLinks(newProps.state.modules);
+        }
     }
 
     render () {

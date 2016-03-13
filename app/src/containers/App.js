@@ -24,15 +24,6 @@ const
     headerHeight = 70;
 
 class App extends Component {
-    createMasterNode () {
-        const { dispatch } = this.props;
-        dispatch(SynthActions.addAudioNode(
-            {
-                id: nodePrefix + '0',
-                isMaster: true
-            }
-        ));
-    }
 
     getKeyboardMapping () {
         const { synth, dispatch } = this.props;
@@ -72,7 +63,7 @@ class App extends Component {
             { synth } = this.props,
             max = synth.modules.reduce((result, e) => {
                 const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
-                return Math.max(result, idInt);
+                return isNaN(idInt) ? 0 : Math.max(result, idInt);
             }, 0);
 
         return max + 1;
@@ -96,14 +87,6 @@ class App extends Component {
             graphHeight = windowSize.height - headerHeight;
         return graphHeight;
     }
-
-    //componentDidMount () {
-    //    //const { synth } = this.props;
-    //    //let master = synth.modules.filter(e => e.isMaster).pop();
-    //    //if (!master) {
-    //    //    this.createMasterNode();
-    //    //}
-    //}
 
     render () {
         const
