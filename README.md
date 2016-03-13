@@ -1,6 +1,10 @@
 # WebSynth
 
+STATUS: `DEVELOPMENT`
+DEMO: [civa86.github.io/web-synth](https://civa86.github.io/web-synth)
+
 Web Audio Modular Synthesizer Library
+
 
 #### NPM Scripts
 
