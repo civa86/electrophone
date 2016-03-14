@@ -1,6 +1,6 @@
 {
   "name": "web-synth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Web Audio Modular Synth",
   "main": "dist/web-synth.js",
   "repository": {
