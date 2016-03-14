@@ -5,7 +5,7 @@ LATEST_TAG=`git describe --tags $(git rev-list --tags --max-count=1)`
 
 if [ "$GIT_BRANCH" != "development" ]
 then
-    echo "Release start from development! switch your branch"
+    echo "ERROR: A Release starts from development! switch branch"
     exit 1
 fi
 
@@ -26,11 +26,13 @@ npm run lib::build || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
 
 echo "/***** COMMIT DEVELOPMENT ****/"
 git add .
-git commit -m "release $RELEASE_NUM"
+git commit -m "build $RELEASE_NUM"
 
 echo "/**** GITFLOW RELEASE :: $RELEASE_NUM ****/"
 git flow release start $RELEASE_NUM
-git flow release finish $RELEASE_NUM
+git flow release finish $RELEASE_NUM -m "release $RELEASE_NUM"
+
+git checkout development
 
 echo "/******************************************/"
 echo "/****      WEB SYNTH RELEASE END       ****/"
