@@ -1,6 +1,6 @@
 {
   "name": "web-synth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Web Audio Modular Synth",
   "main": "dist/web-synth.js",
   "repository": {
@@ -34,6 +34,7 @@
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "lib::dist": "npm test; npm run lib::build",
-    "lib::docs": "esdoc -c esdoc.json"
+    "lib::docs": "esdoc -c esdoc.json",
+    "lib::docs::public": "esdoc -c esdoc.public.json"
   }
 }
