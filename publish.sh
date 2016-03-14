@@ -1,5 +1,8 @@
 #!/bin/bash
-#TODO bump version of package.json!!
+
+echo "/*****************************************/"
+echo "/*****    PUBLISH GH-PAGES :: START   ****/"
+echo "/*****************************************/"
 
 echo "/***** INSTALL LIBRARY DEPENDENCIES ****/"
 npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed' ; exit 1; }
@@ -46,4 +49,6 @@ git push --force --quiet "https://${GH_TOKEN}@$GH_REF" master:gh-pages > /dev/nu
 echo "/***** CLEAN TMP REPO ****/"
 rm -rf .git
 
-echo "PUBLISHING END"
+echo "/*****************************************/"
+echo "/*****    PUBLISH GH-PAGES :: END     ****/"
+echo "/*****************************************/"

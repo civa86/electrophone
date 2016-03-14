@@ -3,7 +3,7 @@
 
     var path = require('path'),
         webpack = require('webpack'),
-        OutputFileName,
+        entries,
         pluginsSet,
         watchEnabled,
         emitLintErrors;
@@ -12,10 +12,16 @@
         //Build Configuration
         console.log('/***** LIBRARY BUILD ****/');
 
-        OutputFileName = 'web-synth.min.js';
+        entries = {
+            "web-synth": path.join(__dirname, 'lib/index.js'),
+            "web-synth.min": path.join(__dirname, 'lib/index.js')
+        };
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin(),
-            new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+            new webpack.optimize.UglifyJsPlugin({
+                include: /\.min\.js$/,
+                minimize: true
+            }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"production"'
             })
@@ -27,7 +33,9 @@
         //Development Configuration
         console.log('/***** LIBRARY DEVELOPMENT ****/');
 
-        OutputFileName = 'web-synth.js';
+        entries = {
+            "web-synth": path.join(__dirname, 'lib/index.js')
+        };
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin()
         ];
@@ -36,15 +44,16 @@
     }
 
     module.exports = {
-        entry: path.join(__dirname, 'lib/index.js'),
+        entry: entries,
         output: {
             path: path.join(__dirname, 'dist'),
-            filename: OutputFileName
+            filename: "[name].js"
         },
         plugins: pluginsSet,
         resolveLoader: {
             fallback: path.join(__dirname, 'node_modules')
         },
+        devtool: 'source-map',
         module: {
             preLoaders: [
                 {
