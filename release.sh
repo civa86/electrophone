@@ -30,7 +30,7 @@ git commit -m "build $RELEASE_NUM"
 
 echo "/**** GITFLOW RELEASE :: $RELEASE_NUM ****/"
 git flow release start $RELEASE_NUM
-git flow release finish -m "release $RELEASE_NUM" $RELEASE_NUM
+git flow release finish -m "release-$RELEASE_NUM" $RELEASE_NUM
 
 git checkout development
 
