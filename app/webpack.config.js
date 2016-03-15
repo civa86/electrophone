@@ -22,7 +22,7 @@
         ];
         output = {
             path: path.join(__dirname, 'dist'),
-            filename: 'js/bundle.min.js'
+            filename: 'js/bundle.[hash].min.js'
         };
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin(),

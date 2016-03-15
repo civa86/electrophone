@@ -136,7 +136,7 @@ class App extends Component {
                         </button>
                     </div>
                     <div className="col-xs-4">
-                        <div className="pull-right">v.{libVersion}</div>
+                        <div className="pull-right">WebSynth v.{libVersion}</div>
                     </div>
                 </div>
                 <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
