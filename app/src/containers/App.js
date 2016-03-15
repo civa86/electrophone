@@ -21,7 +21,7 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 70;
+    headerHeight = 100;
 
 class App extends Component {
 
@@ -101,38 +101,43 @@ class App extends Component {
                 linkHandler: (sourceNodeId, destNodeId) => {
                     dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
-            };
+            },
+            libVersion = process.env.LIB_VERSION;
 
         return (
             <div>
-                <div id="header" style={{ height: headerHeight }}>
-                    <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
-                        LINK MODE
-                    </button>
-                    <button onClick={() => localCache.saveState(localCacheKey, synth)}>
-                        SAVE SYNTH
-                    </button>
-                    <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
-                        LOAD SYNTH
-                    </button>
-                    <button onClick={() => dispatch(SynthActions.resetState())}>
-                        RESET SYNTH
-                    </button>
-                    <br/>
-                    OCTAVE: {synth.octave}
-                    <br/>
-                    <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
-                        ADD MODULE
-                    </button>
+                <div id="header" style={{ height: headerHeight, padding: '5px' }} className="row">
+                    <div className="col-xs-8">
+                        <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
+                            LINK MODE
+                        </button>
+                        <button onClick={() => localCache.saveState(localCacheKey, synth)}>
+                            SAVE SYNTH
+                        </button>
+                        <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
+                            LOAD SYNTH
+                        </button>
+                        <button onClick={() => dispatch(SynthActions.resetState())}>
+                            RESET SYNTH
+                        </button>
+                        <br/>
+                        OCTAVE: {synth.octave}
+                        <br/>
+                        <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
+                            ADD MODULE
+                        </button>
 
-                    <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
-                        GRAPH PANEL
-                    </button>
+                        <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
+                            GRAPH PANEL
+                        </button>
 
-                    <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
-                        CONTROL PANEL
-                    </button>
-
+                        <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
+                            CONTROL PANEL
+                        </button>
+                    </div>
+                    <div className="col-xs-4">
+                        <div className="pull-right">WebSynth v.{libVersion}</div>
+                    </div>
                 </div>
                 <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
                     {synthModules.map(e => {
