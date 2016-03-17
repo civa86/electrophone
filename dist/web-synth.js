@@ -48,9 +48,9 @@
 	
 	exports.__esModule = true;
 	
-	__webpack_require__(43);
+	__webpack_require__(42);
 	
-	var _WebSynth = __webpack_require__(8);
+	var _WebSynth = __webpack_require__(7);
 	
 	var _WebSynth2 = _interopRequireDefault(_WebSynth);
 	
@@ -114,8 +114,7 @@
 	exports.CONST = CONST;
 
 /***/ },
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -124,11 +123,11 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _Module2 = __webpack_require__(4);
+	var _Module2 = __webpack_require__(3);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
 	
-	var _EffectManager = __webpack_require__(10);
+	var _EffectManager = __webpack_require__(9);
 	
 	var _EffectManager2 = _interopRequireDefault(_EffectManager);
 	
@@ -204,7 +203,7 @@
 	exports.default = Effect;
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -213,11 +212,11 @@
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _lodash = __webpack_require__(42);
+	var _lodash = __webpack_require__(41);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _properties = __webpack_require__(7);
+	var _properties = __webpack_require__(6);
 	
 	var Props = _interopRequireWildcard(_properties);
 	
@@ -321,7 +320,7 @@
 	exports.default = Module;
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -330,7 +329,7 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _Module2 = __webpack_require__(4);
+	var _Module2 = __webpack_require__(3);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
 	
@@ -382,14 +381,14 @@
 	exports.default = SoundSource;
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Master = __webpack_require__(22);
+	var _Master = __webpack_require__(21);
 	
 	Object.defineProperty(exports, 'Master', {
 	  enumerable: true,
@@ -398,7 +397,7 @@
 	  }
 	});
 	
-	var _Envelope = __webpack_require__(21);
+	var _Envelope = __webpack_require__(20);
 	
 	Object.defineProperty(exports, 'Envelope', {
 	  enumerable: true,
@@ -407,7 +406,7 @@
 	  }
 	});
 	
-	var _Pan = __webpack_require__(23);
+	var _Pan = __webpack_require__(22);
 	
 	Object.defineProperty(exports, 'Pan', {
 	  enumerable: true,
@@ -416,7 +415,7 @@
 	  }
 	});
 	
-	var _Oscillator = __webpack_require__(26);
+	var _Oscillator = __webpack_require__(25);
 	
 	Object.defineProperty(exports, 'Oscillator', {
 	  enumerable: true,
@@ -425,7 +424,7 @@
 	  }
 	});
 	
-	var _Modulator = __webpack_require__(24);
+	var _Modulator = __webpack_require__(23);
 	
 	Object.defineProperty(exports, 'Modulator', {
 	  enumerable: true,
@@ -434,7 +433,7 @@
 	  }
 	});
 	
-	var _Noise = __webpack_require__(25);
+	var _Noise = __webpack_require__(24);
 	
 	Object.defineProperty(exports, 'Noise', {
 	  enumerable: true,
@@ -443,7 +442,7 @@
 	  }
 	});
 	
-	var _Filter = __webpack_require__(15);
+	var _Filter = __webpack_require__(14);
 	
 	Object.defineProperty(exports, 'Filter', {
 	  enumerable: true,
@@ -452,7 +451,7 @@
 	  }
 	});
 	
-	var _Delay = __webpack_require__(14);
+	var _Delay = __webpack_require__(13);
 	
 	Object.defineProperty(exports, 'Delay', {
 	  enumerable: true,
@@ -461,7 +460,7 @@
 	  }
 	});
 	
-	var _PingPongDelay = __webpack_require__(18);
+	var _PingPongDelay = __webpack_require__(17);
 	
 	Object.defineProperty(exports, 'PingPongDelay', {
 	  enumerable: true,
@@ -470,7 +469,7 @@
 	  }
 	});
 	
-	var _WahWah = __webpack_require__(20);
+	var _WahWah = __webpack_require__(19);
 	
 	Object.defineProperty(exports, 'WahWah', {
 	  enumerable: true,
@@ -479,7 +478,7 @@
 	  }
 	});
 	
-	var _Tremolo = __webpack_require__(19);
+	var _Tremolo = __webpack_require__(18);
 	
 	Object.defineProperty(exports, 'Tremolo', {
 	  enumerable: true,
@@ -488,7 +487,7 @@
 	  }
 	});
 	
-	var _Overdrive = __webpack_require__(17);
+	var _Overdrive = __webpack_require__(16);
 	
 	Object.defineProperty(exports, 'Overdrive', {
 	  enumerable: true,
@@ -497,7 +496,7 @@
 	  }
 	});
 	
-	var _Cabinet = __webpack_require__(13);
+	var _Cabinet = __webpack_require__(12);
 	
 	Object.defineProperty(exports, 'Cabinet', {
 	  enumerable: true,
@@ -506,7 +505,7 @@
 	  }
 	});
 	
-	var _Bitcrusher = __webpack_require__(12);
+	var _Bitcrusher = __webpack_require__(11);
 	
 	Object.defineProperty(exports, 'Bitcrusher', {
 	  enumerable: true,
@@ -515,12 +514,157 @@
 	  }
 	});
 	
-	var _MoogFilter = __webpack_require__(16);
+	var _MoogFilter = __webpack_require__(15);
 	
 	Object.defineProperty(exports, 'MoogFilter', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_MoogFilter).default;
+	  }
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	var _DefaultProps = __webpack_require__(28);
+	
+	Object.defineProperty(exports, 'DefaultProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_DefaultProps).default;
+	  }
+	});
+	
+	var _EnvelopeProps = __webpack_require__(30);
+	
+	Object.defineProperty(exports, 'EnvelopeProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_EnvelopeProps).default;
+	  }
+	});
+	
+	var _PanProps = __webpack_require__(37);
+	
+	Object.defineProperty(exports, 'PanProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PanProps).default;
+	  }
+	});
+	
+	var _OscillatorProps = __webpack_require__(35);
+	
+	Object.defineProperty(exports, 'OscillatorProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_OscillatorProps).default;
+	  }
+	});
+	
+	var _ModulatorProps = __webpack_require__(32);
+	
+	Object.defineProperty(exports, 'ModulatorProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_ModulatorProps).default;
+	  }
+	});
+	
+	var _NoiseProps = __webpack_require__(34);
+	
+	Object.defineProperty(exports, 'NoiseProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_NoiseProps).default;
+	  }
+	});
+	
+	var _FilterProps = __webpack_require__(31);
+	
+	Object.defineProperty(exports, 'FilterProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_FilterProps).default;
+	  }
+	});
+	
+	var _DelayProps = __webpack_require__(29);
+	
+	Object.defineProperty(exports, 'DelayProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_DelayProps).default;
+	  }
+	});
+	
+	var _PingPongDelayProps = __webpack_require__(38);
+	
+	Object.defineProperty(exports, 'PingPongDelayProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PingPongDelayProps).default;
+	  }
+	});
+	
+	var _WahWahProps = __webpack_require__(40);
+	
+	Object.defineProperty(exports, 'WahWahProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_WahWahProps).default;
+	  }
+	});
+	
+	var _TremoloProps = __webpack_require__(39);
+	
+	Object.defineProperty(exports, 'TremoloProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_TremoloProps).default;
+	  }
+	});
+	
+	var _OverdriveProps = __webpack_require__(36);
+	
+	Object.defineProperty(exports, 'OverdriveProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_OverdriveProps).default;
+	  }
+	});
+	
+	var _CabinetProps = __webpack_require__(27);
+	
+	Object.defineProperty(exports, 'CabinetProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_CabinetProps).default;
+	  }
+	});
+	
+	var _BitcrusherProps = __webpack_require__(26);
+	
+	Object.defineProperty(exports, 'BitcrusherProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_BitcrusherProps).default;
+	  }
+	});
+	
+	var _MoogFilterProps = __webpack_require__(33);
+	
+	Object.defineProperty(exports, 'MoogFilterProps', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_MoogFilterProps).default;
 	  }
 	});
 
@@ -534,164 +678,19 @@
 	
 	exports.__esModule = true;
 	
-	var _DefaultProps = __webpack_require__(29);
-	
-	Object.defineProperty(exports, 'DefaultProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_DefaultProps).default;
-	  }
-	});
-	
-	var _EnvelopeProps = __webpack_require__(31);
-	
-	Object.defineProperty(exports, 'EnvelopeProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_EnvelopeProps).default;
-	  }
-	});
-	
-	var _PanProps = __webpack_require__(38);
-	
-	Object.defineProperty(exports, 'PanProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_PanProps).default;
-	  }
-	});
-	
-	var _OscillatorProps = __webpack_require__(36);
-	
-	Object.defineProperty(exports, 'OscillatorProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_OscillatorProps).default;
-	  }
-	});
-	
-	var _ModulatorProps = __webpack_require__(33);
-	
-	Object.defineProperty(exports, 'ModulatorProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_ModulatorProps).default;
-	  }
-	});
-	
-	var _NoiseProps = __webpack_require__(35);
-	
-	Object.defineProperty(exports, 'NoiseProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_NoiseProps).default;
-	  }
-	});
-	
-	var _FilterProps = __webpack_require__(32);
-	
-	Object.defineProperty(exports, 'FilterProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_FilterProps).default;
-	  }
-	});
-	
-	var _DelayProps = __webpack_require__(30);
-	
-	Object.defineProperty(exports, 'DelayProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_DelayProps).default;
-	  }
-	});
-	
-	var _PingPongDelayProps = __webpack_require__(39);
-	
-	Object.defineProperty(exports, 'PingPongDelayProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_PingPongDelayProps).default;
-	  }
-	});
-	
-	var _WahWahProps = __webpack_require__(41);
-	
-	Object.defineProperty(exports, 'WahWahProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_WahWahProps).default;
-	  }
-	});
-	
-	var _TremoloProps = __webpack_require__(40);
-	
-	Object.defineProperty(exports, 'TremoloProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_TremoloProps).default;
-	  }
-	});
-	
-	var _OverdriveProps = __webpack_require__(37);
-	
-	Object.defineProperty(exports, 'OverdriveProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_OverdriveProps).default;
-	  }
-	});
-	
-	var _CabinetProps = __webpack_require__(28);
-	
-	Object.defineProperty(exports, 'CabinetProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_CabinetProps).default;
-	  }
-	});
-	
-	var _BitcrusherProps = __webpack_require__(27);
-	
-	Object.defineProperty(exports, 'BitcrusherProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_BitcrusherProps).default;
-	  }
-	});
-	
-	var _MoogFilterProps = __webpack_require__(34);
-	
-	Object.defineProperty(exports, 'MoogFilterProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_MoogFilterProps).default;
-	  }
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _modules = __webpack_require__(6);
+	var _modules = __webpack_require__(5);
 	
 	var Modules = _interopRequireWildcard(_modules);
 	
-	var _properties = __webpack_require__(7);
+	var _properties = __webpack_require__(6);
 	
 	var Props = _interopRequireWildcard(_properties);
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _Synth = __webpack_require__(9);
+	var _Synth = __webpack_require__(8);
 	
 	var _Synth2 = _interopRequireDefault(_Synth);
 	
@@ -975,7 +974,7 @@
 	//};
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -984,7 +983,7 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _Voice = __webpack_require__(11);
+	var _Voice = __webpack_require__(10);
 	
 	var _Voice2 = _interopRequireDefault(_Voice);
 	
@@ -1153,14 +1152,14 @@
 	exports.default = Synth;
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _tunajs = __webpack_require__(47);
+	var _tunajs = __webpack_require__(46);
 	
 	var _tunajs2 = _interopRequireDefault(_tunajs);
 	
@@ -1173,18 +1172,18 @@
 	exports.default = EffectManager;
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _modules = __webpack_require__(6);
+	var _modules = __webpack_require__(5);
 	
 	var Modules = _interopRequireWildcard(_modules);
 	
-	var _SoundSource = __webpack_require__(5);
+	var _SoundSource = __webpack_require__(4);
 	
 	var _SoundSource2 = _interopRequireDefault(_SoundSource);
 	
@@ -1329,14 +1328,14 @@
 	exports.default = Voice;
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1371,14 +1370,14 @@
 	exports.default = Bitcrusher;
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1416,14 +1415,14 @@
 	exports.default = Cabinet;
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1461,14 +1460,14 @@
 	exports.default = Delay;
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1505,14 +1504,14 @@
 	exports.default = Filter;
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1547,14 +1546,14 @@
 	exports.default = MoogFilter;
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1591,14 +1590,14 @@
 	exports.default = Overdrive;
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1636,14 +1635,14 @@
 	exports.default = PingPongDelay;
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1679,14 +1678,14 @@
 	exports.default = Tremolo;
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Effect2 = __webpack_require__(3);
+	var _Effect2 = __webpack_require__(2);
 	
 	var _Effect3 = _interopRequireDefault(_Effect2);
 	
@@ -1725,14 +1724,14 @@
 	exports.default = WahWah;
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Module2 = __webpack_require__(4);
+	var _Module2 = __webpack_require__(3);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
 	
@@ -1829,14 +1828,14 @@
 	exports.default = Envelope;
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Module2 = __webpack_require__(4);
+	var _Module2 = __webpack_require__(3);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
 	
@@ -1882,14 +1881,14 @@
 	exports.default = Master;
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _Module2 = __webpack_require__(4);
+	var _Module2 = __webpack_require__(3);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
 	
@@ -1923,14 +1922,14 @@
 	exports.default = Pan;
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _SoundSource2 = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(4);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 	
@@ -1969,7 +1968,7 @@
 	exports.default = Modulator;
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1978,7 +1977,7 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _SoundSource2 = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(4);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 	
@@ -2108,14 +2107,14 @@
 	exports.default = Noise;
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _SoundSource2 = __webpack_require__(5);
+	var _SoundSource2 = __webpack_require__(4);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
 	
@@ -2155,7 +2154,7 @@
 	exports.default = Oscillator;
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2182,7 +2181,7 @@
 	exports.default = BitcrusherProps;
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2208,7 +2207,7 @@
 	exports.default = CabinetProps;
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2229,7 +2228,7 @@
 	exports.default = DefaultProps;
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2271,7 +2270,7 @@
 	exports.default = DelayProps;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2311,7 +2310,7 @@
 	exports.default = EnvelopeProps;
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2351,7 +2350,7 @@
 	exports.default = FilterProps;
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2382,7 +2381,7 @@
 	exports.default = ModulatorProps;
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2409,7 +2408,7 @@
 	exports.default = MoogFilterProps;
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2434,7 +2433,7 @@
 	exports.default = NoiseProps;
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2459,7 +2458,7 @@
 	exports.default = OscillatorProps;
 
 /***/ },
-/* 37 */
+/* 36 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2496,7 +2495,7 @@
 	exports.default = OverdriveProps;
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2513,7 +2512,7 @@
 	exports.default = PanProps;
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2555,7 +2554,7 @@
 	exports.default = PingPongDelayProps;
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2587,7 +2586,7 @@
 	exports.default = TremoloProps;
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2633,7 +2632,7 @@
 	exports.default = WahWahProps;
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -17067,16 +17066,16 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)(module), (function() { return this; }())))
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
 	var AudioContext = global.AudioContext || global.webkitAudioContext;
-	var StereoPannerNode = __webpack_require__(46);
+	var StereoPannerNode = __webpack_require__(45);
 	
 	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
 	  AudioContext.prototype.createStereoPanner = function() {
@@ -17087,7 +17086,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17110,12 +17109,12 @@
 
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var curve = __webpack_require__(44);
+	var curve = __webpack_require__(43);
 	
 	/**
 	 *  StereoPannerImpl
@@ -17214,12 +17213,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var StereoPannerImpl = __webpack_require__(45);
+	var StereoPannerImpl = __webpack_require__(44);
 	
 	function StereoPanner(audioContext) {
 	  var impl = new StereoPannerImpl(audioContext);
@@ -17248,7 +17247,7 @@
 
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -19435,7 +19434,7 @@
 
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
