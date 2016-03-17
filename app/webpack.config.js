@@ -31,7 +31,7 @@
                 template: path.join(__dirname, 'index.html'),
                 inject: 'body'
             }),
-            new ExtractTextPlugin('css/screen.css'),
+            new ExtractTextPlugin('css/screen.css'), //TODO add hash also to css
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"production"',
                 'process.env.LIB_VERSION': JSON.stringify(libPackage.version)
