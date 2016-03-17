@@ -165,6 +165,7 @@ const GraphService = (graphLibrary) => {
     }
 
     function bindGraph () {
+        //TODO on window focus refresh graph...sometimes disappears...
         resetLinkStatus();
 
         graph.on('click', 'node', onClickHandler);
