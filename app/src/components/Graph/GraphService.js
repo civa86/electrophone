@@ -165,7 +165,6 @@ const GraphService = (graphLibrary) => {
     }
 
     function bindGraph () {
-        //TODO on window focus refresh graph...sometimes disappears...
         resetLinkStatus();
 
         graph.on('click', 'node', onClickHandler);
@@ -177,6 +176,8 @@ const GraphService = (graphLibrary) => {
         graph.on('tapend', onTapEnd);
         graph.on('zoom', onZoom);
         graph.on('pan', onPan);
+
+        window.addEventListener('focus', () => resize());
     }
 
     function createGraph (domNode, linkAreaContext, applicationActions, graphState = {}) {
