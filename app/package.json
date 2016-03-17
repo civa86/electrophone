@@ -54,6 +54,6 @@
     "test:watch": "npm test -- --watch",
     "app::dev": "node server.js",
     "app::build": "rm -rf ./dist/js ./dist/css; NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
-    "app::dist": "npm test; npm run app::build"
+    "app::dist": "npm test -- --bail && npm run app::build"
   }
 }

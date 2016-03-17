@@ -13,16 +13,22 @@ echo "/******************************************/"
 echo "/****     WEB SYNTH RELEASE START      ****/"
 echo "/******************************************/"
 
+echo "/**** CHECK APP START ****/"
+cd app
+npm run app::dist || { echo 'APPLICATION DIST: failed' ; exit 1; }
+cd ..
+echo "/**** CHECK APP END ****/"
+
 echo "LATEST RELEASE: $LATEST_TAG"
 echo "NEW RELEASE NUMBER: "
 read RELEASE_NUM
 
-echo "/**** BUMP PACKAGE VERSION ****/"
-npm --no-git-tag-version version $RELEASE_NUM
-
 #TODO change with dist for unit testing....
 echo "/***** LIBRARY DISTRIBUTION ****/"
 npm run lib::build || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
+
+echo "/**** BUMP PACKAGE VERSION ****/"
+npm --no-git-tag-version version $RELEASE_NUM
 
 echo "/***** COMMIT DEVELOPMENT ****/"
 git add .
