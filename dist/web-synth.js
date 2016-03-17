@@ -1196,6 +1196,12 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	/**
+	 * Voice Class
+	 * @example
+	 * const v = new Voice(440, AudioContext, { master: { ... }, adsr: { ... } }, null);
+	 */
+	
 	var Voice = function () {
 	    function Voice(note, audioContext, modulesConfig, analyser) {
 	        _classCallCheck(this, Voice);
