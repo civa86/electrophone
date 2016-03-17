@@ -114,29 +114,7 @@
 	exports.CONST = CONST;
 
 /***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-	//TODO remove window and audio context depedency!!
-	
-	exports.__esModule = true;
-	var AudioCtx = window.AudioContext || window.webkitAudioContext,
-	    ctx = new AudioCtx(),
-	    deprecatedFn = {
-	    createGainNode: 'createGain',
-	    createDelayNode: 'createDelay'
-	};
-	
-	for (var f in deprecatedFn) {
-	    if (typeof ctx[f] === 'function') {
-	        ctx[deprecatedFn[f]] = ctx[f];
-	    }
-	}
-	
-	exports.default = ctx;
-
-/***/ },
+/* 2 */,
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -165,10 +143,10 @@
 	var Effect = function (_Module) {
 	    _inherits(Effect, _Module);
 	
-	    function Effect(props, name) {
+	    function Effect(audioContext, props, name) {
 	        _classCallCheck(this, Effect);
 	
-	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = null;
 	        _this.mainEffect = null;
@@ -177,7 +155,8 @@
 	
 	    Effect.prototype.setMainEffect = function setMainEffect(type, mainEffect, props) {
 	        //TODO set an array of main effects??
-	        this.main = new _EffectManager2.default[type](props);
+	        var effectManager = (0, _EffectManager2.default)(this.audioContext);
+	        this.main = new effectManager[type](props);
 	        this.mainEffect = this.main[mainEffect];
 	    };
 	
@@ -238,10 +217,6 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _properties = __webpack_require__(7);
 	
 	var Props = _interopRequireWildcard(_properties);
@@ -253,10 +228,11 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Module = function () {
-	    function Module(props, name) {
+	    function Module(audioContext, props, name) {
 	        _classCallCheck(this, Module);
 	
 	        this.name = name;
+	        this.audioContext = audioContext;
 	        this.gain = null;
 	        this.envelope = null;
 	        this.main = null;
@@ -305,8 +281,8 @@
 	
 	    Module.prototype.createGain = function createGain(level) {
 	        var l = level >= 0 ? level % 101 : 100;
-	        this.gain = _AudioContext2.default.createGain();
-	        this.envelope = _AudioContext2.default.createGain();
+	        this.gain = this.audioContext.createGain();
+	        this.envelope = this.audioContext.createGain();
 	        this.gain.gain.value = l / 100;
 	        this.envelope.gain.value = 1;
 	
@@ -369,10 +345,10 @@
 	var SoundSource = function (_Module) {
 	    _inherits(SoundSource, _Module);
 	
-	    function SoundSource(props, name) {
+	    function SoundSource(audioContext, props, name) {
 	        _classCallCheck(this, SoundSource);
 	
-	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.defaultLineInProperty = 'frequency';
 	        return _this;
@@ -731,20 +707,22 @@
 	/**
 	 * WebSynth Library
 	 * @example
-	 * const synth = new WebSynth();
+	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
+	 * const synth = new WebSynth(new AudioCtx(), { spectrum: false });
 	 */
 	
 	var WebSynth = function () {
 	    /**
 	     * Create a playable synthesizer instance
-	     * @param {WebSynthProperties} [properties]
+	     * @param {AudioContext} audioContext - Web Audio Context instance
+	     * @param {WebSynthProperties} [properties] - synth properties
 	     */
 	
-	    function WebSynth(props) {
+	    function WebSynth(audioContext, props) {
 	        _classCallCheck(this, WebSynth);
 	
 	        var properties = props || {};
-	        this.synth = new _Synth2.default(properties);
+	        this.synth = new _Synth2.default(audioContext, properties);
 	    }
 	
 	    /**
@@ -1006,10 +984,6 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _Voice = __webpack_require__(11);
 	
 	var _Voice2 = _interopRequireDefault(_Voice);
@@ -1018,12 +992,27 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	/**
+	 * Synth Class
+	 * @example
+	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
+	 * const synth = new WebSynth(new AudioCtx(), { spectrum: false });
+	 */
+	
 	var Synth = function () {
-	    function Synth(props) {
+	
+	    /**
+	     * Create the internal synthesizer instance
+	     * @param {AudioContext} audioContext - Web Audio Context instance
+	     * @param {WebSynthProperties} [properties] - synth properties
+	     */
+	
+	    function Synth(audioContext, props) {
 	        _classCallCheck(this, Synth);
 	
 	        var properties = props || {};
-	        this.modulesConfig = {};
+	
+	        this.audioContext = audioContext, this.modulesConfig = {};
 	        this.voices = {};
 	        this.spectrum = properties.spectrum || false;
 	        this.updateSpectrum = properties.updateSpectrum || null;
@@ -1031,6 +1020,17 @@
 	
 	        this.analyser = null;
 	        this.javascriptNode = null;
+	
+	        if (!audioContext) {
+	            throw new Error('No audio context defined');
+	        }
+	
+	        if (typeof audioContext.createGainNode === 'function') {
+	            audioContext.createGain = audioContext.createGainNode;
+	        }
+	        if (typeof audioContext.createDelayNode === 'function') {
+	            audioContext.createDelay = audioContext.createDelayNode;
+	        }
 	
 	        if (this.spectrum === true) {
 	            this.createSpectrum();
@@ -1055,16 +1055,18 @@
 	        var SMOOTHING = 0.8,
 	            FFT_SIZE = 2048;
 	
-	        this.javascriptNode = _AudioContext2.default.createScriptProcessor(2048, 1, 1);
-	        this.javascriptNode.connect(_AudioContext2.default.destination);
+	        if (this.audioContext && this.audioContext.constructor === AudioContext) {
+	            this.javascriptNode = this.audioContext.createScriptProcessor(2048, 1, 1);
+	            this.javascriptNode.connect(this.audioContext.destination);
 	
-	        this.analyser = _AudioContext2.default.createAnalyser();
-	        this.analyser.smoothingTimeConstant = SMOOTHING;
-	        this.analyser.fftSize = FFT_SIZE;
-	        this.analyser.minDecibels = -140;
-	        this.analyser.maxDecibels = 0;
+	            this.analyser = this.audioContext.createAnalyser();
+	            this.analyser.smoothingTimeConstant = SMOOTHING;
+	            this.analyser.fftSize = FFT_SIZE;
+	            this.analyser.minDecibels = -140;
+	            this.analyser.maxDecibels = 0;
 	
-	        this.analyser.connect(_AudioContext2.default.destination);
+	            this.analyser.connect(this.audioContext.destination);
+	        }
 	    };
 	
 	    Synth.prototype.module = function module(type, label, props) {
@@ -1116,7 +1118,7 @@
 	        var frequencyData = undefined;
 	
 	        if (!this.voices[note]) {
-	            this.voices[note] = new _Voice2.default(note, this.modulesConfig, this.analyser);
+	            this.voices[note] = new _Voice2.default(note, this.audioContext, this.modulesConfig, this.analyser);
 	            this.voices[note].noteOn();
 	        }
 	        if (this.spectrum === true && this.javascriptNode) {
@@ -1158,19 +1160,17 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _tunajs = __webpack_require__(47);
 	
 	var _tunajs2 = _interopRequireDefault(_tunajs);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var manager = new _tunajs2.default(_AudioContext2.default);
+	var EffectManager = function EffectManager(audioContext) {
+	  return new _tunajs2.default(audioContext);
+	};
 	
-	exports.default = manager;
+	exports.default = EffectManager;
 
 /***/ },
 /* 11 */
@@ -1196,8 +1196,14 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	/**
+	 * Voice Class
+	 * @example
+	 * const v = new Voice(440, AudioContext, { master: { ... }, adsr: { ... } }, null);
+	 */
+	
 	var Voice = function () {
-	    function Voice(note, modulesConfig, analyser) {
+	    function Voice(note, audioContext, modulesConfig, analyser) {
 	        _classCallCheck(this, Voice);
 	
 	        this.note = note;
@@ -1207,11 +1213,11 @@
 	        this.master = null;
 	        this.analyser = analyser || null;
 	
-	        this.setupModules();
+	        this.setupModules(audioContext);
 	        this.linkModules();
 	    }
 	
-	    Voice.prototype.setupModules = function setupModules() {
+	    Voice.prototype.setupModules = function setupModules(audioContext) {
 	        var _this = this;
 	
 	        var modConf = undefined,
@@ -1220,7 +1226,7 @@
 	        Object.keys(this.modulesConfig).forEach(function (mod) {
 	            modConf = _this.modulesConfig[mod];
 	            if (modConf.type && modConf.props) {
-	                m = new Modules[modConf.type](modConf.props, modConf.type);
+	                m = new Modules[modConf.type](audioContext, modConf.props, modConf.type);
 	                _this.modules[mod] = {
 	                    type: modConf.type,
 	                    instance: m
@@ -1345,10 +1351,10 @@
 	var Bitcrusher = function (_Effect) {
 	    _inherits(Bitcrusher, _Effect);
 	
-	    function Bitcrusher(props, name) {
+	    function Bitcrusher(audioContext, props, name) {
 	        _classCallCheck(this, Bitcrusher);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Bitcrusher', 'output');
 	        _this.setMainProperties({
@@ -1387,10 +1393,10 @@
 	var Cabinet = function (_Effect) {
 	    _inherits(Cabinet, _Effect);
 	
-	    function Cabinet(props, name) {
+	    function Cabinet(audioContext, props, name) {
 	        _classCallCheck(this, Cabinet);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Cabinet', 'output', {
 	            impulsePath: _this.impulsePath,
@@ -1432,10 +1438,10 @@
 	var Delay = function (_Effect) {
 	    _inherits(Delay, _Effect);
 	
-	    function Delay(props, name) {
+	    function Delay(audioContext, props, name) {
 	        _classCallCheck(this, Delay);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Delay', 'filter');
 	        _this.setMainProperties({
@@ -1477,10 +1483,10 @@
 	var Filter = function (_Effect) {
 	    _inherits(Filter, _Effect);
 	
-	    function Filter(props, name) {
+	    function Filter(audioContext, props, name) {
 	        _classCallCheck(this, Filter);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Filter', 'filter');
 	        _this.setMainProperties({
@@ -1521,10 +1527,10 @@
 	var MoogFilter = function (_Effect) {
 	    _inherits(MoogFilter, _Effect);
 	
-	    function MoogFilter(props, name) {
+	    function MoogFilter(audioContext, props, name) {
 	        _classCallCheck(this, MoogFilter);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('MoogFilter', 'output');
 	        _this.setMainProperties({
@@ -1563,10 +1569,10 @@
 	var Overdrive = function (_Effect) {
 	    _inherits(Overdrive, _Effect);
 	
-	    function Overdrive(props, name) {
+	    function Overdrive(audioContext, props, name) {
 	        _classCallCheck(this, Overdrive);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Overdrive', 'output');
 	        _this.setMainProperties({
@@ -1607,10 +1613,10 @@
 	var PingPongDelay = function (_Effect) {
 	    _inherits(PingPongDelay, _Effect);
 	
-	    function PingPongDelay(props, name) {
+	    function PingPongDelay(audioContext, props, name) {
 	        _classCallCheck(this, PingPongDelay);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('PingPongDelay', 'delayLeft');
 	        _this.setMainProperties({
@@ -1652,10 +1658,10 @@
 	var Tremolo = function (_Effect) {
 	    _inherits(Tremolo, _Effect);
 	
-	    function Tremolo(props, name) {
+	    function Tremolo(audioContext, props, name) {
 	        _classCallCheck(this, Tremolo);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('Tremolo', 'output');
 	        _this.setMainProperties({
@@ -1695,10 +1701,10 @@
 	var WahWah = function (_Effect) {
 	    _inherits(WahWah, _Effect);
 	
-	    function WahWah(props, name) {
+	    function WahWah(audioContext, props, name) {
 	        _classCallCheck(this, WahWah);
 	
-	        var _this = _possibleConstructorReturn(this, _Effect.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Effect.call(this, audioContext, props, name));
 	
 	        _this.setMainEffect('WahWah', 'filterBp');
 	        _this.setMainProperties({
@@ -1726,10 +1732,6 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _Module2 = __webpack_require__(4);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
@@ -1745,10 +1747,10 @@
 	var Envelope = function (_Module) {
 	    _inherits(Envelope, _Module);
 	
-	    function Envelope(props, name) {
+	    function Envelope(audioContext, props, name) {
 	        _classCallCheck(this, Envelope);
 	
-	        return _possibleConstructorReturn(this, _Module.call(this, props, name));
+	        return _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	    }
 	
@@ -1757,7 +1759,7 @@
 	    };
 	
 	    Envelope.prototype.getReleaseTime = function getReleaseTime() {
-	        var now = _AudioContext2.default.currentTime,
+	        var now = this.audioContext.currentTime,
 	            release = undefined;
 	
 	        if (this.release) {
@@ -1770,7 +1772,7 @@
 	    };
 	
 	    Envelope.prototype.setEnvelope = function setEnvelope(dest) {
-	        var now = _AudioContext2.default.currentTime,
+	        var now = this.audioContext.currentTime,
 	            envelope = this.level % 101,
 	            attackLevel = undefined,
 	            sustainLevel = undefined,
@@ -1801,7 +1803,7 @@
 	    };
 	
 	    Envelope.prototype.resetEnvelope = function resetEnvelope(dest) {
-	        var now = _AudioContext2.default.currentTime,
+	        var now = this.audioContext.currentTime,
 	            t = undefined;
 	
 	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
@@ -1834,10 +1836,6 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _Module2 = __webpack_require__(4);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
@@ -1853,14 +1851,14 @@
 	var Master = function (_Module) {
 	    _inherits(Master, _Module);
 	
-	    function Master(props, name) {
+	    function Master(audioContext, props, name) {
 	        _classCallCheck(this, Master);
 	
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	
-	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
-	        _this.main = _AudioContext2.default.createGain();
+	        _this.main = _this.audioContext.createGain();
 	        _this.link = null;
 	        return _this;
 	    }
@@ -1874,7 +1872,7 @@
 	        if (analyser) {
 	            this.gain.connect(analyser);
 	        } else {
-	            this.gain.connect(_AudioContext2.default.destination);
+	            this.gain.connect(this.audioContext.destination);
 	        }
 	    };
 	
@@ -1891,10 +1889,6 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _Module2 = __webpack_require__(4);
 	
 	var _Module3 = _interopRequireDefault(_Module2);
@@ -1910,14 +1904,14 @@
 	var Pan = function (_Module) {
 	    _inherits(Pan, _Module);
 	
-	    function Pan(props, name) {
+	    function Pan(audioContext, props, name) {
 	        _classCallCheck(this, Pan);
 	
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	
-	        var _this = _possibleConstructorReturn(this, _Module.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
-	        _this.main = _AudioContext2.default.createStereoPanner();
+	        _this.main = _this.audioContext.createStereoPanner();
 	        _this.main.pan.value = _this.value;
 	        _this.main.connect(_this.envelope);
 	        return _this;
@@ -1936,10 +1930,6 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _SoundSource2 = __webpack_require__(5);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
@@ -1955,14 +1945,14 @@
 	var Modulator = function (_SoundSource) {
 	    _inherits(Modulator, _SoundSource);
 	
-	    function Modulator(props, name) {
+	    function Modulator(audioContext, props, name) {
 	        _classCallCheck(this, Modulator);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	
-	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
-	        _this.main = _AudioContext2.default.createOscillator();
+	        _this.main = _this.audioContext.createOscillator();
 	        _this.main.type = _this.wave;
 	        _this.main.connect(_this.envelope);
 	        return _this;
@@ -1988,10 +1978,6 @@
 	
 	var _Constants = __webpack_require__(1);
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _SoundSource2 = __webpack_require__(5);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
@@ -2007,15 +1993,15 @@
 	var Noise = function (_SoundSource) {
 	    _inherits(Noise, _SoundSource);
 	
-	    function Noise(props, name) {
+	    function Noise(audioContext, props, name) {
 	        _classCallCheck(this, Noise);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	
-	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.defaultLineInProperty = 'detune';
-	        _this.main = _AudioContext2.default.createBufferSource();
+	        _this.main = _this.audioContext.createBufferSource();
 	        _this.main.connect(_this.envelope);
 	
 	        _this.setDetune();
@@ -2103,12 +2089,12 @@
 	    };
 	
 	    Noise.prototype.getBufferSize = function getBufferSize() {
-	        return 2 * _AudioContext2.default.sampleRate;
+	        return 2 * this.audioContext.sampleRate;
 	    };
 	
 	    Noise.prototype.getNoiseBuffer = function getNoiseBuffer() {
 	        var bufferSize = this.getBufferSize(),
-	            noiseBuffer = _AudioContext2.default.createBuffer(1, bufferSize, _AudioContext2.default.sampleRate);
+	            noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
 	        return noiseBuffer;
 	    };
 	
@@ -2129,10 +2115,6 @@
 	
 	exports.__esModule = true;
 	
-	var _AudioContext = __webpack_require__(2);
-	
-	var _AudioContext2 = _interopRequireDefault(_AudioContext);
-	
 	var _SoundSource2 = __webpack_require__(5);
 	
 	var _SoundSource3 = _interopRequireDefault(_SoundSource2);
@@ -2148,14 +2130,14 @@
 	var Oscillator = function (_SoundSource) {
 	    _inherits(Oscillator, _SoundSource);
 	
-	    function Oscillator(props, name) {
+	    function Oscillator(audioContext, props, name) {
 	        _classCallCheck(this, Oscillator);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	
-	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, props, name));
+	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
-	        _this.main = _AudioContext2.default.createOscillator();
+	        _this.main = _this.audioContext.createOscillator();
 	        _this.main.type = _this.wave;
 	        _this.main.connect(_this.envelope);
 	

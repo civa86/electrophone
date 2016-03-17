@@ -21,7 +21,8 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 100;
+    headerHeight = 100,
+    audioCtx = window.AudioContext || window.webkitAudioContext;
 
 class App extends Component {
 
@@ -162,7 +163,7 @@ class App extends Component {
                     modules={synth.modules}
                 />
 
-                <Synth state={synth} />
+                <Synth state={synth} audioContext={audioCtx} />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
