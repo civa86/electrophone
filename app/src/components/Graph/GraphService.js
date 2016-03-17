@@ -176,6 +176,8 @@ const GraphService = (graphLibrary) => {
         graph.on('tapend', onTapEnd);
         graph.on('zoom', onZoom);
         graph.on('pan', onPan);
+
+        window.addEventListener('focus', () => resize());
     }
 
     function createGraph (domNode, linkAreaContext, applicationActions, graphState = {}) {

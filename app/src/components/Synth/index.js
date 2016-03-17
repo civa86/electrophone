@@ -5,24 +5,33 @@ import GlobalKeys from '../GlobalKeys';
 
 //TODO check for spectrum and others init props of synth....pass them from App!!
 //TODO wrtie a synth maanger?
-const
-    synth = new WebSynth(),
-    noteMapping = {
-        65: 'C',    //a
-        87: 'C#',   //w
-        83: 'D',    //s
-        69: 'D#',   //e
-        68: 'E',    //d
-        70: 'F',    //f
-        84: 'F#',   //t
-        71: 'G',    //g
-        89: 'G#',   //y
-        72: 'A',    //h
-        85: 'A#',   //u
-        74: 'B'     //j
-    };
+const noteMapping = {
+    65: 'C',    //a
+    87: 'C#',   //w
+    83: 'D',    //s
+    69: 'D#',   //e
+    68: 'E',    //d
+    70: 'F',    //f
+    84: 'F#',   //t
+    71: 'G',    //g
+    89: 'G#',   //y
+    72: 'A',    //h
+    85: 'A#',   //u
+    74: 'B'     //j
+};
 
 class Synth extends Component {
+
+    constructor (props) {
+        super(props);
+
+        const { audioContext } = this.props;
+
+        if (audioContext && typeof audioContext === 'function') {
+            this.synth = new WebSynth(new audioContext());
+        }
+
+    }
 
     getKeyboardMapping () {
         const { state } = this.props;
@@ -31,14 +40,14 @@ class Synth extends Component {
                 keys: Object.keys(noteMapping).map(Number),
                 down: (event, key) => {
                     if (noteMapping[key]) {
-                        synth.play(
+                        this.synth.play(
                             WebSynth.getFrequency(noteMapping[key], state.octave)
                         );
                     }
                 },
                 up: (event, key) => {
                     if (noteMapping[key]) {
-                        synth.stop(
+                        this.synth.stop(
                             WebSynth.getFrequency(noteMapping[key], state.octave)
                         );
                     }
@@ -48,7 +57,7 @@ class Synth extends Component {
     }
 
     refreshModules (modules) {
-        const currentModules = synth.getModules();
+        const currentModules = this.synth.getModules();
 
         modules.forEach(e => {
             if (e.isMaster) {
@@ -66,13 +75,13 @@ class Synth extends Component {
     refreshLinks (modules) {
         modules.forEach(e => {
             if (!e.isMaster && e.link) {
-                synth.linkModules(e.id, e.link);
+                this.synth.linkModules(e.id, e.link);
             }
         });
     }
 
     updateMaster (props) {
-        synth.master(
+        this.synth.master(
             props
                 .filter(e => e.name === 'level')
                 .reduce((res, p) => {
@@ -80,7 +89,7 @@ class Synth extends Component {
                     return res;
                 }, {}));
 
-        synth.adsr(
+        this.synth.adsr(
             props
                 .filter(e => e.name !== 'level')
                 .reduce((res, p) => {
@@ -90,7 +99,7 @@ class Synth extends Component {
     }
 
     updateModule (id, props) {
-        synth.update(
+        this.synth.update(
             id,
             props.reduce((res, p) => {
                 res[p.name] = p.value;
@@ -100,7 +109,7 @@ class Synth extends Component {
     }
 
     createModule (id, type, props) {
-        synth.create(
+        this.synth.create(
             id,
             type,
             props.reduce((res, p) => {
