@@ -21,10 +21,24 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 100,
-    audioCtx = window.AudioContext || window.webkitAudioContext;
+    headerHeight = 100;
 
 class App extends Component {
+
+    constructor (props) {
+        super(props);
+
+        this.audioContext = null;
+
+        if (window && typeof window.AudioContext !== 'undefined') {
+            this.audioContext = new window.AudioContext();
+        } else if (typeof window.webkitAudioContext !== 'undefined') {
+            this.audioContext = new window.webkitAudioContext();
+        } else {
+            //TODO trigger modal...
+            //throw new Error('AudioContext not supported. :(');
+        }
+    }
 
     getKeyboardMapping () {
         const { synth, dispatch } = this.props;
@@ -163,7 +177,7 @@ class App extends Component {
                     modules={synth.modules}
                 />
 
-                <Synth state={synth} audioContext={audioCtx} />
+                <Synth state={synth} audioContext={this.audioContext} />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
