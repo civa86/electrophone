@@ -16,6 +16,7 @@
     "react-redux": "4.1.x",
     "redux-thunk": "1.0.x",
     "jquery": "1.x",
+    "jquery-knob": "1.2.x",
     "bootstrap": "3.3.x"
   },
   "devDependencies": {
