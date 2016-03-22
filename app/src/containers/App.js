@@ -96,6 +96,11 @@ class App extends Component {
         }));
     }
 
+    updateModule (id, propertyName, propertyValue) {
+        const { dispatch } = this.props;
+        dispatch(SynthActions.updateNode(id, propertyName, propertyValue));
+    }
+
     getGraphHeight () {
         const
             windowSize = screen.getWindowSize(),
@@ -175,6 +180,7 @@ class App extends Component {
                 <ControlPanel
                     isVisible={synth.viewPanel === 'control'}
                     modules={synth.modules}
+                    updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
                 />
 
                 <Synth state={synth} audioContext={this.audioContext} />

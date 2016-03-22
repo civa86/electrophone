@@ -4,11 +4,13 @@ import Knob from './Knob';
 import Select from './Select'
 
 class ControlPanel extends Component {
-    getControlProperty (prop) {
+    getControlProperty (module, prop) {
+        const { updateModule } = this.props;
+
         if (prop.type === 'number') {
-            return <Knob property={prop}/>;
+            return <Knob property={prop} module={module} onUpdate={updateModule} />;
         } else if (prop.type === 'string') {
-            return <Select property={prop}/>;
+            return <Select property={prop} module={module} onUpdate={updateModule} />;
         }
     }
 
@@ -34,7 +36,7 @@ class ControlPanel extends Component {
                                                 .map(prop =>
                                                     <div className="col-xs-2"
                                                          key={module.id + prop.name}>
-                                                        {this.getControlProperty({ ...prop })}
+                                                        {this.getControlProperty(module.id, { ...prop })}
                                                     </div>
                                                 )
                                         }

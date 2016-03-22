@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 class Select extends Component {
 
     render () {
-        const
-            { property } = this.props;
+        const { property, module, onUpdate } = this.props;
 
         return (
             <div className="dropdown">
@@ -21,7 +20,7 @@ class Select extends Component {
                         .filter(val => val !== property.value)
                         .map(val =>
                             <li key={val}>
-                                <a>{val}</a>
+                                <a onClick={() => onUpdate(module, property.name, val)}>{val}</a>
                             </li>
                         )
                     }

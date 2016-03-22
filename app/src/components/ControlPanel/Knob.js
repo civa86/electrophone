@@ -4,20 +4,17 @@ import $ from 'jquery';
 import knob from 'jquery-knob';
 
 class Knob extends Component {
-    onChange (value) {
-        console.log(value);
-    }
 
     componentDidMount () {
         const
             node = $(ReactDOM.findDOMNode(this)),
-            { property } = this.props;
+            { property, module, onUpdate } = this.props;
 
-        //TODO set step from property...
+        //TODO set step from property...remove parse int....
         node.find('input').knob({
             min: property.bounds[0],
             max: property.bounds[1],
-            change: (value) => this.onChange(value)
+            change: (value) => onUpdate(module, property.name, parseInt(value, 10))
         });
     }
 
@@ -27,6 +24,7 @@ class Knob extends Component {
             { property } = newProps;
 
         //TODO set step from property...
+        //check for float....
         node.find('input')
             .val(property.value)
             .trigger('change');

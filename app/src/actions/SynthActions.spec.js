@@ -44,6 +44,16 @@ describe('Synth actions', () => {
         expect(actions.linkNodes('ele1', 'ele2')).to.deep.equal(expectedAction);
     });
 
+    it('should create an action updateNode', () => {
+        const expectedAction = {
+            type: actionTypes.UPDATE_NODE,
+            id: 'ele1',
+            propertyName: 'a',
+            propertyValue: '1'
+        };
+        expect(actions.updateNode('ele1', 'a', '1')).to.deep.equal(expectedAction);
+    });
+
     it('should create an action setAudioNodeSelection', () => {
         const expectedAction = {
             type: actionTypes.SET_AUDIO_NODE_SELECTION,
