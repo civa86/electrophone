@@ -16,6 +16,7 @@
     "react-redux": "4.1.x",
     "redux-thunk": "1.0.x",
     "jquery": "1.x",
+    "jquery-knob": "1.2.x",
     "bootstrap": "3.3.x"
   },
   "devDependencies": {
@@ -54,6 +55,6 @@
     "test:watch": "npm test -- --watch",
     "app::dev": "node server.js",
     "app::build": "rm -rf ./dist/js ./dist/css; NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
-    "app::dist": "npm test; npm run app::build"
+    "app::dist": "npm test -- --bail && npm run app::build"
   }
 }

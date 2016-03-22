@@ -27,10 +27,9 @@ class Synth extends Component {
 
         const { audioContext } = this.props;
 
-        if (audioContext && typeof audioContext === 'function') {
-            this.synth = new WebSynth(new audioContext());
+        if (audioContext) {
+            this.synth = new WebSynth(audioContext);
         }
-
     }
 
     getKeyboardMapping () {

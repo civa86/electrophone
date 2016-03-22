@@ -4,12 +4,13 @@ import cytoscape from 'cytoscape';
 
 //Graph Service
 import GraphService from './GraphService'
-const graph = GraphService(cytoscape);
+const graph = GraphService(cytoscape, window);
 
 class Graph extends Component {
 
     componentDidMount () {
-        const node = ReactDOM.findDOMNode(this),
+        const
+            node = ReactDOM.findDOMNode(this),
             $canvas = document.createElement('canvas'),
             { actions, state, height } = this.props;
 

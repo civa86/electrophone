@@ -43,7 +43,7 @@
         //Development Configuration
         console.log('/***** APPLICATION DEVELOPMENT ****/');
 
-        devtoolValue = 'eval';
+        devtoolValue = 'source-map';
         entry = [
             'webpack-dev-server/client?http://localhost:3000',
             'webpack/hot/only-dev-server',

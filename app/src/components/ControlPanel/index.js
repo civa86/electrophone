@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 
+import Knob from './Knob';
+import Select from './Select'
+
 class ControlPanel extends Component {
+    getControlProperty (module, prop) {
+        const { updateModule } = this.props;
+
+        if (prop.type === 'number') {
+            return <Knob property={prop} module={module} onUpdate={updateModule} />;
+        } else if (prop.type === 'string') {
+            return <Select property={prop} module={module} onUpdate={updateModule} />;
+        }
+    }
 
     render () {
         const
@@ -13,24 +25,30 @@ class ControlPanel extends Component {
                     {modules.map(module =>
                         <div className="row" key={module.id}>
                             <div className="col-xs-12">
-                                {module.type + ' -- ' + module.id}
-                                <div>
-                                    {
-                                        module.properties
-                                            .filter(prop => prop.name !== 'link')
-                                            .map(prop =>
-                                                <div key={module.id + prop.name}>
-                                                    {prop.name}: {prop.value}
-                                                </div>
-                                            )
-                                    }
+                                <div style={{ border: '1px solid #333' }}>
+                                    <p className="bg-primary" style={{ padding: '10px' }}>
+                                        {module.type + ' -- ' + module.id}
+                                    </p>
+                                    <div className="row">
+                                        {
+                                            module.properties
+                                                .filter(prop => prop.name !== 'link')
+                                                .map(prop =>
+                                                    <div className="col-xs-2"
+                                                         key={module.id + prop.name}>
+                                                        {this.getControlProperty(module.id, { ...prop })}
+                                                    </div>
+                                                )
+                                        }
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
-        )
+        );
     }
 }
 

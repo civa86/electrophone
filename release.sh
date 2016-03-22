@@ -2,6 +2,7 @@
 
 GIT_BRANCH=`git name-rev --name-only HEAD`
 LATEST_TAG=`git describe --tags $(git rev-list --tags --max-count=1)`
+DRY_RUN=0
 
 if [ "$GIT_BRANCH" != "development" ]
 then
@@ -13,26 +14,51 @@ echo "/******************************************/"
 echo "/****     WEB SYNTH RELEASE START      ****/"
 echo "/******************************************/"
 
+if [ "$1" == "--dry-run" ]
+then
+    DRY_RUN=1
+fi
+
+echo "/**** CHECK APP START ****/"
+cd app
+npm run app::dist || { echo "APPLICATION DIST: failed" ; exit 1; }
+cd ..
+echo "/**** CHECK APP END ****/"
+
 echo "LATEST RELEASE: $LATEST_TAG"
 echo "NEW RELEASE NUMBER: "
 read RELEASE_NUM
 
-echo "/**** BUMP PACKAGE VERSION ****/"
-npm --no-git-tag-version version $RELEASE_NUM
-
 #TODO change with dist for unit testing....
 echo "/***** LIBRARY DISTRIBUTION ****/"
-npm run lib::build || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
+npm run lib::build || { echo "LIBRARY DISTRIBUTION: failed" ; exit 1; }
 
-echo "/***** COMMIT DEVELOPMENT ****/"
-git add .
-git commit -m "build $RELEASE_NUM"
+if [ "$DRY_RUN" == "0" ]
+then
+    echo "/**** BUMP PACKAGE VERSION ****/"
+    npm --no-git-tag-version version $RELEASE_NUM
 
-echo "/**** GITFLOW RELEASE :: $RELEASE_NUM ****/"
-git flow release start $RELEASE_NUM
-git flow release finish -m "release-$RELEASE_NUM" $RELEASE_NUM
+    echo "/***** COMMIT DEVELOPMENT ****/"
+    git add .
+    git commit -m "build $RELEASE_NUM"
 
-git checkout development
+    echo "/**** GITFLOW RELEASE :: $RELEASE_NUM ****/"
+    git flow release start $RELEASE_NUM
+    git flow release finish -m "release-$RELEASE_NUM" $RELEASE_NUM
+
+    git checkout development
+else
+    echo "/**** DRY RUN SUCCESS ****/"
+    echo "Do you want to do a release? (y/n)"
+    read RUN_RELEASE
+
+    if [ $RUN_RELEASE == "y" ]
+    then
+        echo "run ./release.sh..."
+    else
+        echo "Bye..."
+    fi
+fi
 
 echo "/******************************************/"
 echo "/****      WEB SYNTH RELEASE END       ****/"

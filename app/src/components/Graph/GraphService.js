@@ -1,7 +1,8 @@
 import style from './GraphStyle';
 
-const GraphService = (graphLibrary) => {
+const GraphService = (graphLibrary, window) => {
     const graphLib = graphLibrary;
+    const windowObject = window || null;
     let graph = null,
         linkAreaCtx = null,
         linkMode = false,
@@ -164,7 +165,7 @@ const GraphService = (graphLibrary) => {
         }
     }
 
-    function bindGraph () {
+    function bindGraph (windowObject) {
         resetLinkStatus();
 
         graph.on('click', 'node', onClickHandler);
@@ -177,7 +178,9 @@ const GraphService = (graphLibrary) => {
         graph.on('zoom', onZoom);
         graph.on('pan', onPan);
 
-        window.addEventListener('focus', () => resize());
+        if (windowObject && typeof windowObject.addEventListener === 'function') {
+            windowObject.addEventListener('focus', () => resize());
+        }
     }
 
     function createGraph (domNode, linkAreaContext, applicationActions, graphState = {}) {
@@ -188,7 +191,7 @@ const GraphService = (graphLibrary) => {
             linkAreaCtx = linkAreaContext;
             actions = { ...applicationActions };
 
-            bindGraph();
+            bindGraph(windowObject);
             graph.minZoom(0.2);
             graph.maxZoom(4);
             graph.pan({ x: 0, y: 0 });

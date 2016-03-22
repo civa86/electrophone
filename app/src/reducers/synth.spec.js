@@ -6,6 +6,7 @@ import {
     removeNode,
     removeNodes,
     linkNodes,
+    updateNode,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
@@ -93,6 +94,22 @@ describe('Synth reducer', () => {
         expect(state.modules.length).to.equal(1);
         expect(state.modules[0].id).to.equal('master');
         expect(state.modules[0].link).to.equal(null);
+        expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
+
+    it('should update node', () => {
+        let updatedNode;
+
+        state = synth(state, updateNode('master', 'level', 50));
+        updatedNode = state.modules.filter(e => e.id === 'master').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'level').pop().value).to.equal(50);
+        expect(updatedNode.properties.filter(p => p.name === 'attack').pop().value).to.equal(0);
+
+        state = synth(state, updateNode('master', 'attack', 100));
+        updatedNode = state.modules.filter(e => e.id === 'master').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'level').pop().value).to.equal(50);
+        expect(updatedNode.properties.filter(p => p.name === 'attack').pop().value).to.equal(100);
+
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 

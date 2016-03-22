@@ -74,6 +74,31 @@ function synth (state = initState, action = {}) {
             };
         }
 
+        case actionTypes.UPDATE_NODE : {
+            return {
+                ...state,
+                modules: state.modules.map(e => {
+                    if (e.id !== action.id) {
+                        return e;
+                    }
+
+                    return {
+                        ...e,
+                        properties: e.properties.map(p => {
+                            if (p.name !== action.propertyName) {
+                                return p;
+                            }
+
+                            return {
+                                ...p,
+                                value: action.propertyValue
+                            };
+                        })
+                    };
+                })
+            };
+        }
+
         case actionTypes.SET_AUDIO_NODE_SELECTION : {
             return {
                 ...state,

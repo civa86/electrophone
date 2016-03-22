@@ -32,6 +32,15 @@ function linkNodes (source, dest) {
     };
 }
 
+function updateNode (id, propertyName, propertyValue) {
+    return {
+        type: actionTypes.UPDATE_NODE,
+        id,
+        propertyName,
+        propertyValue
+    };
+}
+
 function setAudioNodeSelection (node, isSelected) {
     return {
         type: actionTypes.SET_AUDIO_NODE_SELECTION,
@@ -115,6 +124,7 @@ export {
     removeNode,
     removeNodes,
     linkNodes,
+    updateNode,
     setAudioNodeSelection,
     setLinkMode,
     toggleLinkMode,
