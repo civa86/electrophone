@@ -1020,15 +1020,11 @@
 	        this.analyser = null;
 	        this.javascriptNode = null;
 	
-	        if (!audioContext) {
-	            throw new Error('No audio context defined');
+	        if (this.audioContext && typeof this.audioContext.createGainNode === 'function') {
+	            this.audioContext.createGain = this.audioContext.createGainNode;
 	        }
-	
-	        if (typeof audioContext.createGainNode === 'function') {
-	            audioContext.createGain = audioContext.createGainNode;
-	        }
-	        if (typeof audioContext.createDelayNode === 'function') {
-	            audioContext.createDelay = audioContext.createDelayNode;
+	        if (this.audioContext && typeof this.audioContext.createDelayNode === 'function') {
+	            this.audioContext.createDelay = this.audioContext.createDelayNode;
 	        }
 	
 	        if (this.spectrum === true) {
@@ -1054,7 +1050,7 @@
 	        var SMOOTHING = 0.8,
 	            FFT_SIZE = 2048;
 	
-	        if (this.audioContext && this.audioContext.constructor === AudioContext) {
+	        if (this.audioContext) {
 	            this.javascriptNode = this.audioContext.createScriptProcessor(2048, 1, 1);
 	            this.javascriptNode.connect(this.audioContext.destination);
 	
@@ -1212,8 +1208,10 @@
 	        this.master = null;
 	        this.analyser = analyser || null;
 	
-	        this.setupModules(audioContext);
-	        this.linkModules();
+	        if (audioContext) {
+	            this.setupModules(audioContext);
+	            this.linkModules();
+	        }
 	    }
 	
 	    Voice.prototype.setupModules = function setupModules(audioContext) {
@@ -1291,7 +1289,7 @@
 	        });
 	        Object.keys(this.modules).forEach(function (e) {
 	            m = _this3.modules[e].instance;
-	            if (typeof m.noteOn === 'function') {
+	            if (m && typeof m.noteOn === 'function') {
 	                m.noteOn();
 	            }
 	        });
@@ -1301,22 +1299,24 @@
 	        var _this4 = this;
 	
 	        var release = 0,
-	            adsr = this.modules.adsr.instance,
+	            adsr = this.modules.adsr ? this.modules.adsr.instance : null,
 	            m = undefined,
 	            dest = undefined;
 	
-	        release = adsr.getReleaseTime();
+	        if (adsr) {
+	            release = adsr.getReleaseTime();
+	        }
 	
 	        Object.keys(this.modules).forEach(function (e) {
 	            m = _this4.modules[e].instance;
-	            if (typeof m.resetEnvelope === 'function') {
+	            if (m && typeof m.resetEnvelope === 'function') {
 	                dest = _this4.modules[m.link] ? _this4.modules[m.link].instance : null;
 	                m.resetEnvelope(dest);
 	            }
 	        });
 	        Object.keys(this.modules).forEach(function (e) {
 	            m = _this4.modules[e].instance;
-	            if (typeof m.noteOff === 'function') {
+	            if (m && typeof m.noteOff === 'function') {
 	                m.noteOff(release);
 	            }
 	        });
