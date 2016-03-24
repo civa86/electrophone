@@ -28,6 +28,7 @@ class Synth extends Component {
         const { audioContext } = this.props;
 
         if (audioContext) {
+            //TODO write a synth service unit tested!
             this.synth = new WebSynth(audioContext);
         }
     }
@@ -58,6 +59,7 @@ class Synth extends Component {
     refreshModules (modules) {
         const currentModules = this.synth.getModules();
 
+        //CREATE / UPDATE
         modules.forEach(e => {
             if (e.isMaster) {
                 this.updateMaster(e.properties);
@@ -69,6 +71,16 @@ class Synth extends Component {
                 }
             }
         });
+
+        //DELETE
+        Object.keys(currentModules)
+            .filter(e => e !== WebSynth.CONST.MASTER && e !== WebSynth.CONST.ADSR)
+            .forEach(moduleId => {
+                const found = modules.filter(e => e.id === moduleId).pop();
+                if (!found) {
+                    this.synth.destroy(moduleId);
+                }
+            });
     }
 
     refreshLinks (modules) {
