@@ -288,9 +288,6 @@
 	        this.envelope.connect(this.gain);
 	    };
 	
-	    //TODO used method?
-	
-	
 	    Module.prototype.disconnect = function disconnect() {
 	        this.gain.disconnect();
 	    };
@@ -739,7 +736,7 @@
 	    };
 	
 	    /**
-	     * Update a synth module
+	     * Update the synth module by id
 	     * @param {string} id - the module identifier
 	     * @param {object} props - module properties
 	     */
@@ -776,6 +773,19 @@
 	    WebSynth.prototype.adsr = function adsr(props) {
 	        this.synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, props);
 	        return this;
+	    };
+	
+	    /**
+	     * Destroy the synth module by id
+	     * @param {string} id - the module identifier
+	     */
+	
+	
+	    WebSynth.prototype.destroy = function destroy(id) {
+	        var currentModule = this.getModules()[id];
+	        if (currentModule) {
+	            this.synth.destroyModule(id);
+	        }
 	    };
 	
 	    /**
@@ -1107,8 +1117,21 @@
 	        }
 	    };
 	
-	    Synth.prototype.play = function play(note) {
+	    Synth.prototype.destroyModule = function destroyModule(label) {
 	        var _this2 = this;
+	
+	        if (this.modulesConfig[label]) {
+	            //TODO check on deletion of voices...you can remove sounds runtime
+	            delete this.modulesConfig[label];
+	
+	            Object.keys(this.voices).forEach(function (e) {
+	                _this2.voices[e].removeModule(label);
+	            });
+	        }
+	    };
+	
+	    Synth.prototype.play = function play(note) {
+	        var _this3 = this;
 	
 	        var frequencyData = undefined;
 	
@@ -1120,9 +1143,9 @@
 	            frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
 	
 	            this.javascriptNode.onaudioprocess = function () {
-	                _this2.analyser.getByteFrequencyData(frequencyData);
-	                if (_this2.updateSpectrum && typeof _this2.updateSpectrum === 'function') {
-	                    _this2.updateSpectrum(frequencyData);
+	                _this3.analyser.getByteFrequencyData(frequencyData);
+	                if (_this3.updateSpectrum && typeof _this3.updateSpectrum === 'function') {
+	                    _this3.updateSpectrum(frequencyData);
 	                }
 	            };
 	        }
@@ -1241,6 +1264,12 @@
 	    Voice.prototype.updateModule = function updateModule(moduleId, props) {
 	        if (this.modules[moduleId] && this.modules[moduleId].instance) {
 	            this.modules[moduleId].instance.updateProperties(props);
+	        }
+	    };
+	
+	    Voice.prototype.removeModule = function removeModule(moduleId) {
+	        if (this.modules[moduleId] && this.modules[moduleId].instance) {
+	            this.modules[moduleId].instance.disconnect();
 	        }
 	    };
 	
