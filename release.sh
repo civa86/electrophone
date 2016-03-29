@@ -29,9 +29,8 @@ echo "LATEST RELEASE: $LATEST_TAG"
 echo "NEW RELEASE NUMBER: "
 read RELEASE_NUM
 
-#TODO change with dist for unit testing....
 echo "/***** LIBRARY DISTRIBUTION ****/"
-npm run lib::build || { echo "LIBRARY DISTRIBUTION: failed" ; exit 1; }
+npm run lib::dist || { echo "LIBRARY DISTRIBUTION: failed" ; exit 1; }
 
 if [ "$DRY_RUN" == "0" ]
 then
@@ -54,9 +53,9 @@ else
 
     if [ $RUN_RELEASE == "y" ]
     then
-        echo "run ./release.sh..."
+        echo "run ./release.sh"
     else
-        echo "Bye..."
+        echo "Bye"
     fi
 fi
 
