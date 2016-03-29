@@ -11,9 +11,10 @@ echo "/***** CLEAN DISTRIBUTION ****/"
 rm -rf app/dist
 mkdir app/dist
 
-#TODO change with dist for unit testing....
 echo "/***** LIBRARY DISTRIBUTION ****/"
-npm run lib::build || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
+npm run lib::dist || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
+
+npm run lib::coverage || { echo 'LIBRARY COVERAGE: failed' ; exit 1; }
 
 echo "/***** LIBRARY DOCUMENTATION ****/"
 npm run lib::docs::public || { echo 'LIBRARY DOCS: failed' ; exit 1; }
@@ -48,6 +49,8 @@ git push --force --quiet "https://${GH_TOKEN}@$GH_REF" master:gh-pages > /dev/nu
 
 echo "/***** CLEAN TMP REPO ****/"
 rm -rf .git
+
+#TODO integrate coveralls
 
 echo "/*****************************************/"
 echo "/*****    PUBLISH GH-PAGES :: END     ****/"

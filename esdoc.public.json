@@ -2,6 +2,10 @@
   "source": "./lib/",
   "includes": ["^(WebSynth|TypeDefinition)\\.js$"],
   "destination": "./app/dist/docs",
+  "test": {
+    "type": "mocha",
+    "source": "./lib"
+  },
   "title": "WebSynth Documentation",
   "plugins": [
     {"name": "esdoc-es7-plugin"}

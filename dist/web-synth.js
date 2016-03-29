@@ -1021,7 +1021,8 @@
 	
 	        var properties = props || {};
 	
-	        this.audioContext = audioContext, this.modulesConfig = {};
+	        this.audioContext = audioContext;
+	        this.modulesConfig = {};
 	        this.voices = {};
 	        this.spectrum = properties.spectrum || false;
 	        this.updateSpectrum = properties.updateSpectrum || null;
@@ -1121,9 +1122,7 @@
 	        var _this2 = this;
 	
 	        if (this.modulesConfig[label]) {
-	            //TODO check on deletion of voices...you can remove sounds runtime
 	            delete this.modulesConfig[label];
-	
 	            Object.keys(this.voices).forEach(function (e) {
 	                _this2.voices[e].removeModule(label);
 	            });

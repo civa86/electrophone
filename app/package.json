@@ -52,7 +52,7 @@
   },
   "scripts": {
     "test": "mocha ./src/**/*.spec.js ./src/components/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
-    "test:watch": "npm test -- --watch",
+    "test::watch": "npm test -- --watch",
     "app::dev": "node server.js",
     "app::build": "rm -rf ./dist/js ./dist/css; NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "app::dist": "npm test -- --bail && npm run app::build"
