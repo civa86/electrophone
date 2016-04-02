@@ -699,9 +699,10 @@
 	
 	var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
 	    methods = Object.keys(Modules);
+	var synth = undefined;
 	
 	/**
-	 * WebSynth Library
+	 * WebSynth Library.
 	 * @example
 	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
 	 * const synth = new WebSynth(new AudioCtx(), { spectrum: false });
@@ -709,131 +710,170 @@
 	
 	var WebSynth = function () {
 	    /**
-	     * Create a playable synthesizer instance
-	     * @param {AudioContext} audioContext - Web Audio Context instance
-	     * @param {WebSynthProperties} [properties] - synth properties
+	     * Create a playable web synthesizer instance.
+	     * @param {AudioContext} audioContext - Web Audio Context instance.
+	     * @param {WebSynthProperties} [properties] - synth properties.
 	     */
 	
 	    function WebSynth(audioContext, props) {
 	        _classCallCheck(this, WebSynth);
 	
 	        var properties = props || {};
-	        this.synth = new _Synth2.default(audioContext, properties);
+	        synth = new _Synth2.default(audioContext, properties);
+	        this.isPlaying = false;
 	    }
 	
+	    //TODO define ModuleProperties type...
 	    /**
-	     * Create a new synth module
-	     * @param {string} id - the module identifier
-	     * @param {string} type - the type of module
-	     * @param {object} props - module properties
+	     * Returns current synth modules configuration object.
+	     * @return {Object} current synth modules configuration.
+	     * @property {Object} master - the master ModuleProperties.
+	     * @property {Object} adsr - the adsr ModuleProperties.
+	     * @property {Object} <module_id> - one ModuleProperties for each created module.
 	     */
 	
 	
-	    WebSynth.prototype.create = function create(id, type, props) {
-	        //TODO check if already created....
-	        this.synth.module(type, id, props);
-	        return this;
+	    WebSynth.prototype.getModules = function getModules() {
+	        return _extends({}, synth.modulesConfig);
 	    };
 	
 	    /**
-	     * Update the synth module by id
-	     * @param {string} id - the module identifier
-	     * @param {object} props - module properties
+	     * Create a new synth module.
+	     * @param {String} id - the module identifier.
+	     * @param {String} type - the type of module.
+	     * @param {Object} properties - module properties.
+	     * @return {WebSynth}
+	     * @throws {Error} throw error when module with id is already created.
 	     */
 	
 	
-	    WebSynth.prototype.update = function update(id, props) {
+	    WebSynth.prototype.create = function create(id, type, properties) {
 	        var currentModule = this.getModules()[id];
 	        if (currentModule) {
-	            this.synth.module(currentModule.type, id, props);
-	        } else {
-	            //TODO creation?? error??
+	            throw new Error('Module ' + id + ' already created. Use update method instead.');
 	        }
-	
+	        synth.module(type, id, properties);
 	        return this;
 	    };
 	
 	    /**
-	     * Update the MASTER module
-	     * @param {object} props - MASTER properties
+	     * Update the synth module by id.
+	     * @param {String} id - the module identifier.
+	     * @param {Object} properties - module properties.
+	     * @return {WebSynth}
+	     * @throws {Error} throw error when module with id is not found.
 	     */
 	
 	
-	    WebSynth.prototype.master = function master(props) {
-	        this.synth.module(_Constants.TYPES.MASTER, _Constants.CONST.MASTER, props);
+	    WebSynth.prototype.update = function update(id, properties) {
+	        var currentModule = this.getModules()[id];
+	        if (!currentModule) {
+	            throw new Error('Module ' + id + ' not found. Use create method instead.');
+	        }
+	        synth.module(currentModule.type, id, properties);
 	        return this;
 	    };
 	
 	    /**
-	     * Update the ADSR module
-	     * @param {object} props - ADSR (Envelope) properties
+	     * Update the master module.
+	     * @param {Object} properties - master properties.
+	     * @return {WebSynth}
 	     */
 	
 	
-	    WebSynth.prototype.adsr = function adsr(props) {
-	        this.synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, props);
+	    WebSynth.prototype.master = function master(properties) {
+	        synth.module(_Constants.TYPES.MASTER, _Constants.CONST.MASTER, properties);
 	        return this;
 	    };
 	
 	    /**
-	     * Destroy the synth module by id
-	     * @param {string} id - the module identifier
+	     * Update the ADSR module.
+	     * @param {Object} properties - ADSR (Envelope) properties
+	     * @return {WebSynth}
+	     */
+	
+	
+	    WebSynth.prototype.adsr = function adsr(properties) {
+	        synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, properties);
+	        return this;
+	    };
+	
+	    /**
+	     * Destroy the synth module by id.
+	     * @param {String} id - the module identifier.
+	     * @return {WebSynth}
+	     * @throws {Error} throw error when module with id is not found.
 	     */
 	
 	
 	    WebSynth.prototype.destroy = function destroy(id) {
 	        var currentModule = this.getModules()[id];
-	        if (currentModule) {
-	            this.synth.destroyModule(id);
+	        if (!currentModule) {
+	            throw new Error('Module ' + id + ' not found.');
 	        }
+	        synth.destroyModule(id);
+	        return this;
 	    };
 	
 	    /**
-	     * Start playing the input frequency
-	     * @param {number} frequency=0 - the number of frequency
+	     * Start playing the input frequency.
+	     * @param {Number} frequency=0 - the frequency value.
+	     * @return {WebSynth}
 	     */
 	
 	
 	    WebSynth.prototype.play = function play() {
 	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 	
-	        this.synth.play(frequency);
+	        synth.play(frequency);
+	        this.isPlaying = true;
+	        return this;
 	    };
 	
 	    /**
-	     * Stop playing the input frequency
-	     * @param {number} frequency=0 - the number of frequency
+	     * Stop playing the input frequency.
+	     * @param {Number} frequency=0 - the frequency value.
+	     * @return {WebSynth}
 	     */
 	
 	
 	    WebSynth.prototype.stop = function stop() {
 	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 	
-	        this.synth.stop(frequency);
+	        synth.stop(frequency);
+	        this.isPlaying = false;
+	        return this;
 	    };
 	
 	    /**
-	     * Returns current synth modules
-	     * @returns {{}}
+	     * Link two modules, connect source module to target module.
+	     * @param {String} source - the source module id.
+	     * @param {String} target - the target module id.
+	     * @return {WebSynth}
+	     * @throws {Error} throw error when source is master.
 	     */
 	
 	
-	    WebSynth.prototype.getModules = function getModules() {
-	        return _extends({}, this.synth.modulesConfig);
-	    };
-	
-	    WebSynth.prototype.linkModules = function linkModules(source, target) {
+	    WebSynth.prototype.link = function link(source, target) {
 	        if (source === _Constants.CONST.MASTER) {
-	            throw new Error('ERROR :: master can\'t be linked to any modules');
+	            throw new Error('master can\'t be linked to any modules');
 	        }
-	
-	        if (this.synth.modulesConfig[source] && this.synth.modulesConfig[target]) {
-	            this.synth.modulesConfig[source].props.link = target;
+	        if (synth.modulesConfig[source] && synth.modulesConfig[target]) {
+	            synth.modulesConfig[source].props.link = target;
 	        }
 	        return this;
 	    };
 	
-	    WebSynth.getModuleProperties = function getModuleProperties(moduleType) {
+	    /**
+	     * Static method that returns module properties by type.
+	     * @param {String} moduleType - module='' type, taken from WebSynth.TYPES.
+	     * @return {Array} list of properties
+	     */
+	
+	
+	    WebSynth.getModuleProperties = function getModuleProperties() {
+	        var moduleType = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	
 	        var moduleProps = Props[moduleType + 'Props'] || {};
 	
 	        return [].concat(Object.keys(moduleProps).map(function (prop) {
@@ -863,6 +903,10 @@
 	        return parseFloat(freq.toFixed(3));
 	    };
 	
+	    WebSynth.getNotes = function getNotes() {
+	        return notes;
+	    };
+	
 	    return WebSynth;
 	}();
 	
@@ -870,118 +914,6 @@
 	WebSynth.TYPES = _Constants.TYPES;
 	
 	exports.default = WebSynth;
-	
-	//export default (props) => {
-	//    const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-	//
-	//    let factory = {
-	//            VARS: CONST,
-	//            TYPES: TYPES
-	//        },
-	//        properties = props || {},
-	//        synth = new Synth(properties);
-	//
-	//    function callModule (type) {
-	//        return (label, props) => {
-	//            synth.module(type, label, props);
-	//            return factory;
-	//        };
-	//    }
-	//
-	//    function init () {
-	//        let fx;
-	//        methods
-	//            .filter(e => e !== TYPES.MASTER)
-	//            .forEach(type => {
-	//                fx = type.toLowerCase();
-	//                factory[fx] = callModule(type);
-	//            });
-	//    }
-	//
-	//    function module (type, label, props) {
-	//        synth.module(type, label, props);
-	//        return factory;
-	//    }
-	//
-	//    function master (level) {
-	//        if (+level >= 0) {
-	//            synth.module(TYPES.MASTER, CONST.MASTER, {
-	//                level: level
-	//            });
-	//        }
-	//    }
-	//
-	//    function adsr (props) {
-	//        synth.module(TYPES.ENVELOPE, CONST.ADSR, props);
-	//    }
-	//
-	//    function destroyModule (id) {
-	//        //TODO check on deletion of voices...you can remove sounds runtime
-	//        //TODO run deletion on synth....
-	//        delete synth.modulesConfig[id];
-	//        return factory;
-	//    }
-	//
-	//    function linkModules (source, target) {
-	//        if (source === CONST.MASTER) {
-	//            throw new Error('ERROR :: master can\'t be linked to any modules');
-	//        }
-	//
-	//        if (synth.modulesConfig[source] && synth.modulesConfig[target]) {
-	//            synth.modulesConfig[source].props.link = target;
-	//        }
-	//        return factory;
-	//    }
-	//
-	//    function listAllModules () {
-	//        return methods;
-	//    }
-	//
-	//    function listModules () {
-	//        return synth.modulesConfig;
-	//    }
-	//
-	//    function getModulePropertiesSet (type) {
-	//        const p = Props[type + 'Props'] || {};
-	//        return _.assign({}, p, Props.DefaultProps);
-	//    }
-	//
-	//    function play (note) {
-	//        synth.play(note);
-	//    }
-	//
-	//    function stop (note) {
-	//        synth.stop(note);
-	//    }
-	//
-	//    function getFrequency (note, octave) {
-	//        const octaveD = parseInt(octave, 10) - 4,
-	//            noteD = notes.indexOf(note) - notes.indexOf('A'),
-	//            delta = 12 * octaveD,
-	//            exp = (noteD + delta),
-	//            freq = 440 * Math.pow(1.059463, exp);
-	//        return parseFloat(freq.toFixed(3));
-	//    }
-	//
-	//    init();
-	//
-	//    factory.module = module;
-	//    factory.master = master;
-	//    factory.adsr = adsr;
-	//    factory.destroyModule = destroyModule;
-	//    factory.linkModules = linkModules;
-	//
-	//    factory.listAllModules = listAllModules;
-	//    factory.listModules = listModules;
-	//    factory.getModulePropertiesSet = getModulePropertiesSet;
-	//
-	//    factory.play = play;
-	//    factory.stop = stop;
-	//
-	//    factory.getFrequency = getFrequency;
-	//
-	//    return factory;
-	//};
 
 /***/ },
 /* 8 */
@@ -1084,6 +1016,7 @@
 	            throw new Error('Synth Module :: missing label');
 	        }
 	
+	        //TODO create woth default properties instead of throw errors
 	        if (!props || props.constructor !== Object) {
 	            throw new Error('Synth Module :: missing properties');
 	        }
