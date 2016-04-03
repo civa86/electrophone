@@ -817,31 +817,31 @@
 	
 	    /**
 	     * Start playing the input frequency.
-	     * @param {Number} frequency=0 - the frequency value.
+	     * @param {Number} frequency - the frequency value.
 	     * @return {WebSynth}
 	     */
 	
 	
-	    WebSynth.prototype.play = function play() {
-	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	
-	        synth.play(frequency);
-	        this.isPlaying = true;
+	    WebSynth.prototype.play = function play(frequency) {
+	        if (+frequency >= 0) {
+	            synth.play(frequency);
+	            this.isPlaying = true;
+	        }
 	        return this;
 	    };
 	
 	    /**
 	     * Stop playing the input frequency.
-	     * @param {Number} frequency=0 - the frequency value.
+	     * @param {Number} frequency - the frequency value.
 	     * @return {WebSynth}
 	     */
 	
 	
-	    WebSynth.prototype.stop = function stop() {
-	        var frequency = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	
-	        synth.stop(frequency);
-	        this.isPlaying = false;
+	    WebSynth.prototype.stop = function stop(frequency) {
+	        if (+frequency >= 0) {
+	            synth.stop(frequency);
+	            this.isPlaying = false;
+	        }
 	        return this;
 	    };
 	
@@ -851,23 +851,30 @@
 	     * @param {String} target - the target module id.
 	     * @return {WebSynth}
 	     * @throws {Error} throw error when source is master.
+	     * @throws {Error} throw error when source module is not found.
+	     * @throws {Error} throw error when target module is not found.
 	     */
 	
 	
 	    WebSynth.prototype.link = function link(source, target) {
 	        if (source === _Constants.CONST.MASTER) {
-	            throw new Error('master can\'t be linked to any modules');
+	            throw new Error('Module master can\'t be linked to any modules.');
 	        }
-	        if (synth.modulesConfig[source] && synth.modulesConfig[target]) {
-	            synth.modulesConfig[source].props.link = target;
+	        if (!synth.modulesConfig[source]) {
+	            throw new Error('Source module ' + source + ' not found.');
 	        }
+	
+	        if (!synth.modulesConfig[target]) {
+	            throw new Error('Target module ' + target + ' not found.');
+	        }
+	        synth.modulesConfig[source].props.link = target;
 	        return this;
 	    };
 	
 	    /**
-	     * Static method that returns module properties by type.
+	     * Get module properties by type.
 	     * @param {String} moduleType - module='' type, taken from WebSynth.TYPES.
-	     * @return {Array} list of properties
+	     * @return {Array}
 	     */
 	
 	
@@ -877,11 +884,17 @@
 	        var moduleProps = Props[moduleType + 'Props'] || {};
 	
 	        return [].concat(Object.keys(moduleProps).map(function (prop) {
-	            return _extends({ name: prop }, moduleProps[prop]);
+	            return _extends({}, moduleProps[prop], { name: prop });
 	        }), Object.keys(Props.DefaultProps).map(function (prop) {
-	            return _extends({ name: prop }, Props.DefaultProps[prop]);
+	            return _extends({}, Props.DefaultProps[prop], { name: prop });
 	        }));
 	    };
+	
+	    /**
+	     * Describe all WebSynth modules with parameters configuration.
+	     * @return {Array}
+	     */
+	
 	
 	    WebSynth.describeModules = function describeModules() {
 	        return [].concat(methods).filter(function (e) {
@@ -894,14 +907,28 @@
 	        }, []);
 	    };
 	
+	    /**
+	     * Get frequency float value calculated from given note and octave.
+	     * @param {String} note - note char indicator. sharp char for semi-tones.
+	     * @param {Number} octave - octave number.
+	     * @return {Number}
+	     */
+	
+	
 	    WebSynth.getFrequency = function getFrequency(note, octave) {
 	        var octaveD = parseInt(octave, 10) - 4,
 	            noteD = notes.indexOf(note) - notes.indexOf('A'),
 	            delta = 12 * octaveD,
 	            exp = noteD + delta,
 	            freq = 440 * Math.pow(1.059463, exp);
-	        return parseFloat(freq.toFixed(3));
+	        return parseFloat(freq.toFixed(3)) || 0;
 	    };
+	
+	    /**
+	     * Get complete notes list.
+	     * @return {Array}
+	     */
+	
 	
 	    WebSynth.getNotes = function getNotes() {
 	        return notes;
@@ -937,15 +964,15 @@
 	 * Synth Class
 	 * @example
 	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
-	 * const synth = new WebSynth(new AudioCtx(), { spectrum: false });
+	 * const synth = new Synth(new AudioCtx(), { spectrum: false });
 	 */
 	
 	var Synth = function () {
 	
 	    /**
-	     * Create the internal synthesizer instance
-	     * @param {AudioContext} audioContext - Web Audio Context instance
-	     * @param {WebSynthProperties} [properties] - synth properties
+	     * Create a synthesizer instance.
+	     * @param {AudioContext} audioContext - Web Audio Context instance.
+	     * @param {WebSynthProperties} [properties] - synth properties.
 	     */
 	
 	    function Synth(audioContext, props) {
@@ -989,6 +1016,11 @@
 	        });
 	    }
 	
+	    /**
+	     * Create a spectrum node for the synth instance.
+	     */
+	
+	
 	    Synth.prototype.createSpectrum = function createSpectrum() {
 	        var SMOOTHING = 0.8,
 	            FFT_SIZE = 2048;
@@ -1007,18 +1039,23 @@
 	        }
 	    };
 	
-	    Synth.prototype.module = function module(type, label, props) {
+	    /**
+	     * Module method to create | update modules.
+	     * @param {String} type - the type of module.
+	     * @param {String} label - the module identifier.
+	     * @param {Object} props={} - module properties
+	     */
+	
+	
+	    Synth.prototype.module = function module(type, label) {
+	        var props = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	
 	        if (!type || type.constructor !== String) {
 	            throw new Error('Synth Module :: missing type');
 	        }
 	
 	        if (!label || label.constructor !== String) {
 	            throw new Error('Synth Module :: missing label');
-	        }
-	
-	        //TODO create woth default properties instead of throw errors
-	        if (!props || props.constructor !== Object) {
-	            throw new Error('Synth Module :: missing properties');
 	        }
 	
 	        if (!this.modulesConfig[label]) {
@@ -1028,39 +1065,78 @@
 	        }
 	    };
 	
-	    Synth.prototype.addModule = function addModule(type, label, props) {
+	    /**
+	     * Add a new module.
+	     * @param {String} type - the type of module.
+	     * @param {String} label - the module identifier.
+	     * @param {Object} props={} - module properties.
+	     * @throws {Error} throw error when module with label is already created.
+	     */
+	
+	
+	    Synth.prototype.addModule = function addModule(type, label) {
+	        var props = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	
+	        if (this.modulesConfig[label]) {
+	            throw new Error('Module ' + label + ' already created. Use updateModule method instead.');
+	        }
 	        this.modulesConfig[label] = {
 	            type: type,
 	            props: props
 	        };
 	    };
 	
-	    Synth.prototype.updateModule = function updateModule(label, props) {
+	    /**
+	     * Update the module identified by label and update all running voices.
+	     * @param {String} label - the module identifier.
+	     * @param {Object} props={} - module properties.
+	     * @throws {Error} throw error when module with label is not found.
+	     */
+	
+	
+	    Synth.prototype.updateModule = function updateModule(label) {
 	        var _this = this;
 	
-	        if (this.modulesConfig[label]) {
-	            Object.keys(props).forEach(function (e) {
-	                if (_this.modulesConfig[label].props[e] !== undefined) {
-	                    _this.modulesConfig[label].props[e] = props[e];
-	                }
-	            });
+	        var props = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
-	            Object.keys(this.voices).forEach(function (e) {
-	                _this.voices[e].updateModule(label, props);
-	            });
+	        if (!this.modulesConfig[label]) {
+	            throw new Error('Module ' + label + ' not found. Use addModule method instead.');
 	        }
+	        Object.keys(props).forEach(function (e) {
+	            if (_this.modulesConfig[label].props[e] !== undefined) {
+	                _this.modulesConfig[label].props[e] = props[e];
+	            }
+	        });
+	
+	        Object.keys(this.voices).forEach(function (e) {
+	            _this.voices[e].updateModule(label, props);
+	        });
 	    };
+	
+	    /**
+	     * Destroy the module identified by label and remove running voices.
+	     * @param {String} label - the module identifier.
+	     * @throws {Error} throw error when module with label is not found.
+	     */
+	
 	
 	    Synth.prototype.destroyModule = function destroyModule(label) {
 	        var _this2 = this;
 	
-	        if (this.modulesConfig[label]) {
-	            delete this.modulesConfig[label];
-	            Object.keys(this.voices).forEach(function (e) {
-	                _this2.voices[e].removeModule(label);
-	            });
+	        if (!this.modulesConfig[label]) {
+	            throw new Error('Module ' + label + ' not found.');
 	        }
+	        delete this.modulesConfig[label];
+	        Object.keys(this.voices).forEach(function (e) {
+	            _this2.voices[e].removeModule(label);
+	        });
 	    };
+	
+	    /**
+	     * Start playing the input note and start spectrum data if necessary.
+	     * @param {Number} note - the note frequency value.
+	     */
+	
 	
 	    Synth.prototype.play = function play(note) {
 	        var _this3 = this;
@@ -1082,6 +1158,12 @@
 	            };
 	        }
 	    };
+	
+	    /**
+	     * Stop playing the input note and stop spectrum data if necessary.
+	     * @param {Number} note - the note frequency value.
+	     */
+	
 	
 	    Synth.prototype.stop = function stop(note) {
 	        if (this.voices[note]) {
@@ -1754,7 +1836,7 @@
 	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
 	            t = dest.getEnvelopeTarget(this.target);
 	
-	            if (t) {
+	            if (t && t.setValueAtTime && t.linearRampToValueAtTime && t.setTargetAtTime) {
 	                t.setValueAtTime(0, now);
 	                t.linearRampToValueAtTime(attackLevel, now + attackEnd);
 	                t.setTargetAtTime(sustainLevel, now + attackEnd, this.decay / 100.0);
@@ -1769,7 +1851,7 @@
 	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
 	            t = dest.getEnvelopeTarget(this.target);
 	
-	            if (t) {
+	            if (t && t.cancelScheduledValues && t.setValueAtTime && t.setTargetAtTime) {
 	                t.cancelScheduledValues(now);
 	                if (this.target === 'gain') {
 	                    t.setValueAtTime(t.value, now);
