@@ -32,6 +32,10 @@ read RELEASE_NUM
 echo "/***** LIBRARY DISTRIBUTION ****/"
 npm run lib::dist || { echo "LIBRARY DISTRIBUTION: failed" ; exit 1; }
 
+echo "/***** LIBRARY DOCUMENTATION ****/"
+npm run lib::docs || { echo "LIBRARY DOCUMENTATION: failed" ; exit 1; }
+
+#TODO remove dry run and make decision of releas interactive!
 if [ "$DRY_RUN" == "0" ]
 then
     echo "/**** BUMP PACKAGE VERSION ****/"
