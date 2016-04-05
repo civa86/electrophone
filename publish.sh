@@ -5,25 +5,21 @@ echo "/*****    PUBLISH GH-PAGES :: START   ****/"
 echo "/*****************************************/"
 
 echo "/***** INSTALL LIBRARY DEPENDENCIES ****/"
-npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed' ; exit 1; }
-
-echo "/***** CLEAN APPLICATION DISTRIBUTION ****/"
-rm -rf app/dist
-mkdir app/dist
+npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed'; exit 1; }
 
 echo "/***** LIBRARY DISTRIBUTION ****/"
-npm run lib::dist || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
+npm run lib::dist || { echo 'LIBRARY DISTRIBUTION: failed'; exit 1; }
 
-npm run lib::coverage || { echo 'LIBRARY COVERAGE: failed' ; exit 1; }
+npm run lib::coverage || { echo 'LIBRARY COVERAGE: failed'; exit 1; }
 
 echo "/***** ENTER APPLICATION DIRECTORY ****/"
 cd app
 
 echo "/***** INSTALL APPLICATION DEPENDENCIES ****/"
-npm install || { echo 'INSTALL APPLICATION DEPENDENCIES: failed' ; exit 1; }
+npm install || { echo 'INSTALL APPLICATION DEPENDENCIES: failed'; exit 1; }
 
 echo "/***** APPLICATION DISTRIBUTION ****/"
-npm run app::dist || { echo 'APPLICATION DISTRIBUTION: failed' ; exit 1; }
+npm run app::dist || { echo 'APPLICATION DISTRIBUTION: failed'; exit 1; }
 
 echo "/***** ENTER APPLICATION DIST DIRECTORY ****/"
 cd dist
