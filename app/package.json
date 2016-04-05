@@ -15,8 +15,10 @@
     "redux": "3.1.x",
     "react-redux": "4.1.x",
     "redux-thunk": "1.0.x",
+    "lodash": "4.0.x",
     "jquery": "1.x",
     "jquery-knob": "1.2.x",
+    "cytoscape": "2.5.x",
     "bootstrap": "3.3.x"
   },
   "devDependencies": {
@@ -29,7 +31,6 @@
     "babel-preset-stage-0": "6.3.x",
     "chai": "3.5.x",
     "css-loader": "0.23.x",
-    "cytoscape": "2.5.x",
     "eslint": "1.10.x",
     "eslint-loader": "1.2.x",
     "eslint-plugin-react": "3.16.x",
@@ -39,7 +40,6 @@
     "html-webpack-plugin": "1.6.x",
     "less": "2.5.x",
     "less-loader": "2.2.x",
-    "lodash": "4.0.x",
     "mocha": "2.4.x",
     "node-libs-browser": "0.5.x",
     "react-hot-loader": "1.3.x",
@@ -54,7 +54,7 @@
     "test": "mocha ./src/**/*.spec.js ./src/components/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test::watch": "npm test -- --watch",
     "app::dev": "node server.js",
-    "app::build": "rm -rf ./dist/js ./dist/css; NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
-    "app::dist": "npm test -- --bail && npm run app::build"
+    "app::build": "rm -rf ./dist/js ./dist/*.css ./dist/*.css.map; NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
+    "app::dist": "npm test -- --bail && npm run app::build && cd .. && npm run lib::docs::public"
   }
 }

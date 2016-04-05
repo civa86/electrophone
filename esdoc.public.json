@@ -4,7 +4,8 @@
   "destination": "./app/dist/docs",
   "test": {
     "type": "mocha",
-    "source": "./lib"
+    "source": "./lib/",
+    "includes": ["^WebSynth\\.spec.js$"]
   },
   "title": "WebSynth Documentation",
   "plugins": [

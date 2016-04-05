@@ -1,6 +1,6 @@
 (function (module) {
     'use strict';
-    //TODO understand how to separate package.json dependency from build...
+
     var path = require('path'),
         webpack = require('webpack'),
         HtmlWebpackPlugin = require('html-webpack-plugin'),
@@ -10,28 +10,47 @@
         entry,
         output,
         pluginsSet,
-        emitLintErrors;
+        emitLintErrors,
+        ExtractStyle,
+        ExtractVendorStyle;
 
     if (process.env.NODE_ENV === 'production') {
         //Build Configuration
         console.log('/***** APPLICATION BUILD ****/');
 
+        //TODO isolate and check for assets...
+        ExtractStyle = new ExtractTextPlugin('screen.[hash].css');
+        ExtractVendorStyle = new ExtractTextPlugin('vendor.[hash].css');
+
         devtoolValue = 'source-map';
-        entry = [
-            './src/index'
-        ];
+        entry = {
+            app: './src/index',
+            vendor: [
+                'react',
+                'react-dom',
+                'redux',
+                'react-redux',
+                'redux-thunk',
+                'lodash',
+                'jquery',
+                'jquery-knob',
+                'cytoscape'
+            ]
+        };
         output = {
             path: path.join(__dirname, 'dist'),
             filename: 'js/bundle.[hash].min.js'
         };
         pluginsSet = [
+            new webpack.optimize.CommonsChunkPlugin("vendor", "js/vendor.[hash].js"),
             new webpack.optimize.OccurenceOrderPlugin(),
             new webpack.optimize.UglifyJsPlugin({ minimize: true }),
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, 'index.html'),
                 inject: 'body'
             }),
-            new ExtractTextPlugin('css/screen.css'), //TODO add hash also to css
+            ExtractStyle,
+            ExtractVendorStyle,
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"production"',
                 'process.env.LIB_VERSION': JSON.stringify(libPackage.version)
@@ -42,6 +61,9 @@
     } else {
         //Development Configuration
         console.log('/***** APPLICATION DEVELOPMENT ****/');
+
+        ExtractStyle = new ExtractTextPlugin('screen.css');
+        ExtractVendorStyle = new ExtractTextPlugin('vendor.css');
 
         devtoolValue = 'source-map';
         entry = [
@@ -59,7 +81,8 @@
                 template: path.join(__dirname, 'index.html'),
                 inject: 'body'
             }),
-            new ExtractTextPlugin('screen.css'),
+            ExtractStyle,
+            ExtractVendorStyle,
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"development"',
                 'process.env.LIB_VERSION': JSON.stringify(libPackage.version)
@@ -103,11 +126,13 @@
                 },
                 {
                     test: /\.less$/,
-                    loader: ExtractTextPlugin.extract('style', 'css!less')
+                    loader: ExtractStyle.extract('style', 'css!less'),
+                    include: path.join(__dirname, 'less')
                 },
                 {
                     test:   /\.css$/,
-                    loader: ExtractTextPlugin.extract('style', 'css')
+                    loader: ExtractVendorStyle.extract('style', 'css'),
+                    include: /node_modules/
                 },
                 {
                     test:   /\.(txt)$/,

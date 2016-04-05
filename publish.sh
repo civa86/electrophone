@@ -7,7 +7,7 @@ echo "/*****************************************/"
 echo "/***** INSTALL LIBRARY DEPENDENCIES ****/"
 npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed' ; exit 1; }
 
-echo "/***** CLEAN DISTRIBUTION ****/"
+echo "/***** CLEAN APPLICATION DISTRIBUTION ****/"
 rm -rf app/dist
 mkdir app/dist
 
@@ -15,9 +15,6 @@ echo "/***** LIBRARY DISTRIBUTION ****/"
 npm run lib::dist || { echo 'LIBRARY DISTRIBUTION: failed' ; exit 1; }
 
 npm run lib::coverage || { echo 'LIBRARY COVERAGE: failed' ; exit 1; }
-
-echo "/***** LIBRARY DOCUMENTATION ****/"
-npm run lib::docs::public || { echo 'LIBRARY DOCS: failed' ; exit 1; }
 
 echo "/***** ENTER APPLICATION DIRECTORY ****/"
 cd app
