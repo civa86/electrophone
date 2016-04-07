@@ -1141,14 +1141,16 @@
 	    Synth.prototype.play = function play(note) {
 	        var _this3 = this;
 	
-	        var frequencyData = undefined;
+	        var frequencyData = undefined,
+	            freqBufferLength = this.analyser && this.analyser.frequencyBinCount ? this.analyser.frequencyBinCount : 1024;
 	
 	        if (!this.voices[note]) {
 	            this.voices[note] = new _Voice2.default(note, this.audioContext, this.modulesConfig, this.analyser);
 	            this.voices[note].noteOn();
 	        }
 	        if (this.spectrum === true && this.javascriptNode) {
-	            frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+	
+	            frequencyData = new Uint8Array(freqBufferLength);
 	
 	            this.javascriptNode.onaudioprocess = function () {
 	                _this3.analyser.getByteFrequencyData(frequencyData);
