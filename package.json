@@ -1,6 +1,6 @@
 {
   "name": "web-synth",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Web Audio Modular Synth",
   "main": "dist/web-synth.js",
   "repository": {
@@ -19,18 +19,18 @@
     "eslint-loader": "1.2.x",
     "esdoc": "0.4.x",
     "esdoc-es7-plugin": "0.0.3",
-    "karma": "0.13.x",
-    "karma-chrome-launcher": "0.2.x",
-    "karma-jasmine": "0.3.x",
-    "karma-spec-reporter": "0.0.23",
-    "karma-webpack": "1.7.x",
     "lodash": "4.0.x",
     "stereo-panner-shim": "0.1.4",
     "tunajs": "0.4.x",
+    "mocha": "2.4.x",
+    "chai": "3.5.x",
+    "isparta": "4.0.x",
     "webpack": "1.9.x"
   },
   "scripts": {
-    "test": "karma start karma.conf.js",
+    "test": "mocha ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test::watch": "npm test -- --watch",
+    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --excludes *.spec.js --report lcovonly --report html _mocha -- ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --recursive --colors",
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "lib::dist": "npm test -- --bail && npm run lib::build",

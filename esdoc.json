@@ -1,6 +1,11 @@
 {
   "source": "./lib",
   "destination": "./docs",
+  "test": {
+    "type": "mocha",
+    "source": "./lib"
+  },
+  "title": "WebSynth Full Development Documentation",
   "plugins": [
     {"name": "esdoc-es7-plugin"}
   ]

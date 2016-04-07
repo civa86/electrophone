@@ -36,7 +36,6 @@ class App extends Component {
             this.audioContext = new window.webkitAudioContext();
         } else {
             //TODO trigger modal...
-            //throw new Error('AudioContext not supported. :(');
         }
     }
 
@@ -181,6 +180,7 @@ class App extends Component {
                     isVisible={synth.viewPanel === 'control'}
                     modules={synth.modules}
                     updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
+                    destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
                 />
 
                 <Synth state={synth} audioContext={this.audioContext} />

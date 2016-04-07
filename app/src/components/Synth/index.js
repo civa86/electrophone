@@ -86,7 +86,7 @@ class Synth extends Component {
     refreshLinks (modules) {
         modules.forEach(e => {
             if (!e.isMaster && e.link) {
-                this.synth.linkModules(e.id, e.link);
+                this.synth.link(e.id, e.link);
             }
         });
     }

@@ -16,6 +16,7 @@ class Knob extends Component {
             max: property.bounds[1],
             change: (value) => onUpdate(module, property.name, parseInt(value, 10))
         });
+        node.find('input').val(property.value).trigger('change');
     }
 
     componentWillReceiveProps (newProps) {
@@ -43,7 +44,7 @@ class Knob extends Component {
                        data-skin="tron"
                        data-thickness=".3"
                        data-anglearc="250"
-                       data-angleoffset="-125" />
+                       data-angleoffset="-125"/>
             </div>
         );
     }
