@@ -108,6 +108,7 @@ class App extends Component {
     }
 
     render () {
+        //TODO make view panel in visibility hidden....check for initial width if chang defaultpanel...
         const
             { synth, dispatch } = this.props,
             graphActions = {

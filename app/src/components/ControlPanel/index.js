@@ -21,14 +21,14 @@ class ControlPanel extends Component {
 
         return (
             <div id="control-panel" className="row" style={{ display: display }}>
-                <div className="col-xs-10 col-xs-offset-1">
+                <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
                     {modules.map(module =>
                         <div className="row" key={module.id} style={{ marginTop: '10px' }}>
                             <div className="col-xs-12">
 
                                 <div className="row bg-primary"
                                      style={{ border: '1px solid #333', borderBottom: 'none' }}>
-                                    <div className="col-xs-12"  style={{ padding: '10px' }}>
+                                    <div className="col-xs-12" style={{ padding: '10px' }}>
                                         {module.type + ' -- ' + module.id}
 
                                         {(() => {
@@ -48,13 +48,44 @@ class ControlPanel extends Component {
                                      style={{ border: '1px solid #333', borderTop: 'none', paddingTop: '20px' }}>
                                     {
                                         module.properties
-                                            .filter(prop => prop.name !== 'link')
+                                            .filter(prop => prop.name !== 'link' && prop.name !== 'level')
                                             .map(prop =>
-                                                <div className="col-xs-2"
+                                                <div className="col-xs-4 col-lg-2"
+                                                     style={{ paddingBottom: '20px' }}
                                                      key={module.id + prop.name}>
                                                     {this.getControlProperty(module.id, { ...prop })}
                                                 </div>
                                             )
+                                    }
+                                    {
+                                        module.properties
+                                            .filter(prop => prop.name === 'level')
+                                            .map(prop => {
+                                                let offset = 0;
+                                                const
+                                                    numElemInRow = 6,
+                                                    pLength = module.properties
+                                                        .filter(prop => prop.name !== 'link')
+                                                        .length;
+
+                                                if (pLength > numElemInRow) {
+                                                    offset = numElemInRow - (pLength % numElemInRow);
+                                                } else {
+                                                    offset = numElemInRow - pLength;
+                                                }
+
+                                                return (
+                                                    <div className={
+                                                            "col-xs-4 col-xs-offset-" +
+                                                            (4 * (parseInt(offset / 2, 10) || 1)) + " " +
+                                                            "col-lg-2 col-lg-offset-" + (2 * offset)
+                                                         }
+                                                         style={{ paddingBottom: '20px' }}
+                                                         key={module.id + prop.name}>
+                                                        {this.getControlProperty(module.id, { ...prop })}
+                                                    </div>
+                                                );
+                                            })
                                     }
                                 </div>
 

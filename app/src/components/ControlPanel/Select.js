@@ -6,13 +6,14 @@ class Select extends Component {
         const { property, module, onUpdate } = this.props;
 
         return (
-            <div className="dropdown">
-                <div>{property.name.toUpperCase()}</div>
+            <div className="dropdown" style={{ width: '100px', margin: '0 auto' }}>
+                <div style={{ textAlign: 'center' }}>{property.name.toUpperCase()}</div>
                 <button className="btn btn-default dropdown-toggle"
+                        style={{ width: '100%' }}
                         type="button"
                         id="dropdownMenu1"
                         data-toggle="dropdown">
-                    {property.value}
+                    {property.value}&nbsp;
                     <span className="caret"></span>
                 </button>
                 <ul className="dropdown-menu">
