@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+
 import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
 
 // Components
+import Header from '../components/Header';
 import Graph from '../components/Graph';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
@@ -21,7 +24,7 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 100;
+    headerHeight = 95;
 
 class App extends Component {
 
@@ -37,6 +40,10 @@ class App extends Component {
         } else {
             //TODO trigger modal...
         }
+
+        $(document).ready(() => {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     }
 
     getKeyboardMapping () {
@@ -104,6 +111,7 @@ class App extends Component {
         const
             windowSize = screen.getWindowSize(),
             graphHeight = windowSize.height - headerHeight;
+
         return graphHeight;
     }
 
@@ -121,68 +129,40 @@ class App extends Component {
                 linkHandler: (sourceNodeId, destNodeId) => {
                     dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
-            },
-            libVersion = process.env.LIB_VERSION;
+            };
 
         return (
-            <div>
-                <div id="header" style={{ height: headerHeight, padding: '5px' }} className="row">
-                    <div className="col-xs-8">
-                        <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
-                            LINK MODE
-                        </button>
-                        <button onClick={() => localCache.saveState(localCacheKey, synth)}>
-                            SAVE SYNTH
-                        </button>
-                        <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
-                            LOAD SYNTH
-                        </button>
-                        <button onClick={() => dispatch(SynthActions.resetState())}>
-                            RESET SYNTH
-                        </button>
-                        <br/>
-                        OCTAVE: {synth.octave}
-                        <br/>
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
-                            ADD MODULE
-                        </button>
+            <div id="main-wrapper" className="container-fluid">
+                <Header height={headerHeight}
+                        repoUrl={process.env.GITHUB_REPO_URL}
+                        libVersion={process.env.LIB_VERSION} />
 
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
-                            GRAPH PANEL
-                        </button>
-
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
-                            CONTROL PANEL
-                        </button>
+                <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
+                    <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
+                        {synthModules.map(e => {
+                            if (e.type !== WebSynth.TYPES.MASTER) {
+                                return <button key={e.type} onClick={() => this.addModule(e.type)}>
+                                    {e.type}
+                                </button>
+                            }
+                        })}
                     </div>
-                    <div className="col-xs-4">
-                        <div className="pull-right">WebSynth v.{libVersion}</div>
-                    </div>
-                </div>
-                <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
-                    {synthModules.map(e => {
-                        if (e.type !== WebSynth.TYPES.MASTER) {
-                            return <button key={e.type} onClick={() => this.addModule(e.type)}>
-                                {e.type}
-                            </button>
-                        }
-                    })}
-                </div>
 
-                <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
-                    <Graph
-                        state={synth}
-                        height={this.getGraphHeight()}
-                        actions={graphActions}
+                    <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
+                        <Graph
+                            state={synth}
+                            height={this.getGraphHeight()}
+                            actions={graphActions}
+                        />
+                    </div>
+
+                    <ControlPanel
+                        isVisible={synth.viewPanel === 'control'}
+                        modules={synth.modules}
+                        updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
+                        destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
                     />
                 </div>
-
-                <ControlPanel
-                    isVisible={synth.viewPanel === 'control'}
-                    modules={synth.modules}
-                    updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
-                    destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
-                />
 
                 <Synth state={synth} audioContext={this.audioContext} />
 

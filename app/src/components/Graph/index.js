@@ -16,13 +16,14 @@ class Graph extends Component {
 
         node.style.height = height + 'px';
 
+        //TODO try to add style rules...
         node.appendChild($canvas);
         $canvas.setAttribute('width', node.offsetWidth);
         $canvas.setAttribute('height', node.offsetHeight);
         $canvas.style.position = 'absolute';
         $canvas.style.top = 0;
         $canvas.style.left = 0;
-        $canvas.style.zIndex = '999';
+        $canvas.style.zIndex = '900';
         graph.createGraph(
             node,
             $canvas.getContext('2d'),
