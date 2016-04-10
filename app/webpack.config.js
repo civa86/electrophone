@@ -139,11 +139,11 @@
                     loader: 'file?name=[name].[ext]'
                 },
                 {
-                    test:   /\.(woff|woff2|ttf|eot)$/,
+                    test:   /\.(woff|woff2|ttf|eot)(\?=?|$)/,
                     loader: 'file?name=assets/fonts/[name].[ext]'
                 },
                 {
-                    test:   /\.(png|jpg|jpeg|gif|svg)$/,
+                    test:   /\.(png|jpg|jpeg|gif|svg)(\?=?|$)/,
                     loader: 'file?name=assets/img/[name].[ext]'
                 }
             ],
