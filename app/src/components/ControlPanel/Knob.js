@@ -14,6 +14,8 @@ class Knob extends Component {
         node.find('input').knob({
             min: property.bounds[0],
             max: property.bounds[1],
+            fgColor: '#46bcec',
+            bgColor: '#ccc',
             change: (value) => onUpdate(module, property.name, parseInt(value, 10))
         });
         node.find('input').val(property.value).trigger('change');

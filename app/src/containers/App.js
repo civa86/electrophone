@@ -19,9 +19,9 @@ import ControlPanel from '../components/ControlPanel';
 import screenService from '../services/screen';
 
 const
-    //localCache = localCacheService(),
+//localCache = localCacheService(),
     screen = screenService(),
-    //localCacheKey = 'webSynth',
+//localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
     headerHeight = 95;
@@ -115,10 +115,15 @@ class App extends Component {
         return graphHeight;
     }
 
+    getGraphWidth () {
+        return $('body').width() - 30;
+    }
+
     render () {
         //TODO make view panel in visibility hidden....check for initial width if chang defaultpanel...
         const
             { synth, dispatch } = this.props,
+        //refactor and port into viewActions...
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
                     dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
@@ -129,13 +134,18 @@ class App extends Component {
                 linkHandler: (sourceNodeId, destNodeId) => {
                     dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
+            },
+            viewActions = {
+                setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel))
             };
 
         return (
             <div id="main-wrapper" className="container-fluid">
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}
-                        libVersion={process.env.LIB_VERSION} />
+                        viewActions={viewActions}
+                        visiblePanel={synth.viewPanel}
+                        libVersion={process.env.LIB_VERSION}/>
 
                 <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
                     <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
@@ -151,6 +161,7 @@ class App extends Component {
                     <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
                         <Graph
                             state={synth}
+                            width={this.getGraphWidth()}
                             height={this.getGraphHeight()}
                             actions={graphActions}
                         />
@@ -164,7 +175,7 @@ class App extends Component {
                     />
                 </div>
 
-                <Synth state={synth} audioContext={this.audioContext} />
+                <Synth state={synth} audioContext={this.audioContext}/>
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>

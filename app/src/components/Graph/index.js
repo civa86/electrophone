@@ -12,18 +12,20 @@ class Graph extends Component {
         const
             node = ReactDOM.findDOMNode(this),
             $canvas = document.createElement('canvas'),
-            { actions, state, height } = this.props;
+            { actions, state, height, width } = this.props;
 
+        node.style.width = width + 'px';
         node.style.height = height + 'px';
 
         //TODO try to add style rules...
         node.appendChild($canvas);
-        $canvas.setAttribute('width', node.offsetWidth);
-        $canvas.setAttribute('height', node.offsetHeight);
+        $canvas.setAttribute('width', width);
+        $canvas.setAttribute('height', height);
         $canvas.style.position = 'absolute';
         $canvas.style.top = 0;
         $canvas.style.left = 0;
         $canvas.style.zIndex = '900';
+
         graph.createGraph(
             node,
             $canvas.getContext('2d'),
