@@ -15,13 +15,13 @@ import GlobalKeys from '../components/GlobalKeys';
 import ControlPanel from '../components/ControlPanel';
 
 // Services
-import localCacheService from '../services/localCache';
+//import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
 const
-    localCache = localCacheService(),
+    //localCache = localCacheService(),
     screen = screenService(),
-    localCacheKey = 'webSynth',
+    //localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
     headerHeight = 95;
@@ -42,7 +42,7 @@ class App extends Component {
         }
 
         $(document).ready(() => {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
         });
     }
 

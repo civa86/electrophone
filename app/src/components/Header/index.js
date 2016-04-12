@@ -38,22 +38,19 @@ const Header = (props) => {
             <div className="menu">
                 <ul className="container">
                     <li className="pull-left">
-                        <a href=""
-                           data-toggle="tooltip"
+                        <a data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Reset Synth"><i className="ion-ios-refresh"></i></a>
+                           title="Reset Synth"><i className="ion-loop"></i></a>
                     </li>
                     <li className="pull-left">
-                        <a href=""
-                           data-toggle="tooltip"
+                        <a data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Load Synth"><i className="ion-ios-upload"></i></a>
+                           title="Load Synth"><i className="ion-upload"></i></a>
                     </li>
                     <li className="pull-left">
-                        <a href=""
-                           data-toggle="tooltip"
+                        <a data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Save Synth"><i className="ion-ios-download"></i></a>
+                           title="Save Synth"><i className="ion-archive"></i></a>
                     </li>
                 </ul>
             </div>
