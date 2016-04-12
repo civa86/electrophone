@@ -15,13 +15,13 @@ import GlobalKeys from '../components/GlobalKeys';
 import ControlPanel from '../components/ControlPanel';
 
 // Services
-//import localCacheService from '../services/localCache';
+import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
 const
-//localCache = localCacheService(),
+    localCache = localCacheService(),
     screen = screenService(),
-//localCacheKey = 'webSynth',
+    localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
     headerHeight = 95;
@@ -136,7 +136,10 @@ class App extends Component {
                 }
             },
             viewActions = {
-                setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel))
+                setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel)),
+                saveSynth: () => localCache.saveState(localCacheKey, synth),
+                loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
+                resetSynth: () => dispatch(SynthActions.resetState())
             };
 
         return (

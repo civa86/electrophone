@@ -41,18 +41,21 @@ const Header = (props) => {
                 <ul className="container">
                     <li className="pull-left">
                         <a className="cursor-pointer"
+                           onClick={() => viewActions.resetSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Reset Synth"><i className="ion-loop"></i></a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
+                           onClick={() => viewActions.loadSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Load Synth"><i className="ion-upload"></i></a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
+                           onClick={() => viewActions.saveSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Save Synth"><i className="ion-archive"></i></a>
@@ -99,14 +102,6 @@ export default Header;
  <br/>
  <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
  ADD MODULE
- </button>
-
- <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
- GRAPH PANEL
- </button>
-
- <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
- CONTROL PANEL
  </button>
 
  </div>

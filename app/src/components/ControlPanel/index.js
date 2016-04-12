@@ -23,11 +23,10 @@ class ControlPanel extends Component {
             <div id="control-panel" className="row" style={{ display: display }}>
                 <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
                     {modules.map(module =>
-                        <div className="row" key={module.id} style={{ marginTop: '10px' }}>
+                        <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
 
-                                <div className="row bg-primary"
-                                     style={{ border: '1px solid #333', borderBottom: 'none' }}>
+                                <div className="row module-title">
                                     <div className="col-xs-12" style={{ padding: '10px' }}>
                                         {module.type + ' -- ' + module.id}
 
@@ -44,8 +43,7 @@ class ControlPanel extends Component {
                                     </div>
                                 </div>
 
-                                <div className="row"
-                                     style={{ border: '1px solid #333', borderTop: 'none', paddingTop: '20px' }}>
+                                <div className="row properties-container">
                                     {
                                         module.properties
                                             .filter(prop => prop.name !== 'link' && prop.name !== 'level')
@@ -61,9 +59,11 @@ class ControlPanel extends Component {
                                         module.properties
                                             .filter(prop => prop.name === 'level')
                                             .map(prop => {
-                                                let offset = 0;
+                                                let offset = 0,
+                                                    offsetMobile = 0;
                                                 const
                                                     numElemInRow = 6,
+                                                    numElemInRowMobile = 3,
                                                     pLength = module.properties
                                                         .filter(prop => prop.name !== 'link')
                                                         .length;
@@ -74,10 +74,16 @@ class ControlPanel extends Component {
                                                     offset = numElemInRow - pLength;
                                                 }
 
+                                                if (pLength > numElemInRowMobile) {
+                                                    offsetMobile = numElemInRowMobile - (pLength % numElemInRowMobile);
+                                                } else {
+                                                    offsetMobile = numElemInRowMobile - pLength;
+                                                }
+
                                                 return (
                                                     <div className={
                                                             "col-xs-4 col-xs-offset-" +
-                                                            (4 * (parseInt(offset / 2, 10) || 1)) + " " +
+                                                            (4 * offsetMobile) + " " +
                                                             "col-lg-2 col-lg-offset-" + (2 * offset)
                                                          }
                                                          style={{ paddingBottom: '20px' }}
