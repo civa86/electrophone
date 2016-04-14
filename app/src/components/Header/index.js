@@ -61,19 +61,20 @@ const Header = (props) => {
                            title="Save Synth"><i className="ion-archive"></i></a>
                     </li>
 
-                    <li className="pull-right" style={{ paddingRight: '0px' }}>
-                        <a className={'cursor-pointer' + ((visiblePanel === 'graph') ? ' selected' : '')}
-                           onClick={() => viewActions.setViewPanel('graph')}
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Graph view"><i className="ion-network"></i></a>
-                    </li>
-                    <li className="pull-right">
+
+                    <li className="pull-right last-right-item">
                         <a className={'cursor-pointer' + ((visiblePanel === 'control') ? ' selected' : '')}
                            onClick={() => viewActions.setViewPanel('control')}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Control view"><i className="ion-levels"></i></a>
+                    </li>
+                    <li className="pull-right">
+                        <a className={'cursor-pointer' + ((visiblePanel === 'graph') ? ' selected' : '')}
+                           onClick={() => viewActions.setViewPanel('graph')}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Graph view"><i className="ion-network"></i></a>
                     </li>
                 </ul>
             </div>

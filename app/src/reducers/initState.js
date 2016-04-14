@@ -61,7 +61,7 @@ const initState = {
         zoom: 1
     },
     octave: 4,
-    viewPanel: 'control'
+    viewPanel: 'graph'
 };
 
 export default initState;
