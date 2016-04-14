@@ -64,6 +64,8 @@ describe('Synth reducer', () => {
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 
+    //TODO test add module.
+
     it('should remove an audio node', () => {
         state = synth(state, addAudioNode({ id: 'ele2' }));
         expect(state.modules.length).to.equal(2);

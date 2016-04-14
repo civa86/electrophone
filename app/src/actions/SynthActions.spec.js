@@ -3,17 +3,39 @@ import * as actions from '../actions/SynthActions';
 import * as actionTypes from '../constants/ActionTypes';
 
 describe('Synth actions', () => {
-    it('should create an action addAudioNode', () => {
+    it('should create an action addAudioNode with default position', () => {
         const expectedAction = {
             type: actionTypes.ADD_AUDIO_NODE,
             id: 'ele1',
             isMaster: true,
+            posX: 0,
+            posY: 0,
             moduleType: 'Type',
             moduleProps: [{ name: 'a', value: 1 }]
         };
         expect(actions.addAudioNode({
             id: 'ele1',
             isMaster: true,
+            type: 'Type',
+            properties: [{ name: 'a', value: 1 }]
+        })).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action addAudioNode with default position', () => {
+        const expectedAction = {
+            type: actionTypes.ADD_AUDIO_NODE,
+            id: 'ele1',
+            isMaster: true,
+            posX: 300,
+            posY: 234,
+            moduleType: 'Type',
+            moduleProps: [{ name: 'a', value: 1 }]
+        };
+        expect(actions.addAudioNode({
+            id: 'ele1',
+            isMaster: true,
+            posX: 300,
+            posY: 234,
             type: 'Type',
             properties: [{ name: 'a', value: 1 }]
         })).to.deep.equal(expectedAction);

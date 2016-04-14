@@ -98,7 +98,9 @@ class App extends Component {
         dispatch(SynthActions.addAudioNode({
             ...newModule,
             id: nodePrefix + this.getMaxNodeId(),
-            isMaster: false
+            isMaster: false,
+            posX: Math.random() * (this.getGraphHeight()),
+            posY: Math.random() * (this.getGraphHeight())
         }));
     }
 

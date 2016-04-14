@@ -32,8 +32,8 @@ function synth (state = initState, action = {}) {
                         })),
                         isMaster: action.isMaster || false,
                         position: {
-                            x: 100,
-                            y: 100
+                            x: action.posX,
+                            y: action.posY
                         },
                         isSelected: false,
                         link: null

@@ -5,6 +5,8 @@ function addAudioNode (node) {
         type: actionTypes.ADD_AUDIO_NODE,
         id: node.id,
         isMaster: node.isMaster,
+        posX: node.posX || 0,
+        posY: node.posY || 0,
         moduleType: node.type,
         moduleProps: [ ...node.properties ]
     };
