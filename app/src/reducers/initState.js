@@ -47,8 +47,8 @@ const initState = {
             isSelected: false,
             link: null,
             position: {
-                x: 100,
-                y: 100
+                x: 'center',
+                y: 'center'
             }
         }
     ],

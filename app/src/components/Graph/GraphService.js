@@ -238,6 +238,13 @@ const GraphService = (graphLibrary, window) => {
             newNodes.forEach(e => {
                 const node = graph.$('#' + e.id);
 
+                if (e.position.x === 'center') {
+                    e.position.x = parseInt(domElement.offsetWidth / 2, 10);
+                }
+                if (e.position.y === 'center') {
+                    e.position.y = parseInt(domElement.offsetHeight / 2, 10);
+                }
+
                 if (node.length === 0) {
                     graph.add({
                         // TODO refactor above...

@@ -61,7 +61,6 @@ const Header = (props) => {
                            title="Save Synth"><i className="ion-archive"></i></a>
                     </li>
 
-
                     <li className="pull-right last-right-item">
                         <a className={'cursor-pointer' + ((visiblePanel === 'control') ? ' selected' : '')}
                            onClick={() => viewActions.setViewPanel('control')}
