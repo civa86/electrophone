@@ -7,6 +7,7 @@ const Header = (props) => {
         repoUrl,
         libVersion,
         viewActions,
+        linkMode,
         visiblePanel
         } = props;
 
@@ -44,21 +45,45 @@ const Header = (props) => {
                            onClick={() => viewActions.resetSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Reset Synth"><i className="ion-loop"></i></a>
+                           title="Reset Synth">
+                            <i className="ion-android-refresh"></i> <span className="menu-label hidden-xs">Reset</span>
+                        </a>
                     </li>
+
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.loadSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Load Synth"><i className="ion-upload"></i></a>
+                           title="Add New Module">
+                            <i className="ion-fork-repo"></i> <span className="menu-label hidden-xs">Add</span>
+                        </a>
+                    </li>
+                    <li className="pull-left">
+                        <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
+                           onClick={() => viewActions.toggleLinkMode()}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Toggle Link Mode">
+                            <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
+                        </a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
                            onClick={() => viewActions.saveSynth()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Save Synth"><i className="ion-archive"></i></a>
+                           title="Save Synth">
+                            <i className="ion-android-download"></i> <span className="menu-label hidden-xs">Save</span>
+                        </a>
+                    </li>
+                    <li className="pull-left">
+                        <a className="cursor-pointer"
+                           onClick={() => viewActions.loadSynth()}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Load Synth">
+                            <i className="ion-android-upload"></i> <span className="menu-label hidden-xs">Load</span>
+                        </a>
                     </li>
 
                     <li className="pull-right last-right-item">

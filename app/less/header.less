@@ -55,7 +55,12 @@
       margin-bottom: 0px;
 
       li {
-        padding-right: @icon-spacing;
+        &.pull-left {
+          padding-right:  2 * @icon-spacing;
+        }
+        &.pull-right {
+          padding-right: @icon-spacing + 3;
+        }
 
         &.last-right-item {
           padding-right: 0px;
@@ -64,9 +69,26 @@
         a {
           color: @c-light;
           font-size: 24px;
+          text-decoration: none;
 
           &:hover, &.selected {
             color: @c-secondary;
+            .menu-label {
+              color: @c-secondary;
+            }
+          }
+
+          i {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+          }
+
+          .menu-label {
+            color: @c-light;
+            padding: 0; margin: 0;
+            font-size: 16px;
+            text-transform: uppercase;
           }
         }
       }

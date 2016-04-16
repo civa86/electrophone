@@ -141,7 +141,8 @@ class App extends Component {
                 setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel)),
                 saveSynth: () => localCache.saveState(localCacheKey, synth),
                 loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
-                resetSynth: () => dispatch(SynthActions.resetState())
+                resetSynth: () => dispatch(SynthActions.resetState()),
+                toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode())
             };
 
         return (
@@ -149,6 +150,7 @@ class App extends Component {
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}
                         viewActions={viewActions}
+                        linkMode={synth.graph.linkMode}
                         visiblePanel={synth.viewPanel}
                         libVersion={process.env.LIB_VERSION}/>
 
