@@ -116,22 +116,33 @@ function synth (state = initState, action = {}) {
         }
 
         case actionTypes.SET_LINK_MODE : {
+            let viewPanel = state.viewPanel;
+            if (state.viewPanel !== 'graph' && action.mode === true) {
+                viewPanel = 'graph';
+            }
             return {
                 ...state,
                 graph: {
                     ...state.graph,
                     linkMode: action.mode
-                }
+                },
+                viewPanel: viewPanel
             };
+            //TODO check if restore previous view....test it in spec...
         }
 
         case actionTypes.TOGGLE_LINK_MODE : {
+            let viewPanel = state.viewPanel;
+            if (state.viewPanel !== 'graph' && state.graph.linkMode === false) {
+                viewPanel = 'graph';
+            }
             return {
                 ...state,
                 graph: {
                     ...state.graph,
                     linkMode: !state.graph.linkMode
-                }
+                },
+                viewPanel: viewPanel
             };
         }
 
