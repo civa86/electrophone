@@ -75,7 +75,8 @@ class ControlPanel extends Component {
                                                 }
 
                                                 if (pLength > numElemInRowMobile) {
-                                                    offsetMobile = numElemInRowMobile - (pLength % numElemInRowMobile);
+                                                    offsetMobile = numElemInRowMobile -
+                                                        ((pLength % numElemInRowMobile) || numElemInRowMobile);
                                                 } else {
                                                     offsetMobile = numElemInRowMobile - pLength;
                                                 }
