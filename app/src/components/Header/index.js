@@ -8,7 +8,8 @@ const Header = (props) => {
         libVersion,
         viewActions,
         linkMode,
-        visiblePanel
+        visiblePanel,
+        synthModules
         } = props;
 
     return (
@@ -49,24 +50,6 @@ const Header = (props) => {
                             <i className="ion-android-refresh"></i> <span className="menu-label hidden-xs">Reset</span>
                         </a>
                     </li>
-
-                    <li className="pull-left">
-                        <a className="cursor-pointer"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Add New Module">
-                            <i className="ion-fork-repo"></i> <span className="menu-label hidden-xs">Add</span>
-                        </a>
-                    </li>
-                    <li className="pull-left">
-                        <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
-                           onClick={() => viewActions.toggleLinkMode()}
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Toggle Link Mode">
-                            <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
-                        </a>
-                    </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
                            onClick={() => viewActions.saveSynth()}
@@ -83,6 +66,38 @@ const Header = (props) => {
                            data-placement="bottom"
                            title="Load Synth">
                             <i className="ion-android-upload"></i> <span className="menu-label hidden-xs">Load</span>
+                        </a>
+                    </li>
+                    <li className="pull-left dropdown module-builder"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Create New Modules">
+                        <a className="cursor-pointer dropdown-toggle"
+                           role="button"
+                           data-toggle="dropdown">
+                            <i className="ion-fork-repo"></i> <span className="menu-label hidden-xs">Add</span>
+                        </a>
+
+                        <ul className="dropdown-menu">
+                            {synthModules.map(e => {
+                                return (
+                                    <li key={e.type}>
+                                        <a className="cursor-pointer"
+                                            onClick={() => viewActions.addModule(e.type)}>
+                                            {e.type}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </li>
+                    <li className="pull-left"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Toggle Link Mode">
+                        <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
+                           onClick={() => viewActions.toggleLinkMode()}>
+                            <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
                         </a>
                     </li>
 

@@ -24,7 +24,7 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 95;
+    headerHeight = 94;
 
 class App extends Component {
 
@@ -43,6 +43,12 @@ class App extends Component {
 
         $(document).ready(() => {
             $('[data-toggle="tooltip"]').tooltip();
+            $("#main-wrapper").find('li.module-builder').on('show.bs.dropdown', () => {
+                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
+            });
+            $("#main-wrapper").find('li.module-builder').on('hidden.bs.dropdown', () => {
+                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            });
         });
     }
 
@@ -122,7 +128,6 @@ class App extends Component {
     }
 
     render () {
-        //TODO make view panel in visibility hidden....check for initial width if chang defaultpanel...
         const
             { synth, dispatch } = this.props,
         //refactor and port into viewActions...
@@ -142,7 +147,8 @@ class App extends Component {
                 saveSynth: () => localCache.saveState(localCacheKey, synth),
                 loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
                 resetSynth: () => dispatch(SynthActions.resetState()),
-                toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode())
+                toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode()),
+                addModule: (type) => this.addModule(type)
             };
 
         return (
@@ -152,19 +158,10 @@ class App extends Component {
                         viewActions={viewActions}
                         linkMode={synth.graph.linkMode}
                         visiblePanel={synth.viewPanel}
+                        synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
                         libVersion={process.env.LIB_VERSION}/>
 
                 <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
-                    <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
-                        {synthModules.map(e => {
-                            if (e.type !== WebSynth.TYPES.MASTER) {
-                                return <button key={e.type} onClick={() => this.addModule(e.type)}>
-                                    {e.type}
-                                </button>
-                            }
-                        })}
-                    </div>
-
                     <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
                         <Graph
                             state={synth}
