@@ -142,7 +142,7 @@ function synth (state = initState, action = {}) {
                     ...state.graph,
                     linkMode: !state.graph.linkMode
                 },
-                viewPanel: viewPanel
+                viewPanel
             };
         }
 
@@ -221,10 +221,19 @@ function synth (state = initState, action = {}) {
         }
 
         case actionTypes.SET_VIEW_PANEL : {
+            let linkMode = state.graph.linkMode;
+            if (action.panel !== 'graph' && state.graph.linkMode === true) {
+                linkMode = false;
+            }
             return {
                 ...state,
+                graph: {
+                    ...state.graph,
+                    linkMode
+                },
                 viewPanel: action.panel
             };
+            //TODO test in spec...change of linkMode
         }
 
         default:
