@@ -9,6 +9,7 @@ const Header = (props) => {
         viewActions,
         linkMode,
         visiblePanel,
+        numSelectedNodes,
         synthModules
         } = props;
 
@@ -98,6 +99,20 @@ const Header = (props) => {
                         <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
                            onClick={() => viewActions.toggleLinkMode()}>
                             <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
+                        </a>
+                    </li>
+                    <li className="pull-left"
+                        style={{ display: (visiblePanel === 'graph' && numSelectedNodes > 0) ? 'block' : 'none' }}
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Delete Selected Nodes">
+                        <a className="cursor-pointer"
+                           onClick={() => viewActions.deleteSelectedNodes()}>
+                            <i className="ion-trash-b"></i> <span className="menu-label hidden-xs">Delete</span>
+                            <span className="delete-counter"
+                                  style={{ display: (numSelectedNodes > 1) ? 'inline-block' : 'none' }}>&nbsp;
+                                {'(' + numSelectedNodes + ')'}
+                            </span>
                         </a>
                     </li>
 

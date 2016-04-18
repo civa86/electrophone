@@ -33,8 +33,8 @@ class ControlPanel extends Component {
                                         {(() => {
                                             if (!module.isMaster) {
                                                 return (
-                                                    <div className="glyphicon glyphicon-remove pull-right"
-                                                         style={{ cursor: 'pointer' }}
+                                                    <div className="ion-trash-b pull-right"
+                                                         style={{ cursor: 'pointer', fontSize: '24px' }}
                                                          onClick={() => destroyModule(module.id)}>
                                                     </div>
                                                 );

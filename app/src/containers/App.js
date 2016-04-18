@@ -7,12 +7,12 @@ import WebSynth from 'web-synth';
 
 // Components
 import Header from '../components/Header';
-import Graph from '../components/Graph';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
+import GraphPanel from '../components/Graph/GraphPanel';
 
 // Services
 import localCacheService from '../services/localCache';
@@ -52,8 +52,18 @@ class App extends Component {
         });
     }
 
+    removeSelectedNodes () {
+        const
+            { synth, dispatch } = this.props,
+            selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
+
+        if (selectedNodes.length > 0) {
+            dispatch(SynthActions.removeNodes(selectedNodes));
+        }
+    }
+
     getKeyboardMapping () {
-        const { synth, dispatch } = this.props;
+        const { dispatch } = this.props;
 
         return [
             {
@@ -74,13 +84,7 @@ class App extends Component {
             {
                 keys: [8], //DELETE
                 down: (e) => e.preventDefault(),
-                up: () => {
-                    const selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
-                    if (selectedNodes.length > 0) {
-                        dispatch(SynthActions.removeNodes(selectedNodes));
-                    }
-
-                }
+                up: () => this.removeSelectedNodes()
             }
         ]
     }
@@ -133,7 +137,9 @@ class App extends Component {
         //refactor and port into viewActions...
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
-                    dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                    if (node !== WebSynth.CONST.MASTER) {
+                        dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                    }
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
                     dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
@@ -148,7 +154,8 @@ class App extends Component {
                 loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
                 resetSynth: () => dispatch(SynthActions.resetState()),
                 toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode()),
-                addModule: (type) => this.addModule(type)
+                addModule: (type) => this.addModule(type),
+                deleteSelectedNodes: () => this.removeSelectedNodes()
             };
 
         return (
@@ -159,18 +166,18 @@ class App extends Component {
                         linkMode={synth.graph.linkMode}
                         visiblePanel={synth.viewPanel}
                         synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
+                        numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
                         libVersion={process.env.LIB_VERSION}/>
 
                 <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
-                    <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
-                        <Graph
-                            state={synth}
-                            width={this.getGraphWidth()}
-                            height={this.getGraphHeight()}
-                            actions={graphActions}
-                        />
-                    </div>
 
+                    <GraphPanel
+                        isVisible={synth.viewPanel === 'graph'}
+                        synth={synth}
+                        graphWidth={this.getGraphWidth()}
+                        graphHeight={this.getGraphHeight()}
+                        viewActions={graphActions}
+                    />
                     <ControlPanel
                         isVisible={synth.viewPanel === 'control'}
                         modules={synth.modules}

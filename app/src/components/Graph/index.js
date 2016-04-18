@@ -1,3 +1,4 @@
+//TODO refactor-- rename this in Graph.js and the folder in GraphPanel...index is the panel!!
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import cytoscape from 'cytoscape';
