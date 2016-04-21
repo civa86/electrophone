@@ -10,7 +10,15 @@ class GlobalKeys extends Component {
                 { keyboardMapping } = this.props;
 
             keyboardMapping.forEach(e => {
-                if (e.keys.indexOf(charCode) !== -1 && typeof e.down === 'function') {
+                if (
+                    e.keys.indexOf(charCode) !== -1 &&
+                    typeof e.down === 'function' &&
+                    (
+                        (!e.specialKeys && !this.specialKeysPressed(event)) ||
+                        (e.specialKeys && this.specialKeysPressed(event, e.specialKeys))
+
+                    )
+                ) {
                     e.down(event, charCode);
                 }
             });
@@ -31,6 +39,15 @@ class GlobalKeys extends Component {
     getKeyCode (event) {
         const keyCode = event.which || event.keyCode;
         return keyCode;
+    }
+
+    specialKeysPressed (event, key) {
+        if (!key) {
+            return event.altKey || event.ctrlKey || event.shiftKey || event.metaKey;
+        } else {
+            return !!event[key + 'Key'];
+        }
+
     }
 
     componentDidMount () {

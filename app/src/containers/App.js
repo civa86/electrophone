@@ -71,22 +71,26 @@ class App extends Component {
             {
                 keys: [16], //SHIFT
                 down: () => dispatch(SynthActions.setLinkMode(true)),
-                up: () => dispatch(SynthActions.setLinkMode(false))
+                up: () => dispatch(SynthActions.setLinkMode(false)),
+                specialKeys: 'shift'
             },
             {
                 keys: [90], //Z
                 down: () => dispatch(SynthActions.octaveDecrease()),
-                up: () => false
+                up: () => false,
+                specialKeys: false
             },
             {
                 keys: [88], //X
                 down: () => dispatch(SynthActions.octaveIncrease()),
-                up: () => false
+                up: () => false,
+                specialKeys: false
             },
             {
                 keys: [8], //DELETE
                 down: (e) => e.preventDefault(),
-                up: () => this.removeSelectedNodes()
+                up: () => this.removeSelectedNodes(),
+                specialKeys: false
             }
         ]
     }
