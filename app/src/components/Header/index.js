@@ -15,8 +15,8 @@ const Header = (props) => {
 
     return (
         <div id="header" style={{ height: height }}>
-            <div className="header-top container">
-                <div className="logo pull-left">
+            <div className="header-top container-fluid">
+                <div className="logo no-select cursor-default pull-left">
                     <span className="capital">W</span>eb<span className="capital">S</span>ynth
                     <span className="version">{libVersion}</span>
                 </div>
@@ -41,7 +41,7 @@ const Header = (props) => {
             </div>
 
             <div className="menu">
-                <ul className="container">
+                <ul className="container-fluid">
                     <li className="pull-left">
                         <a className="cursor-pointer"
                            onClick={() => viewActions.resetSynth()}
@@ -95,7 +95,7 @@ const Header = (props) => {
                     <li className="pull-left"
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="Toggle Link Mode">
+                        title="Toggle Link Mode (SHIFT)">
                         <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
                            onClick={() => viewActions.toggleLinkMode()}>
                             <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>

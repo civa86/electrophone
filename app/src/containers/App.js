@@ -7,6 +7,7 @@ import WebSynth from 'web-synth';
 
 // Components
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 
@@ -24,7 +25,8 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 94;
+    headerHeight = 94,
+    footerHeight = 40;
 
 class App extends Component {
 
@@ -122,7 +124,7 @@ class App extends Component {
     getGraphHeight () {
         const
             windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight;
+            graphHeight = windowSize.height - headerHeight - footerHeight;
 
         return graphHeight;
     }
@@ -155,7 +157,9 @@ class App extends Component {
                 resetSynth: () => dispatch(SynthActions.resetState()),
                 toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode()),
                 addModule: (type) => this.addModule(type),
-                deleteSelectedNodes: () => this.removeSelectedNodes()
+                deleteSelectedNodes: () => this.removeSelectedNodes(),
+                octaveDecrease: () => dispatch(SynthActions.octaveDecrease()),
+                octaveIncrease: () => dispatch(SynthActions.octaveIncrease())
             };
 
         return (
@@ -167,10 +171,10 @@ class App extends Component {
                         visiblePanel={synth.viewPanel}
                         synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
                         numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
-                        libVersion={process.env.LIB_VERSION}/>
+                        libVersion={process.env.LIB_VERSION}
+                />
 
                 <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
-
                     <GraphPanel
                         isVisible={synth.viewPanel === 'graph'}
                         synth={synth}
@@ -189,6 +193,11 @@ class App extends Component {
                 <Synth state={synth} audioContext={this.audioContext}/>
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
+
+                <Footer height={footerHeight}
+                        viewActions={viewActions}
+                        octave={synth.octave}
+                />
             </div>
         );
     }

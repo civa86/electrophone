@@ -1,0 +1,36 @@
+#footer {
+  background: @c-dark;
+  color: @c-light;
+  width:100%;
+  position: fixed;
+  bottom:0; left: 0;
+  z-index: 1000;
+  border-bottom: 2px solid @c-light;
+
+  .octave {
+    .octave-elem {
+      display: inline-block;
+      padding: 0 @icon-spacing / 2;
+
+    }
+
+    a {
+      color: @c-light;
+      font-size: 22px;
+      text-decoration: none;
+
+      &:hover, &.selected {
+        background: @c-dark;
+        color: @c-secondary;
+        .menu-label, .delete-counter {
+          color: @c-secondary;
+        }
+      }
+      i {
+        display: inline-block;
+        vertical-align: middle;
+        float: none;
+      }
+    }
+  }
+}
