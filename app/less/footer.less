@@ -7,30 +7,36 @@
   z-index: 1000;
   border-bottom: 2px solid @c-light;
 
+  a {
+    color: @c-light;
+    font-size: 22px;
+    text-decoration: none;
+
+    &:hover, &.selected {
+      background: @c-dark;
+      color: @c-secondary;
+      .menu-label, .delete-counter {
+        color: @c-secondary;
+      }
+    }
+    i {
+      display: inline-block;
+      vertical-align: middle;
+      float: none;
+    }
+  }
+
   .octave {
     .octave-elem {
       display: inline-block;
       padding: 0 @icon-spacing / 2;
 
     }
+  }
 
-    a {
-      color: @c-light;
-      font-size: 22px;
-      text-decoration: none;
-
-      &:hover, &.selected {
-        background: @c-dark;
-        color: @c-secondary;
-        .menu-label, .delete-counter {
-          color: @c-secondary;
-        }
-      }
-      i {
-        display: inline-block;
-        vertical-align: middle;
-        float: none;
-      }
+  .footer-menu {
+    i {
+      font-size: 28px;
     }
   }
 }

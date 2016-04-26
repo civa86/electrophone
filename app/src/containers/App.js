@@ -194,7 +194,9 @@ class App extends Component {
                     />
                 </div>
 
-                <Synth state={synth} audioContext={this.audioContext}/>
+                <Synth state={synth}
+                       audioContext={this.audioContext}
+                       footerHeight={footerHeight}/>
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
 

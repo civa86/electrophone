@@ -138,8 +138,29 @@ class Synth extends Component {
     }
 
     render () {
+        const { footerHeight } = this.props;
+
         return (
-            <div style={{ display: 'none' }}>
+            <div id="synth" style={{ bottom: footerHeight }}>
+                <div id="keyboard" className="closed">
+                    <div className="key-white" data-action="60"><span>C</span>
+                        <div className="key-black" data-action="61"><span>C#</span></div>
+                    </div>
+                    <div className="key-white" data-action="62"><span>D</span>
+                        <div className="key-black" data-action="63"><span>D#</span></div>
+                    </div>
+                    <div className="key-white" data-action="64"><span>E</span></div>
+                    <div className="key-white" data-action="65"><span>F</span>
+                        <div className="key-black" data-action="66"><span>F#</span></div>
+                    </div>
+                    <div className="key-white" data-action="67"><span>G</span>
+                        <div className="key-black" data-action="68"><span>G#</span></div>
+                    </div>
+                    <div className="key-white" data-action="69"><span>A</span>
+                        <div className="key-black" data-action="70"><span>A#</span></div>
+                    </div>
+                    <div className="key-white" data-action="71"><span>B</span></div>
+                </div>
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         )
