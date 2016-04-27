@@ -17,7 +17,8 @@ import {
     resetState,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel
+    setViewPanel,
+    setPianoVisibility
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -179,5 +180,16 @@ describe('Synth reducer', () => {
     it('should set the view panel', () => {
         state = synth(state, setViewPanel('control'));
         expect(state.viewPanel).to.equal('control');
+    });
+
+    it('should set the piano visibility', () => {
+        state = synth(state, setPianoVisibility(false));
+        expect(state.isPianoVisible).to.equal(false);
+        state = synth(state, setPianoVisibility(true));
+        expect(state.isPianoVisible).to.equal(true);
+        state = synth(state, setPianoVisibility());
+        expect(state.isPianoVisible).to.equal(false);
+        state = synth(state, setPianoVisibility(1));
+        expect(state.isPianoVisible).to.equal(true);
     });
 });

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //TODO check...you are importing web-synth source code...try with dist version!
 import WebSynth from 'web-synth';
 import GlobalKeys from '../GlobalKeys';
+import PianoKeyNote from './PianoKeyNote'
 
 //TODO check for spectrum and others init props of synth....pass them from App!!
 //TODO wrtie a synth maanger?
@@ -33,25 +34,40 @@ class Synth extends Component {
         }
     }
 
-    getKeyboardMapping () {
+    playNoteFromKey (event, key) {
         const { state } = this.props;
+
+        if (event && typeof event.stopPropagation === 'function') {
+            event.stopPropagation();
+        }
+
+        if (noteMapping[key]) {
+            this.synth.play(
+                WebSynth.getFrequency(noteMapping[key], state.octave)
+            );
+        }
+    }
+
+    stopNoteFromKey (event, key) {
+        const { state } = this.props;
+
+        if (event && typeof event.stopPropagation === 'function') {
+            event.stopPropagation();
+        }
+
+        if (noteMapping[key]) {
+            this.synth.stop(
+                WebSynth.getFrequency(noteMapping[key], state.octave)
+            );
+        }
+    }
+
+    getKeyboardMapping () {
         return [
             {
                 keys: Object.keys(noteMapping).map(Number),
-                down: (event, key) => {
-                    if (noteMapping[key]) {
-                        this.synth.play(
-                            WebSynth.getFrequency(noteMapping[key], state.octave)
-                        );
-                    }
-                },
-                up: (event, key) => {
-                    if (noteMapping[key]) {
-                        this.synth.stop(
-                            WebSynth.getFrequency(noteMapping[key], state.octave)
-                        );
-                    }
-                }
+                down: (event, key) => this.playNoteFromKey(event, key),
+                up: (event, key) => this.stopNoteFromKey(event, key)
             }
         ]
     }
@@ -138,29 +154,47 @@ class Synth extends Component {
     }
 
     render () {
-        const { footerHeight } = this.props;
+        const { footerHeight, isPianoVisible } = this.props;
 
         return (
             <div id="synth" style={{ bottom: footerHeight }}>
-                <div id="keyboard" className="closed">
-                    <div className="key-white" data-action="60"><span>C</span>
-                        <div className="key-black" data-action="61"><span>C#</span></div>
-                    </div>
-                    <div className="key-white" data-action="62"><span>D</span>
-                        <div className="key-black" data-action="63"><span>D#</span></div>
-                    </div>
-                    <div className="key-white" data-action="64"><span>E</span></div>
-                    <div className="key-white" data-action="65"><span>F</span>
-                        <div className="key-black" data-action="66"><span>F#</span></div>
-                    </div>
-                    <div className="key-white" data-action="67"><span>G</span>
-                        <div className="key-black" data-action="68"><span>G#</span></div>
-                    </div>
-                    <div className="key-white" data-action="69"><span>A</span>
-                        <div className="key-black" data-action="70"><span>A#</span></div>
-                    </div>
-                    <div className="key-white" data-action="71"><span>B</span></div>
+                <div id="keyboard" className={(!isPianoVisible) ? 'closed' : ''}>
+                    <PianoKeyNote note={{ key: 65, label: 'C' }}
+                                  semiNote={{ key: 87, label: 'C#' }}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 83, label: 'D' }}
+                                  semiNote={{ key: 69, label: 'D#' }}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 68, label: 'E' }}
+                                  semiNote={null}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 70, label: 'F' }}
+                                  semiNote={{ key: 84, label: 'F#' }}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 71, label: 'G' }}
+                                  semiNote={{ key: 89, label: 'G#' }}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 72, label: 'A' }}
+                                  semiNote={{ key: 85, label: 'A#' }}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+
+                    <PianoKeyNote note={{ key: 74, label: 'B' }}
+                                  semiNote={null}
+                                  playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
                 </div>
+
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
             </div>
         )

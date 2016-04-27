@@ -236,6 +236,13 @@ function synth (state = initState, action = {}) {
             //TODO test in spec...change of linkMode
         }
 
+        case actionTypes.SET_PIANO_VISIBILITY : {
+            return {
+                ...state,
+                isPianoVisible: action.isPianoVisible
+            };
+        }
+
         default:
             return state;
 

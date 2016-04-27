@@ -120,6 +120,13 @@ function setViewPanel (panel) {
     }
 }
 
+function setPianoVisibility (isPianoVisible) {
+    return {
+        type: actionTypes.SET_PIANO_VISIBILITY,
+        isPianoVisible: !!isPianoVisible
+    }
+}
+//TODO move ui actions
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -137,5 +144,6 @@ export {
     resetState,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel
+    setViewPanel,
+    setPianoVisibility
 };

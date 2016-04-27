@@ -156,6 +156,7 @@ class App extends Component {
             },
             viewActions = {
                 setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel)),
+                setPianoVisibility: (isPianoVisible) => dispatch(SynthActions.setPianoVisibility(isPianoVisible)),
                 saveSynth: () => localCache.saveState(localCacheKey, synth),
                 loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
                 resetSynth: () => dispatch(SynthActions.resetState()),
@@ -196,13 +197,16 @@ class App extends Component {
 
                 <Synth state={synth}
                        audioContext={this.audioContext}
-                       footerHeight={footerHeight}/>
+                       footerHeight={footerHeight}
+                       isPianoVisible={synth.isPianoVisible}
+                />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
 
                 <Footer height={footerHeight}
                         viewActions={viewActions}
                         octave={synth.octave}
+                        isPianoVisible={synth.isPianoVisible}
                 />
             </div>
         );

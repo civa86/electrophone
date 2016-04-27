@@ -162,4 +162,12 @@ describe('Synth actions', () => {
         };
         expect(actions.setViewPanel('test')).to.deep.equal(expectedAction);
     });
+
+    it('should create an action setPianoVisibility', () => {
+        const expectedAction = {
+            type: actionTypes.SET_PIANO_VISIBILITY,
+            isPianoVisible: true
+        };
+        expect(actions.setPianoVisibility(true)).to.deep.equal(expectedAction);
+    });
 });

@@ -5,7 +5,8 @@ const Footer = (props) => {
     const {
         height,
         viewActions,
-        octave
+        octave,
+        isPianoVisible
         } = props;
 
     return (
@@ -31,7 +32,8 @@ const Footer = (props) => {
                     </a>
                 </div>
                 <div className="footer-menu pull-right">
-                    <a className="cursor-pointer"
+                    <a className={'cursor-pointer' + ((isPianoVisible) ? ' selected' : '')}
+                       onClick={() => viewActions.setPianoVisibility(!isPianoVisible)}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Piano Keyboard">
