@@ -165,7 +165,8 @@ class App extends Component {
                 deleteSelectedNodes: () => this.removeSelectedNodes(),
                 octaveDecrease: () => dispatch(SynthActions.octaveDecrease()),
                 octaveIncrease: () => dispatch(SynthActions.octaveIncrease())
-            };
+            },
+            footerMarginBottom = (synth.isPianoVisible) ? 8 : 2;
 
         return (
             <div id="main-wrapper" className="container-fluid">
@@ -179,7 +180,8 @@ class App extends Component {
                         libVersion={process.env.LIB_VERSION}
                 />
 
-                <div id="panel-wrapper" style={{ marginTop: headerHeight }}>
+                <div id="panel-wrapper"
+                     style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
                     <GraphPanel
                         isVisible={synth.viewPanel === 'graph'}
                         synth={synth}

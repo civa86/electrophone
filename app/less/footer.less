@@ -5,12 +5,18 @@
   position: fixed;
   bottom:0; left: 0;
   z-index: 1000;
-  border-bottom: 2px solid @c-light;
+  //border-bottom: 2px solid @c-light;
 
   a {
     color: @c-light;
     font-size: 22px;
     text-decoration: none;
+
+    //TODO write mixin
+    -moz-transition-duration: @transition-link;
+    -webkit-transition-duration: @transition-link;
+    -o-transition-duration: @transition-link;
+    transition-duration: @transition-link;
 
     &:hover, &.selected {
       background: @c-dark;
@@ -27,6 +33,8 @@
   }
 
   .octave {
+    margin-top: 4px;
+
     .octave-elem {
       display: inline-block;
       padding: 0 @icon-spacing / 2;

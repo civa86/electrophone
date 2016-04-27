@@ -30,6 +30,12 @@
         font-size: 28px;
         color: @c-light;
 
+        //TODO write mixin
+        -moz-transition-duration: @transition-link;
+        -webkit-transition-duration: @transition-link;
+        -o-transition-duration: @transition-link;
+        transition-duration: @transition-link;
+
         &.link-left {
           padding-right: @icon-spacing;
         }
@@ -81,6 +87,12 @@
           color: @c-light;
           font-size: 22px;
           text-decoration: none;
+
+          //TODO write mixin
+          -moz-transition-duration: @transition-link;
+          -webkit-transition-duration: @transition-link;
+          -o-transition-duration: @transition-link;
+          transition-duration: @transition-link;
 
           &:hover, &.selected {
             background: @c-dark;
