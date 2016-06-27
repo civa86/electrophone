@@ -44,8 +44,8 @@ class ControlPanel extends Component {
                                         module.properties
                                             .filter(prop => prop.name !== 'link' && prop.name !== 'level')
                                             .map(prop =>
-                                                <div className="col-xs-4 col-lg-2"
-                                                     style={{ paddingBottom: '20px' }}
+                                                <div className="col-xs-6 col-md-3"
+                                                     style={{ paddingBottom: '20px', height: '100px' }}
                                                      key={module.id + prop.name}>
                                                     {this.getControlProperty(module.id, { ...prop })}
                                                 </div>
@@ -58,8 +58,8 @@ class ControlPanel extends Component {
                                                 let offset = 0,
                                                     offsetMobile = 0;
                                                 const
-                                                    numElemInRow = 6,
-                                                    numElemInRowMobile = 3,
+                                                    numElemInRow = 4,
+                                                    numElemInRowMobile = 2,
                                                     pLength = module.properties
                                                         .filter(prop => prop.name !== 'link')
                                                         .length;
@@ -79,9 +79,9 @@ class ControlPanel extends Component {
 
                                                 return (
                                                     <div className={
-                                                            "col-xs-4 col-xs-offset-" +
-                                                            (4 * offsetMobile) + " " +
-                                                            "col-lg-2 col-lg-offset-" + (2 * offset)
+                                                            "col-xs-6 col-xs-offset-" +
+                                                            (6 * offsetMobile) + " " +
+                                                            "col-md-3 col-md-offset-0"
                                                          }
                                                          style={{ paddingBottom: '20px' }}
                                                          key={module.id + prop.name}>
