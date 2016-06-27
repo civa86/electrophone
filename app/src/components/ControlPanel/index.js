@@ -29,17 +29,13 @@ class ControlPanel extends Component {
                                 <div className="row module-title">
                                     <div className="col-xs-12" style={{ padding: '10px' }}>
                                         {module.type + ' -- ' + module.id}
-
-                                        {(() => {
-                                            if (!module.isMaster) {
-                                                return (
-                                                    <div className="ion-trash-b pull-right"
-                                                         style={{ cursor: 'pointer', fontSize: '24px' }}
-                                                         onClick={() => destroyModule(module.id)}>
-                                                    </div>
-                                                );
-                                            }
-                                        })()}
+                                        {
+                                            !module.isMaster &&
+                                            <div className="ion-trash-b pull-right"
+                                                 style={{ cursor: 'pointer', fontSize: '24px' }}
+                                                 onClick={() => destroyModule(module.id)}>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
 

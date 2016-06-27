@@ -120,9 +120,33 @@ class App extends Component {
         }));
     }
 
+    getNormalizedValue (id, propertyName, propertyValue) {
+        const module = this.props.synth.modules
+                           .filter(e => e.id === id)
+                           .pop();
+        let result,
+            property,
+            step = 1;
+
+        if (module) {
+            property = module.properties.filter(prop => prop.name === propertyName).pop();
+
+            if (property && property.step) {
+                step = property.step;
+            }
+        }
+
+        result = Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
+
+        return result;
+    }
+
     updateModule (id, propertyName, propertyValue) {
-        const { dispatch } = this.props;
-        dispatch(SynthActions.updateNode(id, propertyName, propertyValue));
+        const
+            { dispatch } = this.props,
+            normalizedPropertyValue = this.getNormalizedValue(id, propertyName, propertyValue);
+
+        dispatch(SynthActions.updateNode(id, propertyName, normalizedPropertyValue));
     }
 
     getGraphHeight () {
