@@ -79,8 +79,7 @@ class ControlPanel extends Component {
 
                                                 return (
                                                     <div className={
-                                                            "col-xs-6 col-xs-offset-" +
-                                                            (6 * offsetMobile) + " " +
+                                                            "col-xs-6 col-xs-offset-" + (6 * offsetMobile) + " " +
                                                             "col-md-3 col-md-offset-0"
                                                          }
                                                          style={{ paddingBottom: '20px' }}
