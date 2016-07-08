@@ -34,6 +34,10 @@
       -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
       transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 
+      &.playing {
+        background: @c-secondary;
+      }
+
       &:last-child {
         border-right: 1px solid @c-dark;
       }
@@ -46,6 +50,10 @@
         padding-top: 20%;
         margin-left: 75%;
         cursor: pointer;
+
+        &.playing {
+          background: @c-secondary;
+        }
       }
 
       .key-black span {
