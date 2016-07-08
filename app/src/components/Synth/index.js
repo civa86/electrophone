@@ -35,7 +35,7 @@ class Synth extends Component {
     }
 
     playNoteFromKey (event, key) {
-        const { state } = this.props;
+        const { state, updatePlayingVoices } = this.props;
 
         if (event && typeof event.stopPropagation === 'function') {
             event.stopPropagation();
@@ -45,11 +45,19 @@ class Synth extends Component {
             this.synth.play(
                 WebSynth.getFrequency(noteMapping[key], state.octave)
             );
+
+            if (typeof updatePlayingVoices === 'function') {
+                const voiceLabel = key + '-' + state.octave;
+
+                if (state.playingVoices.indexOf(voiceLabel) === -1) {
+                    updatePlayingVoices([...state.playingVoices, voiceLabel]);
+                }
+            }
         }
     }
 
     stopNoteFromKey (event, key) {
-        const { state } = this.props;
+        const { state, updatePlayingVoices } = this.props;
 
         if (event && typeof event.stopPropagation === 'function') {
             event.stopPropagation();
@@ -59,6 +67,11 @@ class Synth extends Component {
             this.synth.stop(
                 WebSynth.getFrequency(noteMapping[key], state.octave)
             );
+
+            if (typeof updatePlayingVoices === 'function') {
+                const voiceLabel = key + '-' + state.octave;
+                updatePlayingVoices(state.playingVoices.filter(e => e !== voiceLabel));
+            }
         }
     }
 
@@ -154,7 +167,7 @@ class Synth extends Component {
     }
 
     render () {
-        const { footerHeight, isPianoVisible } = this.props;
+        const { footerHeight, isPianoVisible, state } = this.props;
 
         return (
             <div id="synth" style={{ bottom: footerHeight }}>
@@ -162,37 +175,44 @@ class Synth extends Component {
                     <PianoKeyNote note={{ key: 65, label: 'C' }}
                                   semiNote={{ key: 87, label: 'C#' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 83, label: 'D' }}
                                   semiNote={{ key: 69, label: 'D#' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 68, label: 'E' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 70, label: 'F' }}
                                   semiNote={{ key: 84, label: 'F#' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 71, label: 'G' }}
                                   semiNote={{ key: 89, label: 'G#' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 72, label: 'A' }}
                                   semiNote={{ key: 85, label: 'A#' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
 
                     <PianoKeyNote note={{ key: 74, label: 'B' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
-                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}/>
+                                  stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
+                                  playingVoices={state.playingVoices}/>
                 </div>
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>

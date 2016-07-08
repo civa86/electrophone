@@ -16,8 +16,8 @@ class ControlPanel extends Component {
 
     render () {
         const
-            { isVisible, modules, destroyModule } = this.props,
-            display = isVisible ? 'block' : 'none';
+            { modules, destroyModule } = this.props,
+            display = this.props.isVisible ? 'block' : 'none';
 
         return (
             <div id="control-panel" className="row" style={{ display: display }}>
@@ -25,7 +25,6 @@ class ControlPanel extends Component {
                     {modules.map(module =>
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
-
                                 <div className="row module-title">
                                     <div className="col-xs-12" style={{ padding: '10px' }}>
                                         {module.type + ' -- ' + module.id}
@@ -53,41 +52,16 @@ class ControlPanel extends Component {
                                     }
                                     {
                                         module.properties
-                                            .filter(prop => prop.name === 'level')
-                                            .map(prop => {
-                                                let offset = 0,
-                                                    offsetMobile = 0;
-                                                const
-                                                    numElemInRow = 4,
-                                                    numElemInRowMobile = 2,
-                                                    pLength = module.properties
-                                                        .filter(prop => prop.name !== 'link')
-                                                        .length;
-
-                                                if (pLength > numElemInRow) {
-                                                    offset = numElemInRow - (pLength % numElemInRow);
-                                                } else {
-                                                    offset = numElemInRow - pLength;
-                                                }
-
-                                                if (pLength > numElemInRowMobile) {
-                                                    offsetMobile = numElemInRowMobile -
-                                                        ((pLength % numElemInRowMobile) || numElemInRowMobile);
-                                                } else {
-                                                    offsetMobile = numElemInRowMobile - pLength;
-                                                }
-
-                                                return (
-                                                    <div className={
-                                                            "col-xs-6 col-xs-offset-" + (6 * offsetMobile) + " " +
-                                                            "col-md-3 col-md-offset-0"
-                                                         }
-                                                         style={{ paddingBottom: '20px' }}
-                                                         key={module.id + prop.name}>
-                                                        {this.getControlProperty(module.id, { ...prop })}
-                                                    </div>
-                                                );
-                                            })
+                                              .filter(prop => prop.name === 'level')
+                                              .map(prop => {
+                                                  return (
+                                                      <div className="col-xs-6 col-md-3"
+                                                           style={{ paddingBottom: '20px', height: '100px' }}
+                                                           key={module.id + prop.name}>
+                                                          {this.getControlProperty(module.id, { ...prop })}
+                                                      </div>
+                                                  );
+                                              })
                                     }
                                 </div>
 

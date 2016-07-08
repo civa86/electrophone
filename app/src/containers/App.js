@@ -225,6 +225,7 @@ class App extends Component {
                        audioContext={this.audioContext}
                        footerHeight={footerHeight}
                        isPianoVisible={synth.isPianoVisible}
+                       updatePlayingVoices={playingVoices => dispatch(SynthActions.updatePlayingVoices(playingVoices))}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>

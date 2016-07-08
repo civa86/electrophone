@@ -18,7 +18,8 @@ import {
     octaveIncrease,
     octaveDecrease,
     setViewPanel,
-    setPianoVisibility
+    setPianoVisibility,
+    updatePlayingVoices
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -182,6 +183,30 @@ describe('Synth reducer', () => {
         expect(state.viewPanel).to.equal('control');
     });
 
+    it('should reset state maintaing the current view panel', () => {
+        const initialStateWithViewPanel = {
+            ...initState,
+            viewPanel: 'control'
+        };
+
+        state = synth(state, resetState());
+        expect(state).to.deep.equal(initialStateWithViewPanel);
+        expect(state.viewPanel).to.equal('control');
+        expect(state.modules.length).to.equal(1);
+    });
+
+    it('should load a full state maintaing the current view panel', () => {
+        const initialStateWithViewPanel = {
+            ...initState,
+            viewPanel: 'control'
+        };
+
+        state = synth(state, loadState(initialStateWithViewPanel));
+        expect(state).to.deep.equal(initialStateWithViewPanel);
+        expect(state.viewPanel).to.equal('control');
+        expect(state.modules.length).to.equal(1);
+    });
+
     it('should set the piano visibility', () => {
         state = synth(state, setPianoVisibility(false));
         expect(state.isPianoVisible).to.equal(false);
@@ -191,5 +216,13 @@ describe('Synth reducer', () => {
         expect(state.isPianoVisible).to.equal(false);
         state = synth(state, setPianoVisibility(1));
         expect(state.isPianoVisible).to.equal(true);
+    });
+
+    it('should update playing voices', () => {
+        const playingVoices = ['C-4'];
+        state = synth(state, updatePlayingVoices(playingVoices));
+        expect(state.playingVoices).to.deep.equal(playingVoices);
+        state = synth(state, updatePlayingVoices([]));
+        expect(state.playingVoices).to.deep.equal([]);
     });
 });

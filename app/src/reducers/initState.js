@@ -62,7 +62,8 @@ const initState = {
     },
     octave: 4,
     viewPanel: 'graph',
-    isPianoVisible: false
+    isPianoVisible: false,
+    playingVoices: []
 };
 
 export default initState;

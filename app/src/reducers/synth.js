@@ -197,11 +197,17 @@ function synth (state = initState, action = {}) {
         }
 
         case actionTypes.LOAD_STATE : {
-            return { ...action.state };
+            return {
+                ...action.state,
+                viewPanel: state.viewPanel
+            };
         }
 
         case actionTypes.RESET_STATE : {
-            return { ...initState };
+            return {
+                ...initState,
+                viewPanel: state.viewPanel
+            };
         }
 
         case actionTypes.OCTAVE_INCREASE : {
@@ -240,6 +246,13 @@ function synth (state = initState, action = {}) {
             return {
                 ...state,
                 isPianoVisible: action.isPianoVisible
+            };
+        }
+
+        case actionTypes.UPDATE_PLAYING_VOICES : {
+            return {
+                ...state,
+                playingVoices: [...action.playingVoices]
             };
         }
 

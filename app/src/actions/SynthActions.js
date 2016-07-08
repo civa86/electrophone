@@ -126,6 +126,14 @@ function setPianoVisibility (isPianoVisible) {
         isPianoVisible: !!isPianoVisible
     }
 }
+
+function updatePlayingVoices (playingVoices) {
+    return {
+        type: actionTypes.UPDATE_PLAYING_VOICES,
+        playingVoices
+    }
+}
+
 //TODO move ui actions
 //TODO refactor names....no audio...
 export {
@@ -145,5 +153,6 @@ export {
     octaveIncrease,
     octaveDecrease,
     setViewPanel,
-    setPianoVisibility
+    setPianoVisibility,
+    updatePlayingVoices
 };

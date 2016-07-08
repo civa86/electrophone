@@ -170,4 +170,12 @@ describe('Synth actions', () => {
         };
         expect(actions.setPianoVisibility(true)).to.deep.equal(expectedAction);
     });
+
+    it('should update playing voices', () => {
+        const expectedAction = {
+            type: actionTypes.UPDATE_PLAYING_VOICES,
+            playingVoices: ['C-4', 'A-4']
+        };
+        expect(actions.updatePlayingVoices(['C-4', 'A-4'])).to.deep.equal(expectedAction);
+    });
 });

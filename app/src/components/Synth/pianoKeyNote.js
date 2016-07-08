@@ -6,13 +6,21 @@ const PianoKeyNote = (props) => {
         note,
         semiNote,
         playNoteHandler,
-        stopNoteHandler
+        stopNoteHandler,
+        playingVoices
         } = props;
+
+    function getClassName (color, key) {
+        console.log(key, playingVoices);
+        let result = 'key-' + color + ' no-select';
+        return result;
+
+    }
 
     function semiNoteKey () {
         if (semiNote) {
             return (
-                <div className="key-black no-select"
+                <div className={getClassName('black', semiNote.key)}
                      onMouseDown={(e) => playNoteHandler(e, semiNote.key)}
                      onTouchStart={(e) => playNoteHandler(e, semiNote.key)}
                      onMouseOut={() => stopNoteHandler(null, semiNote.key)}
@@ -26,7 +34,7 @@ const PianoKeyNote = (props) => {
     }
 
     return (
-        <div className="key-white no-select"
+        <div className={getClassName('white', note.key)}
              onMouseDown={(e) => playNoteHandler(e, note.key)}
              onTouchStart={(e) => playNoteHandler(e, note.key)}
              onMouseOut={() => stopNoteHandler(null, note.key)}
