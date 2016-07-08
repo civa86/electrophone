@@ -7,12 +7,19 @@ const PianoKeyNote = (props) => {
         semiNote,
         playNoteHandler,
         stopNoteHandler,
-        playingVoices
+        playingVoices,
+        octave
         } = props;
 
     function getClassName (color, key) {
-        console.log(key, playingVoices);
+        const voiceLabel = key + '-' + octave;
+
         let result = 'key-' + color + ' no-select';
+
+        if (playingVoices.indexOf(voiceLabel) !== -1) {
+            result += ' playing';
+        }
+
         return result;
 
     }
