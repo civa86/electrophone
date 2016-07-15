@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+
 //TODO check...you are importing web-synth source code...try with dist version!
 import WebSynth from 'web-synth';
 import GlobalKeys from '../GlobalKeys';
@@ -22,16 +24,44 @@ const noteMapping = {
 };
 
 class Synth extends Component {
+    updateSpectrum (dataArray) {
+        // const sliceWidth = this.spectrumProps.WIDTH * 1.0 / 128;
+        // let x = 0;
 
-    constructor (props) {
-        super(props);
+        this.spectrumProps.canvasCtx.fillStyle = 'rgb(51, 51, 51)';
+        this.spectrumProps.canvasCtx.fillRect(0, 0, this.spectrumProps.WIDTH, this.spectrumProps.HEIGHT);
+        this.spectrumProps.canvasCtx.lineWidth = 1.5;
+        this.spectrumProps.canvasCtx.strokeStyle = 'rgb(239, 239, 239)';
+        this.spectrumProps.canvasCtx.beginPath();
 
-        const { audioContext } = this.props;
-
-        if (audioContext) {
-            //TODO write a synth service unit tested!
-            this.synth = new WebSynth(audioContext);
+        // for (let i = 0; i < dataArray.length; i++) {
+        //     const v = dataArray[i] / 128.0,
+        //         y = v * this.spectrumProps.HEIGHT / 3;
+        //
+        //     if (i === 0) {
+        //         this.spectrumProps.canvasCtx.moveTo(x, y);
+        //     } else {
+        //         this.spectrumProps.canvasCtx.lineTo(x, y);
+        //     }
+        //
+        //     x += sliceWidth;
+        // }
+        for (let i = 0; i < dataArray.length; i++) {
+            let value = dataArray[i],
+                percent = value / 256,
+                height = this.spectrumProps.HEIGHT * percent,
+                offset = this.spectrumProps.HEIGHT - height - 1,
+                barWidth = this.spectrumProps.WIDTH / dataArray.length,
+                hue = i / dataArray.length * 360;
+            this.spectrumProps.canvasCtx.fillStyle = 'hsl(' + hue + ', 90%, 50%)';
+            this.spectrumProps.canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
         }
+
+        this.spectrumProps.canvasCtx.stroke();
+    }
+
+    resetSpectrum () {
+        this.spectrumProps.canvasCtx.clearRect(0, 0, this.spectrumProps.WIDTH, this.spectrumProps.HEIGHT);
     }
 
     playNoteFromKey (event, key) {
@@ -103,13 +133,13 @@ class Synth extends Component {
 
         //DELETE
         Object.keys(currentModules)
-            .filter(e => e !== WebSynth.CONST.MASTER && e !== WebSynth.CONST.ADSR)
-            .forEach(moduleId => {
-                const found = modules.filter(e => e.id === moduleId).pop();
-                if (!found) {
-                    this.synth.destroy(moduleId);
-                }
-            });
+              .filter(e => e !== WebSynth.CONST.MASTER && e !== WebSynth.CONST.ADSR)
+              .forEach(moduleId => {
+                  const found = modules.filter(e => e.id === moduleId).pop();
+                  if (!found) {
+                      this.synth.destroy(moduleId);
+                  }
+              });
     }
 
     refreshLinks (modules) {
@@ -159,6 +189,29 @@ class Synth extends Component {
         );
     }
 
+    componentDidMount () {
+        const
+            { audioContext } = this.props,
+            spectrumCanvasCtxElement = document.getElementById('spectrum');
+
+        this.spectrumProps = {
+            canvasCtx: spectrumCanvasCtxElement.getContext('2d'),
+            WIDTH: $(window).width(), //TODO pay attention if ypu want to manage window resize event
+            HEIGHT: 200
+        };
+
+        this.resetSpectrum();
+
+        if (audioContext) {
+            //TODO write a synth service unit tested!
+            this.synth = new WebSynth(audioContext, {
+                spectrum: true,
+                updateSpectrum: (dataArray) => this.updateSpectrum(dataArray),
+                resetSpectrum: () => this.resetSpectrum()
+            });
+        }
+    }
+
     componentWillReceiveProps (newProps) {
         if (newProps && newProps.state && newProps.state.modules) {
             this.refreshModules(newProps.state.modules);
@@ -167,10 +220,14 @@ class Synth extends Component {
     }
 
     render () {
-        const { footerHeight, isPianoVisible, state } = this.props;
+        const { headerHeight, footerHeight, isPianoVisible, isSpectrumVisible, state } = this.props;
 
         return (
             <div id="synth" style={{ bottom: footerHeight }}>
+                <canvas id="spectrum"
+                        style={{ top: headerHeight }}
+                        className={(!isSpectrumVisible) ? 'closed' : ''}/>
+
                 <div id="keyboard" className={(!isPianoVisible) ? 'closed' : ''}>
                     <PianoKeyNote note={{ key: 65, label: 'C' }}
                                   semiNote={{ key: 87, label: 'C#' }}

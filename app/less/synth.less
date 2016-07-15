@@ -4,6 +4,29 @@
   width: 100%;
   z-index: 1000;
 
+  #spectrum {
+    position: fixed;
+    left: 0;
+    height: 200px;
+    border-top: 1px solid @c-light;
+    background: @c-dark;
+    width: 100%;
+    z-index: 1000;
+
+    -moz-transition-duration: @transition-piano-time;
+    -webkit-transition-duration: @transition-piano-time;
+    -o-transition-duration: @transition-piano-time;
+    transition-duration: @transition-piano-time;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    &.closed {
+      height: 0;
+    }
+  }
+
   #keyboard {
     max-width: 500px;
     width: 90%;

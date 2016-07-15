@@ -19,6 +19,7 @@ import {
     octaveDecrease,
     setViewPanel,
     setPianoVisibility,
+    setSpectrumVisibility,
     updatePlayingVoices
 } from '../actions/SynthActions';
 
@@ -216,6 +217,17 @@ describe('Synth reducer', () => {
         expect(state.isPianoVisible).to.equal(false);
         state = synth(state, setPianoVisibility(1));
         expect(state.isPianoVisible).to.equal(true);
+    });
+
+    it('should set the spectrum visibility', () => {
+        state = synth(state, setSpectrumVisibility(false));
+        expect(state.isSpectrumVisible).to.equal(false);
+        state = synth(state, setSpectrumVisibility(true));
+        expect(state.isSpectrumVisible).to.equal(true);
+        state = synth(state, setSpectrumVisibility());
+        expect(state.isSpectrumVisible).to.equal(false);
+        state = synth(state, setSpectrumVisibility(1));
+        expect(state.isSpectrumVisible).to.equal(true);
     });
 
     it('should update playing voices', () => {

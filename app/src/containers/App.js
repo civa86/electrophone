@@ -179,16 +179,28 @@ class App extends Component {
                 }
             },
             viewActions = {
-                setViewPanel: (viewPanel) => dispatch(SynthActions.setViewPanel(viewPanel)),
-                setPianoVisibility: (isPianoVisible) => dispatch(SynthActions.setPianoVisibility(isPianoVisible)),
-                saveSynth: () => localCache.saveState(localCacheKey, synth),
-                loadSynth: () => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
-                resetSynth: () => dispatch(SynthActions.resetState()),
-                toggleLinkMode: () => dispatch(SynthActions.toggleLinkMode()),
-                addModule: (type) => this.addModule(type),
-                deleteSelectedNodes: () => this.removeSelectedNodes(),
-                octaveDecrease: () => dispatch(SynthActions.octaveDecrease()),
-                octaveIncrease: () => dispatch(SynthActions.octaveIncrease())
+                setViewPanel: (viewPanel) =>
+                    dispatch(SynthActions.setViewPanel(viewPanel)),
+                setPianoVisibility: (isPianoVisible) =>
+                    dispatch(SynthActions.setPianoVisibility(isPianoVisible)),
+                setSpectrumVisibility: (isSpectrumVisible) =>
+                    dispatch(SynthActions.setSpectrumVisibility(isSpectrumVisible)),
+                saveSynth: () =>
+                    localCache.saveState(localCacheKey, synth),
+                loadSynth: () =>
+                    dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
+                resetSynth: () =>
+                    dispatch(SynthActions.resetState()),
+                toggleLinkMode: () =>
+                    dispatch(SynthActions.toggleLinkMode()),
+                addModule: (type) =>
+                    this.addModule(type),
+                deleteSelectedNodes: () =>
+                    this.removeSelectedNodes(),
+                octaveDecrease: () =>
+                    dispatch(SynthActions.octaveDecrease()),
+                octaveIncrease: () =>
+                    dispatch(SynthActions.octaveIncrease())
             },
             footerMarginBottom = (synth.isPianoVisible) ? 8 : 2;
 
@@ -224,7 +236,9 @@ class App extends Component {
                 <Synth state={synth}
                        audioContext={this.audioContext}
                        footerHeight={footerHeight}
+                       headerHeight={headerHeight}
                        isPianoVisible={synth.isPianoVisible}
+                       isSpectrumVisible={synth.isSpectrumVisible}
                        updatePlayingVoices={playingVoices => dispatch(SynthActions.updatePlayingVoices(playingVoices))}
                 />
 
@@ -234,6 +248,7 @@ class App extends Component {
                         viewActions={viewActions}
                         octave={synth.octave}
                         isPianoVisible={synth.isPianoVisible}
+                        isSpectrumVisible={synth.isSpectrumVisible}
                 />
             </div>
         );

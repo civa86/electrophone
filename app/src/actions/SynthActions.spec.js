@@ -171,6 +171,14 @@ describe('Synth actions', () => {
         expect(actions.setPianoVisibility(true)).to.deep.equal(expectedAction);
     });
 
+    it('should create an action setSpectrumVisibility', () => {
+        const expectedAction = {
+            type: actionTypes.SET_SPECTRUM_VISIBILITY,
+            isSpectrumVisible: true
+        };
+        expect(actions.setSpectrumVisibility(true)).to.deep.equal(expectedAction);
+    });
+
     it('should update playing voices', () => {
         const expectedAction = {
             type: actionTypes.UPDATE_PLAYING_VOICES,

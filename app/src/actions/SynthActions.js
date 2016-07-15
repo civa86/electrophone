@@ -127,6 +127,13 @@ function setPianoVisibility (isPianoVisible) {
     }
 }
 
+function setSpectrumVisibility (isSpectrumVisible) {
+    return {
+        type: actionTypes.SET_SPECTRUM_VISIBILITY,
+        isSpectrumVisible: !!isSpectrumVisible
+    }
+}
+
 function updatePlayingVoices (playingVoices) {
     return {
         type: actionTypes.UPDATE_PLAYING_VOICES,
@@ -154,5 +161,6 @@ export {
     octaveDecrease,
     setViewPanel,
     setPianoVisibility,
+    setSpectrumVisibility,
     updatePlayingVoices
 };

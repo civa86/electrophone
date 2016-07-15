@@ -200,14 +200,18 @@ function synth (state = initState, action = {}) {
             return {
                 ...state,
                 ...action.state,
-                viewPanel: state.viewPanel
+                viewPanel: state.viewPanel,
+                isPianoVisible: state.isPianoVisible,
+                isSpectrumVisible: state.isSpectrumVisible
             };
         }
 
         case actionTypes.RESET_STATE : {
             return {
                 ...initState,
-                viewPanel: state.viewPanel
+                viewPanel: state.viewPanel,
+                isPianoVisible: state.isPianoVisible,
+                isSpectrumVisible: state.isSpectrumVisible
             };
         }
 
@@ -247,6 +251,13 @@ function synth (state = initState, action = {}) {
             return {
                 ...state,
                 isPianoVisible: action.isPianoVisible
+            };
+        }
+
+        case actionTypes.SET_SPECTRUM_VISIBILITY : {
+            return {
+                ...state,
+                isSpectrumVisible: action.isSpectrumVisible
             };
         }
 

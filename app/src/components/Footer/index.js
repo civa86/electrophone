@@ -6,8 +6,9 @@ const Footer = (props) => {
         height,
         viewActions,
         octave,
-        isPianoVisible
-        } = props;
+        isPianoVisible,
+        isSpectrumVisible
+    } = props;
 
     return (
         <div id="footer" style={{ height: height }}>
@@ -33,11 +34,19 @@ const Footer = (props) => {
                 </div>
                 <div className="footer-menu pull-right">
                     <a className={'cursor-pointer' + ((isPianoVisible) ? ' selected' : '')}
+                       style={{ marginRight: '20px' }}
                        onClick={() => viewActions.setPianoVisibility(!isPianoVisible)}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Piano Keyboard">
-                        <i className="icon-piano"></i>
+                        <i className="icon-piano"/>
+                    </a>
+                    <a className={'cursor-pointer' + ((isSpectrumVisible) ? ' selected' : '')}
+                       onClick={() => viewActions.setSpectrumVisibility(!isSpectrumVisible)}
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Wave Spectrum">
+                        <i className="ion-ios-pulse-strong"/>
                     </a>
                 </div>
             </div>
