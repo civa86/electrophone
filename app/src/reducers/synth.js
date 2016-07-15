@@ -198,6 +198,7 @@ function synth (state = initState, action = {}) {
 
         case actionTypes.LOAD_STATE : {
             return {
+                ...state,
                 ...action.state,
                 viewPanel: state.viewPanel
             };
