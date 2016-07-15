@@ -121,6 +121,7 @@ class App extends Component {
     }
 
     getNormalizedValue (id, propertyName, propertyValue) {
+        //TODO move this method logic in the reducer
         const module = this.props.synth.modules
                            .filter(e => e.id === id)
                            .pop();
@@ -131,12 +132,14 @@ class App extends Component {
         if (module) {
             property = module.properties.filter(prop => prop.name === propertyName).pop();
 
-            if (property && property.step) {
+            if (property && property.type === 'number' && property.step) {
                 step = property.step;
+                result =
+                    Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
+            } else {
+                result = propertyValue;
             }
         }
-
-        result = Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
 
         return result;
     }
