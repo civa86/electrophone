@@ -1,5 +1,40 @@
 @import 'utils';
 
-#header {
-  background: #ccc;
+html, body {
+  background-color: @c-light !important;
 }
+
+#panel-wrapper {
+  padding-top: 20px;
+}
+
+#control-panel {
+
+  .synth-module {
+    margin-top: @container-padding;
+
+    .module-title {
+      background: @c-dark;
+      color: @c-secondary;
+      border: 1px solid @c-dark;
+      border-top-left-radius: @borderRadius;
+      border-top-right-radius: @borderRadius;
+    }
+
+    .properties-container {
+      border: 1px solid @c-dark;
+      border-top: none;
+      border-bottom-left-radius: @borderRadius;
+      border-bottom-right-radius: @borderRadius;
+      padding-top: 20px;
+    }
+
+    .dropdown-menu {
+      z-index: 9000;
+    }
+  }
+}
+
+@import 'header';
+@import 'synth';
+@import 'footer';

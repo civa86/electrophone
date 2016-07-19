@@ -10,11 +10,13 @@ class Knob extends Component {
             node = $(ReactDOM.findDOMNode(this)),
             { property, module, onUpdate } = this.props;
 
-        //TODO set step from property...remove parse int...check float....
         node.find('input').knob({
-            min: property.bounds[0],
-            max: property.bounds[1],
-            change: (value) => onUpdate(module, property.name, parseInt(value, 10))
+            min: property.bounds[0] || 0,
+            max: property.bounds[1] || 0,
+            step: property.step || 1,
+            fgColor: '#46bcec',
+            bgColor: '#ccc',
+            change: (value) => onUpdate(module, property.name, value)
         });
         node.find('input').val(property.value).trigger('change');
 

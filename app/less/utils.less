@@ -1,2 +1,51 @@
+@container-padding: 15px;
+@content-space: 10px;
+@icon-spacing: 15px;
 
+@borderRadius: 7px;
 
+@c-light: #efefef;
+@c-dark: #333;
+@c-secondary: #46bcec;
+
+//Transitions
+//TODO do a mixin...
+@transition-piano-time: 0.4s;
+@transition-link: 0.2s;
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+@font-face {
+  font-family: "Fontsaddict";
+  src: url("fonts/piano.eot");
+  src: url("fonts/piano.eot#iefix") format("embedded-opentype"),
+  url("fonts/piano.woff") format("woff"),
+  url("fonts/piano.ttf") format("truetype"),
+  url("fonts/piano.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="icon-"]:before, [class*=" icon-"]:before,
+[class^="icon-"]:after, [class*=" icon-"]:after {
+  font-family: Fontsaddict;
+  font-style: normal;
+}
+.icon-piano:before {
+  content: "\e800"
+}

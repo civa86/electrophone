@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+
 import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
 
 // Components
-import Graph from '../components/Graph';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
+import GraphPanel from '../components/Graph/GraphPanel';
 
 // Services
 import localCacheService from '../services/localCache';
@@ -21,7 +25,8 @@ const
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 100;
+    headerHeight = 94,
+    footerHeight = 40;
 
 class App extends Component {
 
@@ -37,37 +42,55 @@ class App extends Component {
         } else {
             //TODO trigger modal...
         }
+
+        $(document).ready(() => {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("#main-wrapper").find('li.module-builder').on('show.bs.dropdown', () => {
+                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
+            });
+            $("#main-wrapper").find('li.module-builder').on('hidden.bs.dropdown', () => {
+                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            });
+        });
+    }
+
+    removeSelectedNodes () {
+        const
+            { synth, dispatch } = this.props,
+            selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
+
+        if (selectedNodes.length > 0) {
+            dispatch(SynthActions.removeNodes(selectedNodes));
+        }
     }
 
     getKeyboardMapping () {
-        const { synth, dispatch } = this.props;
+        const { dispatch } = this.props;
 
         return [
             {
                 keys: [16], //SHIFT
                 down: () => dispatch(SynthActions.setLinkMode(true)),
-                up: () => dispatch(SynthActions.setLinkMode(false))
+                up: () => dispatch(SynthActions.setLinkMode(false)),
+                specialKeys: 'shift'
             },
             {
                 keys: [90], //Z
                 down: () => dispatch(SynthActions.octaveDecrease()),
-                up: () => false
+                up: () => false,
+                specialKeys: false
             },
             {
                 keys: [88], //X
                 down: () => dispatch(SynthActions.octaveIncrease()),
-                up: () => false
+                up: () => false,
+                specialKeys: false
             },
             {
                 keys: [8], //DELETE
                 down: (e) => e.preventDefault(),
-                up: () => {
-                    const selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
-                    if (selectedNodes.length > 0) {
-                        dispatch(SynthActions.removeNodes(selectedNodes));
-                    }
-
-                }
+                up: () => this.removeSelectedNodes(),
+                specialKeys: false
             }
         ]
     }
@@ -91,29 +114,65 @@ class App extends Component {
         dispatch(SynthActions.addAudioNode({
             ...newModule,
             id: nodePrefix + this.getMaxNodeId(),
-            isMaster: false
+            isMaster: false,
+            posX: Math.random() * (this.getGraphHeight()),
+            posY: Math.random() * (this.getGraphHeight())
         }));
     }
 
+    getNormalizedValue (id, propertyName, propertyValue) {
+        //TODO move this method logic in the reducer
+        const module = this.props.synth.modules
+                           .filter(e => e.id === id)
+                           .pop();
+        let result,
+            property,
+            step = 1;
+
+        if (module) {
+            property = module.properties.filter(prop => prop.name === propertyName).pop();
+
+            if (property && property.type === 'number' && property.step) {
+                step = property.step;
+                result =
+                    Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
+            } else {
+                result = propertyValue;
+            }
+        }
+
+        return result;
+    }
+
     updateModule (id, propertyName, propertyValue) {
-        const { dispatch } = this.props;
-        dispatch(SynthActions.updateNode(id, propertyName, propertyValue));
+        const
+            { dispatch } = this.props,
+            normalizedPropertyValue = this.getNormalizedValue(id, propertyName, propertyValue);
+
+        dispatch(SynthActions.updateNode(id, propertyName, normalizedPropertyValue));
     }
 
     getGraphHeight () {
         const
             windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight;
+            graphHeight = windowSize.height - headerHeight - footerHeight;
+
         return graphHeight;
     }
 
+    getGraphWidth () {
+        return $('body').width() - 30;
+    }
+
     render () {
-        //TODO make view panel in visibility hidden....check for initial width if chang defaultpanel...
         const
             { synth, dispatch } = this.props,
+        //refactor and port into viewActions...
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
-                    dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                    if (node !== WebSynth.CONST.MASTER) {
+                        dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                    }
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
                     dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
@@ -122,71 +181,78 @@ class App extends Component {
                     dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
                 }
             },
-            libVersion = process.env.LIB_VERSION;
+            viewActions = {
+                setViewPanel: (viewPanel) =>
+                    dispatch(SynthActions.setViewPanel(viewPanel)),
+                setPianoVisibility: (isPianoVisible) =>
+                    dispatch(SynthActions.setPianoVisibility(isPianoVisible)),
+                setSpectrumVisibility: (isSpectrumVisible) =>
+                    dispatch(SynthActions.setSpectrumVisibility(isSpectrumVisible)),
+                saveSynth: () =>
+                    localCache.saveState(localCacheKey, synth),
+                loadSynth: () =>
+                    dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
+                resetSynth: () =>
+                    dispatch(SynthActions.resetState()),
+                toggleLinkMode: () =>
+                    dispatch(SynthActions.toggleLinkMode()),
+                addModule: (type) =>
+                    this.addModule(type),
+                deleteSelectedNodes: () =>
+                    this.removeSelectedNodes(),
+                octaveDecrease: () =>
+                    dispatch(SynthActions.octaveDecrease()),
+                octaveIncrease: () =>
+                    dispatch(SynthActions.octaveIncrease())
+            },
+            footerMarginBottom = (synth.isPianoVisible) ? 8 : 2;
 
         return (
-            <div>
-                <div id="header" style={{ height: headerHeight, padding: '5px' }} className="row">
-                    <div className="col-xs-8">
-                        <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
-                            LINK MODE
-                        </button>
-                        <button onClick={() => localCache.saveState(localCacheKey, synth)}>
-                            SAVE SYNTH
-                        </button>
-                        <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
-                            LOAD SYNTH
-                        </button>
-                        <button onClick={() => dispatch(SynthActions.resetState())}>
-                            RESET SYNTH
-                        </button>
-                        <br/>
-                        OCTAVE: {synth.octave}
-                        <br/>
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
-                            ADD MODULE
-                        </button>
+            <div id="main-wrapper" className="container-fluid">
+                <Header height={headerHeight}
+                        repoUrl={process.env.GITHUB_REPO_URL}
+                        viewActions={viewActions}
+                        linkMode={synth.graph.linkMode}
+                        visiblePanel={synth.viewPanel}
+                        synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
+                        numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
+                        libVersion={process.env.LIB_VERSION}
+                />
 
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('graph'))}>
-                            GRAPH PANEL
-                        </button>
-
-                        <button onClick={() => dispatch(SynthActions.setViewPanel('control'))}>
-                            CONTROL PANEL
-                        </button>
-                    </div>
-                    <div className="col-xs-4">
-                        <div className="pull-right">WebSynth v.{libVersion}</div>
-                    </div>
-                </div>
-                <div id="add-panel" style={{ display: (synth.viewPanel === 'add') ? 'block' : 'none' }}>
-                    {synthModules.map(e => {
-                        if (e.type !== WebSynth.TYPES.MASTER) {
-                            return <button key={e.type} onClick={() => this.addModule(e.type)}>
-                                {e.type}
-                            </button>
-                        }
-                    })}
-                </div>
-
-                <div id="graph-panel" style={{ display: (synth.viewPanel === 'graph') ? 'block' : 'none' }}>
-                    <Graph
-                        state={synth}
-                        height={this.getGraphHeight()}
-                        actions={graphActions}
+                <div id="panel-wrapper"
+                     style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
+                    <GraphPanel
+                        isVisible={synth.viewPanel === 'graph'}
+                        synth={synth}
+                        graphWidth={this.getGraphWidth()}
+                        graphHeight={this.getGraphHeight()}
+                        viewActions={graphActions}
+                    />
+                    <ControlPanel
+                        isVisible={synth.viewPanel === 'control'}
+                        modules={synth.modules}
+                        updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
+                        destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
                     />
                 </div>
 
-                <ControlPanel
-                    isVisible={synth.viewPanel === 'control'}
-                    modules={synth.modules}
-                    updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
-                    destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
+                <Synth state={synth}
+                       audioContext={this.audioContext}
+                       footerHeight={footerHeight}
+                       headerHeight={headerHeight}
+                       isPianoVisible={synth.isPianoVisible}
+                       isSpectrumVisible={synth.isSpectrumVisible}
+                       updatePlayingVoices={playingVoices => dispatch(SynthActions.updatePlayingVoices(playingVoices))}
                 />
 
-                <Synth state={synth} audioContext={this.audioContext} />
-
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
+
+                <Footer height={footerHeight}
+                        viewActions={viewActions}
+                        octave={synth.octave}
+                        isPianoVisible={synth.isPianoVisible}
+                        isSpectrumVisible={synth.isSpectrumVisible}
+                />
             </div>
         );
     }

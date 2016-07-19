@@ -9,7 +9,7 @@ class Select extends Component {
             <div className="dropdown" style={{ width: '100px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center' }}>{property.name.toUpperCase()}</div>
                 <button className="btn btn-default dropdown-toggle"
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', marginTop: '20px' }}
                         type="button"
                         id="dropdownMenu1"
                         data-toggle="dropdown">
