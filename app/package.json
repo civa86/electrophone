@@ -18,6 +18,7 @@
     "lodash": "4.0.x",
     "jquery": "1.x",
     "jquery-knob": "1.2.x",
+    "ionicons": "2.0.x",
     "cytoscape": "2.5.x",
     "bootstrap": "3.3.x"
   },

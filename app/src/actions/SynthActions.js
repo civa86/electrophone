@@ -5,6 +5,8 @@ function addAudioNode (node) {
         type: actionTypes.ADD_AUDIO_NODE,
         id: node.id,
         isMaster: node.isMaster,
+        posX: node.posX || 0,
+        posY: node.posY || 0,
         moduleType: node.type,
         moduleProps: [ ...node.properties ]
     };
@@ -118,6 +120,28 @@ function setViewPanel (panel) {
     }
 }
 
+function setPianoVisibility (isPianoVisible) {
+    return {
+        type: actionTypes.SET_PIANO_VISIBILITY,
+        isPianoVisible: !!isPianoVisible
+    }
+}
+
+function setSpectrumVisibility (isSpectrumVisible) {
+    return {
+        type: actionTypes.SET_SPECTRUM_VISIBILITY,
+        isSpectrumVisible: !!isSpectrumVisible
+    }
+}
+
+function updatePlayingVoices (playingVoices) {
+    return {
+        type: actionTypes.UPDATE_PLAYING_VOICES,
+        playingVoices
+    }
+}
+
+//TODO move ui actions
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -135,5 +159,8 @@ export {
     resetState,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel
+    setViewPanel,
+    setPianoVisibility,
+    setSpectrumVisibility,
+    updatePlayingVoices
 };

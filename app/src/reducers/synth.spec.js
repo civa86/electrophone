@@ -17,7 +17,10 @@ import {
     resetState,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel
+    setViewPanel,
+    setPianoVisibility,
+    setSpectrumVisibility,
+    updatePlayingVoices
 } from '../actions/SynthActions';
 
 const deepFreeze = (obj) => {
@@ -63,6 +66,8 @@ describe('Synth reducer', () => {
         expect(state.modules[0].isMaster).to.equal(true);
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
+
+    //TODO test add module.
 
     it('should remove an audio node', () => {
         state = synth(state, addAudioNode({ id: 'ele2' }));
@@ -177,5 +182,59 @@ describe('Synth reducer', () => {
     it('should set the view panel', () => {
         state = synth(state, setViewPanel('control'));
         expect(state.viewPanel).to.equal('control');
+    });
+
+    it('should reset state maintaing the current view panel', () => {
+        const initialStateWithViewPanel = {
+            ...initState,
+            viewPanel: 'control'
+        };
+
+        state = synth(state, resetState());
+        expect(state).to.deep.equal(initialStateWithViewPanel);
+        expect(state.viewPanel).to.equal('control');
+        expect(state.modules.length).to.equal(1);
+    });
+
+    it('should load a full state maintaing the current view panel', () => {
+        const initialStateWithViewPanel = {
+            ...initState,
+            viewPanel: 'control'
+        };
+
+        state = synth(state, loadState(initialStateWithViewPanel));
+        expect(state).to.deep.equal(initialStateWithViewPanel);
+        expect(state.viewPanel).to.equal('control');
+        expect(state.modules.length).to.equal(1);
+    });
+
+    it('should set the piano visibility', () => {
+        state = synth(state, setPianoVisibility(false));
+        expect(state.isPianoVisible).to.equal(false);
+        state = synth(state, setPianoVisibility(true));
+        expect(state.isPianoVisible).to.equal(true);
+        state = synth(state, setPianoVisibility());
+        expect(state.isPianoVisible).to.equal(false);
+        state = synth(state, setPianoVisibility(1));
+        expect(state.isPianoVisible).to.equal(true);
+    });
+
+    it('should set the spectrum visibility', () => {
+        state = synth(state, setSpectrumVisibility(false));
+        expect(state.isSpectrumVisible).to.equal(false);
+        state = synth(state, setSpectrumVisibility(true));
+        expect(state.isSpectrumVisible).to.equal(true);
+        state = synth(state, setSpectrumVisibility());
+        expect(state.isSpectrumVisible).to.equal(false);
+        state = synth(state, setSpectrumVisibility(1));
+        expect(state.isSpectrumVisible).to.equal(true);
+    });
+
+    it('should update playing voices', () => {
+        const playingVoices = ['C-4'];
+        state = synth(state, updatePlayingVoices(playingVoices));
+        expect(state.playingVoices).to.deep.equal(playingVoices);
+        state = synth(state, updatePlayingVoices([]));
+        expect(state.playingVoices).to.deep.equal([]);
     });
 });

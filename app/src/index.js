@@ -11,6 +11,9 @@ import '../robots.txt';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'imports?jQuery=jquery!bootstrap/dist/js/bootstrap';
 
+//IONICONS
+import 'ionicons/css/ionicons.css';
+
 // STYLE
 import '../less/screen.less';
 
@@ -20,3 +23,4 @@ render(
     <Root store={store}/>,
     document.getElementById('root')
 );
+

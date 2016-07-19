@@ -47,8 +47,8 @@ const initState = {
             isSelected: false,
             link: null,
             position: {
-                x: 100,
-                y: 100
+                x: 'center',
+                y: 'center'
             }
         }
     ],
@@ -61,7 +61,10 @@ const initState = {
         zoom: 1
     },
     octave: 4,
-    viewPanel: 'graph'
+    viewPanel: 'graph',
+    isPianoVisible: false,
+    isSpectrumVisible: false,
+    playingVoices: []
 };
 
 export default initState;

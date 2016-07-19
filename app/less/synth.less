@@ -1,0 +1,95 @@
+#synth {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  #spectrum {
+    position: fixed;
+    left: 0;
+    height: 180px;
+    border-top: 1px solid @c-light;
+    background: @c-dark;
+    width: 100%;
+    z-index: 1000;
+
+    -moz-transition-duration: @transition-piano-time;
+    -webkit-transition-duration: @transition-piano-time;
+    -o-transition-duration: @transition-piano-time;
+    transition-duration: @transition-piano-time;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    &.closed {
+      height: 0;
+    }
+  }
+
+  #keyboard {
+    max-width: 500px;
+    width: 90%;
+    background: #000000;
+    margin: 0 auto;
+    user-select: none;
+    text-align: center;
+
+    .key-white {
+      float: left;
+      position: relative;
+      width: 14.28571%;
+      height: 100%;
+      color: @c-dark;
+      background: #fff;
+      border: 1px solid @c-dark;
+      border-right: none;
+      padding-bottom: 30%;
+      padding-top: 3%;
+      cursor: pointer;
+
+      -moz-transition-duration: @transition-piano-time;
+      -webkit-transition-duration: @transition-piano-time;
+      -o-transition-duration: @transition-piano-time;
+      transition-duration: @transition-piano-time;
+      -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+      -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+      -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+      &.playing {
+        background: @c-secondary;
+      }
+
+      &:last-child {
+        border-right: 1px solid @c-dark;
+      }
+      .key-black {
+        position: absolute;
+        z-index: 1000;
+        background: #000;
+        width: 50%;
+        height: 66%;
+        padding-top: 20%;
+        margin-left: 75%;
+        cursor: pointer;
+
+        &.playing {
+          background: @c-secondary;
+        }
+      }
+
+      .key-black span {
+        color: @c-light;
+      }
+    }
+
+    &.closed {
+      .key-white {
+        max-height: 0;
+        border: none;
+        padding: 0;
+      }
+    }
+  }
+}

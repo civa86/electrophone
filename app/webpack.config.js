@@ -53,7 +53,8 @@
             ExtractVendorStyle,
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"production"',
-                'process.env.LIB_VERSION': JSON.stringify(libPackage.version)
+                'process.env.LIB_VERSION': JSON.stringify(libPackage.version),
+                'process.env.GITHUB_REPO_URL': JSON.stringify(libPackage.repository.url)
             })
         ];
         emitLintErrors = true;
@@ -85,7 +86,8 @@
             ExtractVendorStyle,
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"development"',
-                'process.env.LIB_VERSION': JSON.stringify(libPackage.version)
+                'process.env.LIB_VERSION': JSON.stringify(libPackage.version),
+                'process.env.GITHUB_REPO_URL': JSON.stringify(libPackage.repository.url)
             })
         ];
         emitLintErrors = false;
@@ -139,11 +141,11 @@
                     loader: 'file?name=[name].[ext]'
                 },
                 {
-                    test:   /\.(woff|woff2|ttf|eot)$/,
+                    test:   /\.(woff|woff2|ttf|eot)(\?=?|$)/,
                     loader: 'file?name=assets/fonts/[name].[ext]'
                 },
                 {
-                    test:   /\.(png|jpg|jpeg|gif|svg)$/,
+                    test:   /\.(png|jpg|jpeg|gif|svg)(\?=?|$)/,
                     loader: 'file?name=assets/img/[name].[ext]'
                 }
             ],
