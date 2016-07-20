@@ -8,7 +8,7 @@
     "url": "https://github.com/civa86/web-synth.git"
   },
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://civa86.github.io/web-synth/",
   "dependencies": {
     "react": "0.14.x",
     "react-dom": "0.14.x",
