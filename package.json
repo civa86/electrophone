@@ -17,7 +17,7 @@
     "babel-preset-stage-0": "6.3.x",
     "eslint": "1.10.x",
     "eslint-loader": "1.2.x",
-    "esdoc": "0.4.x",
+    "esdoc": "0.4.6",
     "esdoc-es7-plugin": "0.0.3",
     "lodash": "4.0.x",
     "stereo-panner-shim": "0.1.4",
