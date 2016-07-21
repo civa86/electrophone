@@ -197,18 +197,26 @@ function synth (state = initState, action = {}) {
         }
 
         case actionTypes.LOAD_STATE : {
-            const loadedState = { ...action.state };
+            let loadedState = initState;
 
-            loadedState.modules = loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1);
-            loadedState.modules = loadedState.modules.map(module => {
-                if (module.link) {
-                    var present = loadedState.modules.filter(e => e.id === module.link).pop();
-                    if (!present) {
-                        module.link = null;
+            if (
+                action.state &&
+                typeof action.state === 'object' &&
+                action.state.modules &&
+                action.state.modules.constructor === Array
+            ) {
+                loadedState = { ...action.state };
+                loadedState.modules = loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1);
+                loadedState.modules = loadedState.modules.map(module => {
+                    if (module.link) {
+                        var present = loadedState.modules.filter(e => e.id === module.link).pop();
+                        if (!present) {
+                            module.link = null;
+                        }
                     }
-                }
-                return module;
-            });
+                    return module;
+                });
+            }
 
             return {
                 ...state,

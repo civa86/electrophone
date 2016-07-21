@@ -182,29 +182,31 @@ describe('Synth reducer', () => {
     it('should set the view panel', () => {
         state = synth(state, setViewPanel('control'));
         expect(state.viewPanel).to.equal('control');
+        state = synth(state, setViewPanel('graph'));
+        expect(state.viewPanel).to.equal('graph');
     });
 
     it('should reset state maintaing the current view panel', () => {
         const initialStateWithViewPanel = {
             ...initState,
-            viewPanel: 'control'
+            viewPanel: 'graph'
         };
 
         state = synth(state, resetState());
         expect(state).to.deep.equal(initialStateWithViewPanel);
-        expect(state.viewPanel).to.equal('control');
+        expect(state.viewPanel).to.equal('graph');
         expect(state.modules.length).to.equal(1);
     });
 
     it('should load a full state maintaing the current view panel', () => {
         const initialStateWithViewPanel = {
             ...initState,
-            viewPanel: 'control'
+            viewPanel: 'graph'
         };
 
-        state = synth(state, loadState(initialStateWithViewPanel));
+        state = synth(state, loadState(initialStateWithViewPanel, ['Master', 'Oscillator']));
         expect(state).to.deep.equal(initialStateWithViewPanel);
-        expect(state.viewPanel).to.equal('control');
+        expect(state.viewPanel).to.equal('graph');
         expect(state.modules.length).to.equal(1);
     });
 
@@ -217,6 +219,7 @@ describe('Synth reducer', () => {
         expect(state.isPianoVisible).to.equal(false);
         state = synth(state, setPianoVisibility(1));
         expect(state.isPianoVisible).to.equal(true);
+        state = synth(state, setPianoVisibility(false));
     });
 
     it('should set the spectrum visibility', () => {
@@ -228,6 +231,7 @@ describe('Synth reducer', () => {
         expect(state.isSpectrumVisible).to.equal(false);
         state = synth(state, setSpectrumVisibility(1));
         expect(state.isSpectrumVisible).to.equal(true);
+        state = synth(state, setSpectrumVisibility(false));
     });
 
     it('should update playing voices', () => {
@@ -236,5 +240,36 @@ describe('Synth reducer', () => {
         expect(state.playingVoices).to.deep.equal(playingVoices);
         state = synth(state, updatePlayingVoices([]));
         expect(state.playingVoices).to.deep.equal([]);
+    });
+
+    //BUG FIXING
+    state = synth(state, resetState());
+    state = synth(state, setViewPanel('graph'));
+
+    it('[Bug #6] should load the initial state if there is no valid input state', () => {
+        state = synth(state, loadState());
+
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
+
+        state = synth(state, loadState(null));
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
+
+        state = synth(state, loadState(false));
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
+
+        state = synth(state, loadState(""));
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
+
+        state = synth(state, loadState(1));
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
+
+        state = synth(state, loadState([2, 3]));
+        expect(state).to.deep.equal(initState);
+        expect(state.modules.length).to.equal(1);
     });
 });
