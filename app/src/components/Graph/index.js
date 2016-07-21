@@ -41,7 +41,7 @@ class Graph extends Component {
 
     render () {
         return (
-            <div style={{ position: 'relative' }}/>
+            <div style={{ position: 'relative' }} className="no-select"/>
         )
     }
 }

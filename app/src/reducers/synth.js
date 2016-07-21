@@ -203,7 +203,9 @@ function synth (state = initState, action = {}) {
                 action.state &&
                 typeof action.state === 'object' &&
                 action.state.modules &&
-                action.state.modules.constructor === Array
+                action.state.modules.constructor === Array &&
+                action.workingTypes &&
+                action.workingTypes.constructor === Array
             ) {
                 loadedState = { ...action.state };
                 loadedState.modules = loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1);

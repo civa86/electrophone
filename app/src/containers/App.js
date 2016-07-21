@@ -66,7 +66,7 @@ class App extends Component {
     }
 
     getKeyboardMapping () {
-        const { dispatch } = this.props;
+        const { dispatch, synth } = this.props;
 
         return [
             {
@@ -74,6 +74,22 @@ class App extends Component {
                 down: () => dispatch(SynthActions.setLinkMode(true)),
                 up: () => dispatch(SynthActions.setLinkMode(false)),
                 specialKeys: 'shift'
+            },
+            {
+                keys: [9], //TAB
+                down: (e) => {
+                    e.preventDefault();
+
+                    let toggleView = '';
+
+                    if (synth.viewPanel === 'graph') {
+                        toggleView = 'control';
+                    } else if (synth.viewPanel === 'control') {
+                        toggleView = 'graph';
+                    }
+                    dispatch(SynthActions.setViewPanel(toggleView));
+                },
+                up: () => false
             },
             {
                 keys: [90], //Z

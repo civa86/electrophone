@@ -41,7 +41,7 @@ const Header = (props) => {
             </div>
 
             <div className="menu">
-                <ul className="container-fluid">
+                <ul className="container-fluid no-select">
                     <li className="pull-left">
                         <a className="cursor-pointer"
                            onClick={() => viewActions.resetSynth()}
@@ -121,14 +121,14 @@ const Header = (props) => {
                            onClick={() => viewActions.setViewPanel('control')}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Control view"><i className="ion-levels"></i></a>
+                           title="Control view (TAB)"><i className="ion-levels"></i></a>
                     </li>
                     <li className="pull-right">
                         <a className={'cursor-pointer' + ((visiblePanel === 'graph') ? ' selected' : '')}
                            onClick={() => viewActions.setViewPanel('graph')}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Graph view"><i className="ion-network"></i></a>
+                           title="Graph view (TAB)"><i className="ion-network"></i></a>
                     </li>
                 </ul>
             </div>
