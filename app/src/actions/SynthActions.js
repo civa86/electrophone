@@ -142,7 +142,6 @@ function updatePlayingVoices (playingVoices) {
     }
 }
 
-//TODO move ui actions
 //TODO refactor names....no audio...
 export {
     addAudioNode,

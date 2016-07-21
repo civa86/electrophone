@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import _ from 'lodash';
 
 import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
@@ -184,7 +183,7 @@ class App extends Component {
     render () {
         const
             { synth, dispatch } = this.props,
-        //refactor and port into viewActions...
+        //TODO refactor and port into viewActions...
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
                     if (node !== WebSynth.CONST.MASTER) {
@@ -210,7 +209,7 @@ class App extends Component {
                 loadSynth: () =>
                     dispatch(SynthActions.loadState(
                         localCache.loadState(localCacheKey),
-                        _.values(WebSynth.TYPES)
+                        WebSynth.describeModules().map(e => e.type)
                     )),
                 resetSynth: () =>
                     dispatch(SynthActions.resetState()),
