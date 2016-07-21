@@ -88,10 +88,11 @@ function setGraphZoom (zoom) {
     }
 }
 
-function loadState (state) {
+function loadState (state, workingTypes) {
     return {
         type: actionTypes.LOAD_STATE,
-        state
+        state,
+        workingTypes
     }
 }
 

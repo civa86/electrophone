@@ -197,9 +197,22 @@ function synth (state = initState, action = {}) {
         }
 
         case actionTypes.LOAD_STATE : {
+            const loadedState = { ...action.state };
+
+            loadedState.modules = loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1);
+            loadedState.modules = loadedState.modules.map(module => {
+                if (module.link) {
+                    var present = loadedState.modules.filter(e => e.id === module.link).pop();
+                    if (!present) {
+                        module.link = null;
+                    }
+                }
+                return module;
+            });
+
             return {
                 ...state,
-                ...action.state,
+                ...loadedState,
                 viewPanel: state.viewPanel,
                 isPianoVisible: state.isPianoVisible,
                 isSpectrumVisible: state.isSpectrumVisible

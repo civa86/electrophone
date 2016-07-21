@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
+import _ from 'lodash';
 
 import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
@@ -191,7 +192,10 @@ class App extends Component {
                 saveSynth: () =>
                     localCache.saveState(localCacheKey, synth),
                 loadSynth: () =>
-                    dispatch(SynthActions.loadState(localCache.loadState(localCacheKey))),
+                    dispatch(SynthActions.loadState(
+                        localCache.loadState(localCacheKey),
+                        _.values(WebSynth.TYPES)
+                    )),
                 resetSynth: () =>
                     dispatch(SynthActions.resetState()),
                 toggleLinkMode: () =>

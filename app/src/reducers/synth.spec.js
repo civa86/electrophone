@@ -157,7 +157,7 @@ describe('Synth reducer', () => {
     });
 
     it('should load a full state', () => {
-        state = synth(state, loadState(initState));
+        state = synth(state, loadState(initState, ['Master', 'Oscillator']));
         expect(state).to.deep.equal(initState);
     });
 

@@ -135,9 +135,10 @@ describe('Synth actions', () => {
     it('should create an action loadState', () => {
         const expectedAction = {
             type: actionTypes.LOAD_STATE,
-            state: { a: 1, b: 2 }
+            state: { a: 1, b: 2 },
+            workingTypes: ['a']
         };
-        expect(actions.loadState({ a: 1, b: 2 })).to.deep.equal(expectedAction);
+        expect(actions.loadState({ a: 1, b: 2 }, ['a'])).to.deep.equal(expectedAction);
     });
 
     it('should create an action resetState', () => {
