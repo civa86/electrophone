@@ -9,19 +9,16 @@ then
     exit 1
 fi
 
-echo "/******************************************/"
-echo "/****     WEB SYNTH RELEASE START      ****/"
-echo "/******************************************/"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo "WEB SYNTH RELEASE START"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
 
 echo "/**** CHECK APP START ****/"
 cd app
 npm run app::dist || { echo "APPLICATION DIST: failed" ; exit 1; }
 cd ..
 echo "/**** CHECK APP END ****/"
-
-echo "LATEST RELEASE: $LATEST_TAG"
-echo "NEW RELEASE NUMBER: "
-read RELEASE_NUM
 
 echo "/***** LIBRARY DISTRIBUTION ****/"
 npm run lib::dist || { echo "LIBRARY DISTRIBUTION: failed" ; exit 1; }
@@ -33,11 +30,17 @@ echo "/***** LIBRARY COVERAGE ****/"
 npm run lib::coverage || { echo "LIBRARY COVERAGE: failed" ; exit 1; }
 
 echo "EVERYTHING WORKS FINE!"
-echo "DO YOU WANT TO RELEASE $RELEASE_NUM ONLINE? (y/n)"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
+echo "DO YOU WANT TO RELEASE ONLINE? (y/n)"
 read DO_RELEASE
 
 if [ "$DO_RELEASE" == "y" ]
 then
+    echo "LATEST RELEASE: $LATEST_TAG"
+    echo "NEW RELEASE NUMBER: "
+    read RELEASE_NUM
+
     echo "/**** BUMP PACKAGE VERSION ****/"
     npm --no-git-tag-version version $RELEASE_NUM
 
@@ -56,6 +59,6 @@ else
     echo "NOTHING TRANSMITTED! SEE YOU SOON."
 fi
 
-echo "/******************************************/"
-echo "/****      WEB SYNTH RELEASE END       ****/"
-echo "/******************************************/"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo "WEB SYNTH RELEASE END"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -

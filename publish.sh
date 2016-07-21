@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "/*****************************************/"
-echo "/*****    PUBLISH GH-PAGES :: START   ****/"
-echo "/*****************************************/"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo "PUBLISH GH-PAGES :: START"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 
 echo "/***** INSTALL LIBRARY DEPENDENCIES ****/"
 npm install || { echo 'INSTALL LIBRARY DEPENDENCIES: failed'; exit 1; }
@@ -45,6 +45,6 @@ rm -rf .git
 
 #TODO integrate coveralls
 
-echo "/*****************************************/"
-echo "/*****    PUBLISH GH-PAGES :: END     ****/"
-echo "/*****************************************/"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo "PUBLISH GH-PAGES :: END"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -

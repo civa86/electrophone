@@ -254,7 +254,7 @@
 	
 	        var properties = props || {},
 	            propsHandler = this.toString() + 'Props',
-	            moduleProperties = undefined;
+	            moduleProperties = void 0;
 	
 	        //TODO assign properties configuration to class ....
 	        moduleProperties = _lodash2.default.assign({}, Props.DefaultProps, Props[propsHandler]);
@@ -683,7 +683,7 @@
 	
 	var notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
 	    methods = Object.keys(Modules);
-	var synth = undefined;
+	var synth = void 0;
 	
 	/**
 	 * WebSynth Library.
@@ -698,7 +698,6 @@
 	     * @param {AudioContext} audioContext - Web Audio Context instance.
 	     * @param {WebSynthProperties} [properties] - synth properties.
 	     */
-	
 	    function WebSynth(audioContext, props) {
 	        _classCallCheck(this, WebSynth);
 	
@@ -950,7 +949,6 @@
 	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
 	 * const synth = new Synth(new AudioCtx(), { spectrum: false });
 	 */
-	
 	var Synth = function () {
 	
 	    /**
@@ -958,7 +956,6 @@
 	     * @param {AudioContext} audioContext - Web Audio Context instance.
 	     * @param {WebSynthProperties} [properties] - synth properties.
 	     */
-	
 	    function Synth(audioContext, props) {
 	        _classCallCheck(this, Synth);
 	
@@ -1125,7 +1122,7 @@
 	    Synth.prototype.play = function play(note) {
 	        var _this3 = this;
 	
-	        var frequencyData = undefined,
+	        var frequencyData = void 0,
 	            freqBufferLength = this.analyser && this.analyser.frequencyBinCount ? this.analyser.frequencyBinCount : 1024;
 	
 	        if (!this.voices[note]) {
@@ -1219,7 +1216,6 @@
 	 * @example
 	 * const v = new Voice(440, AudioContext, { master: { ... }, adsr: { ... } }, null);
 	 */
-	
 	var Voice = function () {
 	    function Voice(note, audioContext, modulesConfig, analyser) {
 	        _classCallCheck(this, Voice);
@@ -1240,8 +1236,8 @@
 	    Voice.prototype.setupModules = function setupModules(audioContext) {
 	        var _this = this;
 	
-	        var modConf = undefined,
-	            m = undefined;
+	        var modConf = void 0,
+	            m = void 0;
 	
 	        Object.keys(this.modulesConfig).forEach(function (mod) {
 	            modConf = _this.modulesConfig[mod];
@@ -1279,9 +1275,9 @@
 	        Object.keys(this.modules).forEach(function (mod) {
 	            var currentModule = _this2.modules[mod].instance,
 	                currentModuleType = _this2.modules[mod].type,
-	                destinationModule = undefined,
-	                source = undefined,
-	                dest = undefined;
+	                destinationModule = void 0,
+	                source = void 0,
+	                dest = void 0;
 	
 	            if (currentModule.link) {
 	                destinationModule = _this2.modules[currentModule.link];
@@ -1302,8 +1298,8 @@
 	    Voice.prototype.noteOn = function noteOn() {
 	        var _this3 = this;
 	
-	        var m = undefined,
-	            dest = undefined;
+	        var m = void 0,
+	            dest = void 0;
 	
 	        Object.keys(this.modules).forEach(function (e) {
 	            m = _this3.modules[e].instance;
@@ -1329,8 +1325,8 @@
 	
 	        var release = 0,
 	            adsr = this.modules.adsr ? this.modules.adsr.instance : null,
-	            m = undefined,
-	            dest = undefined;
+	            m = void 0,
+	            dest = void 0;
 	
 	        if (adsr) {
 	            release = adsr.getReleaseTime();
@@ -1743,7 +1739,7 @@
 	
 	    Envelope.prototype.getReleaseTime = function getReleaseTime() {
 	        var now = this.audioContext.currentTime,
-	            release = undefined;
+	            release = void 0;
 	
 	        if (this.release) {
 	            release = now + this.release / 10.0;
@@ -1757,10 +1753,10 @@
 	    Envelope.prototype.setEnvelope = function setEnvelope(dest) {
 	        var now = this.audioContext.currentTime,
 	            envelope = this.level % 101,
-	            attackLevel = undefined,
-	            sustainLevel = undefined,
+	            attackLevel = void 0,
+	            sustainLevel = void 0,
 	            attackEnd = this.attack / 20.0,
-	            t = undefined;
+	            t = void 0;
 	
 	        if (this.target === 'gain') {
 	            attackLevel = envelope / 100;
@@ -1787,7 +1783,7 @@
 	
 	    Envelope.prototype.resetEnvelope = function resetEnvelope(dest) {
 	        var now = this.audioContext.currentTime,
-	            t = undefined;
+	            t = void 0;
 	
 	        if (dest && typeof dest.getEnvelopeTarget === 'function') {
 	            t = dest.getEnvelopeTarget(this.target);
@@ -1838,7 +1834,6 @@
 	        _classCallCheck(this, Master);
 	
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
-	
 	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createGain();
@@ -1891,7 +1886,6 @@
 	        _classCallCheck(this, Pan);
 	
 	        //TODO check for method to call on update...like setMainProperties of Effect!!
-	
 	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createStereoPanner();
@@ -1932,7 +1926,6 @@
 	        _classCallCheck(this, Modulator);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createOscillator();
@@ -1980,7 +1973,6 @@
 	        _classCallCheck(this, Noise);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.defaultLineInProperty = 'detune';
@@ -2021,17 +2013,17 @@
 	    };
 	
 	    Noise.prototype.pink = function pink() {
-	        var b0 = undefined,
-	            b1 = undefined,
-	            b2 = undefined,
-	            b3 = undefined,
-	            b4 = undefined,
-	            b5 = undefined,
-	            b6 = undefined,
+	        var b0 = void 0,
+	            b1 = void 0,
+	            b2 = void 0,
+	            b3 = void 0,
+	            b4 = void 0,
+	            b5 = void 0,
+	            b6 = void 0,
 	            noiseBuffer = this.getNoiseBuffer(),
 	            bufferSize = this.getBufferSize(),
 	            output = noiseBuffer.getChannelData(0),
-	            white = undefined;
+	            white = void 0;
 	
 	        b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
 	
@@ -2058,7 +2050,7 @@
 	            bufferSize = this.getBufferSize(),
 	            output = noiseBuffer.getChannelData(0),
 	            lastOut = 0.0,
-	            white = undefined;
+	            white = void 0;
 	
 	        for (var i = 0; i < bufferSize; i++) {
 	            white = white = Math.random() * 2 - 1;
@@ -2117,7 +2109,6 @@
 	        _classCallCheck(this, Oscillator);
 	
 	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
-	
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createOscillator();
