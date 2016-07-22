@@ -51,19 +51,6 @@ function setAudioNodeSelection (node, isSelected) {
     }
 }
 
-function setLinkMode (mode) {
-    return {
-        type: actionTypes.SET_LINK_MODE,
-        mode
-    };
-}
-
-function toggleLinkMode () {
-    return {
-        type: actionTypes.TOGGLE_LINK_MODE
-    };
-}
-
 function setPositions (nodeId, nodePos, graphPan, graphZoom) {
     return {
         type: actionTypes.SET_POSITIONS,
@@ -71,20 +58,6 @@ function setPositions (nodeId, nodePos, graphPan, graphZoom) {
         nodePos,
         graphPan,
         graphZoom
-    }
-}
-
-function setGraphPan (pan) {
-    return {
-        type: actionTypes.SET_GRAPH_PAN,
-        pan
-    }
-}
-
-function setGraphZoom (zoom) {
-    return {
-        type: actionTypes.SET_GRAPH_ZOOM,
-        zoom
     }
 }
 
@@ -97,27 +70,6 @@ function octaveIncrease () {
 function octaveDecrease () {
     return {
         type: actionTypes.OCTAVE_DECREASE
-    }
-}
-
-function setViewPanel (panel) {
-    return {
-        type: actionTypes.SET_VIEW_PANEL,
-        panel
-    }
-}
-
-function setPianoVisibility (isPianoVisible) {
-    return {
-        type: actionTypes.SET_PIANO_VISIBILITY,
-        isPianoVisible: !!isPianoVisible
-    }
-}
-
-function setSpectrumVisibility (isSpectrumVisible) {
-    return {
-        type: actionTypes.SET_SPECTRUM_VISIBILITY,
-        isSpectrumVisible: !!isSpectrumVisible
     }
 }
 
@@ -136,15 +88,8 @@ export {
     linkNodes,
     updateNode,
     setAudioNodeSelection,
-    setLinkMode,
-    toggleLinkMode,
     setPositions,
-    setGraphPan,
-    setGraphZoom,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel,
-    setPianoVisibility,
-    setSpectrumVisibility,
     updatePlayingVoices
 };

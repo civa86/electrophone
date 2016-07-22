@@ -67,6 +67,20 @@ function ui (state = initialState, action = {}) {
             };
         }
 
+        case actionTypes.SET_PIANO_VISIBILITY : {
+            return {
+                ...state,
+                isPianoVisible: action.isPianoVisible
+            };
+        }
+
+        case actionTypes.SET_SPECTRUM_VISIBILITY : {
+            return {
+                ...state,
+                isSpectrumVisible: action.isSpectrumVisible
+            };
+        }
+
         case actionTypes.SET_GRAPH_ZOOM : {
             return {
                 ...state,
@@ -91,8 +105,9 @@ function ui (state = initialState, action = {}) {
         }
 
         case actionTypes.APP_LOAD_STATE : {
-            //TODO check for synth state....you have the whole localCache
-            let loadedState = initialState;
+            let loadedState = action.state;
+
+            //TODO check for ui state....you have the whole localCache
 
             return {
                 ...state,

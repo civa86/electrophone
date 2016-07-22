@@ -41,4 +41,20 @@ describe('Ui actions', () => {
         };
         expect(actions.setViewPanel('test')).to.deep.equal(expectedAction);
     });
+
+    it('should create an action setGraphPan', () => {
+        const expectedAction = {
+            type: actionTypes.SET_GRAPH_PAN,
+            pan: { x: 100, y: 100 }
+        };
+        expect(actions.setGraphPan({ x: 100, y: 100 })).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action setGraphZoom', () => {
+        const expectedAction = {
+            type: actionTypes.SET_GRAPH_ZOOM,
+            zoom: 1
+        };
+        expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
+    });
 });

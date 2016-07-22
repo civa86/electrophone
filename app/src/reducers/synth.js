@@ -138,8 +138,9 @@ function synth (state = initialState, action = {}) {
 
         case actionTypes.APP_LOAD_STATE : {
             let loadedState = initialState;
-            
+
             //TODO check for synth state....you have the whole localCache
+
             if (
                 action.state &&
                 typeof action.state === 'object' &&
@@ -180,20 +181,6 @@ function synth (state = initialState, action = {}) {
             return {
                 ...state,
                 octave
-            };
-        }
-
-        case actionTypes.SET_PIANO_VISIBILITY : {
-            return {
-                ...state,
-                isPianoVisible: action.isPianoVisible
-            };
-        }
-
-        case actionTypes.SET_SPECTRUM_VISIBILITY : {
-            return {
-                ...state,
-                isSpectrumVisible: action.isSpectrumVisible
             };
         }
 
