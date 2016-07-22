@@ -8,8 +8,6 @@ function ui (state = initialState, action = {}) {
     switch (action.type) {
 
         case actionTypes.SET_POSITIONS : {
-            //TODO write unit test on that
-
             return {
                 ...state,
                 graph: {

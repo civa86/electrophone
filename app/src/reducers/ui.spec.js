@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import ui from './ui';
 import initState from './initState';
+import { setPositions } from '../actions/SynthActions';
 import {
     setLinkMode,
     toggleLinkMode,
@@ -90,5 +91,18 @@ describe('Ui reducer', () => {
     it('should set graph zoom', () => {
         state = ui(state, setGraphZoom(1));
         expect(state.graph.zoom).to.equal(1);
+    });
+
+    it('should set graph zoom and pan when synth set positions', () => {
+        state = ui(state, setPositions(
+            'master',
+            { x: 100, y: 100 },
+            { x: 333, y: 155 },
+            3
+        ));
+
+        expect(state.graph.pan.x).to.equal(333);
+        expect(state.graph.pan.y).to.equal(155);
+        expect(state.graph.zoom).to.equal(3);
     });
 });
