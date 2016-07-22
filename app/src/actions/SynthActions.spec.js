@@ -85,27 +85,12 @@ describe('Synth actions', () => {
         expect(actions.setAudioNodeSelection('ele1', true)).to.deep.equal(expectedAction);
     });
 
-    it('should create an action setLinkMode', () => {
-        const expectedAction = {
-            type: actionTypes.SET_LINK_MODE,
-            mode: true
-        };
-        expect(actions.setLinkMode(true)).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action toggleLinkMode', () => {
-        const expectedAction = {
-            type: actionTypes.TOGGLE_LINK_MODE
-        };
-        expect(actions.toggleLinkMode()).to.deep.equal(expectedAction);
-    });
-
     it('should create an action setPositions', () => {
         const expectedAction = {
             type: actionTypes.SET_POSITIONS,
             nodeId: 'ele1',
             nodePos: { x: 100, y: 100 },
-            graphPan: { x: 100, y: 100 },
+            graphPan: { x: 100, y: 100 }, //TODO why graph??
             graphZoom: 3
         };
         expect(actions.setPositions(
@@ -116,36 +101,6 @@ describe('Synth actions', () => {
         )).to.deep.equal(expectedAction);
     });
 
-    it('should create an action setGraphPan', () => {
-        const expectedAction = {
-            type: actionTypes.SET_GRAPH_PAN,
-            pan: { x: 100, y: 100 }
-        };
-        expect(actions.setGraphPan({ x: 100, y: 100 })).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action setGraphZoom', () => {
-        const expectedAction = {
-            type: actionTypes.SET_GRAPH_ZOOM,
-            zoom: 1
-        };
-        expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action loadState', () => {
-        const expectedAction = {
-            type: actionTypes.LOAD_STATE,
-            state: { a: 1, b: 2 },
-            workingTypes: ['a']
-        };
-        expect(actions.loadState({ a: 1, b: 2 }, ['a'])).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action resetState', () => {
-        const expectedAction = { type: actionTypes.RESET_STATE };
-        expect(actions.resetState()).to.deep.equal(expectedAction);
-    });
-
     it('should create an action octaveIncrease', () => {
         const expectedAction = { type: actionTypes.OCTAVE_INCREASE };
         expect(actions.octaveIncrease()).to.deep.equal(expectedAction);
@@ -154,30 +109,6 @@ describe('Synth actions', () => {
     it('should create an action octaveDecrease', () => {
         const expectedAction = { type: actionTypes.OCTAVE_DECREASE };
         expect(actions.octaveDecrease()).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action setViewPanel', () => {
-        const expectedAction = {
-            type: actionTypes.SET_VIEW_PANEL,
-            panel: 'test'
-        };
-        expect(actions.setViewPanel('test')).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action setPianoVisibility', () => {
-        const expectedAction = {
-            type: actionTypes.SET_PIANO_VISIBILITY,
-            isPianoVisible: true
-        };
-        expect(actions.setPianoVisibility(true)).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action setSpectrumVisibility', () => {
-        const expectedAction = {
-            type: actionTypes.SET_SPECTRUM_VISIBILITY,
-            isSpectrumVisible: true
-        };
-        expect(actions.setSpectrumVisibility(true)).to.deep.equal(expectedAction);
     });
 
     it('should update playing voices', () => {

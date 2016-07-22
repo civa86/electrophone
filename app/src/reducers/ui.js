@@ -90,6 +90,22 @@ function ui (state = initialState, action = {}) {
             };
         }
 
+        case actionTypes.APP_LOAD_STATE : {
+            //TODO check for synth state....you have the whole localCache
+            let loadedState = initialState;
+
+            return {
+                ...state,
+                ...loadedState
+            };
+        }
+
+        case actionTypes.APP_RESET_STATE : {
+            return {
+                ...initialState
+            };
+        }
+
         default:
             return state;
 

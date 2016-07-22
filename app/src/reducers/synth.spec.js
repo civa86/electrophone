@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import synth from './synth';
 import initState from './initState';
+import { loadState, resetState } from '../actions/AppActions';
 import {
     addAudioNode,
     removeNode,
@@ -8,17 +9,9 @@ import {
     linkNodes,
     updateNode,
     setAudioNodeSelection,
-    setLinkMode,
-    toggleLinkMode,
     setPositions,
-    setGraphPan,
-    setGraphZoom,
-    loadState,
-    resetState,
     octaveIncrease,
     octaveDecrease,
-    setPianoVisibility,
-    setSpectrumVisibility,
     updatePlayingVoices
 } from '../actions/SynthActions';
 
@@ -130,6 +123,7 @@ describe('Synth reducer', () => {
         expect(selectedNode.position.y).to.equal(100);
     });
 
+    //TODO check for unit test
     it('should load a full state', () => {
         state = synth(state, loadState(initialState, ['Master', 'Oscillator']));
         expect(state).to.deep.equal(initialState);
@@ -162,6 +156,7 @@ describe('Synth reducer', () => {
     });
 
     //BUG FIXING
+    //TODO take from app actions
     state = synth(state, resetState());
 
     it('[Bug #6] should load the initial state if there is no valid input state', () => {

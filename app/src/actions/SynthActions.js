@@ -88,20 +88,6 @@ function setGraphZoom (zoom) {
     }
 }
 
-function loadState (state, workingTypes) {
-    return {
-        type: actionTypes.LOAD_STATE,
-        state,
-        workingTypes
-    }
-}
-
-function resetState () {
-    return {
-        type: actionTypes.RESET_STATE
-    }
-}
-
 function octaveIncrease () {
     return {
         type: actionTypes.OCTAVE_INCREASE
@@ -155,8 +141,6 @@ export {
     setPositions,
     setGraphPan,
     setGraphZoom,
-    loadState,
-    resetState,
     octaveIncrease,
     octaveDecrease,
     setViewPanel,

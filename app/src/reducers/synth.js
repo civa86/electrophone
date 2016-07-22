@@ -136,9 +136,10 @@ function synth (state = initialState, action = {}) {
             };
         }
 
-        case actionTypes.LOAD_STATE : {
+        case actionTypes.APP_LOAD_STATE : {
             let loadedState = initialState;
-
+            
+            //TODO check for synth state....you have the whole localCache
             if (
                 action.state &&
                 typeof action.state === 'object' &&
@@ -160,7 +161,7 @@ function synth (state = initialState, action = {}) {
             };
         }
 
-        case actionTypes.RESET_STATE : {
+        case actionTypes.APP_RESET_STATE : {
             return {
                 ...initialState
             };

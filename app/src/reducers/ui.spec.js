@@ -76,13 +76,23 @@ describe('Ui reducer', () => {
     });
 
     it('should set graph pan', () => {
-        state = synth(state, setGraphPan({ x: 100, y: 100 }));
+        state = ui(state, setGraphPan({ x: 100, y: 100 }));
         expect(state.graph.pan.x).to.equal(100);
         expect(state.graph.pan.y).to.equal(100);
     });
 
     it('should set graph zoom', () => {
-        state = synth(state, setGraphZoom(1));
+        state = ui(state, setGraphZoom(1));
         expect(state.graph.zoom).to.equal(1);
     });
+
+    it('should load a full state', () => {
+        expect(0).to.equal(1);
+    });
+
+    it('should reset state', () => {
+        expect(0).to.equal(1);
+    });
+
+    //TODO check for unit test load and reset state....
 });
