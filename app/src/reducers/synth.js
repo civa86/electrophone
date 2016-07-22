@@ -139,17 +139,16 @@ function synth (state = initialState, action = {}) {
         case actionTypes.APP_LOAD_STATE : {
             let loadedState = initialState;
 
-            //TODO check for synth state....you have the whole localCache
-
             if (
                 action.state &&
-                typeof action.state === 'object' &&
-                action.state.modules &&
-                action.state.modules.constructor === Array &&
+                action.state.synth &&
+                typeof action.state.synth === 'object' &&
+                action.state.synth.modules &&
+                action.state.synth.modules.constructor === Array &&
                 action.workingTypes &&
                 action.workingTypes.constructor === Array
             ) {
-                loadedState = { ...action.state };
+                loadedState = { ...action.state.synth };
                 loadedState.modules = cleanNodeLinks(
                     loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1)
                 );
@@ -158,13 +157,15 @@ function synth (state = initialState, action = {}) {
 
             return {
                 ...state,
-                ...loadedState
+                ...loadedState,
+                octave: state.octave
             };
         }
 
         case actionTypes.APP_RESET_STATE : {
             return {
-                ...initialState
+                ...initialState,
+                octave: state.octave
             };
         }
 

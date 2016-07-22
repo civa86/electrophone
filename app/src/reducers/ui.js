@@ -104,23 +104,6 @@ function ui (state = initialState, action = {}) {
             };
         }
 
-        case actionTypes.APP_LOAD_STATE : {
-            let loadedState = action.state;
-
-            //TODO check for ui state....you have the whole localCache
-
-            return {
-                ...state,
-                ...loadedState
-            };
-        }
-
-        case actionTypes.APP_RESET_STATE : {
-            return {
-                ...initialState
-            };
-        }
-
         default:
             return state;
 

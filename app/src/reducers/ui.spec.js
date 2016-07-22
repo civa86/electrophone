@@ -91,14 +91,4 @@ describe('Ui reducer', () => {
         state = ui(state, setGraphZoom(1));
         expect(state.graph.zoom).to.equal(1);
     });
-
-    // it('should load a full state', () => {
-    //     expect(0).to.equal(1);
-    // });
-    //
-    // it('should reset state', () => {
-    //     expect(0).to.equal(1);
-    // });
-
-    //TODO check for unit test load and reset state....
 });
