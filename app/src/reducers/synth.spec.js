@@ -156,7 +156,6 @@ describe('Synth reducer', () => {
     });
 
     //BUG FIXING
-    //TODO take from app actions
     state = synth(state, resetState());
 
     it('[Bug #6] should load the initial state if there is no valid input state', () => {

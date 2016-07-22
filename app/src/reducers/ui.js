@@ -7,6 +7,22 @@ function ui (state = initialState, action = {}) {
 
     switch (action.type) {
 
+        case actionTypes.SET_POSITIONS : {
+            //TODO write unit test on that
+
+            return {
+                ...state,
+                graph: {
+                    ...state.graph,
+                    pan: {
+                        x: action.graphPan.x,
+                        y: action.graphPan.y
+                    },
+                    zoom: action.graphZoom
+                }
+            };
+        }
+
         case actionTypes.SET_LINK_MODE : {
             let viewPanel = state.viewPanel;
             if (state.viewPanel !== 'graph' && action.mode === true) {
