@@ -51,19 +51,6 @@ function setAudioNodeSelection (node, isSelected) {
     }
 }
 
-function setLinkMode (mode) {
-    return {
-        type: actionTypes.SET_LINK_MODE,
-        mode
-    };
-}
-
-function toggleLinkMode () {
-    return {
-        type: actionTypes.TOGGLE_LINK_MODE
-    };
-}
-
 function setPositions (nodeId, nodePos, graphPan, graphZoom) {
     return {
         type: actionTypes.SET_POSITIONS,
@@ -71,34 +58,6 @@ function setPositions (nodeId, nodePos, graphPan, graphZoom) {
         nodePos,
         graphPan,
         graphZoom
-    }
-}
-
-function setGraphPan (pan) {
-    return {
-        type: actionTypes.SET_GRAPH_PAN,
-        pan
-    }
-}
-
-function setGraphZoom (zoom) {
-    return {
-        type: actionTypes.SET_GRAPH_ZOOM,
-        zoom
-    }
-}
-
-function loadState (state, workingTypes) {
-    return {
-        type: actionTypes.LOAD_STATE,
-        state,
-        workingTypes
-    }
-}
-
-function resetState () {
-    return {
-        type: actionTypes.RESET_STATE
     }
 }
 
@@ -114,27 +73,6 @@ function octaveDecrease () {
     }
 }
 
-function setViewPanel (panel) {
-    return {
-        type: actionTypes.SET_VIEW_PANEL,
-        panel
-    }
-}
-
-function setPianoVisibility (isPianoVisible) {
-    return {
-        type: actionTypes.SET_PIANO_VISIBILITY,
-        isPianoVisible: !!isPianoVisible
-    }
-}
-
-function setSpectrumVisibility (isSpectrumVisible) {
-    return {
-        type: actionTypes.SET_SPECTRUM_VISIBILITY,
-        isSpectrumVisible: !!isSpectrumVisible
-    }
-}
-
 function updatePlayingVoices (playingVoices) {
     return {
         type: actionTypes.UPDATE_PLAYING_VOICES,
@@ -142,7 +80,6 @@ function updatePlayingVoices (playingVoices) {
     }
 }
 
-//TODO move ui actions
 //TODO refactor names....no audio...
 export {
     addAudioNode,
@@ -151,17 +88,8 @@ export {
     linkNodes,
     updateNode,
     setAudioNodeSelection,
-    setLinkMode,
-    toggleLinkMode,
     setPositions,
-    setGraphPan,
-    setGraphZoom,
-    loadState,
-    resetState,
     octaveIncrease,
     octaveDecrease,
-    setViewPanel,
-    setPianoVisibility,
-    setSpectrumVisibility,
     updatePlayingVoices
 };

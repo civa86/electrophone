@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import _ from 'lodash';
 
+import * as AppActions from '../actions/AppActions';
+import * as UiActions from '../actions/UiActions';
 import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
 
@@ -27,7 +28,8 @@ const
     nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
     headerHeight = 94,
-    footerHeight = 40;
+    footerHeight = 40,
+    Actions = { ...AppActions, ...UiActions, ...SynthActions };
 
 class App extends Component {
 
@@ -61,18 +63,18 @@ class App extends Component {
             selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
 
         if (selectedNodes.length > 0) {
-            dispatch(SynthActions.removeNodes(selectedNodes));
+            dispatch(Actions.removeNodes(selectedNodes));
         }
     }
 
     getKeyboardMapping () {
-        const { dispatch, synth } = this.props;
+        const { dispatch, ui } = this.props;
 
         return [
             {
                 keys: [16], //SHIFT
-                down: () => dispatch(SynthActions.setLinkMode(true)),
-                up: () => dispatch(SynthActions.setLinkMode(false)),
+                down: () => dispatch(Actions.setLinkMode(true)),
+                up: () => dispatch(Actions.setLinkMode(false)),
                 specialKeys: 'shift'
             },
             {
@@ -82,24 +84,24 @@ class App extends Component {
 
                     let toggleView = '';
 
-                    if (synth.viewPanel === 'graph') {
+                    if (ui.viewPanel === 'graph') {
                         toggleView = 'control';
-                    } else if (synth.viewPanel === 'control') {
+                    } else if (ui.viewPanel === 'control') {
                         toggleView = 'graph';
                     }
-                    dispatch(SynthActions.setViewPanel(toggleView));
+                    dispatch(Actions.setViewPanel(toggleView));
                 },
                 up: () => false
             },
             {
                 keys: [90], //Z
-                down: () => dispatch(SynthActions.octaveDecrease()),
+                down: () => dispatch(Actions.octaveDecrease()),
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [88], //X
-                down: () => dispatch(SynthActions.octaveIncrease()),
+                down: () => dispatch(Actions.octaveIncrease()),
                 up: () => false,
                 specialKeys: false
             },
@@ -128,7 +130,7 @@ class App extends Component {
             { dispatch } = this.props,
             newModule = synthModules.filter(e => e.type === type).pop();
 
-        dispatch(SynthActions.addAudioNode({
+        dispatch(Actions.addAudioNode({
             ...newModule,
             id: nodePrefix + this.getMaxNodeId(),
             isMaster: false,
@@ -166,7 +168,7 @@ class App extends Component {
             { dispatch } = this.props,
             normalizedPropertyValue = this.getNormalizedValue(id, propertyName, propertyValue);
 
-        dispatch(SynthActions.updateNode(id, propertyName, normalizedPropertyValue));
+        dispatch(Actions.updateNode(id, propertyName, normalizedPropertyValue));
     }
 
     getGraphHeight () {
@@ -183,57 +185,57 @@ class App extends Component {
 
     render () {
         const
-            { synth, dispatch } = this.props,
-        //refactor and port into viewActions...
+            { ui, synth, dispatch } = this.props,
+        //TODO refactor and port into viewActions...
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
                     if (node !== WebSynth.CONST.MASTER) {
-                        dispatch(SynthActions.setAudioNodeSelection(node, isSeletected));
+                        dispatch(Actions.setAudioNodeSelection(node, isSeletected));
                     }
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
-                    dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
+                    dispatch(Actions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
                 },
                 linkHandler: (sourceNodeId, destNodeId) => {
-                    dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId));
+                    dispatch(Actions.linkNodes(sourceNodeId, destNodeId));
                 }
             },
             viewActions = {
                 setViewPanel: (viewPanel) =>
-                    dispatch(SynthActions.setViewPanel(viewPanel)),
+                    dispatch(Actions.setViewPanel(viewPanel)),
                 setPianoVisibility: (isPianoVisible) =>
-                    dispatch(SynthActions.setPianoVisibility(isPianoVisible)),
+                    dispatch(Actions.setPianoVisibility(isPianoVisible)),
                 setSpectrumVisibility: (isSpectrumVisible) =>
-                    dispatch(SynthActions.setSpectrumVisibility(isSpectrumVisible)),
+                    dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
                 saveSynth: () =>
-                    localCache.saveState(localCacheKey, synth),
+                    localCache.saveState(localCacheKey, { ui: { ...ui }, synth: { ...synth } }),
                 loadSynth: () =>
-                    dispatch(SynthActions.loadState(
+                    dispatch(Actions.loadState(
                         localCache.loadState(localCacheKey),
-                        _.values(WebSynth.TYPES)
+                        WebSynth.describeModules().map(e => e.type)
                     )),
                 resetSynth: () =>
-                    dispatch(SynthActions.resetState()),
+                    dispatch(Actions.resetState()),
                 toggleLinkMode: () =>
-                    dispatch(SynthActions.toggleLinkMode()),
+                    dispatch(Actions.toggleLinkMode()),
                 addModule: (type) =>
                     this.addModule(type),
                 deleteSelectedNodes: () =>
                     this.removeSelectedNodes(),
                 octaveDecrease: () =>
-                    dispatch(SynthActions.octaveDecrease()),
+                    dispatch(Actions.octaveDecrease()),
                 octaveIncrease: () =>
-                    dispatch(SynthActions.octaveIncrease())
+                    dispatch(Actions.octaveIncrease())
             },
-            footerMarginBottom = (synth.isPianoVisible) ? 8 : 2;
+            footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
 
         return (
             <div id="main-wrapper" className="container-fluid">
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}
                         viewActions={viewActions}
-                        linkMode={synth.graph.linkMode}
-                        visiblePanel={synth.viewPanel}
+                        linkMode={ui.graph.linkMode}
+                        visiblePanel={ui.viewPanel}
                         synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
                         numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
                         libVersion={process.env.LIB_VERSION}
@@ -242,17 +244,18 @@ class App extends Component {
                 <div id="panel-wrapper"
                      style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
                     <GraphPanel
-                        isVisible={synth.viewPanel === 'graph'}
+                        isVisible={ui.viewPanel === 'graph'}
                         synth={synth}
+                        ui={ui}
                         graphWidth={this.getGraphWidth()}
                         graphHeight={this.getGraphHeight()}
                         viewActions={graphActions}
                     />
                     <ControlPanel
-                        isVisible={synth.viewPanel === 'control'}
+                        isVisible={ui.viewPanel === 'control'}
                         modules={synth.modules}
                         updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
-                        destroyModule={(id) => dispatch(SynthActions.removeNode(id))}
+                        destroyModule={(id) => dispatch(Actions.removeNode(id))}
                     />
                 </div>
 
@@ -260,9 +263,9 @@ class App extends Component {
                        audioContext={this.audioContext}
                        footerHeight={footerHeight}
                        headerHeight={headerHeight}
-                       isPianoVisible={synth.isPianoVisible}
-                       isSpectrumVisible={synth.isSpectrumVisible}
-                       updatePlayingVoices={playingVoices => dispatch(SynthActions.updatePlayingVoices(playingVoices))}
+                       isPianoVisible={ui.isPianoVisible}
+                       isSpectrumVisible={ui.isSpectrumVisible}
+                       updatePlayingVoices={playingVoices => dispatch(Actions.updatePlayingVoices(playingVoices))}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
@@ -270,8 +273,8 @@ class App extends Component {
                 <Footer height={footerHeight}
                         viewActions={viewActions}
                         octave={synth.octave}
-                        isPianoVisible={synth.isPianoVisible}
-                        isSpectrumVisible={synth.isSpectrumVisible}
+                        isPianoVisible={ui.isPianoVisible}
+                        isSpectrumVisible={ui.isSpectrumVisible}
                 />
             </div>
         );
@@ -280,7 +283,8 @@ class App extends Component {
 
 function mapStateToProps (state) {
     return {
-        synth: state.synth
+        synth: state.synth,
+        ui: state.ui
     };
 }
 

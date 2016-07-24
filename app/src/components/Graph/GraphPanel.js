@@ -6,6 +6,7 @@ const GraphPanel = (props) => {
     const {
         isVisible,
         synth,
+        ui,
         graphWidth,
         graphHeight,
         viewActions
@@ -14,7 +15,8 @@ const GraphPanel = (props) => {
     return (
         <div id="graph-panel" style={{ display: (isVisible) ? 'block' : 'none' }}>
             <Graph
-                state={synth}
+                synthState={synth}
+                uiState={ui}
                 width={graphWidth}
                 height={graphHeight}
                 actions={viewActions}
