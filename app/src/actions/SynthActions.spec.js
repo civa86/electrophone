@@ -90,7 +90,7 @@ describe('Synth actions', () => {
             type: actionTypes.SET_POSITIONS,
             nodeId: 'ele1',
             nodePos: { x: 100, y: 100 },
-            graphPan: { x: 100, y: 100 }, //TODO why graph??
+            graphPan: { x: 100, y: 100 },
             graphZoom: 3
         };
         expect(actions.setPositions(
