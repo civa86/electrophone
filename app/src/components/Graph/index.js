@@ -13,7 +13,7 @@ class Graph extends Component {
         const
             node = ReactDOM.findDOMNode(this),
             $canvas = document.createElement('canvas'),
-            { actions, state, height, width } = this.props;
+            { actions, synthState, uiState, height, width } = this.props;
 
         node.style.width = width + 'px';
         node.style.height = height + 'px';
@@ -31,17 +31,18 @@ class Graph extends Component {
             node,
             $canvas.getContext('2d'),
             actions,
-            state
+            synthState,
+            uiState
         );
     }
 
     componentWillReceiveProps (newProps) {
-        graph.refreshGraph(newProps.state);
+        graph.refreshGraph(newProps.synthState, newProps.uiState);
     }
 
     render () {
         return (
-            <div style={{ position: 'relative' }}/>
+            <div style={{ position: 'relative' }} className="no-select"/>
         )
     }
 }

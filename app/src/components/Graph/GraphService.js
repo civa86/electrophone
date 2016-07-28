@@ -183,7 +183,7 @@ const GraphService = (graphLibrary, window) => {
         }
     }
 
-    function createGraph (domNode, linkAreaContext, applicationActions, graphState = {}) {
+    function createGraph (domNode, linkAreaContext, applicationActions, synthState = {}, uiState = {}) {
         const config = { ...style, container: domNode };
         if (graphLib && typeof graphLib === 'function') {
             graph = graphLib(config);
@@ -198,7 +198,7 @@ const GraphService = (graphLibrary, window) => {
             graph.zoom(1);
             resize();
 
-            refreshGraph(graphState);
+            refreshGraph(synthState, uiState);
 
         } else {
             throw new Error('Missing Graph Library');
@@ -226,9 +226,9 @@ const GraphService = (graphLibrary, window) => {
         }
     }
 
-    function refreshGraph (graphState) {
-        const newNodes = graphState.modules || [],
-            newGraph = graphState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
+    function refreshGraph (synthState, uiState) {
+        const newNodes = synthState.modules || [],
+            newGraph = uiState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
             newLinkMode = newGraph.linkMode || false;
 
         currentGraph = newGraph;
@@ -256,7 +256,8 @@ const GraphService = (graphLibrary, window) => {
                         position: {
                             x: e.position.x,
                             y: e.position.y
-                        }
+                        },
+                        classes: e.type.toLowerCase()
                     });
                 }
             });
@@ -272,6 +273,7 @@ const GraphService = (graphLibrary, window) => {
                 }
 
                 //SET MASTER CLASS
+                //TODO check to remove that...already set a type class
                 if (e.isMaster && !node.hasClass('isMaster')) {
                     node.addClass('isMaster');
                 }

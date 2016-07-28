@@ -1,7 +1,9 @@
 import * as actionTypes from '../constants/ActionTypes';
 import initState from './initState';
 
-function synth (state = initState, action = {}) {
+const initialState = initState.synth;
+
+function synth (state = initialState, action = {}) {
 
     const cleanNodeLinks = (nodes) => {
         return nodes.map(e => {
@@ -115,48 +117,9 @@ function synth (state = initState, action = {}) {
             };
         }
 
-        case actionTypes.SET_LINK_MODE : {
-            let viewPanel = state.viewPanel;
-            if (state.viewPanel !== 'graph' && action.mode === true) {
-                viewPanel = 'graph';
-            }
-            return {
-                ...state,
-                graph: {
-                    ...state.graph,
-                    linkMode: action.mode
-                },
-                viewPanel: viewPanel
-            };
-            //TODO check if restore previous view....test it in spec...
-        }
-
-        case actionTypes.TOGGLE_LINK_MODE : {
-            let viewPanel = state.viewPanel;
-            if (state.viewPanel !== 'graph' && state.graph.linkMode === false) {
-                viewPanel = 'graph';
-            }
-            return {
-                ...state,
-                graph: {
-                    ...state.graph,
-                    linkMode: !state.graph.linkMode
-                },
-                viewPanel
-            };
-        }
-
         case actionTypes.SET_POSITIONS : {
             return {
                 ...state,
-                graph: {
-                    ...state.graph,
-                    pan: {
-                        x: action.graphPan.x,
-                        y: action.graphPan.y
-                    },
-                    zoom: action.graphZoom
-                },
                 modules: state.modules.map(e => {
                     if (e.id !== action.nodeId) {
                         return e;
@@ -173,45 +136,36 @@ function synth (state = initState, action = {}) {
             };
         }
 
-        case actionTypes.SET_GRAPH_PAN : {
+        case actionTypes.APP_LOAD_STATE : {
+            let loadedState = initialState;
+
+            if (
+                action.state &&
+                action.state.synth &&
+                typeof action.state.synth === 'object' &&
+                action.state.synth.modules &&
+                action.state.synth.modules.constructor === Array &&
+                action.workingTypes &&
+                action.workingTypes.constructor === Array
+            ) {
+                loadedState = { ...action.state.synth };
+                loadedState.modules = cleanNodeLinks(
+                    loadedState.modules.filter(e => action.workingTypes.indexOf(e.type) !== -1)
+                );
+
+            }
+
             return {
                 ...state,
-                graph: {
-                    ...state.graph,
-                    pan: {
-                        x: action.pan.x,
-                        y: action.pan.y
-                    }
-                }
+                ...loadedState,
+                octave: state.octave
             };
         }
 
-        case actionTypes.SET_GRAPH_ZOOM : {
+        case actionTypes.APP_RESET_STATE : {
             return {
-                ...state,
-                graph: {
-                    ...state.graph,
-                    zoom: action.zoom
-                }
-            };
-        }
-
-        case actionTypes.LOAD_STATE : {
-            return {
-                ...state,
-                ...action.state,
-                viewPanel: state.viewPanel,
-                isPianoVisible: state.isPianoVisible,
-                isSpectrumVisible: state.isSpectrumVisible
-            };
-        }
-
-        case actionTypes.RESET_STATE : {
-            return {
-                ...initState,
-                viewPanel: state.viewPanel,
-                isPianoVisible: state.isPianoVisible,
-                isSpectrumVisible: state.isSpectrumVisible
+                ...initialState,
+                octave: state.octave
             };
         }
 
@@ -228,36 +182,6 @@ function synth (state = initState, action = {}) {
             return {
                 ...state,
                 octave
-            };
-        }
-
-        case actionTypes.SET_VIEW_PANEL : {
-            let linkMode = state.graph.linkMode;
-            if (action.panel !== 'graph' && state.graph.linkMode === true) {
-                linkMode = false;
-            }
-            return {
-                ...state,
-                graph: {
-                    ...state.graph,
-                    linkMode
-                },
-                viewPanel: action.panel
-            };
-            //TODO test in spec...change of linkMode
-        }
-
-        case actionTypes.SET_PIANO_VISIBILITY : {
-            return {
-                ...state,
-                isPianoVisible: action.isPianoVisible
-            };
-        }
-
-        case actionTypes.SET_SPECTRUM_VISIBILITY : {
-            return {
-                ...state,
-                isSpectrumVisible: action.isSpectrumVisible
             };
         }
 

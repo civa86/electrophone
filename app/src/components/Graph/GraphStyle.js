@@ -14,18 +14,33 @@ const style = {
         {
             selector: 'node',
             style: {
-                width: 80,
-                height: 80,
+                width: 100,
+                height: 100,
                 'overlay-opacity': 0,
-                'background-color': '#333'
+                'background-color': '#ccc'
             }
         },
         {
-            selector: 'node.isMaster',
+            selector: 'node.master',
             style: {
-                width: 100,
-                height: 100,
+                width: 140,
+                height: 140,
+                shape: 'heptagon',
+                'border-width': 0,
                 'background-color': 'purple'
+            }
+        },
+        {
+            selector: 'node.oscillator',
+            style: {
+                'background-image': '../../../img/osc.svg',
+                'background-fit': 'cover'
+            }
+        },
+        {
+            selector: 'node.filter',
+            style: {
+                shape: 'roundrectangle'
             }
         },
         {
