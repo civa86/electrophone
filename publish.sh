@@ -21,6 +21,9 @@ npm install || { echo 'INSTALL APPLICATION DEPENDENCIES: failed'; exit 1; }
 echo "/***** APPLICATION DISTRIBUTION ****/"
 npm run app::dist || { echo 'APPLICATION DISTRIBUTION: failed'; exit 1; }
 
+echo "/***** PUSH LIBRARY COVERALLS ****/"
+cat ../coverage/lcov.info | ../node_modules/.bin/coveralls
+
 echo "/***** ENTER APPLICATION DIST DIRECTORY ****/"
 cd dist
 
@@ -42,8 +45,6 @@ git push --force --quiet "https://${GH_TOKEN}@$GH_REF" master:gh-pages > /dev/nu
 
 echo "/***** CLEAN TMP REPO ****/"
 rm -rf .git
-
-#TODO integrate coveralls
 
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 echo "PUBLISH GH-PAGES :: END"

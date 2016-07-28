@@ -25,6 +25,7 @@
     "mocha": "2.4.5",
     "chai": "3.5.0",
     "isparta": "4.0.0",
+    "coveralls": "2.11.11",
     "webpack": "1.9.13"
   },
   "scripts": {
@@ -36,5 +37,9 @@
     "lib::dist": "npm test -- --bail && npm run lib::build",
     "lib::docs": "esdoc -c esdoc.json",
     "lib::docs::public": "esdoc -c esdoc.public.json"
+  },
+  "engines" : {
+    "node" : "=0.12.x",
+    "npm": "=2.x.x"
   }
 }
