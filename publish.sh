@@ -21,7 +21,7 @@ npm install || { echo 'INSTALL APPLICATION DEPENDENCIES: failed'; exit 1; }
 echo "/***** APPLICATION DISTRIBUTION ****/"
 npm run app::dist || { echo 'APPLICATION DISTRIBUTION: failed'; exit 1; }
 
-echo "/***** PUSH LIBRARY COVERALLS ****/"
+echo "/***** LIBRARY LCOV >>> COVERALLS ****/"
 cat ../coverage/lcov.info | ../node_modules/.bin/coveralls
 
 echo "/***** ENTER APPLICATION DIST DIRECTORY ****/"
