@@ -1,6 +1,6 @@
 {
   "name": "web-synth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Web Audio Modular Synth",
   "main": "dist/web-synth.js",
   "repository": {
@@ -38,8 +38,8 @@
     "lib::docs": "esdoc -c esdoc.json",
     "lib::docs::public": "esdoc -c esdoc.public.json"
   },
-  "engines" : {
-    "node" : "=0.12.x",
+  "engines": {
+    "node": "=0.12.x",
     "npm": "=2.x.x"
   }
 }
