@@ -256,7 +256,8 @@ const GraphService = (graphLibrary, window) => {
                         position: {
                             x: e.position.x,
                             y: e.position.y
-                        }
+                        },
+                        classes: e.type.toLowerCase()
                     });
                 }
             });
@@ -272,6 +273,7 @@ const GraphService = (graphLibrary, window) => {
                 }
 
                 //SET MASTER CLASS
+                //TODO check to remove that...already set a type class
                 if (e.isMaster && !node.hasClass('isMaster')) {
                     node.addClass('isMaster');
                 }
