@@ -57,14 +57,16 @@ var AudioCtx = window.AudioContext || window.webkitAudioContext;
 var synth = new WebSynth(new AudioCtx(), {
         //Optional parameters
         spectrum: <true|false>, //set true to manage data of playing sound
-        updateSpectrum: <function () {}>, //on receive data callback
+        updateSpectrum: <function (dataArray) {}>, //on receive data callback
         resetSpectrum: <function () {}> //on stop data callback
     });
 ```
 
 ### Prebuilt Modules
 
-Modules hardcoded into the WebSynth Instance. `Master` and `ADSR` to let sound exit from sound card output.
+Every WebSynth instance has 2 hardcoded modules: `Master` and `ADSR`. 
+
+This is the minimal configuration to sound exit from sound card and control its behaviour during time.
 
 ##### Master
 
