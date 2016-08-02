@@ -8,6 +8,7 @@ import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
 
 // Components
+import NoAudioWarning from '../components/NoAudioWarning';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
@@ -43,7 +44,12 @@ class App extends Component {
         } else if (typeof window.webkitAudioContext !== 'undefined') {
             this.audioContext = new window.webkitAudioContext();
         } else {
-            //TODO trigger modal...
+            $(document).ready(() => {
+                $('#no-audio-warning').modal({
+                    backdrop: 'static'
+                });
+                $('#no-audio-warning').modal('show');
+            });
         }
 
         $(document).ready(() => {
@@ -208,6 +214,7 @@ class App extends Component {
 
         return (
             <div id="main-wrapper" className="container-fluid">
+                <NoAudioWarning/>
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}
                         viewActions={viewActions}

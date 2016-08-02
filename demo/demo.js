@@ -102,7 +102,7 @@
             //wave: WebSynth.CONST.WAVE_SAWTOOTH,
             link: 'master'
         });
-        //TODO link to waves...
+        //link to waves...
         //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/
     }
 })();
