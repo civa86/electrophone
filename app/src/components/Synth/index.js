@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-//TODO check...you are importing web-synth source code...try with dist version!
 import WebSynth from 'web-synth';
 import GlobalKeys from '../GlobalKeys';
 import PianoKeyNote from './PianoKeyNote'
 
-//TODO check for spectrum and others init props of synth....pass them from App!!
-//TODO wrtie a synth maanger?
 const noteMapping = {
     65: 'C',    //a
     87: 'C#',   //w
@@ -203,7 +200,6 @@ class Synth extends Component {
         this.resetSpectrum();
 
         if (audioContext) {
-            //TODO write a synth service unit tested!
             this.synth = new WebSynth(audioContext, {
                 spectrum: true,
                 updateSpectrum: (dataArray) => this.updateSpectrum(dataArray),

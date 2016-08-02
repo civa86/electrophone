@@ -18,7 +18,6 @@
         //Build Configuration
         console.log('/***** APPLICATION BUILD ****/');
 
-        //TODO isolate and check for assets...
         ExtractStyle = new ExtractTextPlugin('screen.[hash].css');
         ExtractVendorStyle = new ExtractTextPlugin('vendor.[hash].css');
 

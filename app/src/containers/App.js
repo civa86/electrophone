@@ -57,6 +57,48 @@ class App extends Component {
         });
     }
 
+    getViewActions () {
+        const { dispatch } = this.props;
+        return {
+            onClickHandler: (node, isSeletected) => {
+                if (node !== WebSynth.CONST.MASTER) {
+                    dispatch(Actions.setNodeSelection(node, isSeletected));
+                }
+            },
+            onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
+                dispatch(Actions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
+            },
+            linkHandler: (sourceNodeId, destNodeId) => {
+                dispatch(Actions.linkNodes(sourceNodeId, destNodeId));
+            },
+            setViewPanel: (viewPanel) =>
+                dispatch(Actions.setViewPanel(viewPanel)),
+            setPianoVisibility: (isPianoVisible) =>
+                dispatch(Actions.setPianoVisibility(isPianoVisible)),
+            setSpectrumVisibility: (isSpectrumVisible) =>
+                dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
+            saveSynth: () =>
+                localCache.saveState(localCacheKey, { ui: { ...ui }, synth: { ...synth } }),
+            loadSynth: () =>
+                dispatch(Actions.loadState(
+                    localCache.loadState(localCacheKey),
+                    WebSynth.describeModules().map(e => e.type)
+                )),
+            resetSynth: () =>
+                dispatch(Actions.resetState()),
+            toggleLinkMode: () =>
+                dispatch(Actions.toggleLinkMode()),
+            addModule: (type) =>
+                this.addModule(type),
+            deleteSelectedNodes: () =>
+                this.removeSelectedNodes(),
+            octaveDecrease: () =>
+                dispatch(Actions.octaveDecrease()),
+            octaveIncrease: () =>
+                dispatch(Actions.octaveIncrease())
+        }
+    }
+
     removeSelectedNodes () {
         const
             { synth, dispatch } = this.props,
@@ -139,36 +181,11 @@ class App extends Component {
         }));
     }
 
-    getNormalizedValue (id, propertyName, propertyValue) {
-        //TODO move this method logic in the reducer
-        const module = this.props.synth.modules
-                           .filter(e => e.id === id)
-                           .pop();
-        let result,
-            property,
-            step = 1;
 
-        if (module) {
-            property = module.properties.filter(prop => prop.name === propertyName).pop();
-
-            if (property && property.type === 'number' && property.step) {
-                step = property.step;
-                result =
-                    Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
-            } else {
-                result = propertyValue;
-            }
-        }
-
-        return result;
-    }
 
     updateModule (id, propertyName, propertyValue) {
-        const
-            { dispatch } = this.props,
-            normalizedPropertyValue = this.getNormalizedValue(id, propertyName, propertyValue);
-
-        dispatch(Actions.updateNode(id, propertyName, normalizedPropertyValue));
+        const { dispatch } = this.props;
+        dispatch(Actions.updateNode(id, propertyName, propertyValue));
     }
 
     getGraphHeight () {
@@ -186,47 +203,7 @@ class App extends Component {
     render () {
         const
             { ui, synth, dispatch } = this.props,
-        //TODO refactor and port into viewActions...
-            graphActions = {
-                onClickHandler: (node, isSeletected) => {
-                    if (node !== WebSynth.CONST.MASTER) {
-                        dispatch(Actions.setNodeSelection(node, isSeletected));
-                    }
-                },
-                onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
-                    dispatch(Actions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
-                },
-                linkHandler: (sourceNodeId, destNodeId) => {
-                    dispatch(Actions.linkNodes(sourceNodeId, destNodeId));
-                }
-            },
-            viewActions = {
-                setViewPanel: (viewPanel) =>
-                    dispatch(Actions.setViewPanel(viewPanel)),
-                setPianoVisibility: (isPianoVisible) =>
-                    dispatch(Actions.setPianoVisibility(isPianoVisible)),
-                setSpectrumVisibility: (isSpectrumVisible) =>
-                    dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
-                saveSynth: () =>
-                    localCache.saveState(localCacheKey, { ui: { ...ui }, synth: { ...synth } }),
-                loadSynth: () =>
-                    dispatch(Actions.loadState(
-                        localCache.loadState(localCacheKey),
-                        WebSynth.describeModules().map(e => e.type)
-                    )),
-                resetSynth: () =>
-                    dispatch(Actions.resetState()),
-                toggleLinkMode: () =>
-                    dispatch(Actions.toggleLinkMode()),
-                addModule: (type) =>
-                    this.addModule(type),
-                deleteSelectedNodes: () =>
-                    this.removeSelectedNodes(),
-                octaveDecrease: () =>
-                    dispatch(Actions.octaveDecrease()),
-                octaveIncrease: () =>
-                    dispatch(Actions.octaveIncrease())
-            },
+            viewActions = this.getViewActions(),
             footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
 
         return (
@@ -249,7 +226,7 @@ class App extends Component {
                         ui={ui}
                         graphWidth={this.getGraphWidth()}
                         graphHeight={this.getGraphHeight()}
-                        viewActions={graphActions}
+                        viewActions={viewActions}
                     />
                     <ControlPanel
                         isVisible={ui.viewPanel === 'control'}

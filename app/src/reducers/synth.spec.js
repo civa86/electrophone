@@ -98,6 +98,8 @@ describe('Synth reducer', () => {
         expect(updatedNode.properties.filter(p => p.name === 'attack').pop().value).to.equal(100);
 
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+
+        //TODO THE getNormalizedValue logic
     });
 
     it('should select an audio node', () => {
