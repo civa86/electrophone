@@ -18,7 +18,6 @@ class Graph extends Component {
         node.style.width = width + 'px';
         node.style.height = height + 'px';
 
-        //TODO try to add style rules...
         node.appendChild($canvas);
         $canvas.setAttribute('width', width);
         $canvas.setAttribute('height', height);
