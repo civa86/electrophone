@@ -15,7 +15,7 @@ import GlobalKeys from '../components/GlobalKeys';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
-import GraphPanel from '../components/Graph/GraphPanel';
+import GraphPanel from '../components/Graph';
 
 // Services
 import localCacheService from '../services/localCache';
