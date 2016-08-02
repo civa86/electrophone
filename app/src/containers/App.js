@@ -130,7 +130,7 @@ class App extends Component {
             { dispatch } = this.props,
             newModule = synthModules.filter(e => e.type === type).pop();
 
-        dispatch(Actions.addAudioNode({
+        dispatch(Actions.addNode({
             ...newModule,
             id: nodePrefix + this.getMaxNodeId(),
             isMaster: false,
@@ -190,7 +190,7 @@ class App extends Component {
             graphActions = {
                 onClickHandler: (node, isSeletected) => {
                     if (node !== WebSynth.CONST.MASTER) {
-                        dispatch(Actions.setAudioNodeSelection(node, isSeletected));
+                        dispatch(Actions.setNodeSelection(node, isSeletected));
                     }
                 },
                 onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {

@@ -20,7 +20,7 @@ function synth (state = initialState, action = {}) {
 
     switch (action.type) {
 
-        case actionTypes.ADD_AUDIO_NODE : {
+        case actionTypes.ADD_NODE : {
             return {
                 ...state,
                 modules: [
@@ -101,7 +101,7 @@ function synth (state = initialState, action = {}) {
             };
         }
 
-        case actionTypes.SET_AUDIO_NODE_SELECTION : {
+        case actionTypes.SET_NODE_SELECTION : {
             return {
                 ...state,
                 modules: state.modules.map(e => {

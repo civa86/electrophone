@@ -3,12 +3,12 @@ import synth from './synth';
 import initState from './initState';
 import { loadState, resetState } from '../actions/AppActions';
 import {
-    addAudioNode,
+    addNode,
     removeNode,
     removeNodes,
     linkNodes,
     updateNode,
-    setAudioNodeSelection,
+    setNodeSelection,
     setPositions,
     octaveIncrease,
     octaveDecrease,
@@ -52,7 +52,7 @@ describe('Synth reducer', () => {
     //TODO test add module.
 
     it('should remove an audio node', () => {
-        state = synth(state, addAudioNode({ id: 'ele2' }));
+        state = synth(state, addNode({ id: 'ele2' }));
         expect(state.modules.length).to.equal(2);
         state = synth(state, removeNode('ele2'));
         expect(state.modules.length).to.equal(1);
@@ -61,9 +61,9 @@ describe('Synth reducer', () => {
     });
 
     it('should remove an array of audio node', () => {
-        state = synth(state, addAudioNode({ id: 'ele3' }));
+        state = synth(state, addNode({ id: 'ele3' }));
         expect(state.modules.length).to.equal(2);
-        state = synth(state, addAudioNode({ id: 'ele4' }));
+        state = synth(state, addNode({ id: 'ele4' }));
         expect(state.modules.length).to.equal(3);
         state = synth(state, removeNodes(['ele3', 'ele4']));
         expect(state.modules.length).to.equal(1);
@@ -72,7 +72,7 @@ describe('Synth reducer', () => {
     });
 
     it('should link nodes', () => {
-        state = synth(state, addAudioNode({ id: 'ele2' }));
+        state = synth(state, addNode({ id: 'ele2' }));
         expect(state.modules.length).to.equal(2);
         state = synth(state, linkNodes('master', 'ele2'));
         expect(state.modules[0].id).to.equal('master');
@@ -103,7 +103,7 @@ describe('Synth reducer', () => {
     it('should select an audio node', () => {
         let selectedNode;
 
-        state = synth(state, setAudioNodeSelection('master', true));
+        state = synth(state, setNodeSelection('master', true));
         selectedNode = state.modules.filter(e => e.id === 'master').pop();
         expect(selectedNode.isSelected).to.equal(true);
     });
@@ -130,7 +130,7 @@ describe('Synth reducer', () => {
     });
 
     it('should reset state', () => {
-        state = synth(state, addAudioNode({ id: 'tmpNode' }));
+        state = synth(state, addNode({ id: 'tmpNode' }));
         expect(state.modules.length).to.equal(2);
         state = synth(state, resetState());
         expect(state).to.deep.equal(initialState);

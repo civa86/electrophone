@@ -3,9 +3,9 @@ import * as actions from '../actions/SynthActions';
 import * as actionTypes from '../constants/ActionTypes';
 
 describe('Synth actions', () => {
-    it('should create an action addAudioNode with default position', () => {
+    it('should create an action addNode with default position', () => {
         const expectedAction = {
-            type: actionTypes.ADD_AUDIO_NODE,
+            type: actionTypes.ADD_NODE,
             id: 'ele1',
             isMaster: true,
             posX: 0,
@@ -13,7 +13,7 @@ describe('Synth actions', () => {
             moduleType: 'Type',
             moduleProps: [{ name: 'a', value: 1 }]
         };
-        expect(actions.addAudioNode({
+        expect(actions.addNode({
             id: 'ele1',
             isMaster: true,
             type: 'Type',
@@ -21,9 +21,9 @@ describe('Synth actions', () => {
         })).to.deep.equal(expectedAction);
     });
 
-    it('should create an action addAudioNode with default position', () => {
+    it('should create an action addNode with default position', () => {
         const expectedAction = {
-            type: actionTypes.ADD_AUDIO_NODE,
+            type: actionTypes.ADD_NODE,
             id: 'ele1',
             isMaster: true,
             posX: 300,
@@ -31,7 +31,7 @@ describe('Synth actions', () => {
             moduleType: 'Type',
             moduleProps: [{ name: 'a', value: 1 }]
         };
-        expect(actions.addAudioNode({
+        expect(actions.addNode({
             id: 'ele1',
             isMaster: true,
             posX: 300,
@@ -76,13 +76,13 @@ describe('Synth actions', () => {
         expect(actions.updateNode('ele1', 'a', '1')).to.deep.equal(expectedAction);
     });
 
-    it('should create an action setAudioNodeSelection', () => {
+    it('should create an action setNodeSelection', () => {
         const expectedAction = {
-            type: actionTypes.SET_AUDIO_NODE_SELECTION,
+            type: actionTypes.SET_NODE_SELECTION,
             node: 'ele1',
             isSelected: true
         };
-        expect(actions.setAudioNodeSelection('ele1', true)).to.deep.equal(expectedAction);
+        expect(actions.setNodeSelection('ele1', true)).to.deep.equal(expectedAction);
     });
 
     it('should create an action setPositions', () => {
