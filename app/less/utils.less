@@ -9,10 +9,24 @@
 @c-secondary: #46bcec;
 
 //Transitions
-//TODO do a mixin...
 @transition-piano-time: 0.4s;
 @transition-link: 0.2s;
 
+.transition-duration (@seconds) {
+  -moz-transition-duration: @seconds;
+  -webkit-transition-duration: @seconds;
+  -o-transition-duration: @seconds;
+  transition-duration: @seconds;
+}
+
+.transition-timing-function (@function) {
+  -moz-transition-timing-function: @function;
+  -webkit-transition-timing-function: @function;
+  -o-transition-timing-function: @function;
+  transition-timing-function: @function;
+}
+
+//Helper classes
 .cursor-pointer {
   cursor: pointer !important;
 }

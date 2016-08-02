@@ -12,11 +12,7 @@
     font-size: 22px;
     text-decoration: none;
 
-    //TODO write mixin
-    -moz-transition-duration: @transition-link;
-    -webkit-transition-duration: @transition-link;
-    -o-transition-duration: @transition-link;
-    transition-duration: @transition-link;
+    .transition-duration(@transition-link);
 
     &:hover, &.selected {
       background: @c-dark;
