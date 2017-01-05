@@ -69,6 +69,7 @@
         entry = [
             'webpack-dev-server/client?http://localhost:3000',
             'webpack/hot/only-dev-server',
+            'react-hot-loader/patch',
             './src/index'
         ];
         output = {
@@ -116,7 +117,7 @@
             loaders: [
                 {
                     test: /\.js$/,
-                    loaders: ['react-hot', 'babel'],
+                    loaders: ['babel'],
                     exclude: /node_modules/,
                     include: path.join(__dirname, 'src')
                 },
