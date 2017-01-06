@@ -26,9 +26,8 @@ const style = {
             style: {
                 width: 140,
                 height: 140,
-                shape: 'heptagon',
+                shape: 'hexagon',
                 'border-width': 0,
-                // 'background-color': 'purple',
                 'background-image': '../../../img/master.svg',
                 'background-width': '50%',
                 'background-height': '50%'
@@ -39,8 +38,9 @@ const style = {
             selector: 'node.envelope',
             style: {
                 shape: 'polygon',
-                'shape-polygon-points': '0, -0.7, 0, -0.7, 1, 1, -1, 1',
+                'shape-polygon-points': '0, -0.7, 1, 1, -1, 1',
                 'background-image': '../../../img/envelope.svg',
+                'background-color': '#f6cde6',
                 'background-position-y': '95%',
                 'background-width': '50%',
                 'background-height': '50%'
@@ -50,8 +50,9 @@ const style = {
             selector: 'node.pan',
             style: {
                 shape: 'polygon',
-                'shape-polygon-points': '0, -0.7, 0, -0.7, 1, 1, -1, 1',
+                'shape-polygon-points': '0, -0.7, 1, 1, -1, 1',
                 'background-image': '../../../img/pan.svg',
+                'background-color': '#f6cde6',
                 'background-position-y': '95%',
                 'background-width': '50%',
                 'background-height': '50%'
@@ -62,6 +63,7 @@ const style = {
             selector: 'node.oscillator',
             style: {
                 'background-image': '../../../img/oscillator.svg',
+                'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -70,6 +72,7 @@ const style = {
             selector: 'node.modulator',
             style: {
                 'background-image': '../../../img/modulator.svg',
+                'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -78,6 +81,7 @@ const style = {
             selector: 'node.noise',
             style: {
                 'background-image': '../../../img/noise.svg',
+                'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -88,6 +92,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/filter.svg',
+                'background-color': '#ddf9d9',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -97,6 +102,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/moogfilter.svg',
+                'background-color': '#ddf9d9',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -107,6 +113,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/delay.svg',
+                'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -116,6 +123,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/pingpongdelay.svg',
+                'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -125,6 +133,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/tremolo.svg',
+                'background-color': '#ffe5bc',
                 'background-width': '80%',
                 'background-height': '80%'
             }
@@ -134,6 +143,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/overdrive.svg',
+                'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -143,6 +153,7 @@ const style = {
             style: {
                 shape: 'roundrectangle',
                 'background-image': '../../../img/bitcrusher.svg',
+                'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
             }
@@ -150,26 +161,23 @@ const style = {
         {
             selector: 'node.selected',
             style: {
-                'background-color': 'green'
+                'border-width': 4,
+                'border-color': '#333'
             }
         },
         {
             selector: 'node.link-mode',
             style: {
-                'background-color': 'purple'
-            }
-        },
-        {
-            selector: 'node.link-mode-master',
-            style: {
-                'background-color': 'black'
+                'border-width': 4,
+                'border-color': '#ccc',
+                'border-style': 'double'
             }
         },
         {
             selector: 'edge',
             style: {
-                width: 6,
-                'line-color': '#666',
+                width: 4,
+                'line-color': '#333',
                 'line-style': 'dashed'
             }
         }
