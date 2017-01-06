@@ -31,8 +31,9 @@ function synth (state = initialState, action = {}) {
 
                 if (property && property.type === 'number') {
                     step = property.step || 1;
-                    result =
-                        Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
+                    result = Math.round(
+                            ((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100
+                        ) / 100;
                 } else {
                     result = propertyValue;
                 }

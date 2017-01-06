@@ -64,7 +64,7 @@ class App extends Component {
     }
 
     getViewActions () {
-        const { dispatch } = this.props;
+        const { dispatch, ui, synth } = this.props;
         return {
             onClickHandler: (node, isSeletected) => {
                 if (node !== WebSynth.CONST.MASTER) {
@@ -186,8 +186,6 @@ class App extends Component {
             posY: Math.random() * (this.getGraphHeight())
         }));
     }
-
-
 
     updateModule (id, propertyName, propertyValue) {
         const { dispatch } = this.props;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<line fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="419.035" y1="120.181" x2="279.6" y2="322.776"/>
+<polygon points="333.41,320.921 255.25,358.219 262.028,271.882 "/>
+<line fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="419.035" y1="395.219" x2="280.1" y2="193.623"/>
+<polygon points="333.91,195.479 255.75,158.181 262.528,244.518 "/>
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="512" height="512"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	
+		<path clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M249,115.667c107.964,0,214,0,214,0"/>
+	
+		<path clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M23,115.667c0,0,14.404,0,37.999,0"/>
+	<path clip-path="url(#SVGID_2_)" fill="none" d="M69,115c0,48.325,39.175,87.5,87.5,87.5S244,163.325,244,115
+		s-39.175-87.5-87.5-87.5S69,66.675,69,115"/>
+	
+		<circle clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="156.5" cy="115" r="87.5"/>
+	
+		<line clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="155.5" y1="76" x2="155.5" y2="151"/>
+	
+		<line clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="193" y1="113.5" x2="118" y2="113.5"/>
+	<polygon clip-path="url(#SVGID_2_)" points="431,72.365 506,115.667 431,158.968 	"/>
+	
+		<path clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M253,400.667c106.568,0,210,0,210,0"/>
+	
+		<path clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M23,400.667c0,0,15.63,0,40.999,0"/>
+	<path clip-path="url(#SVGID_2_)" fill="none" d="M69,400c0,48.325,39.175,87.5,87.5,87.5S244,448.325,244,400
+		s-39.175-87.5-87.5-87.5S69,351.675,69,400"/>
+	
+		<circle clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="156.5" cy="400" r="87.5"/>
+	
+		<line clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="155.5" y1="361" x2="155.5" y2="436"/>
+	
+		<line clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="35" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="193" y1="398.5" x2="118" y2="398.5"/>
+	<polygon clip-path="url(#SVGID_2_)" points="431,357.365 506,400.666 431,443.969 	"/>
+</g>
+</svg>
