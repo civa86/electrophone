@@ -3,7 +3,7 @@ script: bash ./publish.sh
 language: node_js
 
 node_js:
-  - "0.12"
+  - "6.1.0"
 
 cache:
   directories:
