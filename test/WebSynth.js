@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import WebSynth from './WebSynth'
+import WebSynth from '../lib/WebSynth'
 
 /** @test {WebSynth} */
 describe('WebSynth', () => {

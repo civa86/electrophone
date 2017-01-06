@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Synth from './Synth'
+import Synth from '../../lib/src/Synth'
 
 /** @test {Synth} */
 describe('Synth', () => {

@@ -30,9 +30,9 @@
     "webpack": "1.9.13"
   },
   "scripts": {
-    "test": "mocha ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test": "mocha ./test/*.js ./test/**/*.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test::watch": "npm test -- --watch",
-    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --excludes *.spec.js --report lcovonly --report html _mocha -- ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --recursive --colors",
+    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --report lcovonly --report html _mocha -- ./test/*.js ./test/**/*.js --reporter spec --recursive --colors",
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "lib::dist": "npm test -- --bail && npm run lib::build",
