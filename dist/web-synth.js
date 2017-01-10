@@ -48,7 +48,7 @@
 	
 	exports.__esModule = true;
 	
-	__webpack_require__(38);
+	__webpack_require__(41);
 	
 	var _WebSynth = __webpack_require__(7);
 	
@@ -211,7 +211,7 @@
 	
 	exports.__esModule = true;
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _lodash = __webpack_require__(37);
 	
@@ -844,7 +844,7 @@
 	
 	
 	    WebSynth.getModuleProperties = function getModuleProperties() {
-	        var moduleType = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	        var moduleType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 	
 	        var moduleProps = Props[moduleType + 'Props'] || {};
 	
@@ -1011,7 +1011,7 @@
 	
 	
 	    Synth.prototype.module = function module(type, label) {
-	        var props = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	        var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	
 	        if (!type || type.constructor !== String) {
 	            throw new Error('Synth Module :: missing type');
@@ -1038,7 +1038,7 @@
 	
 	
 	    Synth.prototype.addModule = function addModule(type, label) {
-	        var props = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	        var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	
 	        if (this.modulesConfig[label]) {
 	            throw new Error('Module ' + label + ' already created. Use updateModule method instead.');
@@ -1060,7 +1060,7 @@
 	    Synth.prototype.updateModule = function updateModule(label) {
 	        var _this = this;
 	
-	        var props = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	
 	        if (!this.modulesConfig[label]) {
 	            throw new Error('Module ' + label + ' not found. Use addModule method instead.');
@@ -16910,23 +16910,6 @@
 
 /***/ },
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-	
-	var AudioContext = global.AudioContext || global.webkitAudioContext;
-	var StereoPannerNode = __webpack_require__(41);
-	
-	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
-	  AudioContext.prototype.createStereoPanner = function() {
-	    return new StereoPannerNode(this);
-	  };
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 39 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -16949,12 +16932,12 @@
 
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var curve = __webpack_require__(39);
+	var curve = __webpack_require__(38);
 	
 	/**
 	 *  StereoPannerImpl
@@ -17053,12 +17036,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var StereoPannerImpl = __webpack_require__(40);
+	var StereoPannerImpl = __webpack_require__(39);
 	
 	function StereoPanner(audioContext) {
 	  var impl = new StereoPannerImpl(audioContext);
@@ -17085,6 +17068,23 @@
 	
 	module.exports = StereoPanner;
 
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	
+	var AudioContext = global.AudioContext || global.webkitAudioContext;
+	var StereoPannerNode = __webpack_require__(40);
+	
+	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
+	  AudioContext.prototype.createStereoPanner = function() {
+	    return new StereoPannerNode(this);
+	  };
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 42 */

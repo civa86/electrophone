@@ -17,21 +17,23 @@
     "babel-preset-stage-0": "6.3.13",
     "eslint": "1.10.3",
     "eslint-loader": "1.2.1",
-    "esdoc": "0.4.6",
+    "esdoc": "0.4.7",
     "esdoc-es7-plugin": "0.0.3",
     "lodash": "4.0.1",
     "stereo-panner-shim": "0.1.4",
     "tunajs": "0.4.2",
     "mocha": "2.4.5",
+    "node-libs-browser": "0.5.3",
     "chai": "3.5.0",
     "isparta": "4.0.0",
     "coveralls": "2.11.11",
     "webpack": "1.9.13"
   },
   "scripts": {
-    "test": "mocha ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test": "mocha ./test/*.js ./test/**/*.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test::watch": "npm test -- --watch",
-    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --excludes *.spec.js --report lcovonly --report html _mocha -- ./lib/*.spec.js ./lib/**/*.spec.js --reporter spec --recursive --colors",
+    "lib::readme::preview": "grip -b",
+    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --report lcovonly --report html _mocha -- ./test/*.js ./test/**/*.js --reporter spec --recursive --colors",
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
     "lib::dist": "npm test -- --bail && npm run lib::build",
@@ -39,7 +41,7 @@
     "lib::docs::public": "esdoc -c esdoc.public.json"
   },
   "engines": {
-    "node": "=0.12.x",
-    "npm": "=2.x.x"
+    "node": "=6.1.0",
+    "npm": "=3.8.6"
   }
 }

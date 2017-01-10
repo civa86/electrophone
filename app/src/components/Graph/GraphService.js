@@ -42,9 +42,9 @@ const GraphService = (graphLibrary, window) => {
     }
 
     function drawLink (targetX, targetY) {
-        linkAreaCtx.fillStyle = '#000';
-        linkAreaCtx.strokeStyle = '#000';
-        linkAreaCtx.lineWidth = 6;
+        linkAreaCtx.fillStyle = '#666';
+        linkAreaCtx.strokeStyle = '#666';
+        linkAreaCtx.lineWidth = 4;
         linkAreaCtx.setLineDash([6, 5]);
         linkAreaCtx.beginPath();
         linkAreaCtx.moveTo(startX, startY);
@@ -194,13 +194,8 @@ const GraphService = (graphLibrary, window) => {
             graph.autoungrabify(mode);
             graph.nodes().forEach(function (e) {
                 if (mode) {
-                    if (e.data('isMaster') === true) {
-                        e.addClass('link-mode-master');
-                    } else {
-                        e.addClass('link-mode');
-                    }
+                    e.addClass('link-mode');
                 } else {
-                    e.removeClass('link-mode-master');
                     e.removeClass('link-mode');
                 }
             });

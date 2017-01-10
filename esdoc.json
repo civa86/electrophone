@@ -3,7 +3,7 @@
   "destination": "./docs",
   "test": {
     "type": "mocha",
-    "source": "./lib"
+    "source": "./test"
   },
   "title": "WebSynth Full Development Documentation",
   "plugins": [
