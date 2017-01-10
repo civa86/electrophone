@@ -32,6 +32,7 @@
   "scripts": {
     "test": "mocha ./test/*.js ./test/**/*.js --reporter spec --compilers js:babel-core/register --recursive --colors",
     "test::watch": "npm test -- --watch",
+    "lib::readme::preview": "grip -b",
     "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --report lcovonly --report html _mocha -- ./test/*.js ./test/**/*.js --reporter spec --recursive --colors",
     "lib::dev": "webpack --config webpack.config.js --colors",
     "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
@@ -40,7 +41,7 @@
     "lib::docs::public": "esdoc -c esdoc.public.json"
   },
   "engines": {
-    "node": "=0.12.x",
-    "npm": "=2.x.x"
+    "node": "=6.1.0",
+    "npm": "=3.8.6"
   }
 }

@@ -26,8 +26,12 @@ class ControlPanel extends Component {
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
                                 <div className="row module-title">
-                                    <div className="col-xs-12" style={{ padding: '10px' }}>
+                                    <div className="col-xs-2"></div>
+                                    <div className="col-xs-8">
                                         {module.type + ' -- ' + module.id}
+                                    </div>
+                                    <div className="col-xs-2" style={{ padding: '10px' }}>
+
                                         {
                                             !module.isMaster &&
                                             <div className="ion-trash-b pull-right"
