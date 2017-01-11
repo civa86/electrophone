@@ -33,8 +33,10 @@ Code Documentation of the WebSynth class provided by the Library.
 
 For a full development documentation:
 
-- Clone Repository
+- Download / Clone the Repository
+- Enter in the web-synth project folder
 - Run `lib::docs` npm script
+- Run docs/index.html in a browser
 
 ## Usage
 
@@ -205,5 +207,8 @@ It can be linked to any Sound Module or to any module that has the level propert
 
 #### Pan
 
+A module that routes sound between left and right channel.
+
+It can be placed between a Sound Module and its destination to setup stereo routing.
 
 ## Effect Modules
