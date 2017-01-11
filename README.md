@@ -150,7 +150,7 @@ Envelope on the master gain. Describes final sound behavior during time.
 
 Sound Modules can generate sounds and play frequencies.
 
-They can be linked to any Effect or directly to Master
+They can be linked to any Effect Module or directly to Master
 
 #### Oscillator
 
@@ -161,16 +161,18 @@ Sound Wave Generator.
 | level    | Integer  | 0 - 100                                   | 100     |
 | detune   | Integer  | -1200 - 1200                              | 0       |
 | wave     | String   | sine, square, sawtooth, triangle, custom  | sine    |
+| link     | String   | master, adsr, <any module label>          | -       |
 
 #### Noise
 
 Noise Generator.
 
-| Property | Type     | Values              | Default |
-| -------- | -------- | ------------------- | ------- |
-| level    | Integer  | 0 - 100             | 100     |
-| detune   | Integer  | -1200 - 1200        | 0       |
-| color    | String   | white, brown, pink  | white   |
+| Property | Type     | Values                           | Default |
+| -------- | -------- | -------------------------------- | ------- |
+| level    | Integer  | 0 - 100                          | 100     |
+| detune   | Integer  | -1200 - 1200                     | 0       |
+| color    | String   | white, brown, pink               | white   |
+| link     | String   | master, adsr, <any module label> | -       |
 
 ## Control Modules
 
@@ -188,6 +190,7 @@ It can be linked to any Sound Module.
 | freq     | Integer  | 1 - 100                                   | 5         |
 | wave     | String   | sine, square, sawtooth, triangle, custom  | sine      |
 | target   | String   | frequency, detune                         | frequency |
+| link     | String   | master, adsr, <any module label>          | -         |
 
 #### Envelope
 
@@ -195,14 +198,15 @@ A module that can describe property changes during time.
 
 It can be linked to any Sound Module or to any module that has the level property (gain target).
 
-| Property | Type     | Values                  | Default |
-| -------- | -------- | -------                 | ------- |
-| level    | Integer  | 0 - 100                 | 100     |
-| attack   | Integer  | 0 - 100                 | 0       |
-| decay    | Integer  | 0 - 100                 | 1       |
-| sustain  | Integer  | 0 - 100                 | 100     |
-| release  | Integer  | 0 - 100                 | 5       |
-| target   | String   | frequency, detune, gain | gain    |
+| Property | Type     | Values                           | Default |
+| -------- | -------- | -------------------------------- | ------- |
+| level    | Integer  | 0 - 100                          | 100     |
+| attack   | Integer  | 0 - 100                          | 0       |
+| decay    | Integer  | 0 - 100                          | 1       |
+| sustain  | Integer  | 0 - 100                          | 100     |
+| release  | Integer  | 0 - 100                          | 5       |
+| target   | String   | frequency, detune, gain          | gain    |
+| link     | String   | master, adsr, <any module label> | -       |
 
 
 #### Pan
@@ -211,4 +215,44 @@ A module that routes sound between left and right channel.
 
 It can be placed between a Sound Module and its destination to setup stereo routing.
 
+| Property | Type     | Values                           | Default |
+| -------- | -------- | -------------------------------- | ------- |
+| level    | Integer  | 0 - 100                          | 100     |
+| value    | Float    | -1 - 1                           | 0       |
+| link     | String   | master, adsr, <any module label> | -       |
+
 ## Effect Modules
+
+Effect Modules can change the nature of a sound.
+
+They can be linked to other Effect Modules to create an effect chain and finally to Master.
+
+#### Filter
+
+A module that filters frequencies with different algorithms.
+
+| Property   | Type     | Values                                                                    | Default |
+| ---------- | -------- | ------------------------------------------------------------------------- | ------- |
+| level      | Integer  | 0 - 100                                                                   | 100     |
+| freq       | Integer  | 20 - 20000                                                                | 440     |
+| q          | Integer  | 0 - 100                                                                   | 10      |
+| filterGain | Integer  | -40 - 40                                                                  | 0       |
+| filterType | String   | lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass | lowpass |
+| bypass     | Flag     | 0 / 1                                                                     | 0       |
+| link       | String   | master, adsr, <any module label>                                          | -       |
+
+#### Delay
+
+A module that plays a sound back after a period of time.
+
+| Property  | Type     | Values                           | Default |
+| --------- | -------- | -------------------------------- | ------- |
+| level     | Integer  | 0 - 100                          | 100     |
+| dry       | Flag     | 0 / 1                            | 0       |
+| wet       | Flag     | 0 / 1                            | 0       |
+| feedback  | Flag     | 0 / 1                            | 0       |
+| cutoff    | Integer  | 20 - 20000                       | 440     |
+| delayTime | Integer  | 1 - 10000                        | 1       |
+| bypass    | Flag     | 0 / 1                            | 0       |
+| link      | String   | master, adsr, <any module label> | -       |
+
