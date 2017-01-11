@@ -73,6 +73,12 @@ var synth = new WebSynth(new AudioCtx(), {
     });
 ```
 
+#### Create Modules
+
+#### Update Modules
+
+#### Update Prebuilt Modules
+
 #### Full Example: Two Voices Synth
 
 ```javascript
@@ -117,6 +123,56 @@ synth.play(440);
 // Stop frequency 440 after 1 second
 setTimeout(() => synth.stop(440), 1000);
 ```
+
+## Constants
+
+The library expose two set of constants: `CONST` and `TYPES`
+
+#### CONST
+
+The set of string values to setup module properties.
+
+| CONST                   | Description                          |
+| ----------------------- | ------------------------------------ |
+| MASTER                  | the Master module label              |
+| ADSR                    | the ADSR module label                |
+| NOISE_WHITE             | the white Noise color value          |
+| NOISE_PINK              | the pink Noise color value           |
+| NOISE_BROWN             | the brown Noise color value          |
+| WAVE_SINE               | the sine Wave type value             |
+| WAVE_SQUARE             | the square Wave type value           |
+| WAVE_SAWTOOTH           | the sawtooth Wave type value         |
+| WAVE_TRIANLGE           | the triangle Wave type value         |
+| WAVE_CUSTOM             | the custom Wave type value           |
+| FILTER_LOWPASS          | the lowpass Filter type value        |
+| FILTER_HIGHPASS         | the highpass Filter type value       |
+| FILTER_BANDPASS         | the bandpass Filter type value       |
+| FILTER_LOWSHELF         | the lowshelf Filter type value       |
+| FILTER_HIGHSHELF        | the highshelf Filter type value      |
+| FILTER_PEAKING          | the peaking Filter type value        |
+| FILTER_NOTCH            | the notch Filter type value          |
+| FILTER_ALLPASS          | the allpass Filter type value        |
+| MODULATOR_TARGET_FREQ   | the frequency Modulator target value |
+| MODULATOR_TARGET_DETUNE | the detune Modulator target value    |
+| ENVELOPE_TARGET_GAIN    | the gain Envelope target value       |
+| ENVELOPE_TARGET_FREQ    | the frequency Envelope target value  |
+| ENVELOPE_TARGET_DETUNE  | the detune Envelope target value     |
+
+#### TYPES
+
+The set of string values to create modules.
+
+| TYPES      | Usage                                             |
+| ---------- | ------------------------------------------------- |
+| OSCILLATOR | synth.create('id', WebSynth.TYPES.OSCILLATOR, {}) |
+| MODULATOR  | synth.create('id', WebSynth.TYPES.MODULATOR, {})  |
+| FILTER     | synth.create('id', WebSynth.TYPES.FILTER, {})     |
+| NOISE      | synth.create('id', WebSynth.TYPES.NOISE, {})      |
+| REVERB     | synth.create('id', WebSynth.TYPES.REVERB, {})     |
+| CHORUS     | synth.create('id', WebSynth.TYPES.CHORUS, {})     |
+| DELAY      | synth.create('id', WebSynth.TYPES.DELAY, {})      |
+| ENVELOPE   | synth.create('id', WebSynth.TYPES.ENVELOPE, {})   |
+...
 
 
 ## Prebuilt Modules
@@ -256,3 +312,15 @@ A module that plays a sound back after a period of time.
 | bypass    | Flag     | 0 / 1                            | 0       |
 | link      | String   | master, adsr, <any module label> | -       |
 
+#### PingPong Delay
+
+| Property  | Type     | Values                           | Default |
+| --------- | -------- | -------------------------------- | ------- |
+| level     | Integer  | 0 - 100                          | 100     |
+| dry       | Flag     | 0 / 1                            | 0       |
+| wet       | Flag     | 0 / 1                            | 0       |
+| feedback  | Flag     | 0 / 1                            | 0       |
+| cutoff    | Integer  | 20 - 20000                       | 440     |
+| delayTime | Integer  | 1 - 10000                        | 1       |
+| bypass    | Flag     | 0 / 1                            | 0       |
+| link      | String   | master, adsr, <any module label> | -       |
