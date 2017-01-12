@@ -33,7 +33,7 @@ const style = {
                 'background-height': '50%'
             }
         },
-        //Sound Shapers
+        //Control Modules
         {
             selector: 'node.envelope',
             style: {
@@ -50,28 +50,32 @@ const style = {
             selector: 'node.pan',
             style: {
                 shape: 'polygon',
-                'shape-polygon-points': '0, -0.7, 1, 1, -1, 1',
+                'shape-polygon-points': '-1, -1, 1, -1, 0, 0.7',
                 'background-image': '../../../img/pan.svg',
                 'background-color': '#f6cde6',
-                'background-position-y': '95%',
+                'background-position-y': '5%',
                 'background-width': '50%',
                 'background-height': '50%'
-            }
-        },
-        //SoundSources
-        {
-            selector: 'node.oscillator',
-            style: {
-                'background-image': '../../../img/oscillator.svg',
-                'background-color': '#add9fe',
-                'background-width': '75%',
-                'background-height': '75%'
             }
         },
         {
             selector: 'node.modulator',
             style: {
+                shape: 'polygon',
+                'shape-polygon-points': '-1, -1, 0.7, 0, -1, 1',
                 'background-image': '../../../img/modulator.svg',
+                'background-color': '#f6cde6',
+                'background-position-x': '20%',
+                'background-position-y': '50%',
+                'background-width': '50%',
+                'background-height': '50%'
+            }
+        },
+        //Sound Modules
+        {
+            selector: 'node.oscillator',
+            style: {
+                'background-image': '../../../img/oscillator.svg',
                 'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'

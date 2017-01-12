@@ -26,7 +26,9 @@ class ControlPanel extends Component {
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
                                 <div className="row module-title">
-                                    <div className="col-xs-2"></div>
+                                    <div className="col-xs-2">
+                                        <div className={'module-elem ' + module.type.toLowerCase()}/>
+                                    </div>
                                     <div className="col-xs-8">
                                         {module.type + ' -- ' + module.id}
                                     </div>
