@@ -375,7 +375,9 @@ A module that plays a sound back after a period of time.
 | bypass    | Flag     | 0 / 1                            | 0       |
 | link      | String   | master, adsr, "any module label" | -       |
 
-#### PingPong Delay
+#### PingPongDelay
+
+A different kind of Delay.
 
 | Property  | Type     | Values                           | Default |
 | --------- | -------- | -------------------------------- | ------- |
@@ -387,3 +389,54 @@ A module that plays a sound back after a period of time.
 | delayTime | Integer  | 1 - 10000                        | 1       |
 | bypass    | Flag     | 0 / 1                            | 0       |
 | link      | String   | master, adsr, "any module label" | -       |
+
+#### Tremolo
+
+A trembling sound effect.
+
+| Property    | Type     | Values                           | Default |
+| ----------- | -------- | -------------------------------- | ------- |
+| level       | Integer  | 0 - 100                          | 100     |
+| intensity   | Float    | 0 - 1                            | 0       |
+| rate        | Integer  | 0 - 8                            | 0       |
+| stereoPhase | Integer  | 0 - 180                          | 0       |
+| bypass      | Flag     | 0 / 1                            | 0       |
+| link        | String   | master, adsr, "any module label" | -       |
+
+#### Overdrive
+
+A module that alters the sound increasing its gain with distortion. 
+
+| Property       | Type     | Values                           | Default |
+| -------------- | -------- | -------------------------------- | ------- |
+| level          | Integer  | 0 - 100                          | 100     |
+| outputGain     | Float    | 0 - 1                            | 0.5     |
+| drive          | Float    | 0 - 1                            | 0       |
+| curveAmount    | Float    | 0 - 1                            | 1       |
+| algorithmIndex | Integer  | 1 - 5                            | 0       |
+| bypass         | Flag     | 0 / 1                            | 0       |
+| link           | String   | master, adsr, "any module label" | -       |
+
+#### Bitcrusher
+
+A module that produces a distortion by the reduction of the resolution or bandwidth of digital audio data. 
+
+| Property   | Type     | Values                           | Default |
+| ---------- | -------- | -------------------------------- | ------- |
+| level      | Integer  | 0 - 100                          | 100     |
+| bits       | Integer  | 1 - 16                           | 1       |
+| normfreq   | Float    | 0 - 1                            | 0.5     |
+| bufferSize | Integer  | 256 - 16384                      | 4096    |
+| link       | String   | master, adsr, "any module label" | -       |
+
+#### Moogfilter
+
+A Moog inspired filter 
+
+| Property   | Type     | Values                           | Default |
+| ---------- | -------- | -------------------------------- | ------- |
+| level      | Integer  | 0 - 100                          | 100     |
+| cutoff     | Float    | 0 - 1                            | 0       |
+| resonance  | Integer  | 0 - 4                            | 0       |
+| bufferSize | Integer  | 256 - 16384                      | 4096    |
+| link       | String   | master, adsr, "any module label" | -       |
