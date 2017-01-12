@@ -61,23 +61,61 @@ import WebSynth from 'web-synth'
 #### Create an instance
 
 ```javascript
-//Get the browser AudioContext
+// Get the browser AudioContext
 var AudioCtx = window.AudioContext || window.webkitAudioContext;
 
-//CREATE A WEBSYNTH INSTANCE
+// CREATE A WEBSYNTH INSTANCE
 var synth = new WebSynth(new AudioCtx(), {
         //Optional parameters
-        spectrum: <true|false>,            //set true to manage data of playing sound
-        updateSpectrum: <dataArray => {}>, //on receive data callback
-        resetSpectrum: <() => {}>          //on stop data callback
+        spectrum: <true|false>,            // set true to manage data of playing sound
+        updateSpectrum: <dataArray => {}>, // on receive data callback
+        resetSpectrum: <() => {}>          // on stop data callback
     });
 ```
 
 #### Create Modules
 
+```javascript
+synth.create("moduleLabel", "moduleType", { ...properties });
+```
+
 #### Update Modules
 
+```javascript
+synth.update("moduleLabel", { ...properties });
+```
+
+#### Destroy Modules
+
+```javascript
+synth.destroy("moduleLabel");
+```
+
+#### Link modules
+
+```javascript
+synth.link("sourceModuleLabel", "destinationModuleLabel");
+```
+
 #### Update Prebuilt Modules
+
+```javascript
+// Master module
+synth.master({ ...properties });
+
+// ADSR module
+synth.adsr({ ...properties });
+```
+
+#### Play and Stop sound
+
+```javascript
+// Play a frequency (20 - 20000)
+synth.play(440);
+
+// Stop a frequency (20 - 20000)
+synth.stop(440);
+```
 
 #### Full Example: Two Voices Synth
 
@@ -124,6 +162,29 @@ synth.play(440);
 setTimeout(() => synth.stop(440), 1000);
 ```
 
+#### Get All Created Modules
+
+```javascript
+synth.getModules();
+```
+
+#### Static Methods
+
+```javascript
+// Get module properties by type.
+WebSynth.getModuleProperties("moduleType");
+
+// Describe all WebSynth modules with properties configuration.
+WebSynth.describeModules("moduleType");
+
+// Get frequency float value calculated from given note and octave.
+WebSynth.getFrequency("A", 4);
+
+// Get complete notes list.
+WebSynth.getNotes();
+```
+
+
 ## Constants
 
 The library expose two set of constants: `CONST` and `TYPES`
@@ -162,18 +223,20 @@ The set of string values to setup module properties.
 
 The set of string values to create modules.
 
-| TYPES      | Usage                                             |
-| ---------- | ------------------------------------------------- |
-| OSCILLATOR | synth.create('id', WebSynth.TYPES.OSCILLATOR, {}) |
-| MODULATOR  | synth.create('id', WebSynth.TYPES.MODULATOR, {})  |
-| FILTER     | synth.create('id', WebSynth.TYPES.FILTER, {})     |
-| NOISE      | synth.create('id', WebSynth.TYPES.NOISE, {})      |
-| REVERB     | synth.create('id', WebSynth.TYPES.REVERB, {})     |
-| CHORUS     | synth.create('id', WebSynth.TYPES.CHORUS, {})     |
-| DELAY      | synth.create('id', WebSynth.TYPES.DELAY, {})      |
-| ENVELOPE   | synth.create('id', WebSynth.TYPES.ENVELOPE, {})   |
-...
-
+| TYPES         | Usage                                                |
+| ------------- | ---------------------------------------------------- |
+| OSCILLATOR    | synth.create('id', WebSynth.TYPES.OSCILLATOR, {})    |
+| NOISE         | synth.create('id', WebSynth.TYPES.NOISE, {})         |
+| MODULATOR     | synth.create('id', WebSynth.TYPES.MODULATOR, {})     |
+| ENVELOPE      | synth.create('id', WebSynth.TYPES.ENVELOPE, {})      |
+| PAN           | synth.create('id', WebSynth.TYPES.PAN, {})           |
+| FILTER        | synth.create('id', WebSynth.TYPES.FILTER, {})        |
+| DELAY         | synth.create('id', WebSynth.TYPES.DELAY, {})         |
+| PINGPONGDELAY | synth.create('id', WebSynth.TYPES.PINGPONGDELAY, {}) |
+| TREMOLO       | synth.create('id', WebSynth.TYPES.TREMOLO, {})       |
+| OVERDRIVE     | synth.create('id', WebSynth.TYPES.OVERDRIVE, {})     |
+| BITCRUSHER    | synth.create('id', WebSynth.TYPES.BITCRUSHER, {})    |
+| MOOGFILTER    | synth.create('id', WebSynth.TYPES.MOOGFILTER, {})    |
 
 ## Prebuilt Modules
 
@@ -217,7 +280,7 @@ Sound Wave Generator.
 | level    | Integer  | 0 - 100                                   | 100     |
 | detune   | Integer  | -1200 - 1200                              | 0       |
 | wave     | String   | sine, square, sawtooth, triangle, custom  | sine    |
-| link     | String   | master, adsr, <any module label>          | -       |
+| link     | String   | master, adsr, "any module label"          | -       |
 
 #### Noise
 
@@ -228,7 +291,7 @@ Noise Generator.
 | level    | Integer  | 0 - 100                          | 100     |
 | detune   | Integer  | -1200 - 1200                     | 0       |
 | color    | String   | white, brown, pink               | white   |
-| link     | String   | master, adsr, <any module label> | -       |
+| link     | String   | master, adsr, "any module label" | -       |
 
 ## Control Modules
 
@@ -246,7 +309,7 @@ It can be linked to any Sound Module.
 | freq     | Integer  | 1 - 100                                   | 5         |
 | wave     | String   | sine, square, sawtooth, triangle, custom  | sine      |
 | target   | String   | frequency, detune                         | frequency |
-| link     | String   | master, adsr, <any module label>          | -         |
+| link     | String   | master, adsr, "any module label"          | -         |
 
 #### Envelope
 
@@ -262,7 +325,7 @@ It can be linked to any Sound Module or to any module that has the level propert
 | sustain  | Integer  | 0 - 100                          | 100     |
 | release  | Integer  | 0 - 100                          | 5       |
 | target   | String   | frequency, detune, gain          | gain    |
-| link     | String   | master, adsr, <any module label> | -       |
+| link     | String   | master, adsr, "any module label" | -       |
 
 
 #### Pan
@@ -275,7 +338,7 @@ It can be placed between a Sound Module and its destination to setup stereo rout
 | -------- | -------- | -------------------------------- | ------- |
 | level    | Integer  | 0 - 100                          | 100     |
 | value    | Float    | -1 - 1                           | 0       |
-| link     | String   | master, adsr, <any module label> | -       |
+| link     | String   | master, adsr, "any module label" | -       |
 
 ## Effect Modules
 
@@ -295,7 +358,7 @@ A module that filters frequencies with different algorithms.
 | filterGain | Integer  | -40 - 40                                                                  | 0       |
 | filterType | String   | lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass | lowpass |
 | bypass     | Flag     | 0 / 1                                                                     | 0       |
-| link       | String   | master, adsr, <any module label>                                          | -       |
+| link       | String   | master, adsr, "any module label"                                          | -       |
 
 #### Delay
 
@@ -310,7 +373,7 @@ A module that plays a sound back after a period of time.
 | cutoff    | Integer  | 20 - 20000                       | 440     |
 | delayTime | Integer  | 1 - 10000                        | 1       |
 | bypass    | Flag     | 0 / 1                            | 0       |
-| link      | String   | master, adsr, <any module label> | -       |
+| link      | String   | master, adsr, "any module label" | -       |
 
 #### PingPong Delay
 
@@ -323,4 +386,4 @@ A module that plays a sound back after a period of time.
 | cutoff    | Integer  | 20 - 20000                       | 440     |
 | delayTime | Integer  | 1 - 10000                        | 1       |
 | bypass    | Flag     | 0 / 1                            | 0       |
-| link      | String   | master, adsr, <any module label> | -       |
+| link      | String   | master, adsr, "any module label" | -       |
