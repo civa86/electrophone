@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 import Knob from './Knob';
 import Select from './Select'
@@ -14,6 +15,17 @@ class ControlPanel extends Component {
         }
     }
 
+    componentDidMount () {
+        $('.collapse').on('hidden.bs.collapse', function () {
+            const id = $(this).attr('id').replace('collapse', 'title');
+            $('#' + id).addClass('collapsed');
+        });
+        $('.collapse').on('show.bs.collapse', function () {
+            const id = $(this).attr('id').replace('collapse', 'title');
+            $('#' + id).removeClass('collapsed');
+        });
+    }
+
     render () {
         const
             { modules, destroyModule } = this.props,
@@ -25,7 +37,7 @@ class ControlPanel extends Component {
                     {modules.map(module =>
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
-                                <div className="row module-title">
+                                <div className="row module-title" id={'module-title-' + module.id}>
                                     <div className="col-xs-2 col-lg-1 module-elem-container">
                                         <div className={'module-elem ' + module.type.toLowerCase()}
                                              data-toggle="collapse"
@@ -47,30 +59,34 @@ class ControlPanel extends Component {
 
                                 <div className="row properties-container collapse in"
                                      id={'module-collapse-' + module.id}>
-                                    {
-                                        module.properties
-                                            .filter(prop => prop.name !== 'link' && prop.name !== 'level')
-                                            .map(prop =>
-                                                <div className="col-xs-6 col-md-3"
-                                                     style={{ paddingBottom: '20px', height: '100px' }}
-                                                     key={module.id + prop.name}>
-                                                    {this.getControlProperty(module.id, { ...prop })}
-                                                </div>
-                                            )
-                                    }
-                                    {
-                                        module.properties
-                                              .filter(prop => prop.name === 'level')
-                                              .map(prop => {
-                                                  return (
-                                                      <div className="col-xs-6 col-md-3"
-                                                           style={{ paddingBottom: '20px', height: '100px' }}
-                                                           key={module.id + prop.name}>
-                                                          {this.getControlProperty(module.id, { ...prop })}
-                                                      </div>
-                                                  );
-                                              })
-                                    }
+                                    <div className="col-xs-12" style={{ paddingBottom: '20px' }}>
+                                        <div className="row">
+                                            {
+                                                module.properties
+                                                      .filter(prop => prop.name !== 'link' && prop.name !== 'level')
+                                                      .map(prop =>
+                                                          <div className="col-xs-6 col-md-3"
+                                                               style={{ paddingTop: '20px', height: '100px' }}
+                                                               key={module.id + prop.name}>
+                                                              {this.getControlProperty(module.id, { ...prop })}
+                                                          </div>
+                                                      )
+                                            }
+                                            {
+                                                module.properties
+                                                      .filter(prop => prop.name === 'level')
+                                                      .map(prop => {
+                                                          return (
+                                                              <div className="col-xs-6 col-md-3"
+                                                                   style={{ paddingTop: '20px', height: '100px' }}
+                                                                   key={module.id + prop.name}>
+                                                                  {this.getControlProperty(module.id, { ...prop })}
+                                                              </div>
+                                                          );
+                                                      })
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
