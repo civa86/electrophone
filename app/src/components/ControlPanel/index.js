@@ -26,14 +26,15 @@ class ControlPanel extends Component {
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
                                 <div className="row module-title">
-                                    <div className="col-xs-2">
-                                        <div className={'module-elem ' + module.type.toLowerCase()}/>
+                                    <div className="col-xs-2 col-lg-1 module-elem-container">
+                                        <div className={'module-elem ' + module.type.toLowerCase()}
+                                             data-toggle="collapse"
+                                             data-target={'#module-collapse-' + module.id}/>
                                     </div>
-                                    <div className="col-xs-8">
+                                    <div className="col-xs-8 col-lg-10">
                                         {module.type + ' -- ' + module.id}
                                     </div>
-                                    <div className="col-xs-2" style={{ padding: '10px' }}>
-
+                                    <div className="col-xs-2 col-lg-1" style={{ padding: '10px' }}>
                                         {
                                             !module.isMaster &&
                                             <div className="ion-trash-b pull-right"
@@ -44,7 +45,8 @@ class ControlPanel extends Component {
                                     </div>
                                 </div>
 
-                                <div className="row properties-container">
+                                <div className="row properties-container collapse in"
+                                     id={'module-collapse-' + module.id}>
                                     {
                                         module.properties
                                             .filter(prop => prop.name !== 'link' && prop.name !== 'level')

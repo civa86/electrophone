@@ -29,6 +29,7 @@ const style = {
                 shape: 'hexagon',
                 'border-width': 0,
                 'background-image': '../../../img/master.svg',
+                'background-color': '#ccc',
                 'background-width': '50%',
                 'background-height': '50%'
             }
