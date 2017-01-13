@@ -334,7 +334,6 @@ It can be linked to any module with `level` property (gain target).
 | target   | String   | frequency, detune, gain          | gain    |
 | link     | String   | master, "any module label"       | -       |
 
-
 #### Pan
 
 A module that routes sound between left and right channel.
