@@ -38,21 +38,25 @@ class ControlPanel extends Component {
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
                                 <div className="row module-title" id={'module-title-' + module.id}>
-                                    <div className="col-xs-2 col-lg-1 module-elem-container">
+                                    <div className="col-xs-2 col-lg-1 vcenter module-elem-container">
                                         <div className={'module-elem ' + module.type.toLowerCase()}
                                              data-toggle="collapse"
                                              data-target={'#module-collapse-' + module.id}/>
                                     </div>
-                                    <div className="col-xs-8 col-lg-10">
-                                        {module.type + ' -- ' + module.id}
+                                    <div className="col-xs-8 col-lg-10 vcenter">
+                                        <div className="module-title-text">
+                                            {module.type}
+                                            {
+                                                !module.isMaster &&
+                                                ' #' + module.id.replace('node', '')
+                                            }
+                                        </div>
                                     </div>
-                                    <div className="col-xs-2 col-lg-1" style={{ padding: '10px' }}>
+                                    <div className="col-xs-2 col-lg-1 vcenter module-delete-container">
                                         {
                                             !module.isMaster &&
-                                            <div className="ion-trash-b pull-right"
-                                                 style={{ cursor: 'pointer', fontSize: '24px' }}
-                                                 onClick={() => destroyModule(module.id)}>
-                                            </div>
+                                            <i className="ion-trash-b pull-right"
+                                               onClick={() => destroyModule(module.id)}/>
                                         }
                                     </div>
                                 </div>
@@ -87,6 +91,15 @@ class ControlPanel extends Component {
                                             }
                                         </div>
                                     </div>
+                                    {
+                                        !module.isMaster &&
+                                        <div className="col-xs-12">
+                                            <div className="link-text">
+                                                <i className="ion-pull-request"/>
+                                                {(module.link ? '#' + module.link.replace('node', '') : '')}
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
 
                             </div>

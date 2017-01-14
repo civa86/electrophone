@@ -19,10 +19,104 @@ html, body {
       border: 1px solid @c-dark;
       border-top-left-radius: @borderRadius;
       border-top-right-radius: @borderRadius;
+      line-height: 10px;
 
       &.collapsed {
         border-bottom-left-radius: @borderRadius;
         border-bottom-right-radius: @borderRadius;
+      }
+
+      .module-title-text {
+        text-align: center;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      .module-elem-container {
+        padding: 10px 15px;
+
+        .module-elem {
+          display: inline-block;
+          width: 30px; height: 30px;
+          border-radius: 50%;
+          cursor: pointer;
+
+          &.master {
+            background: @c-master url(../img/master.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.envelope {
+            background: @c-control-modules url(../img/envelope.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.pan {
+            background: @c-control-modules url(../img/pan.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.modulator {
+            background: @c-control-modules url(../img/modulator.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.oscillator {
+            background: @c-sound-modules url(../img/oscillator.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.noise {
+            background: @c-sound-modules url(../img/noise.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.filter {
+            background: @c-filters-modules url(../img/filter.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.moogfilter {
+            background: @c-filters-modules url(../img/filter.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.delay {
+            background: @c-effect-modules url(../img/delay.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.pingpongdelay {
+            background: @c-effect-modules url(../img/pingpongdelay.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.tremolo {
+            background: @c-effect-modules url(../img/tremolo.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.overdrive {
+            background: @c-effect-modules url(../img/overdrive.svg) center center no-repeat;
+            background-size: 70%;
+          }
+
+          &.bitcrusher {
+            background: @c-effect-modules url(../img/bitcrusher.svg) center center no-repeat;
+            background-size: 70%;
+          }
+        }
+      }
+
+      .module-delete-container {
+        padding: 10px 15px;
+
+        i {
+          cursor: pointer;
+          font-size: 24px;
+          display: block;
+          color: @c-light;
+        }
       }
     }
 
@@ -31,86 +125,22 @@ html, body {
       border-top: none;
       border-bottom-left-radius: @borderRadius;
       border-bottom-right-radius: @borderRadius;
+
+      .link-text {
+        font-size: 16px;
+        i {
+          font-size: 20px;
+          vertical-align: bottom;
+          display: inline-block;
+          padding-right: 5px;
+        }
+
+        text-align: right;
+      }
     }
 
     .dropdown-menu {
       z-index: 9000;
-    }
-
-    .module-elem-container {
-      padding: @content-space 0 (@content-space / 2) @content-space;
-
-      .module-elem {
-        display: inline-block;
-        width: 30px; height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-
-        &.master {
-          background: @c-master url(../img/master.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.envelope {
-          background: @c-control-modules url(../img/envelope.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.pan {
-          background: @c-control-modules url(../img/pan.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.modulator {
-          background: @c-control-modules url(../img/modulator.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.oscillator {
-          background: @c-sound-modules url(../img/oscillator.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.noise {
-          background: @c-sound-modules url(../img/noise.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.filter {
-          background: @c-filters-modules url(../img/filter.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.moogfilter {
-          background: @c-filters-modules url(../img/filter.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.delay {
-          background: @c-effect-modules url(../img/delay.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.pingpongdelay {
-          background: @c-effect-modules url(../img/pingpongdelay.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.tremolo {
-          background: @c-effect-modules url(../img/tremolo.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.overdrive {
-          background: @c-effect-modules url(../img/overdrive.svg) center center no-repeat;
-          background-size: 70%;
-        }
-
-        &.bitcrusher {
-          background: @c-effect-modules url(../img/bitcrusher.svg) center center no-repeat;
-          background-size: 70%;
-        }
-      }
     }
   }
 }
