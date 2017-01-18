@@ -96,7 +96,7 @@ class ControlPanel extends Component {
                                         <div className="col-xs-12">
                                             <div className="link-text">
                                                 <i className="ion-pull-request"/>
-                                                {(module.link ? '#' + module.link.replace('node', '') : '')}
+                                                {(module.link ? '#' + module.link.replace('node', '') : 'no link')}
                                             </div>
                                         </div>
                                     }
