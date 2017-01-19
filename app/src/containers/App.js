@@ -216,8 +216,8 @@ class App extends Component {
     render () {
         const
             { ui, synth, dispatch } = this.props,
-            viewActions = this.getViewActions(),
-            footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
+            viewActions = this.getViewActions();
+            // footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
 
         return (
             <div id="main-wrapper" className="container-fluid">
@@ -233,7 +233,7 @@ class App extends Component {
                 />
 
                 <div id="panel-wrapper"
-                     style={{ marginTop: headerHeight}}>
+                     style={{ marginTop: headerHeight }}>
                     <GraphPanel
                         isVisible={ui.viewPanel === 'graph'}
                         synth={synth}
