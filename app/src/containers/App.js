@@ -204,7 +204,7 @@ class App extends Component {
     getGraphHeight () {
         const
             windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight - footerHeight;
+            graphHeight = windowSize.height - headerHeight - footerHeight - 30;
 
         return graphHeight;
     }
@@ -233,7 +233,7 @@ class App extends Component {
                 />
 
                 <div id="panel-wrapper"
-                     style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
+                     style={{ marginTop: headerHeight}}>
                     <GraphPanel
                         isVisible={ui.viewPanel === 'graph'}
                         synth={synth}
