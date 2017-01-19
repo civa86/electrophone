@@ -22,7 +22,9 @@ const noteMapping = {
 
 class Synth extends Component {
     updateSpectrum (dataArray) {
-        const sliceWidth = this.spectrumProps.WIDTH * 1.0 / 256;
+        const
+            k = 256.0,
+            sliceWidth = this.spectrumProps.WIDTH * 1.0 / k;
         let x = 0;
 
         this.spectrumProps.canvasCtx.fillStyle = 'rgb(51, 51, 51)';
@@ -32,7 +34,7 @@ class Synth extends Component {
         this.spectrumProps.canvasCtx.beginPath();
 
         for (let i = 0; i < dataArray.length; i++) {
-            const v = dataArray[i] / 256.0,
+            const v = dataArray[i] / k,
                 y = this.spectrumProps.HEIGHT - (v * this.spectrumProps.HEIGHT);
 
             if (i === 0) {

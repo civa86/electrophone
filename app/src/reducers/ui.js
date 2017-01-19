@@ -128,6 +128,20 @@ function ui (state = initialState, action = {}) {
             };
         }
 
+        case actionTypes.UPDATE_PLAYING_VOICES : {
+            return {
+                ...state,
+                graph: {
+                    ...state.graph,
+                    zoom: action.graph.zoom,
+                    pan: {
+                        x: action.graph.pan.x,
+                        y: action.graph.pan.y
+                    }
+                }
+            };
+        }
+
         default:
             return state;
 

@@ -86,8 +86,10 @@ class App extends Component {
                 dispatch(Actions.setPianoVisibility(isPianoVisible)),
             setSpectrumVisibility: (isSpectrumVisible) =>
                 dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
-            saveSynth: () =>
-                localCache.saveState(localCacheKey, { ui: { ...ui }, synth: { ...synth } }),
+            saveSynth: () => {
+                const newUi = { ...ui, graph: { ...ui.graph, instance: null } };
+                localCache.saveState(localCacheKey, { ui: { ...newUi }, synth: { ...synth } });
+            },
             loadSynth: () =>
                 dispatch(Actions.loadState(
                     localCache.loadState(localCacheKey),
@@ -217,7 +219,6 @@ class App extends Component {
         const
             { ui, synth, dispatch } = this.props,
             viewActions = this.getViewActions();
-            // footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
 
         return (
             <div id="main-wrapper" className="container-fluid">
@@ -256,7 +257,15 @@ class App extends Component {
                        headerHeight={headerHeight}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={playingVoices => dispatch(Actions.updatePlayingVoices(playingVoices))}
+                       updatePlayingVoices={
+                            playingVoices => dispatch(Actions.updatePlayingVoices(
+                                playingVoices,
+                                {
+                                    zoom: ui.graph.instance.zoom(),
+                                    pan: ui.graph.instance.pan()
+                                }
+                            ))
+                       }
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>

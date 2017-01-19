@@ -74,10 +74,11 @@ function octaveDecrease () {
     }
 }
 
-function updatePlayingVoices (playingVoices) {
+function updatePlayingVoices (playingVoices, graph) {
     return {
         type: actionTypes.UPDATE_PLAYING_VOICES,
-        playingVoices
+        playingVoices,
+        graph
     }
 }
 

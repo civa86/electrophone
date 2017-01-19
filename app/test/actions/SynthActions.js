@@ -112,8 +112,24 @@ describe('Synth actions', () => {
     it('should update playing voices', () => {
         const expectedAction = {
             type: actionTypes.UPDATE_PLAYING_VOICES,
-            playingVoices: ['C-4', 'A-4']
+            playingVoices: ['C-4', 'A-4'],
+            graph: {
+                zoom: 1,
+                pan: {
+                    x: 0,
+                    y: 0
+                }
+            }
         };
-        expect(actions.updatePlayingVoices(['C-4', 'A-4'])).to.deep.equal(expectedAction);
+        expect(actions.updatePlayingVoices(
+            ['C-4', 'A-4'],
+            {
+                zoom: 1,
+                pan: {
+                    x: 0,
+                    y: 0
+                }
+            }
+        )).to.deep.equal(expectedAction);
     });
 });

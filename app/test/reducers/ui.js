@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import ui from '../../src/reducers/ui';
 import initState from '../../src/reducers/initState';
-import { setPositions, addNode } from '../../src/actions/SynthActions';
+import { setPositions, addNode, updatePlayingVoices } from '../../src/actions/SynthActions';
 import {
     setLinkMode,
     toggleLinkMode,
@@ -126,6 +126,23 @@ describe('Ui reducer', () => {
                 type: 'Type',
                 properties: [{ name: 'a', value: 1 }]
             },
+            {
+                zoom: 3,
+                pan: {
+                    x: 5,
+                    y: 6
+                }
+            }
+        ));
+
+        expect(state.graph.zoom).to.equal(3);
+        expect(state.graph.pan.x).to.equal(5);
+        expect(state.graph.pan.y).to.equal(6);
+    });
+
+    it('should set graph zoom and pan when synth updates playing voices', () => {
+        state = ui(state, updatePlayingVoices(
+            ['C-4', 'A-4'],
             {
                 zoom: 3,
                 pan: {
