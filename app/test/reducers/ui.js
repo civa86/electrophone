@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import ui from '../../src/reducers/ui';
 import initState from '../../src/reducers/initState';
-import { setPositions } from '../../src/actions/SynthActions';
+import { setPositions, addNode } from '../../src/actions/SynthActions';
 import {
     setLinkMode,
     toggleLinkMode,
@@ -9,7 +9,8 @@ import {
     setSpectrumVisibility,
     setViewPanel,
     setGraphPan,
-    setGraphZoom
+    setGraphZoom,
+    setGraphInstance
 } from '../../src/actions/UiActions';
 
 const
@@ -104,5 +105,38 @@ describe('Ui reducer', () => {
         expect(state.graph.pan.x).to.equal(333);
         expect(state.graph.pan.y).to.equal(155);
         expect(state.graph.zoom).to.equal(3);
+    });
+
+    it('should set graph instance', () => {
+        state = ui(state, setGraphInstance({ value: 1, zoom: () => 1 }));
+
+        expect(state.graph.instance).to.be.a('object');
+        expect(state.graph.instance.value).to.equal(1);
+        expect(state.graph.instance.zoom).to.be.a('function');
+        expect(state.graph.instance.zoom()).to.equal(1);
+    });
+
+    it('should set graph zoom and pan when synth add node', () => {
+        state = ui(state, addNode(
+            {
+                id: 'ele1',
+                isMaster: true,
+                posX: 300,
+                posY: 234,
+                type: 'Type',
+                properties: [{ name: 'a', value: 1 }]
+            },
+            {
+                zoom: 3,
+                pan: {
+                    x: 5,
+                    y: 6
+                }
+            }
+        ));
+
+        expect(state.graph.zoom).to.equal(3);
+        expect(state.graph.pan.x).to.equal(5);
+        expect(state.graph.pan.y).to.equal(6);
     });
 });

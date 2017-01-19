@@ -57,4 +57,12 @@ describe('Ui actions', () => {
         };
         expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
     });
+
+    it('should create an action setGraphInstance', () => {
+        const expectedAction = {
+            type: actionTypes.SET_GRAPH_INSTANCE,
+            graphInstance: { value: 1 }
+        };
+        expect(actions.setGraphInstance({ value: 1 })).to.deep.equal(expectedAction);
+    });
 });

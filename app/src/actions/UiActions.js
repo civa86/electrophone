@@ -48,7 +48,6 @@ function setGraphZoom (zoom) {
     };
 }
 
-//TODO unit test...
 function setGraphInstance (graphInstance) {
     return {
         type: actionTypes.SET_GRAPH_INSTANCE,

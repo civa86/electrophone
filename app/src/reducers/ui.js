@@ -105,7 +105,6 @@ function ui (state = initialState, action = {}) {
         }
 
         case actionTypes.SET_GRAPH_INSTANCE : {
-            //TODO unit test
             return {
                 ...state,
                 graph: {
@@ -116,7 +115,6 @@ function ui (state = initialState, action = {}) {
         }
 
         case actionTypes.ADD_NODE : {
-            //TODO unit test
             return {
                 ...state,
                 graph: {
