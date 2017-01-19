@@ -49,9 +49,27 @@ describe('Synth reducer', () => {
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
     });
 
-    //TODO test add module.
+    it('should add an audio node', () => {
+        let addedModule = null;
+        state = synth(state, addNode({
+            id: 'eleAdded',
+            posX: 300,
+            posY: 234,
+            type: 'Type'
+        }));
+        addedModule = state.modules.filter(e => e.id === 'eleAdded').pop();
+
+        expect(state.modules.length).to.equal(2);
+        expect(addedModule).to.be.a('object');
+        expect(addedModule.position.x).to.equal(300);
+        expect(addedModule.position.y).to.equal(234);
+        expect(addedModule.type).to.equal('Type');
+        expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
 
     it('should remove an audio node', () => {
+        state = synth(state, removeNode('eleAdded'));
+        expect(state.modules.length).to.equal(1);
         state = synth(state, addNode({ id: 'ele2' }));
         expect(state.modules.length).to.equal(2);
         state = synth(state, removeNode('ele2'));
@@ -98,8 +116,52 @@ describe('Synth reducer', () => {
         expect(updatedNode.properties.filter(p => p.name === 'attack').pop().value).to.equal(100);
 
         expect(Object.keys(state)).to.deep.equal(Object.keys(state));
+    });
 
-        //TODO THE getNormalizedValue logic
+    it('should normalize values when update node', () => {
+        let updatedNode;
+
+        state = synth(state, addNode({
+            id: 'valueTest',
+            type: 'Pan',
+            properties: [
+                {
+                    type: 'number',
+                    bounds: [0, 100],
+                    defaultValue: 1,
+                    name: 'integer'
+                },
+                {
+                    type: 'number',
+                    bounds: [0, 1],
+                    defaultValue: 0,
+                    step: 0.1,
+                    name: 'float'
+                }
+            ]
+        }));
+
+        updatedNode = state.modules.filter(e => e.id === 'valueTest').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'integer').pop().value).to.equal(1);
+        expect(updatedNode.properties.filter(p => p.name === 'float').pop().value).to.equal(0);
+
+        //Normalize Integers
+        state = synth(state, updateNode('valueTest', 'integer', 30.45778));
+        updatedNode = state.modules.filter(e => e.id === 'valueTest').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'integer').pop().value).to.equal(30);
+
+        state = synth(state, updateNode('valueTest', 'integer', 30.57));
+        updatedNode = state.modules.filter(e => e.id === 'valueTest').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'integer').pop().value).to.equal(31);
+
+        //Normalize Floats
+        state = synth(state, updateNode('valueTest', 'float', 0.5111));
+        updatedNode = state.modules.filter(e => e.id === 'valueTest').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'float').pop().value).to.equal(0.5);
+
+        state = synth(state, updateNode('valueTest', 'float', 0.588));
+        updatedNode = state.modules.filter(e => e.id === 'valueTest').pop();
+        expect(updatedNode.properties.filter(p => p.name === 'float').pop().value).to.equal(0.6);
     });
 
     it('should select an audio node', () => {
@@ -125,7 +187,6 @@ describe('Synth reducer', () => {
         expect(selectedNode.position.y).to.equal(100);
     });
 
-    //TODO check for unit test
     it('should load a full state', () => {
         state = synth(state, loadState(initialState, ['Master', 'Oscillator']));
         expect(state).to.deep.equal(initialState);

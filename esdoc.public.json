@@ -5,7 +5,7 @@
   "test": {
     "type": "mocha",
     "source": "./test/",
-    "includes": ["^WebSynth\\.spec.js$"]
+    "includes": ["^WebSynth\\.js$"]
   },
   "title": "WebSynth Documentation",
   "plugins": [
