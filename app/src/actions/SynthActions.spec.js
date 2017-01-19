@@ -8,37 +8,35 @@ describe('Synth actions', () => {
             type: actionTypes.ADD_NODE,
             id: 'ele1',
             isMaster: true,
-            posX: 0,
-            posY: 0,
-            moduleType: 'Type',
-            moduleProps: [{ name: 'a', value: 1 }]
-        };
-        expect(actions.addNode({
-            id: 'ele1',
-            isMaster: true,
-            type: 'Type',
-            properties: [{ name: 'a', value: 1 }]
-        })).to.deep.equal(expectedAction);
-    });
-
-    it('should create an action addNode with default position', () => {
-        const expectedAction = {
-            type: actionTypes.ADD_NODE,
-            id: 'ele1',
-            isMaster: true,
             posX: 300,
             posY: 234,
             moduleType: 'Type',
-            moduleProps: [{ name: 'a', value: 1 }]
+            moduleProps: [{ name: 'a', value: 1 }],
+            graph: {
+                zoom: 1,
+                pan: {
+                    x: 0,
+                    y: 0
+                }
+            }
         };
-        expect(actions.addNode({
-            id: 'ele1',
-            isMaster: true,
-            posX: 300,
-            posY: 234,
-            type: 'Type',
-            properties: [{ name: 'a', value: 1 }]
-        })).to.deep.equal(expectedAction);
+        expect(actions.addNode(
+            {
+                id: 'ele1',
+                isMaster: true,
+                posX: 300,
+                posY: 234,
+                type: 'Type',
+                properties: [{ name: 'a', value: 1 }]
+            },
+            {
+                zoom: 1,
+                pan: {
+                    x: 0,
+                    y: 0
+                }
+            }
+        )).to.deep.equal(expectedAction);
     });
 
     it('should create an action removeNode', () => {
