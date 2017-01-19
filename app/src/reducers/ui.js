@@ -104,6 +104,32 @@ function ui (state = initialState, action = {}) {
             };
         }
 
+        case actionTypes.SET_GRAPH_INSTANCE : {
+            //TODO unit test
+            return {
+                ...state,
+                graph: {
+                    ...state.graph,
+                    instance: action.graphInstance
+                }
+            };
+        }
+
+        case actionTypes.ADD_NODE : {
+            //TODO unit test
+            return {
+                ...state,
+                graph: {
+                    ...state.graph,
+                    zoom: action.graph.zoom,
+                    pan: {
+                        x: action.graph.pan.x,
+                        y: action.graph.pan.y
+                    }
+                }
+            };
+        }
+
         default:
             return state;
 

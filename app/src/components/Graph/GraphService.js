@@ -13,8 +13,7 @@ const GraphService = (graphLibrary, window) => {
         sourceLinkNode,
         targetLinkNode,
         startX,
-        startY,
-        currentGraph;
+        startY;
 
     function resize () {
         if (graph) {
@@ -109,16 +108,6 @@ const GraphService = (graphLibrary, window) => {
     }
 
     function onTapEnd () {
-        const currentPan = graph.pan();
-        if (currentPan.x !== currentGraph.pan.x || currentPan.y !== currentGraph.pan.y) {
-            actions.onFreeHandler(
-                null,
-                null,
-                graph.pan(),
-                graph.zoom()
-            );
-        }
-
         if (linkMode) {
             mouseDown = false;
             if (isDragging) {
@@ -181,6 +170,10 @@ const GraphService = (graphLibrary, window) => {
             resize();
 
             refreshGraph(synthState, uiState);
+
+            if (actions && actions.onGraphCreated && typeof actions.onGraphCreated === 'function') {
+                actions.onGraphCreated(graph);
+            }
 
         } else {
             throw new Error('Missing Graph Library');
@@ -267,8 +260,6 @@ const GraphService = (graphLibrary, window) => {
         const newNodes = synthState.modules || [],
             newGraph = uiState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
             newLinkMode = newGraph.linkMode || false;
-
-        currentGraph = newGraph;
 
         if (graph) {
             //CREATE NOT EXISTENT MODULES
