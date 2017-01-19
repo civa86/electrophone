@@ -1,40 +1,9 @@
 import { expect } from 'chai';
-import Synth from '../../lib/src/Synth'
+import Synth from '../../lib/src/Synth';
+import mockAudioCtx from '../mocks/AudioContext';
 
 /** @test {Synth} */
 describe('Synth', () => {
-    //TODO export in a file...
-    const mockAudioCtx = {
-        createGainNode: () => ({
-            gain: {
-                value: 0
-            },
-            connect: () => null
-        }),
-        createDelayNode: () => ({}),
-        createScriptProcessor: () => ({
-            connect: () => null
-        }),
-        createAnalyser: () => ({
-            smoothingTimeConstant: '',
-            fftSize: '',
-            minDecibels: 0,
-            maxDecibels: 0,
-            connect: () => null,
-            getByteFrequencyData: () => null
-        }),
-        createGain: () => ({
-            gain: {
-                value: 0
-            },
-            connect: () => null
-        }),
-        createOscillator: () => ({
-            type: '',
-            connect: () => null
-        }),
-        destination: {}
-    };
     let synth;
 
     it('should have a Synth function', () => {
