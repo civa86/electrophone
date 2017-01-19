@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import synth from './synth';
-import initState from './initState';
-import { loadState, resetState } from '../actions/AppActions';
+import synth from '../../src/reducers/synth';
+import initState from '../../src/reducers/initState';
+import { loadState, resetState } from '../../src/actions/AppActions';
 import {
     addNode,
     removeNode,
@@ -13,7 +13,7 @@ import {
     octaveIncrease,
     octaveDecrease,
     updatePlayingVoices
-} from '../actions/SynthActions';
+} from '../../src/actions/SynthActions';
 
 const
     initialState = initState.synth,

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../actions/AppActions';
-import * as actionTypes from '../constants/ActionTypes';
+import * as actions from '../../src/actions/AppActions';
+import * as actionTypes from '../../src/constants/ActionTypes';
 
 describe('App actions', () => {
     it('should create an action loadState', () => {

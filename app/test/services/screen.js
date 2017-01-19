@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import screenService from './screen';
+import screenService from '../../src/services/screen';
 
 describe('screen Service library', () => {
     const screen = screenService();

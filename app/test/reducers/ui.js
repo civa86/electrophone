@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import ui from './ui';
-import initState from './initState';
-import { setPositions } from '../actions/SynthActions';
+import ui from '../../src/reducers/ui';
+import initState from '../../src/reducers/initState';
+import { setPositions } from '../../src/actions/SynthActions';
 import {
     setLinkMode,
     toggleLinkMode,
@@ -10,7 +10,7 @@ import {
     setViewPanel,
     setGraphPan,
     setGraphZoom
-} from '../actions/UiActions';
+} from '../../src/actions/UiActions';
 
 const
     initialState = initState.ui,

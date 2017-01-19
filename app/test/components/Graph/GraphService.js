@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import GraphService from './GraphService';
+import GraphService from '../../../src/components/Graph/GraphService';
 
 // MOCK LIB
 let state = null;

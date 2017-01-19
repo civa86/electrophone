@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import localCacheService from './localCache';
+import localCacheService from '../../src/services/localCache';
 
 describe('localCache Service library', () => {
     const localCache = localCacheService();

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../actions/SynthActions';
-import * as actionTypes from '../constants/ActionTypes';
+import * as actions from '../../src/actions/SynthActions';
+import * as actionTypes from '../../src/constants/ActionTypes';
 
 describe('Synth actions', () => {
     it('should create an action addNode with default position', () => {

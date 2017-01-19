@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../actions/UiActions';
-import * as actionTypes from '../constants/ActionTypes';
+import * as actions from '../../src/actions/UiActions';
+import * as actionTypes from '../../src/constants/ActionTypes';
 
 describe('Ui actions', () => {
     it('should create an action setLinkMode', () => {
