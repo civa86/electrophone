@@ -48,7 +48,7 @@
 	
 	exports.__esModule = true;
 	
-	__webpack_require__(41);
+	__webpack_require__(38);
 	
 	var _WebSynth = __webpack_require__(7);
 	
@@ -68,16 +68,20 @@
 	'use strict';
 	
 	exports.__esModule = true;
-	var TYPES = { //TODO add missing types...
+	var TYPES = {
 	    MASTER: 'Master',
 	    OSCILLATOR: 'Oscillator',
-	    MODULATOR: 'Modulator',
-	    FILTER: 'Filter',
 	    NOISE: 'Noise',
-	    REVERB: 'Reverb',
-	    CHORUS: 'Chorus',
+	    MODULATOR: 'Modulator',
+	    ENVELOPE: 'Envelope',
+	    PAN: 'Pan',
+	    FILTER: 'Filter',
 	    DELAY: 'Delay',
-	    ENVELOPE: 'Envelope'
+	    PINGPONGDELAY: 'PingPongDelay',
+	    TREMOLO: 'Tremolo',
+	    OVERDRIVE: 'Overdrive',
+	    BITCRUSHER: 'Bitcrusher',
+	    MOOGFILTER: 'MoogFilter'
 	},
 	    CONST = {
 	    MASTER: 'master',
@@ -2080,6 +2084,7 @@
 	    normfreq: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 0.5
 	    },
 	    bufferSize: {
@@ -2212,7 +2217,7 @@
 	    },
 	    q: {
 	        type: 'number',
-	        bounds: [0.001, 100],
+	        bounds: [0, 100],
 	        defaultValue: 10
 	    },
 	    filterGain: {
@@ -2276,6 +2281,7 @@
 	    cutoff: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 0
 	    },
 	    resonance: {
@@ -2353,16 +2359,19 @@
 	    outputGain: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 0.5
 	    },
 	    drive: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 0
 	    },
 	    curveAmount: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 1
 	    },
 	    algorithmIndex: {
@@ -2450,12 +2459,13 @@
 	    intensity: {
 	        type: 'number',
 	        bounds: [0, 1],
+	        step: 0.1,
 	        defaultValue: 0
 	    },
 	    rate: {
 	        type: 'number',
-	        bounds: [0.001, 8],
-	        defaultValue: 0.001
+	        bounds: [0, 8],
+	        defaultValue: 0
 	    },
 	    stereoPhase: {
 	        type: 'number',
@@ -16910,6 +16920,23 @@
 
 /***/ },
 /* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	
+	var AudioContext = global.AudioContext || global.webkitAudioContext;
+	var StereoPannerNode = __webpack_require__(41);
+	
+	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
+	  AudioContext.prototype.createStereoPanner = function() {
+	    return new StereoPannerNode(this);
+	  };
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 39 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -16932,12 +16959,12 @@
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var curve = __webpack_require__(38);
+	var curve = __webpack_require__(39);
 	
 	/**
 	 *  StereoPannerImpl
@@ -17036,12 +17063,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var StereoPannerImpl = __webpack_require__(39);
+	var StereoPannerImpl = __webpack_require__(40);
 	
 	function StereoPanner(audioContext) {
 	  var impl = new StereoPannerImpl(audioContext);
@@ -17068,23 +17095,6 @@
 	
 	module.exports = StereoPanner;
 
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-	
-	var AudioContext = global.AudioContext || global.webkitAudioContext;
-	var StereoPannerNode = __webpack_require__(40);
-	
-	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
-	  AudioContext.prototype.createStereoPanner = function() {
-	    return new StereoPannerNode(this);
-	  };
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 42 */
