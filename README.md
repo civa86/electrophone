@@ -373,11 +373,11 @@ A module that plays a sound back after a period of time.
 | Property  | Type     | Values                           | Default |
 | --------- | -------- | -------------------------------- | ------- |
 | level     | Integer  | 0 - 100                          | 100     |
-| dry       | Flag     | 0 / 1                            | 0       |
-| wet       | Flag     | 0 / 1                            | 0       |
-| feedback  | Flag     | 0 / 1                            | 0       |
+| dry       | Float    | 0 - 1                            | 1       |
+| wet       | Float    | 0 - 1                            | 0.5     |
+| feedback  | Float    | 0 - 0.9                          | 0.4     |
 | cutoff    | Integer  | 20 - 20000                       | 440     |
-| delayTime | Integer  | 1 - 10000                        | 1       |
+| delayTime | Integer  | 20 - 1000                        | 100     |
 | bypass    | Flag     | 0 / 1                            | 0       |
 | link      | String   | master, "any module label"       | -       |
 
@@ -385,16 +385,16 @@ A module that plays a sound back after a period of time.
 
 A different kind of Delay.
 
-| Property  | Type     | Values                           | Default |
-| --------- | -------- | -------------------------------- | ------- |
-| level     | Integer  | 0 - 100                          | 100     |
-| dry       | Flag     | 0 / 1                            | 0       |
-| wet       | Flag     | 0 / 1                            | 0       |
-| feedback  | Flag     | 0 / 1                            | 0       |
-| cutoff    | Integer  | 20 - 20000                       | 440     |
-| delayTime | Integer  | 1 - 10000                        | 1       |
-| bypass    | Flag     | 0 / 1                            | 0       |
-| link      | String   | master, "any module label"       | -       |
+| Property       | Type     | Values                           | Default |
+| -------------- | -------- | -------------------------------- | ------- |
+| level          | Integer  | 0 - 100                          | 100     |
+| wet            | Float    | 0 - 1                            | 0.5     |
+| feedback       | Float    | 0 - 1                            | 0.3     |
+| cutoff         | Integer  | 20 - 20000                       | 440     |
+| delayTimeLeft  | Integer  | 1 - 10000                        | 200     |
+| delayTimeRight | Integer  | 1 - 10000                        | 400     |
+| bypass         | Flag     | 0 / 1                            | 0       |
+| link           | String   | master, "any module label"       | -       |
 
 #### Tremolo
 
@@ -403,8 +403,8 @@ A trembling sound effect.
 | Property    | Type     | Values                           | Default |
 | ----------- | -------- | -------------------------------- | ------- |
 | level       | Integer  | 0 - 100                          | 100     |
-| intensity   | Float    | 0 - 1                            | 0       |
-| rate        | Integer  | 0 - 8                            | 0       |
+| intensity   | Float    | 0 - 1                            | 0.3     |
+| rate        | Float    | 0 - 11                           | 5       |
 | stereoPhase | Integer  | 0 - 180                          | 0       |
 | bypass      | Flag     | 0 / 1                            | 0       |
 | link        | String   | master, "any module label"       | -       |
@@ -416,10 +416,10 @@ A module that alters the sound increasing its gain with distortion.
 | Property       | Type     | Values                           | Default |
 | -------------- | -------- | -------------------------------- | ------- |
 | level          | Integer  | 0 - 100                          | 100     |
-| outputGain     | Float    | 0 - 1                            | 0.5     |
-| drive          | Float    | 0 - 1                            | 0       |
-| curveAmount    | Float    | 0 - 1                            | 1       |
-| algorithmIndex | Integer  | 1 - 5                            | 0       |
+| outputGain     | Float    | 0 - 1                            | 1       |
+| drive          | Float    | 0 - 1                            | 1       |
+| curveAmount    | Float    | 0 - 1                            | 0.7     |
+| algorithmIndex | Integer  | 0 - 5                            | 0       |
 | bypass         | Flag     | 0 / 1                            | 0       |
 | link           | String   | master, "any module label"       | -       |
 
@@ -430,9 +430,10 @@ A module that produces a distortion by the reduction of the resolution or bandwi
 | Property   | Type     | Values                           | Default |
 | ---------- | -------- | -------------------------------- | ------- |
 | level      | Integer  | 0 - 100                          | 100     |
-| bits       | Integer  | 1 - 16                           | 1       |
-| normfreq   | Float    | 0 - 1                            | 0.5     |
+| bits       | Integer  | 1 - 16                           | 4       |
+| normfreq   | Float    | 0 - 1                            | 0.1     |
 | bufferSize | Integer  | 256 - 16384                      | 4096    |
+| bypass     | Flag     | 0 / 1                            | 0       |
 | link       | String   | master, "any module label"       | -       |
 
 #### Moogfilter
@@ -442,7 +443,8 @@ A Moog inspired filter
 | Property   | Type     | Values                           | Default |
 | ---------- | -------- | -------------------------------- | ------- |
 | level      | Integer  | 0 - 100                          | 100     |
-| cutoff     | Float    | 0 - 1                            | 0       |
-| resonance  | Integer  | 0 - 4                            | 0       |
+| cutoff     | Float    | 0 - 1                            | 0.1     |
+| resonance  | Float    | 0 - 4                            | 3.5     |
 | bufferSize | Integer  | 256 - 16384                      | 4096    |
+| bypass     | Flag     | 0 / 1                            | 0       |
 | link       | String   | master, "any module label"       | -       |

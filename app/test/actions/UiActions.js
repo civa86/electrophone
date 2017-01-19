@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../actions/UiActions';
-import * as actionTypes from '../constants/ActionTypes';
+import * as actions from '../../src/actions/UiActions';
+import * as actionTypes from '../../src/constants/ActionTypes';
 
 describe('Ui actions', () => {
     it('should create an action setLinkMode', () => {
@@ -56,5 +56,13 @@ describe('Ui actions', () => {
             zoom: 1
         };
         expect(actions.setGraphZoom(1)).to.deep.equal(expectedAction);
+    });
+
+    it('should create an action setGraphInstance', () => {
+        const expectedAction = {
+            type: actionTypes.SET_GRAPH_INSTANCE,
+            graphInstance: { value: 1 }
+        };
+        expect(actions.setGraphInstance({ value: 1 })).to.deep.equal(expectedAction);
     });
 });

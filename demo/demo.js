@@ -102,6 +102,8 @@
             //wave: WebSynth.CONST.WAVE_SAWTOOTH,
             link: 'master'
         });
+
+        console.log(synth.getModules())
         //link to waves...
         //http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/
     }

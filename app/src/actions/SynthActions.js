@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/ActionTypes';
 
-function addNode (node) {
+function addNode (node, graph) {
     return {
         type: actionTypes.ADD_NODE,
         id: node.id,
@@ -8,7 +8,8 @@ function addNode (node) {
         posX: node.posX || 0,
         posY: node.posY || 0,
         moduleType: node.type,
-        moduleProps: [ ...node.properties ]
+        moduleProps: [ ...node.properties ],
+        graph
     };
 }
 

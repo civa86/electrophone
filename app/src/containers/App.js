@@ -66,6 +66,9 @@ class App extends Component {
     getViewActions () {
         const { dispatch, ui, synth } = this.props;
         return {
+            onGraphCreated: (instance) => {
+                dispatch(Actions.setGraphInstance(instance));
+            },
             onClickHandler: (node, isSeletected) => {
                 if (node !== WebSynth.CONST.MASTER) {
                     dispatch(Actions.setNodeSelection(node, isSeletected));
@@ -175,16 +178,22 @@ class App extends Component {
 
     addModule (type) {
         const
-            { dispatch } = this.props,
+            { dispatch, ui } = this.props,
             newModule = synthModules.filter(e => e.type === type).pop();
 
-        dispatch(Actions.addNode({
-            ...newModule,
-            id: nodePrefix + this.getMaxNodeId(),
-            isMaster: false,
-            posX: Math.random() * (this.getGraphHeight()),
-            posY: Math.random() * (this.getGraphHeight())
-        }));
+        dispatch(Actions.addNode(
+            {
+                ...newModule,
+                id: nodePrefix + this.getMaxNodeId(),
+                isMaster: false,
+                posX: Math.random() * (this.getGraphHeight()),
+                posY: Math.random() * (this.getGraphHeight())
+            },
+            {
+                zoom: ui.graph.instance.zoom(),
+                pan: ui.graph.instance.pan()
+            }
+        ));
     }
 
     updateModule (id, propertyName, propertyValue) {
@@ -195,7 +204,7 @@ class App extends Component {
     getGraphHeight () {
         const
             windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight - footerHeight;
+            graphHeight = windowSize.height - headerHeight - footerHeight - 30;
 
         return graphHeight;
     }
@@ -207,8 +216,8 @@ class App extends Component {
     render () {
         const
             { ui, synth, dispatch } = this.props,
-            viewActions = this.getViewActions(),
-            footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
+            viewActions = this.getViewActions();
+            // footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
 
         return (
             <div id="main-wrapper" className="container-fluid">
@@ -224,7 +233,7 @@ class App extends Component {
                 />
 
                 <div id="panel-wrapper"
-                     style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
+                     style={{ marginTop: headerHeight }}>
                     <GraphPanel
                         isVisible={ui.viewPanel === 'graph'}
                         synth={synth}

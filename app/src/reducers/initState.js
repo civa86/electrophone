@@ -58,6 +58,7 @@ const initState = {
     },
     ui: {
         graph: {
+            instance: null,
             linkMode: false,
             pan: {
                 x: 0,
