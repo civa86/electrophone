@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GH_REF="`node -p -e "require('./package.json').repository.url.replace('https://', '')"`"
+
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 echo "PUBLISH GH-PAGES :: START"
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
@@ -36,9 +38,6 @@ git add .
 
 echo "/***** COMMIT VERSION ****/"
 PUBLISH_TIME="`date +'%Y-%m-%d %H:%M:%S'`"
-#TODO discover repo by cmd line...
-GH_REF="github.com/civa86/web-synth.git"
-
 git commit -m "[$PUBLISH_TIME] Publish gh-pages"
 
 git push --force --quiet "https://${GH_TOKEN}@$GH_REF" master:gh-pages > /dev/null 2>&1
