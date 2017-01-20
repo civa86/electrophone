@@ -278,7 +278,6 @@
 	    Module.prototype.updateProperties = function updateProperties(props) {
 	        var _this2 = this;
 	
-	        //TODO implement setMainProperties and use it in each module????
 	        Object.keys(props).forEach(function (p) {
 	            var realProp = _this2.getRealProperties(p);
 	
@@ -1689,7 +1688,6 @@
 	        _classCallCheck(this, Envelope);
 	
 	        return _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
-	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	    }
 	
 	    Envelope.prototype.createGain = function createGain() {
@@ -1792,7 +1790,6 @@
 	    function Master(audioContext, props, name) {
 	        _classCallCheck(this, Master);
 	
-	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createGain();
@@ -1844,7 +1841,6 @@
 	    function Pan(audioContext, props, name) {
 	        _classCallCheck(this, Pan);
 	
-	        //TODO check for method to call on update...like setMainProperties of Effect!!
 	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createStereoPanner();
@@ -1884,7 +1880,6 @@
 	    function Modulator(audioContext, props, name) {
 	        _classCallCheck(this, Modulator);
 	
-	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createOscillator();
@@ -1931,7 +1926,6 @@
 	    function Noise(audioContext, props, name) {
 	        _classCallCheck(this, Noise);
 	
-	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.defaultLineInProperty = 'detune';
@@ -2067,7 +2061,6 @@
 	    function Oscillator(audioContext, props, name) {
 	        _classCallCheck(this, Oscillator);
 	
-	        //TODO separate in a method to call on update...like setMainProperties of Effect!!
 	        var _this = _possibleConstructorReturn(this, _SoundSource.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createOscillator();
