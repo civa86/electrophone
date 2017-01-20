@@ -343,7 +343,7 @@ It can be placed between a Sound Module and its destination to setup stereo rout
 | Property | Type     | Values                           | Default |
 | -------- | -------- | -------------------------------- | ------- |
 | level    | Integer  | 0 - 100                          | 100     |
-| value    | Float    | -1 - 1                           | 0       |
+| pan      | Float    | -1 - 1                           | 0       |
 | link     | String   | master, "any module label"       | -       |
 
 ## Effect Modules

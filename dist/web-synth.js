@@ -1844,7 +1844,7 @@
 	        var _this = _possibleConstructorReturn(this, _Module.call(this, audioContext, props, name));
 	
 	        _this.main = _this.audioContext.createStereoPanner();
-	        _this.main.pan.value = _this.value;
+	        _this.main.pan.value = _this.pan;
 	        _this.main.connect(_this.envelope);
 	        return _this;
 	    }
@@ -2421,7 +2421,7 @@
 	
 	exports.__esModule = true;
 	var PanProps = {
-	    value: {
+	    pan: {
 	        type: 'number',
 	        bounds: [-1, 1],
 	        step: 0.1,
