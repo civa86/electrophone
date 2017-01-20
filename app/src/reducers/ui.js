@@ -142,6 +142,21 @@ function ui (state = initialState, action = {}) {
             };
         }
 
+        case actionTypes.APP_LOAD_STATE : {
+            return {
+                ...state,
+                viewPanel:
+                    (action.state.ui.viewPanel !== undefined && action.state.ui.viewPanel !== null) ?
+                        action.state.ui.viewPanel : state.viewPanel,
+                isPianoVisible:
+                    (action.state.ui.isPianoVisible !== undefined && action.state.ui.isPianoVisible !== null) ?
+                        action.state.ui.isPianoVisible : state.isPianoVisible,
+                isSpectrumVisible:
+                    (action.state.ui.isSpectrumVisible !== undefined && action.state.ui.isSpectrumVisible !== null) ?
+                        action.state.ui.isSpectrumVisible : state.isSpectrumVisible
+            };
+        }
+
         default:
             return state;
 

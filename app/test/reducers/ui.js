@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import ui from '../../src/reducers/ui';
 import initState from '../../src/reducers/initState';
+import { loadState } from '../../src/actions/AppActions';
 import { setPositions, addNode, updatePlayingVoices } from '../../src/actions/SynthActions';
 import {
     setLinkMode,
@@ -155,5 +156,43 @@ describe('Ui reducer', () => {
         expect(state.graph.zoom).to.equal(3);
         expect(state.graph.pan.x).to.equal(5);
         expect(state.graph.pan.y).to.equal(6);
+    });
+
+    it('should load a full state', () => {
+        state = ui(state, loadState({
+            synth: {},
+            ui: {
+                viewPanel: 'test',
+                isPianoVisible: true,
+                isSpectrumVisible: true
+            }
+        }, ['Master', 'Oscillator']));
+
+        expect(state.viewPanel).to.equal('test');
+        expect(state.isPianoVisible).to.equal(true);
+        expect(state.isSpectrumVisible).to.equal(true);
+
+        state = ui(state, loadState({
+            synth: {},
+            ui: {
+                viewPanel: 'testtest',
+                isPianoVisible: false,
+            }
+        }, ['Master', 'Oscillator']));
+
+        expect(state.viewPanel).to.equal('testtest');
+        expect(state.isPianoVisible).to.equal(false);
+        expect(state.isSpectrumVisible).to.equal(true);
+
+        state = ui(state, loadState({
+            synth: {},
+            ui: {
+                viewPanel: null
+            }
+        }, ['Master', 'Oscillator']));
+
+        expect(state.viewPanel).to.equal('testtest');
+        expect(state.isPianoVisible).to.equal(false);
+        expect(state.isSpectrumVisible).to.equal(true);
     });
 });
