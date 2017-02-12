@@ -17,6 +17,9 @@
   vertical-align: middle;
 }
 
+.modal-backdrop.in {
+  opacity: 0.7 !important;
+}
 
 #no-audio-warning {
   color: @c-dark;
@@ -28,5 +31,79 @@
   a {
     color: @c-dark;
     text-decoration: underline;
+  }
+}
+
+#save-operation {
+  .modal-dialog {
+    overflow-y: initial !important;
+
+    .modal-content {
+      color: @c-light;
+      background: @c-dark;
+
+      .modal-header {
+        border-bottom: none;
+      }
+
+      .modal-title {
+        color: @c-secondary;
+        text-transform: uppercase;
+      }
+
+      .modal-body {
+        .save-new {
+
+          .newSynthGroup {
+            input {
+              outline: none !important;
+              background: @c-dark;
+              border: 1px solid @c-light;
+              color: @c-light;
+            }
+            .input-group-addon {
+              border: none;
+              background: @c-light;
+              padding: 0;
+
+              button {
+                outline: none !important;
+                padding: 0px 15px;
+                border: none;
+                background: @c-light;
+                color: @c-dark;
+                font-size: 28px;
+                cursor: pointer;
+
+                &:hover {
+                  color: @c-secondary;
+                }
+              }
+            }
+
+            &.has-error {
+              input {
+                color: @c-error;
+                border-color: @c-error;
+              }
+
+            }
+          }
+
+
+
+        }
+
+        .savedItemsList {
+          overflow-y: auto;
+          margin: 15px 0;
+
+          .modal-title {
+            margin-bottom: 15px;
+          }
+        }
+      }
+
+    }
   }
 }

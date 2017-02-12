@@ -69,6 +69,9 @@ const initState = {
         viewPanel: 'graph',
         isPianoVisible: false,
         isSpectrumVisible: false
+    },
+    app: {
+        savedList: []
     }
 };
 

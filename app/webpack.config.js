@@ -30,7 +30,6 @@
                 'redux',
                 'react-redux',
                 'redux-thunk',
-                'lodash',
                 'jquery',
                 'jquery-knob',
                 'cytoscape'

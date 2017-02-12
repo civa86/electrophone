@@ -34,7 +34,11 @@ const localCache = (storageInput) => {
         if (hasStorage && stateName) {
             cache = storage.getItem(stateName);
             if (cache && typeof cache === 'string') {
-                cache = JSON.parse(cache);
+                try {
+                    cache = JSON.parse(cache);
+                } catch (e) {
+                    cache = null;
+                }
             }
         }
         return cache;
@@ -65,8 +69,8 @@ const localCache = (storageInput) => {
             found = storage.filter(e => e.id === itemId).pop(),
             element = {
                 id: itemId,
-                item: item
-                //TODO add date...
+                item: item,
+                time: + new Date()
             };
 
         if (!found) {

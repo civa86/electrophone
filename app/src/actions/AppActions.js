@@ -14,7 +14,15 @@ function resetState () {
     }
 }
 
+function updateSavedList (list) {
+    return {
+        type: actionTypes.APP_UPDATE_SAVED_LIST, 
+        list    
+    }
+}
+
 export {
     loadState,
-    resetState
+    resetState,
+    updateSavedList
 };
