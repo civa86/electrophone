@@ -5,7 +5,7 @@ import SavedList from './SavedList';
 
 const SaveOperation = (props) => {
     const
-        { savedItems, windowHeight, saveAction } = props,
+        { savedItems, windowHeight, saveAction, removeAction, updateAction } = props,
         h = (windowHeight) ? +windowHeight / 2 : 400;
 
     function saveSynth (e) {
@@ -17,6 +17,7 @@ const SaveOperation = (props) => {
             $('.newSynthGroup').addClass('has-error');
         } else {
             try {
+                e.target.newSynth.value = '';
                 saveAction(val);
             } catch (e) {
                 //TODO manage duplicate message??
@@ -59,8 +60,12 @@ const SaveOperation = (props) => {
                         </div>
                         <div className="savedItemsList" style={{ height: h + 'px' }}>
                             <h5 className="modal-title">Overwrite existing</h5>
-                            <SavedList items={savedItems}
-                                       onClickHandler={() => alert('asd')}
+                            <SavedList id="save-op-modal"
+                                       items={savedItems}
+                                       operationIcon="ion-ios-download"
+                                       confirmMessage="Overwrite?"
+                                       onConfirmHandler={id => updateAction(id)}
+                                       onRemoveHandler={id => removeAction(id)}
                             />
                         </div>
                     </div>

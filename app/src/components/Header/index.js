@@ -62,7 +62,7 @@ const Header = (props) => {
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.loadSynth()}
+                           onClick={() => viewActions.openLoadOperation()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Load Synth">

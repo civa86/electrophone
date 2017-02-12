@@ -14,6 +14,7 @@ import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
 import SaveOperation from '../components/Operations/Save';
+import LoadOperation from '../components/Operations/Load';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
@@ -120,11 +121,25 @@ class App extends Component {
                     newSavedList = localCache.addItem(localCacheKey, id, { ui: { ...newUi }, synth: { ...synth } });
                 dispatch(AppActions.updateSavedList(newSavedList));
             },
-            // loadSynth: () =>
-            //     dispatch(Actions.loadState(
-            //         // localCache.loadState(localCacheKey),
-            //         WebSynth.describeModules().map(e => e.type)
-            //     )),
+            removedSavedSynth: id => {
+                const newSavedList = localCache.removeItem(localCacheKey, id);
+                dispatch(AppActions.updateSavedList(newSavedList));
+            },
+            updateSavedSynth: id => {
+                const
+                    newUi = { ...ui, graph: { ...ui.graph, instance: null } },
+                    newSavedList = localCache.updateItem(localCacheKey, id, { ui: { ...newUi }, synth: { ...synth } });
+                dispatch(AppActions.updateSavedList(newSavedList));
+            },
+            openLoadOperation: () => {
+                $('#load-operation').modal('show');
+            },
+            loadSynth: id => {
+                const item = localCache.getItem(localCacheKey, id);
+
+                $('#load-operation').modal('hide');
+                dispatch(Actions.loadState(item.item, WebSynth.describeModules().map(e => e.type)));
+            },
             resetSynth: () =>
                 dispatch(Actions.resetState()),
             toggleLinkMode: () =>
@@ -151,7 +166,7 @@ class App extends Component {
     }
 
     getKeyboardMapping () {
-        const { dispatch, ui } = this.props;
+        const { ui } = this.props;
 
         //TODO wrap actions inside a method that check if if ($('.modal.in').length === 0)
         return [
@@ -264,6 +279,13 @@ class App extends Component {
                 <NoAudioWarning/>
                 <SaveOperation savedItems={app.savedList}
                                saveAction={viewActions.saveSynth}
+                               removeAction={viewActions.removedSavedSynth}
+                               updateAction={viewActions.updateSavedSynth}
+                               windowHeight={$(window).height()}
+                />
+                <LoadOperation savedItems={app.savedList}
+                               loadAction={viewActions.loadSynth}
+                               removeAction={viewActions.removedSavedSynth}
                                windowHeight={$(window).height()}
                 />
                 <Header height={headerHeight}
@@ -300,15 +322,14 @@ class App extends Component {
                        headerHeight={headerHeight}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={
-                            playingVoices => this.dispatchIfNotInOperation(Actions.updatePlayingVoices(
-                                        playingVoices,
-                                        {
-                                            zoom: ui.graph.instance.zoom(),
-                                            pan: ui.graph.instance.pan()
-                                        }
-                            ))
-                       }
+                       updatePlayingVoices={playingVoices => this.dispatchIfNotInOperation(
+                                                                Actions.updatePlayingVoices(
+                                                                    playingVoices,
+                                                                    {
+                                                                        zoom: ui.graph.instance.zoom(),
+                                                                        pan: ui.graph.instance.pan()
+                                                                    }
+                                                                ))}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>

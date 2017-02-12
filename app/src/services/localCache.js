@@ -94,6 +94,7 @@ const localCache = (storageInput) => {
 
                 return {
                     ...e,
+                    time: + new Date(),
                     item: {
                         ...e.item,
                         ...item
