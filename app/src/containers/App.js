@@ -23,7 +23,8 @@ import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
 const
-    localCache = localCacheService(),
+    storage = (typeof(Storage) !== "undefined" && window.localStorage) ? window.localStorage : null,
+    localCache = localCacheService(storage),
     screen = screenService(),
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
@@ -88,11 +89,11 @@ class App extends Component {
                 dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
             saveSynth: () => {
                 const newUi = { ...ui, graph: { ...ui.graph, instance: null } };
-                localCache.saveState(localCacheKey, { ui: { ...newUi }, synth: { ...synth } });
+                // localCache.saveState(localCacheKey, { ui: { ...newUi }, synth: { ...synth } });
             },
             loadSynth: () =>
                 dispatch(Actions.loadState(
-                    localCache.loadState(localCacheKey),
+                    // localCache.loadState(localCacheKey),
                     WebSynth.describeModules().map(e => e.type)
                 )),
             resetSynth: () =>
