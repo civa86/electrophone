@@ -129,7 +129,14 @@ class App extends Component {
             saveSynth: values => {
                 const
                     newUi = { ...ui, graph: { ...ui.graph, instance: null } },
-                    newSavedList = localCache.addItem(localCacheKey, values.label, { ui: { ...newUi }, synth: { ...synth } });
+                    newSavedList = localCache.addItem(
+                        localCacheKey,
+                        values.label,
+                        { ui: { ...newUi }, synth: { ...synth } }
+                    );
+
+                $('.save-new-form').find('input[name="label"]').blur();
+
                 dispatch(reset('saveSynth'));
                 dispatch(AppActions.updateSavedList(newSavedList));
             },
@@ -140,7 +147,11 @@ class App extends Component {
             updateSavedSynth: id => {
                 const
                     newUi = { ...ui, graph: { ...ui.graph, instance: null } },
-                    newSavedList = localCache.updateItem(localCacheKey, id, { ui: { ...newUi }, synth: { ...synth } });
+                    newSavedList = localCache.updateItem(
+                        localCacheKey,
+                        id,
+                        { ui: { ...newUi }, synth: { ...synth } }
+                    );
                 dispatch(AppActions.updateSavedList(newSavedList));
             },
             loadSynth: id => {

@@ -16,13 +16,12 @@ const validate = (values, props) => {
     return errors;
 };
 
-const renderField = ({ input, placeholder, type, meta: { touched, error } }) => (
+const renderField = ({ input, meta: { touched, error } }) => (
     <div className="form-group">
         <div className={'input-group' + ((touched && error) ? ' has-error' : '')}>
             <input type="text"
                    autoComplete="off"
                    className="form-control"
-                   onChange={() => removeError()}
                    placeholder="Save New Synth"
                 {...input}/>
             <div className="input-group-addon">
@@ -47,7 +46,7 @@ class SaveForm extends Component {
     render () {
         const {
             handleSubmit,
-            submitAction,
+            submitAction
         } = this.props;
 
         return (

@@ -19,9 +19,11 @@ const LoadModal = (props) => {
                         <div className="savedItemsList" style={{ height: h + 'px' }}>
                             <ItemsList id="load-op-modal"
                                        items={items}
-                                       operationIcon="ion-ios-upload"
-                                       confirmMessage="Load?"
-                                       onConfirmHandler={id => loadAction(id)}
+                                       mainOperation={{
+                                           icon: 'ion-ios-upload',
+                                           handler: id => loadAction(id),
+                                           confirm: false
+                                       }}
                                        onRemoveHandler={id => removeAction(id)}
                             />
                         </div>

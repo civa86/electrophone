@@ -24,9 +24,12 @@ const SaveModal = (props) => {
                             <h5 className="modal-title">Overwrite existing</h5>
                             <ItemsList id="save-op-modal"
                                        items={items}
-                                       operationIcon="ion-ios-download"
-                                       confirmMessage="Overwrite?"
-                                       onConfirmHandler={id => updateAction(id)}
+                                       mainOperation={{
+                                           icon: 'ion-ios-download',
+                                           question: 'Overwrite?',
+                                           handler: id => updateAction(id),
+                                           confirm: true
+                                       }}
                                        onRemoveHandler={id => removeAction(id)}
                             />
                         </div>

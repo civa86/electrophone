@@ -6,9 +6,7 @@ const ItemsList = (props) => {
     const {
             id,
             items,
-            operationIcon,
-            confirmMessage,
-            onConfirmHandler,
+            mainOperation,
             onRemoveHandler
         } = props,
         selector = $('#' + id);
@@ -21,6 +19,32 @@ const ItemsList = (props) => {
         if (a && a.time && b && b.time) {
             return -1 * asc(a.time, b.time);
         }
+    }
+
+    function showConfirm (i, elem) {
+        selector
+            .find('#item-' + i)
+            .find(elem).fadeIn();
+    }
+
+    function hideConfirm (i, elem) {
+        selector
+            .find('#item-' + i)
+            .find(elem).fadeOut();
+    }
+
+    function hideAll () {
+        selector.find('.confirm-operation').fadeOut();
+    }
+
+    function removeItem (id) {
+        hideAll();
+        onRemoveHandler(id);
+    }
+
+    function confirmOperation (id) {
+        hideAll();
+        mainOperation.handler(id);
     }
 
     return (
@@ -40,15 +64,17 @@ const ItemsList = (props) => {
                                     <div className="col-xs-8 name">{e.id}</div>
                                     <div className="col-xs-4 text-right">
                                         <div className="operations">
-                                            <i className={operationIcon}
-                                               onClick={() => selector
-                                                            .find('#item-' + i)
-                                                            .find('.action-confirm').fadeIn()}
+                                            <i className={mainOperation.icon}
+                                               onClick={() => {
+                                                   if (mainOperation.confirm === true) {
+                                                       showConfirm(i, '.action-confirm');
+                                                   } else {
+                                                       confirmOperation(e.id);
+                                                   }
+                                               }}
                                             />
                                             <i className="ion-trash-b"
-                                               onClick={() => selector
-                                                            .find('#item-' + i)
-                                                            .find('.remove-confirm').fadeIn()}
+                                               onClick={() => showConfirm(i, '.remove-confirm')}
                                             />
                                         </div>
                                         <div className="time">
@@ -57,38 +83,27 @@ const ItemsList = (props) => {
                                     </div>
                                 </div>
                                 <div className="remove-confirm confirm-operation">
-                                    <div className="col-xs-8 question">Remove?</div>
+                                    <div className="col-xs-8 question">Delete?</div>
                                     <div className="col-xs-4 text-right">
                                         <div className="operations">
                                             <i className="ion-ios-checkmark"
-                                               onClick={() => {
-                                                   selector.find('.confirm-operation').fadeOut();
-                                                   onRemoveHandler(e.id);
-                                               }}
+                                               onClick={() => removeItem(e.id)}
                                             />
                                             <i className="ion-ios-close"
-                                               onClick={() => selector
-                                                   .find('#item-' + i)
-                                                   .find('.remove-confirm').fadeOut()
-                                               }
+                                               onClick={() => hideConfirm(i, '.remove-confirm')}
                                             />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="action-confirm confirm-operation">
-                                    <div className="col-xs-8 question">{confirmMessage}</div>
+                                    <div className="col-xs-8 question">{mainOperation.question}</div>
                                     <div className="col-xs-4 text-right">
                                         <div className="operations">
                                             <i className="ion-ios-checkmark"
-                                               onClick={() => {
-                                                   selector.find('.confirm-operation').fadeOut();
-                                                   onConfirmHandler(e.id);
-                                               }}
+                                               onClick={() => confirmOperation(e.id)}
                                             />
                                             <i className="ion-ios-close"
-                                               onClick={() => selector
-                                                            .find('#item-' + i)
-                                                            .find('.action-confirm').fadeOut()}
+                                               onClick={() => hideConfirm(i, '.action-confirm')}
                                             />
                                         </div>
                                     </div>
