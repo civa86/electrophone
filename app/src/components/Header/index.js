@@ -1,5 +1,7 @@
 import React from 'react';
 
+import icon from '../../../img/icon.png';
+
 const Header = (props) => {
 
     const {
@@ -17,8 +19,13 @@ const Header = (props) => {
         <div id="header" style={{ height: height }}>
             <div className="header-top container-fluid">
                 <div className="logo no-select cursor-default pull-left">
-                    <span className="capital">W</span>eb<span className="capital">S</span>ynth
-                    <span className="version">{libVersion}</span>
+                    <div className="pull-left icon">
+                        <img src={icon} alt="icon"/>
+                    </div>
+                    <div className="pull-left">
+                        <span className="capital">W</span>eb<span className="capital">S</span>ynth
+                        <span className="version">{libVersion}</span>
+                    </div>
                 </div>
 
                 <div className="links pull-right">

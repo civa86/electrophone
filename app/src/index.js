@@ -15,6 +15,9 @@ import 'imports?jQuery=jquery!bootstrap/dist/js/bootstrap';
 //IONICONS
 import 'ionicons/css/ionicons.css';
 
+//ICON
+import '../img/icon.png';
+
 // STYLE
 import '../less/screen.less';
 
