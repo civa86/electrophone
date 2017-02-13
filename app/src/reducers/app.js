@@ -10,7 +10,7 @@ function app (state = initialState, action = {}) {
         case actionTypes.APP_UPDATE_SAVED_LIST : {
             return {
                 ...state,
-                savedList: action.list //TODO sort...
+                savedList: action.list
             };
         }
 

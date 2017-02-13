@@ -195,7 +195,7 @@ class Synth extends Component {
 
         this.spectrumProps = {
             canvasCtx: spectrumCanvasCtxElement.getContext('2d'),
-            WIDTH: $(window).width(), //TODO pay attention if ypu want to manage window resize event
+            WIDTH: $(window).width(),
             HEIGHT: 200
         };
 
