@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import $ from 'jquery';
 
 import * as AppActions from '../actions/AppActions';
@@ -13,6 +14,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
+import SaveModal from '../components/Operations/SaveModal';
+import LoadModal from '../components/Operations/LoadModal';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
@@ -23,7 +26,8 @@ import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
 const
-    localCache = localCacheService(),
+    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
+    localCache = localCacheService(storage),
     screen = screenService(),
     localCacheKey = 'webSynth',
     nodePrefix = 'node',
@@ -44,6 +48,7 @@ class App extends Component {
         } else if (typeof window.webkitAudioContext !== 'undefined') {
             this.audioContext = new window.webkitAudioContext();
         } else {
+            //No Audio Warning
             $(document).ready(() => {
                 $('#no-audio-warning').modal({
                     backdrop: 'static'
@@ -51,19 +56,48 @@ class App extends Component {
                 $('#no-audio-warning').modal('show');
             });
         }
+    }
+
+    componentDidMount () {
+        const
+            { dispatch } = this.props,
+            savedList = localCache.itemsList(localCacheKey);
+
+        dispatch(AppActions.updateSavedList(savedList));
 
         $(document).ready(() => {
+            //Tooltips
             $('[data-toggle="tooltip"]').tooltip();
-            $("#main-wrapper").find('li.module-builder').on('show.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
+
+            //Add module dropdown
+            $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
             });
-            $("#main-wrapper").find('li.module-builder').on('hidden.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            $('#main-wrapper').find('li.module-builder').on('hidden.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            });
+
+            //Operation Modals
+            $('.operation-modal').on('hidden.bs.modal', () => {
+                $('.operation-modal').find('.confirm-operation').hide();
+                dispatch(reset('saveSynth'));
             });
         });
     }
 
+    isOperationInProgress () {
+        return $('.modal.in').length > 0;
+    }
+
+    dispatchIfNotInOperation (action) {
+        const { dispatch } = this.props;
+        if (!this.isOperationInProgress()) {
+            return dispatch(action);
+        }
+    }
+
     getViewActions () {
+        //TODO write a component dedicated???
         const { dispatch, ui, synth } = this.props;
         return {
             onGraphCreated: (instance) => {
@@ -86,15 +120,46 @@ class App extends Component {
                 dispatch(Actions.setPianoVisibility(isPianoVisible)),
             setSpectrumVisibility: (isSpectrumVisible) =>
                 dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
-            saveSynth: () => {
-                const newUi = { ...ui, graph: { ...ui.graph, instance: null } };
-                localCache.saveState(localCacheKey, { ui: { ...newUi }, synth: { ...synth } });
+            openSaveOperation: () => {
+                $('#save-operation').modal('show');
             },
-            loadSynth: () =>
-                dispatch(Actions.loadState(
-                    localCache.loadState(localCacheKey),
-                    WebSynth.describeModules().map(e => e.type)
-                )),
+            openLoadOperation: () => {
+                $('#load-operation').modal('show');
+            },
+            saveSynth: values => {
+                const
+                    newUi = { ...ui, graph: { ...ui.graph, instance: null } },
+                    newSavedList = localCache.addItem(
+                        localCacheKey,
+                        values.label,
+                        { ui: { ...newUi }, synth: { ...synth } }
+                    );
+
+                $('.save-new-form').find('input[name="label"]').blur();
+
+                dispatch(reset('saveSynth'));
+                dispatch(AppActions.updateSavedList(newSavedList));
+            },
+            removedSavedSynth: id => {
+                const newSavedList = localCache.removeItem(localCacheKey, id);
+                dispatch(AppActions.updateSavedList(newSavedList));
+            },
+            updateSavedSynth: id => {
+                const
+                    newUi = { ...ui, graph: { ...ui.graph, instance: null } },
+                    newSavedList = localCache.updateItem(
+                        localCacheKey,
+                        id,
+                        { ui: { ...newUi }, synth: { ...synth } }
+                    );
+                dispatch(AppActions.updateSavedList(newSavedList));
+            },
+            loadSynth: id => {
+                const item = localCache.getItem(localCacheKey, id);
+
+                $('#load-operation').modal('hide');
+                dispatch(Actions.loadState(item.item, WebSynth.describeModules().map(e => e.type)));
+            },
             resetSynth: () =>
                 dispatch(Actions.resetState()),
             toggleLinkMode: () =>
@@ -121,13 +186,13 @@ class App extends Component {
     }
 
     getKeyboardMapping () {
-        const { dispatch, ui } = this.props;
+        const { ui } = this.props;
 
         return [
             {
                 keys: [16], //SHIFT
-                down: () => dispatch(Actions.setLinkMode(true)),
-                up: () => dispatch(Actions.setLinkMode(false)),
+                down: () => this.dispatchIfNotInOperation(Actions.setLinkMode(true)),
+                up: () => this.dispatchIfNotInOperation(Actions.setLinkMode(false)),
                 specialKeys: 'shift'
             },
             {
@@ -142,26 +207,34 @@ class App extends Component {
                     } else if (ui.viewPanel === 'control') {
                         toggleView = 'graph';
                     }
-                    dispatch(Actions.setViewPanel(toggleView));
+                    this.dispatchIfNotInOperation(Actions.setViewPanel(toggleView));
                 },
                 up: () => false
             },
             {
                 keys: [90], //Z
-                down: () => dispatch(Actions.octaveDecrease()),
+                down: () => this.dispatchIfNotInOperation(Actions.octaveDecrease()),
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [88], //X
-                down: () => dispatch(Actions.octaveIncrease()),
+                down: () => this.dispatchIfNotInOperation(Actions.octaveIncrease()),
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [8], //DELETE
-                down: (e) => e.preventDefault(),
-                up: () => this.removeSelectedNodes(),
+                down: (e) => {
+                    if (!this.isOperationInProgress()) {
+                        e.preventDefault()
+                    }
+                },
+                up: () => {
+                    if (!this.isOperationInProgress()) {
+                        this.removeSelectedNodes();
+                    }
+                },
                 specialKeys: false
             }
         ]
@@ -217,12 +290,21 @@ class App extends Component {
 
     render () {
         const
-            { ui, synth, dispatch } = this.props,
+            { app, ui, synth, dispatch } = this.props,
             viewActions = this.getViewActions();
 
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
+                <SaveModal items={app.savedList}
+                           saveAction={viewActions.saveSynth}
+                           updateAction={viewActions.updateSavedSynth}
+                           removeAction={viewActions.removedSavedSynth}
+                />
+                <LoadModal items={app.savedList}
+                           loadAction={viewActions.loadSynth}
+                           removeAction={viewActions.removedSavedSynth}
+                />
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}
                         viewActions={viewActions}
@@ -257,15 +339,14 @@ class App extends Component {
                        headerHeight={headerHeight}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={
-                            playingVoices => dispatch(Actions.updatePlayingVoices(
-                                playingVoices,
-                                {
-                                    zoom: ui.graph.instance.zoom(),
-                                    pan: ui.graph.instance.pan()
-                                }
-                            ))
-                       }
+                       updatePlayingVoices={playingVoices => this.dispatchIfNotInOperation(
+                                                                Actions.updatePlayingVoices(
+                                                                    playingVoices,
+                                                                    {
+                                                                        zoom: ui.graph.instance.zoom(),
+                                                                        pan: ui.graph.instance.pan()
+                                                                    }
+                                                                ))}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
@@ -283,6 +364,7 @@ class App extends Component {
 
 function mapStateToProps (state) {
     return {
+        app: state.app,
         synth: state.synth,
         ui: state.ui
     };

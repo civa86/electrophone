@@ -16,4 +16,12 @@ describe('App actions', () => {
         const expectedAction = { type: actionTypes.APP_RESET_STATE };
         expect(actions.resetState()).to.deep.equal(expectedAction);
     });
+
+    it('should create an action updateSavedList', () => {
+        const expectedAction = {
+            type: actionTypes.APP_UPDATE_SAVED_LIST,
+            list: [1, 2, 3]
+        };
+        expect(actions.updateSavedList([1, 2, 3])).to.deep.equal(expectedAction);
+    });
 });

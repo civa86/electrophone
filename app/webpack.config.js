@@ -30,10 +30,11 @@
                 'redux',
                 'react-redux',
                 'redux-thunk',
-                'lodash',
                 'jquery',
                 'jquery-knob',
-                'cytoscape'
+                'cytoscape',
+                'moment',
+                'redux-form'
             ]
         };
         output = {

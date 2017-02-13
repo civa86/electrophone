@@ -53,7 +53,7 @@ const Header = (props) => {
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.saveSynth()}
+                           onClick={() => viewActions.openSaveOperation()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Save Synth">
@@ -62,7 +62,7 @@ const Header = (props) => {
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.loadSynth()}
+                           onClick={() => viewActions.openLoadOperation()}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Load Synth">
@@ -137,27 +137,3 @@ const Header = (props) => {
 };
 
 export default Header;
-
-/*
- <div className="col-xs-8">
- <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
- LINK MODE
- </button>
- <button onClick={() => localCache.saveState(localCacheKey, synth)}>
- SAVE SYNTH
- </button>
- <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
- LOAD SYNTH
- </button>
- <button onClick={() => dispatch(SynthActions.resetState())}>
- RESET SYNTH
- </button>
- <br/>
- OCTAVE: {synth.octave}
- <br/>
- <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
- ADD MODULE
- </button>
-
- </div>
- */

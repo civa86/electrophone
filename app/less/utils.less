@@ -7,7 +7,7 @@
 @c-light: #efefef;
 @c-dark: #333;
 @c-secondary: #46bcec;
-@c-error: #cc0000;
+@c-error: #a94442;
 
 @c-master: #ccc;
 @c-control-modules: #f6cde6;
@@ -31,6 +31,12 @@
   -webkit-transition-timing-function: @function;
   -o-transition-timing-function: @function;
   transition-timing-function: @function;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 //Helper classes

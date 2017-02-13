@@ -17,6 +17,9 @@
   vertical-align: middle;
 }
 
+.modal-backdrop.in {
+  opacity: 0.7 !important;
+}
 
 #no-audio-warning {
   color: @c-dark;
@@ -28,5 +31,158 @@
   a {
     color: @c-dark;
     text-decoration: underline;
+  }
+}
+
+.operation-modal {
+  .modal-dialog {
+    overflow-y: initial !important;
+
+    .modal-content {
+      color: @c-light;
+      background: @c-dark;
+
+      .modal-header {
+        border-bottom: none;
+      }
+
+      .modal-title {
+        color: @c-secondary;
+        text-transform: uppercase;
+      }
+
+      .modal-body {
+        .save-new-form {
+          .form-group {
+            margin-bottom: 0;
+          }
+
+          .form-error {
+            height: 25px;
+            margin-top: 5px;
+          }
+
+          .input-group {
+            input {
+              outline: none !important;
+              background: @c-dark;
+              border: 1px solid @c-light;
+              color: @c-light;
+            }
+            .input-group-addon {
+              border: none;
+              background: @c-light;
+              padding: 0;
+
+              button {
+                outline: none !important;
+                padding: 0px 15px;
+                border: none;
+                background: @c-light;
+                color: @c-dark;
+                font-size: 28px;
+                cursor: pointer;
+
+                &:hover {
+                  color: @c-secondary;
+                }
+              }
+            }
+
+            &.has-error {
+              input {
+                color: @c-error;
+                border-color: @c-error;
+              }
+
+              .input-group-addon {
+                background: @c-error;
+
+                button {
+                  background: @c-error;
+
+                  &:hover {
+                    color: @c-dark;
+                  }
+                }
+              }
+            }
+          }
+
+
+
+        }
+
+        .savedItemsList {
+          overflow-y: auto;
+          margin: 5px 0 15px 0;
+
+          .modal-title {
+            color: @c-light;
+            margin-bottom: 15px;
+          }
+
+          .saved-item {
+            position: relative;
+            border: 1px solid @c-light;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            padding: 5px 15px;
+
+            .name {
+              color: @c-light;
+              font-size: 16px;
+              text-overflow: ellipsis;
+            }
+
+            .time {
+              padding-top: 3px;
+              color: #999;
+              font-size: 13px;
+            }
+
+            .operations {
+              i {
+                font-size: 20px;
+                cursor: pointer;
+                display: inline-block;
+                color: @c-light;
+
+                &:first-child {
+                  margin-right: 15px;
+                }
+
+                &:hover {
+                  color: @c-secondary;
+                }
+              }
+            }
+
+            .confirm-operation {
+              position: absolute;
+              top: 0; left: 0;
+              width: 100%; height: 100%;
+              background: fade(@c-light, 95);
+              color: @c-dark;
+              display: none;
+              padding: 5px 0;
+
+              .question {
+                color: @c-dark;
+                font-size: 16px;
+                text-overflow: ellipsis;
+              }
+
+              .operations {
+                i {
+                  color: @c-dark;
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
   }
 }

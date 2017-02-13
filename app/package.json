@@ -19,6 +19,8 @@
     "jquery-knob": "1.2.11",
     "ionicons": "2.0.1",
     "cytoscape": "2.5.5",
+    "moment": "2.13.0",
+    "redux-form": "6.5.0",
     "bootstrap": "3.3.6"
   },
   "devDependencies": {
