@@ -33,7 +33,8 @@
                 'jquery',
                 'jquery-knob',
                 'cytoscape',
-                'moment'
+                'moment',
+                'redux-form'
             ]
         };
         output = {

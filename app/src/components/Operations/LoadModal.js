@@ -1,11 +1,12 @@
 import React from 'react';
+import $ from 'jquery';
 
-import SavedList from './SavedList';
+import ItemsList from './ItemsList';
 
-const LoadOperation = (props) => {
+const LoadModal = (props) => {
     const
-        { savedItems, windowHeight, loadAction, removeAction } = props,
-        h = (windowHeight) ? +windowHeight / 2 : 400;
+        { items, loadAction, removeAction } = props,
+        h = $(window).height() / 2;
 
     return (
         <div id="load-operation" className="operation-modal modal fade" tabIndex="-1" role="dialog">
@@ -16,8 +17,8 @@ const LoadOperation = (props) => {
                     </div>
                     <div className="modal-body">
                         <div className="savedItemsList" style={{ height: h + 'px' }}>
-                            <SavedList id="load-op-modal"
-                                       items={savedItems}
+                            <ItemsList id="load-op-modal"
+                                       items={items}
                                        operationIcon="ion-ios-upload"
                                        confirmMessage="Load?"
                                        onConfirmHandler={id => loadAction(id)}
@@ -31,4 +32,4 @@ const LoadOperation = (props) => {
     );
 };
 
-export default LoadOperation;
+export default LoadModal;

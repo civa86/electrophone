@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import $ from 'jquery';
 
 import * as AppActions from '../actions/AppActions';
@@ -13,8 +14,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
-import SaveOperation from '../components/Operations/Save';
-import LoadOperation from '../components/Operations/Load';
+import SaveModal from '../components/Operations/SaveModal';
+import LoadModal from '../components/Operations/LoadModal';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
@@ -79,6 +80,7 @@ class App extends Component {
             //Operation Modals
             $('.operation-modal').on('hidden.bs.modal', () => {
                 $('.operation-modal').find('.confirm-operation').hide();
+                dispatch(reset('saveSynth'));
             });
         });
     }
@@ -95,6 +97,7 @@ class App extends Component {
     }
 
     getViewActions () {
+        //TODO write a component dedicated???
         const { dispatch, ui, synth } = this.props;
         return {
             onGraphCreated: (instance) => {
@@ -120,10 +123,14 @@ class App extends Component {
             openSaveOperation: () => {
                 $('#save-operation').modal('show');
             },
-            saveSynth: id => {
+            openLoadOperation: () => {
+                $('#load-operation').modal('show');
+            },
+            saveSynth: values => {
                 const
                     newUi = { ...ui, graph: { ...ui.graph, instance: null } },
-                    newSavedList = localCache.addItem(localCacheKey, id, { ui: { ...newUi }, synth: { ...synth } });
+                    newSavedList = localCache.addItem(localCacheKey, values.label, { ui: { ...newUi }, synth: { ...synth } });
+                dispatch(reset('saveSynth'));
                 dispatch(AppActions.updateSavedList(newSavedList));
             },
             removedSavedSynth: id => {
@@ -135,9 +142,6 @@ class App extends Component {
                     newUi = { ...ui, graph: { ...ui.graph, instance: null } },
                     newSavedList = localCache.updateItem(localCacheKey, id, { ui: { ...newUi }, synth: { ...synth } });
                 dispatch(AppActions.updateSavedList(newSavedList));
-            },
-            openLoadOperation: () => {
-                $('#load-operation').modal('show');
             },
             loadSynth: id => {
                 const item = localCache.getItem(localCacheKey, id);
@@ -173,7 +177,6 @@ class App extends Component {
     getKeyboardMapping () {
         const { ui } = this.props;
 
-        //TODO wrap actions inside a method that check if if ($('.modal.in').length === 0)
         return [
             {
                 keys: [16], //SHIFT
@@ -282,16 +285,14 @@ class App extends Component {
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
-                <SaveOperation savedItems={app.savedList}
-                               saveAction={viewActions.saveSynth}
-                               removeAction={viewActions.removedSavedSynth}
-                               updateAction={viewActions.updateSavedSynth}
-                               windowHeight={$(window).height()}
+                <SaveModal items={app.savedList}
+                           saveAction={viewActions.saveSynth}
+                           updateAction={viewActions.updateSavedSynth}
+                           removeAction={viewActions.removedSavedSynth}
                 />
-                <LoadOperation savedItems={app.savedList}
-                               loadAction={viewActions.loadSynth}
-                               removeAction={viewActions.removedSavedSynth}
-                               windowHeight={$(window).height()}
+                <LoadModal items={app.savedList}
+                           loadAction={viewActions.loadSynth}
+                           removeAction={viewActions.removedSavedSynth}
                 />
                 <Header height={headerHeight}
                         repoUrl={process.env.GITHUB_REPO_URL}

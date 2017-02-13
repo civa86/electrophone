@@ -52,9 +52,17 @@
       }
 
       .modal-body {
-        .save-new {
+        .save-new-form {
+          .form-group {
+            margin-bottom: 0;
+          }
 
-          .newSynthGroup {
+          .form-error {
+            height: 25px;
+            margin-top: 5px;
+          }
+
+          .input-group {
             input {
               outline: none !important;
               background: @c-dark;
@@ -87,6 +95,17 @@
                 border-color: @c-error;
               }
 
+              .input-group-addon {
+                background: @c-error;
+
+                button {
+                  background: @c-error;
+
+                  &:hover {
+                    color: @c-dark;
+                  }
+                }
+              }
             }
           }
 
@@ -96,7 +115,7 @@
 
         .savedItemsList {
           overflow-y: auto;
-          margin: 15px 0;
+          margin: 5px 0 15px 0;
 
           .modal-title {
             color: @c-light;
