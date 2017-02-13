@@ -45,6 +45,7 @@ const SaveOperation = (props) => {
                                 <div className="form-group">
                                     <div className="input-group newSynthGroup">
                                         <input type="text"
+                                               autoComplete="off"
                                                name="newSynth"
                                                className="form-control"
                                                onChange={() => removeError()}
