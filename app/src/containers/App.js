@@ -25,7 +25,7 @@ import localCacheService from '../services/localCache';
 import screenService from '../services/screen';
 
 const
-    storage = (typeof(Storage) !== "undefined" && window.localStorage) ? window.localStorage : null,
+    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
     localCache = localCacheService(storage),
     screen = screenService(),
     localCacheKey = 'webSynth',
@@ -69,11 +69,16 @@ class App extends Component {
             $('[data-toggle="tooltip"]').tooltip();
 
             //Add module dropdown
-            $("#main-wrapper").find('li.module-builder').on('show.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
+            $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
             });
-            $("#main-wrapper").find('li.module-builder').on('hidden.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            $('#main-wrapper').find('li.module-builder').on('hidden.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            });
+
+            //Operation Modals
+            $('.operation-modal').on('hidden.bs.modal', () => {
+                $('.operation-modal').find('.confirm-operation').hide();
             });
         });
     }
