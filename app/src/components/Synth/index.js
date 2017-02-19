@@ -24,37 +24,20 @@ class Synth extends Component {
     updateSpectrum (dataArray) {
         const
             k = 256.0,
-            sliceWidth = this.spectrumProps.WIDTH * 1.0 / k;
+            sliceWidth = this.spectrumProps.WIDTH * (dataArray.length / this.spectrumProps.WIDTH) / k;
         let x = 0;
 
         this.spectrumProps.canvasCtx.fillStyle = 'rgb(51, 51, 51)';
         this.spectrumProps.canvasCtx.fillRect(0, 0, this.spectrumProps.WIDTH, this.spectrumProps.HEIGHT);
-        this.spectrumProps.canvasCtx.lineWidth = 1.8;
-        this.spectrumProps.canvasCtx.strokeStyle = 'rgb(70, 188, 236)';
-        this.spectrumProps.canvasCtx.beginPath();
 
         for (let i = 0; i < dataArray.length; i++) {
             const v = dataArray[i] / k,
                 y = this.spectrumProps.HEIGHT - (v * this.spectrumProps.HEIGHT);
 
-            if (i === 0) {
-                this.spectrumProps.canvasCtx.moveTo(x, y);
-            } else {
-                this.spectrumProps.canvasCtx.lineTo(x, y);
-            }
-
+            this.spectrumProps.canvasCtx.fillStyle = 'rgb(70, 188, 236)';
+            this.spectrumProps.canvasCtx.fillRect(x, y, sliceWidth - 2, this.spectrumProps.HEIGHT - y);
             x += sliceWidth;
         }
-        // for (let i = 0; i < dataArray.length; i++) {
-        //     let value = dataArray[i],
-        //         percent = value / 256,
-        //         height = this.spectrumProps.HEIGHT * percent,
-        //         offset = this.spectrumProps.HEIGHT - height - 1,
-        //         barWidth = this.spectrumProps.WIDTH / dataArray.length,
-        //         hue = i / dataArray.length * 360;
-        //     this.spectrumProps.canvasCtx.fillStyle = 'hsl(' + hue + ', 90%, 50%)';
-        //     this.spectrumProps.canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
-        // }
 
         this.spectrumProps.canvasCtx.stroke();
     }
@@ -195,7 +178,7 @@ class Synth extends Component {
 
         this.spectrumProps = {
             canvasCtx: spectrumCanvasCtxElement.getContext('2d'),
-            WIDTH: $(window).width(),
+            WIDTH: $("#spectrum").width(),
             HEIGHT: 200
         };
 
