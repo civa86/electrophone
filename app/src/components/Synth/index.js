@@ -37,9 +37,8 @@ class Synth extends Component {
             this.spectrumProps.canvasCtx.fillStyle = 'rgb(70, 188, 236)';
             this.spectrumProps.canvasCtx.fillRect(x, y, sliceWidth - 2, this.spectrumProps.HEIGHT - y);
             x += sliceWidth;
+            this.spectrumProps.canvasCtx.stroke();
         }
-
-        this.spectrumProps.canvasCtx.stroke();
     }
 
     resetSpectrum () {
