@@ -41,6 +41,11 @@ function ActionHandler (WrappedComponent) {
             dispatch(UiActions.toggleLinkMode());
         }
 
+        setLinkMode (link) {
+            const { dispatch } = this.props;
+            dispatch(UiActions.setLinkMode(link));
+        }
+
         addSynthModule (type) {
             const
                 { dispatch, ui } = this.props,
@@ -67,6 +72,16 @@ function ActionHandler (WrappedComponent) {
             ));
         }
 
+        updateSynthModule (id, propertyName, propertyValue) {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.updateNode(id, propertyName, propertyValue));
+        }
+
+        deleteSynthModule (id) {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.removeNode(id));
+        }
+
         deleteSynthSelectedNodes () {
             const
                 { dispatch } = this.props,
@@ -77,14 +92,31 @@ function ActionHandler (WrappedComponent) {
             }
         }
 
+        updatePlayingVoices (playingVoices) {
+            const { dispatch, ui } = this.props;
+            dispatch(SynthActions.updatePlayingVoices(playingVoices, {
+                zoom: ui.graph.instance.zoom(),
+                pan: ui.graph.instance.pan()
+            }))
+        }
+
         setViewPanel (viewPanel) {
             const { dispatch } = this.props;
             dispatch(UiActions.setViewPanel(viewPanel))
         }
 
+        updateSavedList (list) {
+            const { dispatch } = this.props;
+            dispatch(AppActions.updateSavedList(list));
+        }
+
+        resetSaveForm () {
+            const { dispatch } = this.props;
+            dispatch(reset('saveSynth'));
+        }
+
         saveSynth (values, localCacheKey) {
             const
-                { dispatch } = this.props,
                 newUi = { ...this.props.ui, graph: { ...this.props.ui.graph, instance: null } },
                 newSavedList = localCache.addItem(
                     localCacheKey,
@@ -94,27 +126,24 @@ function ActionHandler (WrappedComponent) {
 
             $('.save-new-form').find('input[name="label"]').blur();
 
-            dispatch(reset('saveSynth'));
-            dispatch(AppActions.updateSavedList(newSavedList));
+            this.resetSaveForm();
+            this.updateSavedList(newSavedList);
         }
 
         updateSavedSynth (id, localCacheKey) {
             const
-                { dispatch } = this.props,
                 newUi = { ...this.props.ui, graph: { ...this.props.ui.graph, instance: null } },
                 newSavedList = localCache.updateItem(
                     localCacheKey,
                     id,
                     { ui: { ...newUi }, synth: { ...this.props.synth } }
                 );
-            dispatch(AppActions.updateSavedList(newSavedList));
+            this.updateSavedList(newSavedList);
         }
 
         removedSavedSynth (id, localCacheKey) {
-            const
-                { dispatch } = this.props,
-                newSavedList = localCache.removeItem(localCacheKey, id);
-            dispatch(AppActions.updateSavedList(newSavedList));
+            const newSavedList = localCache.removeItem(localCacheKey, id);
+            this.updateSavedList(newSavedList);
         }
 
         loadSynth (id, localCacheKey) {
@@ -179,11 +208,24 @@ function ActionHandler (WrappedComponent) {
 
                     addSynthModule: (type) => this.addSynthModule(type),
 
+                    updateSynthModule: (id, propertyName, propertyValue) =>
+                        this.updateSynthModule(id, propertyName, propertyValue),
+
+                    deleteSynthModule: (id) => this.deleteSynthModule(id),
+
                     toggleLinkMode: () => this.toggleLinkMode(),
+
+                    setLinkMode: (link) => this.setLinkMode(link),
 
                     deleteSynthSelectedNodes: () => this.deleteSynthSelectedNodes(),
 
+                    updatePlayingVoices: (playingVoices) => this.updatePlayingVoices(playingVoices),
+
                     setViewPanel: (viewPanel) => this.setViewPanel(viewPanel),
+
+                    updateSavedList: (list) => this.updateSavedList(list),
+
+                    resetSaveForm: () => this.resetSaveForm(),
 
                     saveSynth: (values, localCacheKey) => this.saveSynth(values, localCacheKey),
 

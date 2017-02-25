@@ -8,7 +8,7 @@ const GraphPanel = (props) => {
         synth,
         ui,
         graphWidth,
-        graphHeight,
+        graphHeight
         } = props;
 
     return (

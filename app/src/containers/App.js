@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reset } from 'redux-form';
 import $ from 'jquery';
-
-import * as AppActions from '../actions/AppActions';
-import * as UiActions from '../actions/UiActions';
-import * as SynthActions from '../actions/SynthActions';
 import WebSynth from 'web-synth';
 
 // Components
+import { ActionHandler } from '../components/ActionHandler';
 import NoAudioWarning from '../components/NoAudioWarning';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -29,10 +25,7 @@ const
     storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
     localCache = localCacheService(storage),
     localCacheKey = 'webSynth',
-    synthModules = WebSynth.describeModules(),
-    Actions = { ...AppActions, ...UiActions, ...SynthActions };
-
-//TODO remove dispatch and use highorder??
+    synthModules = WebSynth.describeModules();
 
 class App extends Component {
     constructor (props) {
@@ -56,11 +49,9 @@ class App extends Component {
     }
 
     componentDidMount () {
-        const
-            { dispatch } = this.props,
-            savedList = localCache.itemsList(localCacheKey);
+        const { actions } = this.props;
 
-        dispatch(AppActions.updateSavedList(savedList));
+        actions.updateSavedList(localCache.itemsList(localCacheKey));
 
         $(document).ready(() => {
             //Tooltips
@@ -77,7 +68,7 @@ class App extends Component {
             //Operation Modals
             $('.operation-modal').on('hidden.bs.modal', () => {
                 $('.operation-modal').find('.confirm-operation').hide();
-                dispatch(reset('saveSynth'));
+                actions.resetSaveForm();
             });
         });
     }
@@ -86,46 +77,22 @@ class App extends Component {
         return $('.modal.in').length > 0;
     }
 
-    dispatchIfNotInOperation (action) {
-        const { dispatch } = this.props;
-        if (!this.isOperationInProgress()) {
-            return dispatch(action);
-        }
-    }
-
-    getViewActions () {
-        //TODO write a component dedicated???
-        const { dispatch } = this.props;
-        return {
-            setViewPanel: (viewPanel) =>
-                dispatch(Actions.setViewPanel(viewPanel)),
-                
-            octaveDecrease: () =>
-                dispatch(Actions.octaveDecrease()),
-            octaveIncrease: () =>
-                dispatch(Actions.octaveIncrease())
-        }
-    }
-
-    removeSelectedNodes () {
-        //TODO check and use actions.deleteSynthSelectedNodes
-        const
-            { dispatch } = this.props,
-            selectedNodes = this.props.synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
-
-        if (selectedNodes.length > 0) {
-            dispatch(Actions.removeNodes(selectedNodes));
-        }
-    }
-
     getKeyboardMapping () {
-        const { ui } = this.props;
+        const { ui, actions } = this.props;
 
         return [
             {
                 keys: [16], //SHIFT
-                down: () => this.dispatchIfNotInOperation(Actions.setLinkMode(true)),
-                up: () => this.dispatchIfNotInOperation(Actions.setLinkMode(false)),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.setLinkMode(true);
+                    }
+                },
+                up: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.setLinkMode(false);
+                    }
+                },
                 specialKeys: 'shift'
             },
             {
@@ -140,19 +107,30 @@ class App extends Component {
                     } else if (ui.viewPanel === 'control') {
                         toggleView = 'graph';
                     }
-                    this.dispatchIfNotInOperation(Actions.setViewPanel(toggleView));
+
+                    if (!this.isOperationInProgress()) {
+                        actions.setViewPanel(toggleView);
+                    }
                 },
                 up: () => false
             },
             {
                 keys: [90], //Z
-                down: () => this.dispatchIfNotInOperation(Actions.octaveDecrease()),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.octaveDecrease();
+                    }
+                },
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [88], //X
-                down: () => this.dispatchIfNotInOperation(Actions.octaveIncrease()),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.octaveIncrease();
+                    }
+                },
                 up: () => false,
                 specialKeys: false
             },
@@ -165,7 +143,7 @@ class App extends Component {
                 },
                 up: () => {
                     if (!this.isOperationInProgress()) {
-                        this.removeSelectedNodes();
+                        actions.deleteSynthSelectedNodes();
                     }
                 },
                 specialKeys: false
@@ -173,14 +151,9 @@ class App extends Component {
         ]
     }
 
-    updateModule (id, propertyName, propertyValue) {
-        const { dispatch } = this.props;
-        dispatch(Actions.updateNode(id, propertyName, propertyValue));
-    }
-
     render () {
-        const { app, ui, synth, dispatch } = this.props;
-        
+        const { app, ui, synth, actions } = this.props;
+
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
@@ -210,8 +183,8 @@ class App extends Component {
                     <ControlPanel
                         isVisible={ui.viewPanel === 'control'}
                         modules={synth.modules}
-                        updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
-                        destroyModule={(id) => dispatch(Actions.removeNode(id))}
+                        updateModule={(id, prop, value) => actions.updateSynthModule(id, prop, value)}
+                        destroyModule={(id) => actions.deleteSynthModule(id)}
                     />
                 </div>
 
@@ -222,10 +195,7 @@ class App extends Component {
                        headerHeight={screenService.getHeaderHeight()}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={playingVoices => dispatch(Actions.updatePlayingVoices(playingVoices,{
-                                                                            zoom: ui.graph.instance.zoom(),
-                                                                            pan: ui.graph.instance.pan()
-                                                                        }))}
+                       updatePlayingVoices={playingVoices => actions.updatePlayingVoices(playingVoices)}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
@@ -248,4 +218,4 @@ function mapStateToProps (state) {
     };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(ActionHandler(App));
