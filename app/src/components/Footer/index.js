@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
 const Footer = (props) => {
 
     const {
         height,
-        viewActions,
         octave,
+        actions,
         isPianoVisible,
         isSpectrumVisible
     } = props;
@@ -15,7 +17,7 @@ const Footer = (props) => {
             <div className="container-fluid">
                 <div className="octave pull-left">
                     <a className="cursor-pointer"
-                       onClick={() => viewActions.octaveDecrease()}
+                       onClick={() => actions.octaveDecrease()}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Decrease Octave (Z)">
@@ -25,7 +27,7 @@ const Footer = (props) => {
                     <span className="octave-elem no-select cursor-default"> OCTAVE: {octave} </span>
 
                     <a className="cursor-pointer"
-                       onClick={() => viewActions.octaveIncrease()}
+                       onClick={() => actions.octaveIncrease()}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Increase Octave (X)">
@@ -35,14 +37,14 @@ const Footer = (props) => {
                 <div className="footer-menu pull-right">
                     <a className={'cursor-pointer' + ((isPianoVisible) ? ' selected' : '')}
                        style={{ marginRight: '20px' }}
-                       onClick={() => viewActions.setPianoVisibility(!isPianoVisible)}
+                       onClick={() => actions.setPianoVisibility(!isPianoVisible)}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Piano Keyboard">
                         <i className="icon-piano"/>
                     </a>
                     <a className={'cursor-pointer' + ((isSpectrumVisible) ? ' selected' : '')}
-                       onClick={() => viewActions.setSpectrumVisibility(!isSpectrumVisible)}
+                       onClick={() => actions.setSpectrumVisibility(!isSpectrumVisible)}
                        data-toggle="tooltip"
                        data-placement="top"
                        title="Wave Spectrum">
@@ -54,4 +56,4 @@ const Footer = (props) => {
     );
 };
 
-export default Footer;
+export default ActionHandler(Footer);

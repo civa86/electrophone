@@ -126,20 +126,90 @@ function ActionHandler (WrappedComponent) {
             dispatch(AppActions.loadState(item.item, WebSynth.describeModules().map(e => e.type)));
         }
 
+        onGraphCreated (instance) {
+            const { dispatch } = this.props;
+            dispatch(UiActions.setGraphInstance(instance));
+        }
+
+        onClickHandler (node, isSelected) {
+            const { dispatch } = this.props;
+            if (node !== WebSynth.CONST.MASTER) {
+                dispatch(SynthActions.setNodeSelection(node, isSelected));
+            }
+        }
+
+        onFreeHandler (nodeId, nodePosition, graphPan, graphZoom) {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
+        }
+
+        linkHandler (sourceNodeId, destNodeId) {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.linkNodes(sourceNodeId, destNodeId))
+        }
+
+        octaveDecrease () {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.octaveDecrease());
+        }
+
+        octaveIncrease () {
+            const { dispatch } = this.props;
+            dispatch(SynthActions.octaveIncrease());
+        }
+
+        setPianoVisibility (isPianoVisible) {
+            const { dispatch } = this.props;
+            dispatch(UiActions.setPianoVisibility(isPianoVisible));
+        }
+
+        setSpectrumVisibility (isSpectrumVisible) {
+            const { dispatch } = this.props;
+            dispatch(UiActions.setSpectrumVisibility(isSpectrumVisible));
+        }
+
         render () {
             return <WrappedComponent {...this.props}
                 actions={{
                     resetApplication: () => this.resetApplication(),
+
                     openSaveModal: () => this.openSaveModal(),
+
                     openLoadModal: () => this.openLoadModal(),
+
                     addSynthModule: (type) => this.addSynthModule(type),
+
                     toggleLinkMode: () => this.toggleLinkMode(),
+
                     deleteSynthSelectedNodes: () => this.deleteSynthSelectedNodes(),
+
                     setViewPanel: (viewPanel) => this.setViewPanel(viewPanel),
+
                     saveSynth: (values, localCacheKey) => this.saveSynth(values, localCacheKey),
+
                     updateSavedSynth: (id, localCacheKey) => this.updateSavedSynth(id, localCacheKey),
+
                     removedSavedSynth: (id, localCacheKey) => this.removedSavedSynth(id, localCacheKey),
-                    loadSynth: (id, localCacheKey) => this.loadSynth(id, localCacheKey)
+
+                    loadSynth: (id, localCacheKey) => this.loadSynth(id, localCacheKey),
+
+                    onGraphCreated: (instance) => this.onGraphCreated(instance),
+
+                    onClickHandler: (node, isSelected) => this.onClickHandler(node, isSelected),
+
+                    onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) =>
+                        this.onFreeHandler(nodeId, nodePosition, graphPan, graphZoom),
+
+                    linkHandler: (sourceNodeId, destNodeId) => this.linkHandler(sourceNodeId, destNodeId),
+
+                    octaveDecrease: () => this.octaveDecrease(),
+
+                    octaveIncrease: () => this.octaveIncrease(),
+
+                    setPianoVisibility: (isPianoVisible) => this.setPianoVisibility(isPianoVisible),
+
+                    setSpectrumVisibility: (isSpectrumVisible) => this.setSpectrumVisibility(isSpectrumVisible)
+
                 }}
             />;
         }

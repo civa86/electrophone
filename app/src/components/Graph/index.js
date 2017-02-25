@@ -9,7 +9,6 @@ const GraphPanel = (props) => {
         ui,
         graphWidth,
         graphHeight,
-        viewActions
         } = props;
 
     return (
@@ -19,7 +18,6 @@ const GraphPanel = (props) => {
                 uiState={ui}
                 width={graphWidth}
                 height={graphHeight}
-                actions={viewActions}
             />
         </div>
     );

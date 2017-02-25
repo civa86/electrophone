@@ -95,28 +95,11 @@ class App extends Component {
 
     getViewActions () {
         //TODO write a component dedicated???
-        const { dispatch, ui, synth } = this.props;
+        const { dispatch } = this.props;
         return {
-            onGraphCreated: (instance) => {
-                dispatch(Actions.setGraphInstance(instance));
-            },
-            onClickHandler: (node, isSeletected) => {
-                if (node !== WebSynth.CONST.MASTER) {
-                    dispatch(Actions.setNodeSelection(node, isSeletected));
-                }
-            },
-            onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
-                dispatch(Actions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
-            },
-            linkHandler: (sourceNodeId, destNodeId) => {
-                dispatch(Actions.linkNodes(sourceNodeId, destNodeId));
-            },
             setViewPanel: (viewPanel) =>
                 dispatch(Actions.setViewPanel(viewPanel)),
-            setPianoVisibility: (isPianoVisible) =>
-                dispatch(Actions.setPianoVisibility(isPianoVisible)),
-            setSpectrumVisibility: (isSpectrumVisible) =>
-                dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
+                
             octaveDecrease: () =>
                 dispatch(Actions.octaveDecrease()),
             octaveIncrease: () =>
@@ -125,6 +108,7 @@ class App extends Component {
     }
 
     removeSelectedNodes () {
+        //TODO check and use actions.deleteSynthSelectedNodes
         const
             { dispatch } = this.props,
             selectedNodes = this.props.synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
@@ -195,10 +179,8 @@ class App extends Component {
     }
 
     render () {
-        const
-            { app, ui, synth, dispatch } = this.props,
-            viewActions = this.getViewActions();
-
+        const { app, ui, synth, dispatch } = this.props;
+        
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
@@ -224,7 +206,6 @@ class App extends Component {
                         ui={ui}
                         graphWidth={screenService.getGraphWidth()}
                         graphHeight={screenService.getGraphHeight()}
-                        viewActions={viewActions}
                     />
                     <ControlPanel
                         isVisible={ui.viewPanel === 'control'}
@@ -250,7 +231,6 @@ class App extends Component {
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
 
                 <Footer height={screenService.getFooterHeight()}
-                        viewActions={viewActions}
                         octave={synth.octave}
                         isPianoVisible={ui.isPianoVisible}
                         isSpectrumVisible={ui.isSpectrumVisible}

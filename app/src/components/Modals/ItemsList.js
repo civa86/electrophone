@@ -79,8 +79,8 @@ const ItemsList = (props) => {
                                             />
                                             <i className="ion-trash-b"
                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    showConfirm(i, '.remove-confirm')
+                                                   e.stopPropagation();
+                                                   showConfirm(i, '.remove-confirm')
                                                }}
                                             />
                                         </div>
