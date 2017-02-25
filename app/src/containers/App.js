@@ -14,8 +14,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
-import SaveModal from '../components/Operations/SaveModal';
-import LoadModal from '../components/Operations/LoadModal';
+import SaveModal from '../components/Modals/SaveModal';
+import LoadModal from '../components/Modals/LoadModal';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
@@ -23,21 +23,18 @@ import GraphPanel from '../components/Graph';
 
 // Services
 import localCacheService from '../services/localCache';
-import screenService from '../services/screen';
+import * as screenService from '../services/screen';
 
 const
     storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
     localCache = localCacheService(storage),
-    screen = screenService(),
     localCacheKey = 'webSynth',
-    nodePrefix = 'node',
     synthModules = WebSynth.describeModules(),
-    headerHeight = 94,
-    footerHeight = 40,
     Actions = { ...AppActions, ...UiActions, ...SynthActions };
 
-class App extends Component {
+//TODO remove dispatch and use highorder??
 
+class App extends Component {
     constructor (props) {
         super(props);
 
@@ -120,54 +117,6 @@ class App extends Component {
                 dispatch(Actions.setPianoVisibility(isPianoVisible)),
             setSpectrumVisibility: (isSpectrumVisible) =>
                 dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
-            openSaveOperation: () => {
-                $('#save-operation').modal('show');
-            },
-            openLoadOperation: () => {
-                $('#load-operation').modal('show');
-            },
-            saveSynth: values => {
-                const
-                    newUi = { ...ui, graph: { ...ui.graph, instance: null } },
-                    newSavedList = localCache.addItem(
-                        localCacheKey,
-                        values.label,
-                        { ui: { ...newUi }, synth: { ...synth } }
-                    );
-
-                $('.save-new-form').find('input[name="label"]').blur();
-
-                dispatch(reset('saveSynth'));
-                dispatch(AppActions.updateSavedList(newSavedList));
-            },
-            removedSavedSynth: id => {
-                const newSavedList = localCache.removeItem(localCacheKey, id);
-                dispatch(AppActions.updateSavedList(newSavedList));
-            },
-            updateSavedSynth: id => {
-                const
-                    newUi = { ...ui, graph: { ...ui.graph, instance: null } },
-                    newSavedList = localCache.updateItem(
-                        localCacheKey,
-                        id,
-                        { ui: { ...newUi }, synth: { ...synth } }
-                    );
-                dispatch(AppActions.updateSavedList(newSavedList));
-            },
-            loadSynth: id => {
-                const item = localCache.getItem(localCacheKey, id);
-
-                $('#load-operation').modal('hide');
-                dispatch(Actions.loadState(item.item, WebSynth.describeModules().map(e => e.type)));
-            },
-            resetSynth: () =>
-                dispatch(Actions.resetState()),
-            toggleLinkMode: () =>
-                dispatch(Actions.toggleLinkMode()),
-            addModule: (type) =>
-                this.addModule(type),
-            deleteSelectedNodes: () =>
-                this.removeSelectedNodes(),
             octaveDecrease: () =>
                 dispatch(Actions.octaveDecrease()),
             octaveIncrease: () =>
@@ -177,8 +126,8 @@ class App extends Component {
 
     removeSelectedNodes () {
         const
-            { synth, dispatch } = this.props,
-            selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
+            { dispatch } = this.props,
+            selectedNodes = this.props.synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
 
         if (selectedNodes.length > 0) {
             dispatch(Actions.removeNodes(selectedNodes));
@@ -240,52 +189,9 @@ class App extends Component {
         ]
     }
 
-    getMaxNodeId () {
-        const
-            { synth } = this.props,
-            max = synth.modules.reduce((result, e) => {
-                const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
-                return isNaN(idInt) ? 0 : Math.max(result, idInt);
-            }, 0);
-
-        return max + 1;
-    }
-
-    addModule (type) {
-        const
-            { dispatch, ui } = this.props,
-            newModule = synthModules.filter(e => e.type === type).pop();
-
-        dispatch(Actions.addNode(
-            {
-                ...newModule,
-                id: nodePrefix + this.getMaxNodeId(),
-                isMaster: false,
-                posX: Math.random() * (this.getGraphHeight()),
-                posY: Math.random() * (this.getGraphHeight())
-            },
-            {
-                zoom: ui.graph.instance.zoom(),
-                pan: ui.graph.instance.pan()
-            }
-        ));
-    }
-
     updateModule (id, propertyName, propertyValue) {
         const { dispatch } = this.props;
         dispatch(Actions.updateNode(id, propertyName, propertyValue));
-    }
-
-    getGraphHeight () {
-        const
-            windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight - footerHeight - 30;
-
-        return graphHeight;
-    }
-
-    getGraphWidth () {
-        return $('body').width() - 30;
     }
 
     render () {
@@ -296,18 +202,13 @@ class App extends Component {
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
-                <SaveModal items={app.savedList}
-                           saveAction={viewActions.saveSynth}
-                           updateAction={viewActions.updateSavedSynth}
-                           removeAction={viewActions.removedSavedSynth}
-                />
-                <LoadModal items={app.savedList}
-                           loadAction={viewActions.loadSynth}
-                           removeAction={viewActions.removedSavedSynth}
-                />
-                <Header height={headerHeight}
+
+                <SaveModal items={app.savedList} localCacheKey={localCacheKey} />
+
+                <LoadModal items={app.savedList} localCacheKey={localCacheKey} />
+
+                <Header height={screenService.getHeaderHeight()}
                         repoUrl={process.env.GITHUB_REPO_URL}
-                        viewActions={viewActions}
                         linkMode={ui.graph.linkMode}
                         visiblePanel={ui.viewPanel}
                         synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
@@ -316,13 +217,13 @@ class App extends Component {
                 />
 
                 <div id="panel-wrapper"
-                     style={{ marginTop: headerHeight }}>
+                     style={{ marginTop: screenService.getHeaderHeight() }}>
                     <GraphPanel
                         isVisible={ui.viewPanel === 'graph'}
                         synth={synth}
                         ui={ui}
-                        graphWidth={this.getGraphWidth()}
-                        graphHeight={this.getGraphHeight()}
+                        graphWidth={screenService.getGraphWidth()}
+                        graphHeight={screenService.getGraphHeight()}
                         viewActions={viewActions}
                     />
                     <ControlPanel
@@ -334,24 +235,21 @@ class App extends Component {
                 </div>
 
                 <Synth state={synth}
+                       isOperationInProgress={() => this.isOperationInProgress()}
                        audioContext={this.audioContext}
-                       footerHeight={footerHeight}
-                       headerHeight={headerHeight}
+                       footerHeight={screenService.getFooterHeight()}
+                       headerHeight={screenService.getHeaderHeight()}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={playingVoices => this.dispatchIfNotInOperation(
-                                                                Actions.updatePlayingVoices(
-                                                                    playingVoices,
-                                                                    {
-                                                                        zoom: ui.graph.instance.zoom(),
-                                                                        pan: ui.graph.instance.pan()
-                                                                    }
-                                                                ))}
+                       updatePlayingVoices={playingVoices => dispatch(Actions.updatePlayingVoices(playingVoices,{
+                                                                            zoom: ui.graph.instance.zoom(),
+                                                                            pan: ui.graph.instance.pan()
+                                                                        }))}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
 
-                <Footer height={footerHeight}
+                <Footer height={screenService.getFooterHeight()}
                         viewActions={viewActions}
                         octave={synth.octave}
                         isPianoVisible={ui.isPianoVisible}

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
 import icon from '../../../img/icon.png';
 
 const Header = (props) => {
@@ -8,7 +10,7 @@ const Header = (props) => {
         height,
         repoUrl,
         libVersion,
-        viewActions,
+        actions,
         linkMode,
         visiblePanel,
         numSelectedNodes,
@@ -51,28 +53,28 @@ const Header = (props) => {
                 <ul className="container-fluid no-select">
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.resetSynth()}
+                           onClick={() => actions.resetApplication()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Reset Synth">
+                           title="Reset">
                             <i className="ion-android-refresh"></i> <span className="menu-label hidden-xs">Reset</span>
                         </a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.openSaveOperation()}
+                           onClick={() => actions.openSaveModal()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Save Synth">
+                           title="Save">
                             <i className="ion-android-download"></i> <span className="menu-label hidden-xs">Save</span>
                         </a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.openLoadOperation()}
+                           onClick={() => actions.openLoadModal()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Load Synth">
+                           title="Load">
                             <i className="ion-android-upload"></i> <span className="menu-label hidden-xs">Load</span>
                         </a>
                     </li>
@@ -91,7 +93,7 @@ const Header = (props) => {
                                 return (
                                     <li key={e.type}>
                                         <a className="cursor-pointer"
-                                            onClick={() => viewActions.addModule(e.type)}>
+                                            onClick={() => actions.addSynthModule(e.type)}>
                                             {e.type}
                                         </a>
                                     </li>
@@ -104,7 +106,7 @@ const Header = (props) => {
                         data-placement="top"
                         title="Toggle Link Mode (SHIFT)">
                         <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
-                           onClick={() => viewActions.toggleLinkMode()}>
+                           onClick={() => actions.toggleLinkMode()}>
                             <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
                         </a>
                     </li>
@@ -114,7 +116,7 @@ const Header = (props) => {
                         data-placement="top"
                         title="Delete Selected Nodes">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.deleteSelectedNodes()}>
+                           onClick={() => actions.deleteSynthSelectedNodes()}>
                             <i className="ion-trash-b"></i> <span className="menu-label hidden-xs">Delete</span>
                             <span className="delete-counter"
                                   style={{ display: (numSelectedNodes > 1) ? 'inline-block' : 'none' }}>&nbsp;
@@ -125,14 +127,14 @@ const Header = (props) => {
 
                     <li className="pull-right last-right-item">
                         <a className={'cursor-pointer' + ((visiblePanel === 'control') ? ' selected' : '')}
-                           onClick={() => viewActions.setViewPanel('control')}
+                           onClick={() => actions.setViewPanel('control')}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Control view (TAB)"><i className="ion-levels"></i></a>
                     </li>
                     <li className="pull-right">
                         <a className={'cursor-pointer' + ((visiblePanel === 'graph') ? ' selected' : '')}
-                           onClick={() => viewActions.setViewPanel('graph')}
+                           onClick={() => actions.setViewPanel('graph')}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Graph view (TAB)"><i className="ion-network"></i></a>
@@ -143,4 +145,4 @@ const Header = (props) => {
     );
 };
 
-export default Header;
+export default ActionHandler(Header);
