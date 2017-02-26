@@ -8,7 +8,7 @@ import ItemsList from './ItemsList';
 const LoadModal = (props) => {
     const
         { items, actions, localCacheKey } = props,
-        h = $(window).height() / 2; //TODO use screen service?
+        h = $(window).height() / 2;
 
     return (
         <div id="load-operation" className="operation-modal modal fade" tabIndex="-1" role="dialog">
