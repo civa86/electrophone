@@ -55,12 +55,13 @@ function ActionHandler (WrappedComponent) {
                 maxNodeId = this.props.synth.modules.reduce((result, e) => {
                     const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
                     return isNaN(idInt) ? 0 : Math.max(result, idInt);
-                }, 0);
+                }, 0),
+                newId = nodePrefix + (maxNodeId + 1);
 
             dispatch(SynthActions.addNode(
                 {
                     ...newModule,
-                    id: nodePrefix + (maxNodeId + 1),
+                    id: newId,
                     isMaster: false,
                     posX: Math.random() * (screenService.getGraphHeight()),
                     posY: Math.random() * (screenService.getGraphHeight())
@@ -70,6 +71,10 @@ function ActionHandler (WrappedComponent) {
                     pan: ui.graph.instance.pan()
                 }
             ));
+
+            if (type === 'Oscillator' || type === 'Noise') {
+                this.linkHandler(newId, 'master');
+            }
         }
 
         updateSynthModule (id, propertyName, propertyValue) {
