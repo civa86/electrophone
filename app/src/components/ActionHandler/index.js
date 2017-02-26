@@ -105,6 +105,10 @@ function ActionHandler (WrappedComponent) {
             dispatch(UiActions.setViewPanel(viewPanel))
         }
 
+        getSavedList (localCacheKey) {
+            return localCache.itemsList(localCacheKey);
+        }
+
         updateSavedList (list) {
             const { dispatch } = this.props;
             dispatch(AppActions.updateSavedList(list));
@@ -224,6 +228,8 @@ function ActionHandler (WrappedComponent) {
                     setViewPanel: (viewPanel) => this.setViewPanel(viewPanel),
 
                     updateSavedList: (list) => this.updateSavedList(list),
+
+                    getSavedList: (localCacheKey) => this.getSavedList(localCacheKey),
 
                     resetSaveForm: () => this.resetSaveForm(),
 

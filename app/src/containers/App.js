@@ -18,14 +18,9 @@ import ControlPanel from '../components/ControlPanel';
 import GraphPanel from '../components/Graph';
 
 // Services
-import localCacheService from '../services/localCache';
 import * as screenService from '../services/screen';
 
-const
-    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
-    localCache = localCacheService(storage),
-    localCacheKey = 'webSynth',
-    synthModules = WebSynth.describeModules();
+const localCacheKey = 'webSynth';
 
 class App extends Component {
     constructor (props) {
@@ -51,7 +46,7 @@ class App extends Component {
     componentDidMount () {
         const { actions } = this.props;
 
-        actions.updateSavedList(localCache.itemsList(localCacheKey));
+        actions.updateSavedList(actions.getSavedList(localCacheKey));
 
         $(document).ready(() => {
             //Tooltips
@@ -166,7 +161,7 @@ class App extends Component {
                         repoUrl={process.env.GITHUB_REPO_URL}
                         linkMode={ui.graph.linkMode}
                         visiblePanel={ui.viewPanel}
-                        synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
+                        synthModules={WebSynth.describeModules().filter(e => e.type !== WebSynth.TYPES.MASTER)}
                         numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
                         libVersion={process.env.LIB_VERSION}
                 />
