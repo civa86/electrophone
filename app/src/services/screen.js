@@ -1,33 +1,32 @@
-const screen = () => {
-    let factory = {};
+import $ from 'jquery';
 
-    function getWindowSize () {
-        let res = { width: 0, height: 0 };
-        if (window && document) {
-            res.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            res.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        }
-        return res;
-    }
+const
+    headerHeight = 94,
+    footerHeight = 40;
 
-    function getSizeById (id) {
-        let res = { width: 0, height: 0 },
-            node;
-        if (document && id) {
-            node = document.getElementById(id);
-            if (node) {
-                res.width = node.clientWidth;
-                res.height = node.clientHeight;
-            }
-        }
+function getHeaderHeight () {
+    return headerHeight;
+}
 
-        return res;
-    }
+function getFooterHeight () {
+    return footerHeight;
+}
 
-    factory.getWindowSize = getWindowSize;
-    factory.getSizeById = getSizeById;
+function getGraphHeight () {
+    return (
+        $(window).height() -
+        getHeaderHeight() -
+        getFooterHeight() -
+        30
+    );
+}
 
-    return factory;
+function  getGraphWidth () {
+    return $('body').width() - 30;
+}
+export {
+    getHeaderHeight,
+    getFooterHeight,
+    getGraphHeight,
+    getGraphWidth
 };
-
-export default screen;

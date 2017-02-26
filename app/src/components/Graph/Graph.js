@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import cytoscape from 'cytoscape';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
 //Graph Service
 import GraphService from './GraphService'
 const graph = GraphService(cytoscape, window);
@@ -45,4 +47,4 @@ class Graph extends Component {
     }
 }
 
-export default Graph;
+export default ActionHandler(Graph);

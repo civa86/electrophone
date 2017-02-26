@@ -1,12 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
 import SaveForm from './SaveForm';
 import ItemsList from './ItemsList';
 
 const SaveModal = (props) => {
     const
-        { items, saveAction, updateAction, removeAction } = props,
+        { items, actions, localCacheKey } = props,
         h = $(window).height() / 2;
 
     return (
@@ -17,7 +19,7 @@ const SaveModal = (props) => {
                         <h3 className="modal-title">Save Synth</h3>
                     </div>
                     <div className="modal-body">
-                        <SaveForm submitAction={saveAction}
+                        <SaveForm submitAction={ values => actions.saveSynth(values, localCacheKey)}
                                   items={items}/>
 
                         <div className="savedItemsList" style={{ height: h + 'px' }}>
@@ -27,10 +29,10 @@ const SaveModal = (props) => {
                                        mainOperation={{
                                            icon: 'ion-ios-download',
                                            question: 'Overwrite?',
-                                           handler: id => updateAction(id),
+                                           handler: id => actions.updateSavedSynth(id, localCacheKey),
                                            confirm: true
                                        }}
-                                       onRemoveHandler={id => removeAction(id)}
+                                       onRemoveHandler={id => actions.removedSavedSynth(id, localCacheKey)}
                             />
                         </div>
                     </div>
@@ -40,4 +42,4 @@ const SaveModal = (props) => {
     );
 };
 
-export default SaveModal;
+export default ActionHandler(SaveModal);

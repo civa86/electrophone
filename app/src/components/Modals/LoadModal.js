@@ -1,11 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
 import ItemsList from './ItemsList';
 
 const LoadModal = (props) => {
     const
-        { items, loadAction, removeAction } = props,
+        { items, actions, localCacheKey } = props,
         h = $(window).height() / 2;
 
     return (
@@ -21,10 +23,10 @@ const LoadModal = (props) => {
                                        items={items}
                                        mainOperation={{
                                            icon: 'ion-ios-upload',
-                                           handler: id => loadAction(id),
+                                           handler: id => actions.loadSynth(id, localCacheKey),
                                            confirm: false
                                        }}
-                                       onRemoveHandler={id => removeAction(id)}
+                                       onRemoveHandler={id => actions.removedSavedSynth(id, localCacheKey)}
                             />
                         </div>
                     </div>
@@ -34,4 +36,4 @@ const LoadModal = (props) => {
     );
 };
 
-export default LoadModal;
+export default ActionHandler(LoadModal);

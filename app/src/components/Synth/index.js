@@ -37,9 +37,8 @@ class Synth extends Component {
             this.spectrumProps.canvasCtx.fillStyle = 'rgb(70, 188, 236)';
             this.spectrumProps.canvasCtx.fillRect(x, y, sliceWidth - 2, this.spectrumProps.HEIGHT - y);
             x += sliceWidth;
+            this.spectrumProps.canvasCtx.stroke();
         }
-
-        this.spectrumProps.canvasCtx.stroke();
     }
 
     resetSpectrum () {
@@ -47,42 +46,46 @@ class Synth extends Component {
     }
 
     playNoteFromKey (event, key) {
-        const { state, updatePlayingVoices } = this.props;
+        const { state, updatePlayingVoices, isOperationInProgress } = this.props;
 
-        if (event && typeof event.stopPropagation === 'function') {
-            event.stopPropagation();
-        }
+        if (!isOperationInProgress()) {
+            if (event && typeof event.stopPropagation === 'function') {
+                event.stopPropagation();
+            }
 
-        if (noteMapping[key]) {
-            this.synth.play(
-                WebSynth.getFrequency(noteMapping[key], state.octave)
-            );
+            if (noteMapping[key]) {
+                this.synth.play(
+                    WebSynth.getFrequency(noteMapping[key], state.octave)
+                );
 
-            if (typeof updatePlayingVoices === 'function') {
-                const voiceLabel = key + '-' + state.octave;
+                if (typeof updatePlayingVoices === 'function') {
+                    const voiceLabel = key + '-' + state.octave;
 
-                if (state.playingVoices.indexOf(voiceLabel) === -1) {
-                    updatePlayingVoices([...state.playingVoices, voiceLabel]);
+                    if (state.playingVoices.indexOf(voiceLabel) === -1) {
+                        updatePlayingVoices([...state.playingVoices, voiceLabel]);
+                    }
                 }
             }
         }
     }
 
     stopNoteFromKey (event, key) {
-        const { state, updatePlayingVoices } = this.props;
+        const { state, updatePlayingVoices, isOperationInProgress } = this.props;
 
-        if (event && typeof event.stopPropagation === 'function') {
-            event.stopPropagation();
-        }
+        if (!isOperationInProgress()) {
+            if (event && typeof event.stopPropagation === 'function') {
+                event.stopPropagation();
+            }
 
-        if (noteMapping[key]) {
-            this.synth.stop(
-                WebSynth.getFrequency(noteMapping[key], state.octave)
-            );
+            if (noteMapping[key]) {
+                this.synth.stop(
+                    WebSynth.getFrequency(noteMapping[key], state.octave)
+                );
 
-            if (typeof updatePlayingVoices === 'function') {
-                const voiceLabel = key + '-' + state.octave;
-                updatePlayingVoices(state.playingVoices.filter(e => e !== voiceLabel));
+                if (typeof updatePlayingVoices === 'function') {
+                    const voiceLabel = key + '-' + state.octave;
+                    updatePlayingVoices(state.playingVoices.filter(e => e !== voiceLabel));
+                }
             }
         }
     }

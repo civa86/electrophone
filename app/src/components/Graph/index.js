@@ -8,8 +8,7 @@ const GraphPanel = (props) => {
         synth,
         ui,
         graphWidth,
-        graphHeight,
-        viewActions
+        graphHeight
         } = props;
 
     return (
@@ -19,7 +18,6 @@ const GraphPanel = (props) => {
                 uiState={ui}
                 width={graphWidth}
                 height={graphHeight}
-                actions={viewActions}
             />
         </div>
     );

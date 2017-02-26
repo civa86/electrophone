@@ -47,6 +47,15 @@ const ItemsList = (props) => {
         mainOperation.handler(id);
     }
 
+    function manageMainOperation (event, id, i) {
+        event.stopPropagation();
+        if (mainOperation.confirm === true) {
+            showConfirm(i, '.action-confirm');
+        } else {
+            confirmOperation(id);
+        }
+    }
+
     return (
         <div id={id} className="saved-list">
             {
@@ -59,22 +68,20 @@ const ItemsList = (props) => {
                     .sort((a, b) => sortByTime(a, b))
                     .map((e, i) => (
                         <div key={i}>
-                            <div id={'item-' + i} className="saved-item">
-                                <div className="row">
+                            <div id={'item-' + i}
+                                 className="saved-item cursor-pointer">
+                                <div className="row" onClick={(event) => manageMainOperation(event, e.id, i)}>
                                     <div className="col-xs-8 name">{e.id}</div>
                                     <div className="col-xs-4 text-right">
                                         <div className="operations">
                                             <i className={mainOperation.icon}
-                                               onClick={() => {
-                                                   if (mainOperation.confirm === true) {
-                                                       showConfirm(i, '.action-confirm');
-                                                   } else {
-                                                       confirmOperation(e.id);
-                                                   }
-                                               }}
+                                               onClick={(event) => manageMainOperation(event, e.id, i)}
                                             />
                                             <i className="ion-trash-b"
-                                               onClick={() => showConfirm(i, '.remove-confirm')}
+                                               onClick={(e) => {
+                                                   e.stopPropagation();
+                                                   showConfirm(i, '.remove-confirm')
+                                               }}
                                             />
                                         </div>
                                         <div className="time">
