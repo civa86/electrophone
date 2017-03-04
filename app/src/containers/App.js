@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import WebSynth from 'electrophone';
+import ElectroPhone from 'electrophone';
 
 // Components
 import { ActionHandler } from '../components/ActionHandler';
@@ -20,7 +20,7 @@ import GraphPanel from '../components/Graph';
 // Services
 import * as screenService from '../services/screen';
 
-const localCacheKey = 'webSynth';
+const localCacheKey = 'ElectroPhoneApp';
 
 class App extends Component {
     constructor (props) {
@@ -161,7 +161,7 @@ class App extends Component {
                         repoUrl={process.env.GITHUB_REPO_URL}
                         linkMode={ui.graph.linkMode}
                         visiblePanel={ui.viewPanel}
-                        synthModules={WebSynth.describeModules().filter(e => e.type !== WebSynth.TYPES.MASTER)}
+                        synthModules={ElectroPhone.describeModules().filter(e => e.type !== ElectroPhone.TYPES.MASTER)}
                         numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
                         libVersion={process.env.LIB_VERSION}
                 />

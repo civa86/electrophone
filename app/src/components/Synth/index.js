@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-import WebSynth from 'electrophone';
+import ElectroPhone from 'electrophone';
 import GlobalKeys from '../GlobalKeys';
 import PianoKeyNote from './PianoKeyNote'
 
@@ -55,7 +55,7 @@ class Synth extends Component {
 
             if (noteMapping[key]) {
                 this.synth.play(
-                    WebSynth.getFrequency(noteMapping[key], state.octave)
+                    ElectroPhone.getFrequency(noteMapping[key], state.octave)
                 );
 
                 if (typeof updatePlayingVoices === 'function') {
@@ -79,7 +79,7 @@ class Synth extends Component {
 
             if (noteMapping[key]) {
                 this.synth.stop(
-                    WebSynth.getFrequency(noteMapping[key], state.octave)
+                    ElectroPhone.getFrequency(noteMapping[key], state.octave)
                 );
 
                 if (typeof updatePlayingVoices === 'function') {
@@ -118,7 +118,7 @@ class Synth extends Component {
 
         //DELETE
         Object.keys(currentModules)
-              .filter(e => e !== WebSynth.CONST.MASTER && e !== WebSynth.CONST.ADSR)
+              .filter(e => e !== ElectroPhone.CONST.MASTER && e !== ElectroPhone.CONST.ADSR)
               .forEach(moduleId => {
                   const found = modules.filter(e => e.id === moduleId).pop();
                   if (!found) {
@@ -188,7 +188,7 @@ class Synth extends Component {
         this.resetSpectrum();
 
         if (audioContext) {
-            this.synth = new WebSynth(audioContext, {
+            this.synth = new ElectroPhone(audioContext, {
                 spectrum: true,
                 updateSpectrum: (dataArray) => this.updateSpectrum(dataArray),
                 resetSpectrum: () => this.resetSpectrum()

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
 import $ from 'jquery';
-import WebSynth from 'electrophone';
+import ElectroPhone from 'electrophone';
 
 import * as AppActions from '../../actions/AppActions';
 import * as UiActions from '../../actions/UiActions';
@@ -50,7 +50,7 @@ function ActionHandler (WrappedComponent) {
             const
                 { dispatch, ui } = this.props,
                 nodePrefix = 'node',
-                modulesList = WebSynth.describeModules(),
+                modulesList = ElectroPhone.describeModules(),
                 newModule = modulesList.filter(e => e.type === type).pop(),
                 maxNodeId = this.props.synth.modules.reduce((result, e) => {
                     const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
@@ -161,7 +161,7 @@ function ActionHandler (WrappedComponent) {
                 item = localCache.getItem(localCacheKey, id);
 
             $('.modal').modal('hide');
-            dispatch(AppActions.loadState(item.item, WebSynth.describeModules().map(e => e.type)));
+            dispatch(AppActions.loadState(item.item, ElectroPhone.describeModules().map(e => e.type)));
         }
 
         onGraphCreated (instance) {
@@ -171,7 +171,7 @@ function ActionHandler (WrappedComponent) {
 
         onClickHandler (node, isSelected) {
             const { dispatch } = this.props;
-            if (node !== WebSynth.CONST.MASTER) {
+            if (node !== ElectroPhone.CONST.MASTER) {
                 dispatch(SynthActions.setNodeSelection(node, isSelected));
             }
         }
