@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import WebSynth from 'web-synth';
+import WebSynth from 'electrophone';
 
 // Components
 import { ActionHandler } from '../components/ActionHandler';

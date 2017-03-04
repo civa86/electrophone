@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
 import $ from 'jquery';
-import WebSynth from 'web-synth';
+import WebSynth from 'electrophone';
 
 import * as AppActions from '../../actions/AppActions';
 import * as UiActions from '../../actions/UiActions';

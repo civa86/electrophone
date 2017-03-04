@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-import WebSynth from 'web-synth';
+import WebSynth from 'electrophone';
 import GlobalKeys from '../GlobalKeys';
 import PianoKeyNote from './PianoKeyNote'
 

@@ -101,7 +101,7 @@
         plugins: pluginsSet,
         resolve: {
             alias: {
-                'web-synth': path.join(__dirname, '..', 'lib')
+                'electrophone': path.join(__dirname, '..', 'lib')
             }
         },
         resolveLoader: {

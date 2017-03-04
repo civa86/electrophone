@@ -13,8 +13,8 @@
         console.log('/***** LIBRARY BUILD ****/');
 
         entries = {
-            "web-synth": path.join(__dirname, 'lib/index.js'),
-            "web-synth.min": path.join(__dirname, 'lib/index.js')
+            "electrophone": path.join(__dirname, 'lib/index.js'),
+            "electrophone.min": path.join(__dirname, 'lib/index.js')
         };
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin(),
@@ -34,7 +34,7 @@
         console.log('/***** LIBRARY DEVELOPMENT ****/');
 
         entries = {
-            "web-synth": path.join(__dirname, 'lib/index.js')
+            "electrophone": path.join(__dirname, 'lib/index.js')
         };
         pluginsSet = [
             new webpack.optimize.OccurenceOrderPlugin()

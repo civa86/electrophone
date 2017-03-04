@@ -1,14 +1,14 @@
 {
-  "name": "web-synth-ui",
+  "name": "electrophone-ui",
   "version": "0.0.1",
-  "description": "Web Graph UI - React + Redux",
+  "description": "ElectroPhone Build & Play",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/civa86/web-synth.git"
+    "url": "https://github.com/civa86/electrophone.git"
   },
   "license": "MIT",
-  "homepage": "https://civa86.github.io/web-synth/",
+  "homepage": "https://civa86.github.io/electrophone/",
   "dependencies": {
     "react": "15.4.1",
     "react-dom": "15.4.1",

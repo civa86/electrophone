@@ -4,14 +4,14 @@ JavaScript Library to build a modular synthesizer.
 
 Based on WebAudio API and WebAudio Effects Libray [tuna](https://github.com/Theodeus/tuna)
 
-[![Build Status](https://travis-ci.org/civa86/web-synth.svg?branch=master)](https://travis-ci.org/civa86/web-synth)
-[![Coverage Status](https://coveralls.io/repos/github/civa86/web-synth/badge.svg?branch=master)](https://coveralls.io/github/civa86/web-synth?branch=master)
+[![Build Status](https://travis-ci.org/civa86/electrophone.svg?branch=master)](https://travis-ci.org/civa86/electrophone)
+[![Coverage Status](https://coveralls.io/repos/github/civa86/electrophone/badge.svg?branch=master)](https://coveralls.io/github/civa86/electrophone?branch=master)
 
 ## Demo Application
 
-[https://civa86.github.io/web-synth](https://civa86.github.io/web-synth)
+[https://civa86.github.io/electrophone](https://civa86.github.io/electrophone)
 
-HTML5 Application to demonstrate the use of `web-synth` library.
+HTML5 Application to demonstrate the use of `electrophone` library.
 
 Frameworks and Libraries:
 
@@ -27,14 +27,14 @@ Frameworks and Libraries:
 
 ## Library Code Documentation
 
-[Documentation Page](http://civa86.github.io/web-synth/docs/)
+[Documentation Page](http://civa86.github.io/electrophone/docs/)
 
 Code Documentation of the WebSynth class provided by the Library.
 
 For a full development documentation:
 
 - Download / Clone the Repository
-- Enter in the web-synth project folder
+- Enter in the electrophone project folder
 - Run `lib::docs` npm script
 - Run docs/index.html in a browser
 
@@ -43,19 +43,19 @@ For a full development documentation:
 Install npm module
 
 ```bash
-npm install web-synth
+npm install electrophone
 ```
 
 #### Include Library
 
 With ES5 via `<script>` tag:
 
-`<script src="<path_to_node_modules>/web-synth/dist/web-synth.min.js"/>`
+`<script src="<path_to_node_modules>/electrophone/dist/electrophone.min.js"/>`
 
 With ES2015 via [Babel](https://babeljs.io/):
 
 ```javascript
-import WebSynth from 'web-synth'
+import WebSynth from 'electrophone'
 ```
 
 #### Create an instance
