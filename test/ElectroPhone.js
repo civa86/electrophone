@@ -5,12 +5,12 @@ import ElectroPhone from '../lib/ElectroPhone'
 describe('ElectroPhone', () => {
     let synth;
 
-    it('should have a WebSynth function', () => {
+    it('should have a ElectroPhone function', () => {
         expect(ElectroPhone).to.be.a('function');
     });
 
     /** @test {ElectroPhone#constructor} */
-    it('should create a WebSynth instance', () => {
+    it('should create a ElectroPhone instance', () => {
         synth = new ElectroPhone();
         expect(synth).to.be.a('object');
     });
@@ -172,8 +172,8 @@ describe('ElectroPhone', () => {
     /** @test {ElectroPhone#getModuleProperties} */
     it('should have a static getModuleProperties method to get module properties by type', () => {
         const
-            props = WebSynth.getModuleProperties(),
-            oscProps = WebSynth.getModuleProperties(ElectroPhone.TYPES.OSCILLATOR);
+            props = ElectroPhone.getModuleProperties(),
+            oscProps = ElectroPhone.getModuleProperties(ElectroPhone.TYPES.OSCILLATOR);
 
         expect(props).is.an('array');
         expect(props.length).to.be.above(0);
