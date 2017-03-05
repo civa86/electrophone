@@ -53,6 +53,15 @@ const Header = (props) => {
                 <ul className="container-fluid no-select">
                     <li className="pull-left">
                         <a className="cursor-pointer"
+                           onClick={() => actions.launchTutorial()}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Help">
+                            <i className="ion-help-circled"></i> <span className="menu-label hidden-xs">Help</span>
+                        </a>
+                    </li>
+                    <li className="pull-left">
+                        <a className="cursor-pointer"
                            onClick={() => actions.resetApplication()}
                            data-toggle="tooltip"
                            data-placement="bottom"

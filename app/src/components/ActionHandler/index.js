@@ -206,6 +206,10 @@ function ActionHandler (WrappedComponent) {
             dispatch(UiActions.setSpectrumVisibility(isSpectrumVisible));
         }
 
+        launchTutorial () {
+            $('#tutorial').modal('show');
+        }
+
         render () {
             return <WrappedComponent {...this.props}
                 actions={{
@@ -261,7 +265,9 @@ function ActionHandler (WrappedComponent) {
 
                     setPianoVisibility: (isPianoVisible) => this.setPianoVisibility(isPianoVisible),
 
-                    setSpectrumVisibility: (isSpectrumVisible) => this.setSpectrumVisibility(isSpectrumVisible)
+                    setSpectrumVisibility: (isSpectrumVisible) => this.setSpectrumVisibility(isSpectrumVisible),
+
+                    launchTutorial: () => this.launchTutorial()
 
                 }}
             />;

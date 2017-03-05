@@ -10,8 +10,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
-import SaveModal from '../components/Modals/SaveModal';
-import LoadModal from '../components/Modals/LoadModal';
+import SaveModal from '../components/File/SaveModal';
+import LoadModal from '../components/File/LoadModal';
+import Tutorial from '../components/Tutorial';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
@@ -52,7 +53,15 @@ class App extends Component {
             //Tooltips
             $('[data-toggle="tooltip"]').tooltip();
 
-            //Add module dropdown
+            //Show Tutorial
+            //Move logic in actions...
+            if (true /*TODO put localcache logic...*/) {
+                $('#tutorial').modal('show');
+                //TODO add localcache viewed state
+            }
+
+            //TODO Move events in actions??
+            //Add Module Menu Events
             $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
                 $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
             });
@@ -60,10 +69,22 @@ class App extends Component {
                 $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
             });
 
-            //Operation Modals
+            //Operation File Events
             $('.operation-modal').on('hidden.bs.modal', () => {
                 $('.operation-modal').find('.confirm-operation').hide();
                 actions.resetSaveForm();
+            });
+
+            //Tutorial Modal Events
+            $('#tutorial').on('shown.bs.modal', () => {
+                const
+                    modal = $('#tutorial'),
+                    modalH = modal.find('.modal-content').height(),
+                    modalHeaderH = modal.find('.modal-header').height(),
+                    modalFooterH = modal.find('.modal-footer').height();
+
+                modal.find('.modal-body').height(modalH - (modalHeaderH + modalFooterH + 90));
+                modal.find('.modal-pre-hide').fadeIn();
             });
         });
     }
@@ -152,6 +173,8 @@ class App extends Component {
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
+
+                <Tutorial/>
 
                 <SaveModal items={app.savedList} localCacheKey={localCacheKey} />
 
