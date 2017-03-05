@@ -57,7 +57,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var win = window || {};
-	win.EP = _ElectroPhone2.default;
+	win.ElectroPhone = _ElectroPhone2.default;
 	
 	exports.default = _ElectroPhone2.default;
 
