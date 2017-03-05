@@ -25,8 +25,8 @@ const Header = (props) => {
                         <img src={icon} alt="icon"/>
                     </div>
                     <div className="pull-left">
-                        <span className="capital">W</span>eb<span className="capital">S</span>ynth
-                        <span className="version">{libVersion}</span>
+                        <span className="capital">E</span>lectro<span className="capital">P</span>hone
+                        <span className="version visible-xs-block visible-sm-inline">{libVersion}</span>
                     </div>
                 </div>
 

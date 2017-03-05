@@ -133,5 +133,5 @@ echo "RELEASE END"
 separator
 
 if which osascript >/dev/null; then
-    osascript -e 'display notification "completed" with title "WebSynth Release"'
+    osascript -e 'display notification "completed" with title "ElectroPhone Release"'
 fi

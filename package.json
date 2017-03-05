@@ -1,11 +1,11 @@
 {
-  "name": "web-synth",
+  "name": "electrophone",
   "version": "0.1.1",
-  "description": "Web Audio Modular Synth",
-  "main": "dist/web-synth.js",
+  "description": "Modular Synth Javascript Library",
+  "main": "dist/electrophone.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/civa86/web-synth.git"
+    "url": "https://github.com/civa86/electrophone.git"
   },
   "license": "MIT",
   "homepage": "",

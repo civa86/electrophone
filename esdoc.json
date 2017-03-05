@@ -5,7 +5,7 @@
     "type": "mocha",
     "source": "./test"
   },
-  "title": "WebSynth Full Development Documentation",
+  "title": "ElectroPhone Full Development Documentation",
   "plugins": [
     {"name": "esdoc-es7-plugin"}
   ]

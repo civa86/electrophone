@@ -48,18 +48,18 @@
 	
 	exports.__esModule = true;
 	
-	__webpack_require__(37);
+	__webpack_require__(40);
 	
-	var _WebSynth = __webpack_require__(7);
+	var _ElectroPhone = __webpack_require__(7);
 	
-	var _WebSynth2 = _interopRequireDefault(_WebSynth);
+	var _ElectroPhone2 = _interopRequireDefault(_ElectroPhone);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var win = window || {};
-	win.WebSynth = _WebSynth2.default;
+	win.EP = _ElectroPhone2.default;
 	
-	exports.default = _WebSynth2.default;
+	exports.default = _ElectroPhone2.default;
 
 /***/ },
 /* 1 */
@@ -691,20 +691,20 @@
 	var synth = void 0;
 	
 	/**
-	 * WebSynth Library.
+	 * ElectroPhone Library.
 	 * @example
 	 * const AudioCtx = window.AudioContext || window.webkitAudioContext;
-	 * const synth = new WebSynth(new AudioCtx(), { spectrum: false });
+	 * const synth = new ElectroPhone(new AudioCtx(), { spectrum: false });
 	 */
 	
-	var WebSynth = function () {
+	var ElectroPhone = function () {
 	    /**
 	     * Create a playable web synthesizer instance.
 	     * @param {AudioContext} audioContext - Web Audio Context instance.
-	     * @param {WebSynthProperties} [properties] - synth properties.
+	     * @param {ElectroPhoneProperties} [properties] - synth properties.
 	     */
-	    function WebSynth(audioContext, props) {
-	        _classCallCheck(this, WebSynth);
+	    function ElectroPhone(audioContext, props) {
+	        _classCallCheck(this, ElectroPhone);
 	
 	        var properties = props || {};
 	        synth = new _Synth2.default(audioContext, properties);
@@ -720,7 +720,7 @@
 	     */
 	
 	
-	    WebSynth.prototype.getModules = function getModules() {
+	    ElectroPhone.prototype.getModules = function getModules() {
 	        return _extends({}, synth.modulesConfig);
 	    };
 	
@@ -729,12 +729,12 @@
 	     * @param {String} id - the module identifier.
 	     * @param {String} type - the type of module.
 	     * @param {Object} properties - module properties.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     * @throws {Error} throw error when module with id is already created.
 	     */
 	
 	
-	    WebSynth.prototype.create = function create(id, type, properties) {
+	    ElectroPhone.prototype.create = function create(id, type, properties) {
 	        var currentModule = this.getModules()[id];
 	        if (currentModule) {
 	            throw new Error('Module ' + id + ' already created. Use update method instead.');
@@ -747,12 +747,12 @@
 	     * Update the synth module by id.
 	     * @param {String} id - the module identifier.
 	     * @param {Object} properties - module properties.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     * @throws {Error} throw error when module with id is not found.
 	     */
 	
 	
-	    WebSynth.prototype.update = function update(id, properties) {
+	    ElectroPhone.prototype.update = function update(id, properties) {
 	        var currentModule = this.getModules()[id];
 	        if (!currentModule) {
 	            throw new Error('Module ' + id + ' not found. Use create method instead.');
@@ -764,11 +764,11 @@
 	    /**
 	     * Update the master module.
 	     * @param {Object} properties - master properties.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     */
 	
 	
-	    WebSynth.prototype.master = function master(properties) {
+	    ElectroPhone.prototype.master = function master(properties) {
 	        synth.module(_Constants.TYPES.MASTER, _Constants.CONST.MASTER, properties);
 	        return this;
 	    };
@@ -776,11 +776,11 @@
 	    /**
 	     * Update the ADSR module.
 	     * @param {Object} properties - ADSR (Envelope) properties
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     */
 	
 	
-	    WebSynth.prototype.adsr = function adsr(properties) {
+	    ElectroPhone.prototype.adsr = function adsr(properties) {
 	        synth.module(_Constants.TYPES.ENVELOPE, _Constants.CONST.ADSR, properties);
 	        return this;
 	    };
@@ -788,12 +788,12 @@
 	    /**
 	     * Destroy the synth module by id.
 	     * @param {String} id - the module identifier.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     * @throws {Error} throw error when module with id is not found.
 	     */
 	
 	
-	    WebSynth.prototype.destroy = function destroy(id) {
+	    ElectroPhone.prototype.destroy = function destroy(id) {
 	        var currentModule = this.getModules()[id];
 	        if (!currentModule) {
 	            throw new Error('Module ' + id + ' not found.');
@@ -805,11 +805,11 @@
 	    /**
 	     * Start playing the input frequency.
 	     * @param {Number} frequency - the frequency value.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     */
 	
 	
-	    WebSynth.prototype.play = function play(frequency) {
+	    ElectroPhone.prototype.play = function play(frequency) {
 	        if (+frequency >= 0) {
 	            synth.play(frequency);
 	            this.isPlaying = true;
@@ -820,11 +820,11 @@
 	    /**
 	     * Stop playing the input frequency.
 	     * @param {Number} frequency - the frequency value.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     */
 	
 	
-	    WebSynth.prototype.stop = function stop(frequency) {
+	    ElectroPhone.prototype.stop = function stop(frequency) {
 	        if (+frequency >= 0) {
 	            synth.stop(frequency);
 	            this.isPlaying = false;
@@ -836,14 +836,14 @@
 	     * Link two modules, connect source module to target module.
 	     * @param {String} source - the source module id.
 	     * @param {String} target - the target module id.
-	     * @return {WebSynth}
+	     * @return {ElectroPhone}
 	     * @throws {Error} throw error when source is master.
 	     * @throws {Error} throw error when source module is not found.
 	     * @throws {Error} throw error when target module is not found.
 	     */
 	
 	
-	    WebSynth.prototype.link = function link(source, target) {
+	    ElectroPhone.prototype.link = function link(source, target) {
 	        if (source === _Constants.CONST.MASTER) {
 	            throw new Error('Module master can\'t be linked to any modules.');
 	        }
@@ -860,12 +860,12 @@
 	
 	    /**
 	     * Get module properties by type.
-	     * @param {String} moduleType - module='' type, taken from WebSynth.TYPES.
+	     * @param {String} moduleType - module='' type, taken from ElectroPhone.TYPES.
 	     * @return {Array}
 	     */
 	
 	
-	    WebSynth.getModuleProperties = function getModuleProperties() {
+	    ElectroPhone.getModuleProperties = function getModuleProperties() {
 	        var moduleType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 	
 	        var moduleProps = Props[moduleType + 'Props'] || {};
@@ -878,18 +878,18 @@
 	    };
 	
 	    /**
-	     * Describe all WebSynth modules with parameters configuration.
+	     * Describe all ElectroPhone modules with parameters configuration.
 	     * @return {Array}
 	     */
 	
 	
-	    WebSynth.describeModules = function describeModules() {
+	    ElectroPhone.describeModules = function describeModules() {
 	        return [].concat(methods).filter(function (e) {
 	            return e !== '__esModule';
 	        }).reduce(function (result, e) {
 	            return [].concat(result, [{
 	                type: e,
-	                properties: WebSynth.getModuleProperties(e)
+	                properties: ElectroPhone.getModuleProperties(e)
 	            }]);
 	        }, []);
 	    };
@@ -902,7 +902,7 @@
 	     */
 	
 	
-	    WebSynth.getFrequency = function getFrequency(note, octave) {
+	    ElectroPhone.getFrequency = function getFrequency(note, octave) {
 	        var octaveD = parseInt(octave, 10) - 4,
 	            noteD = notes.indexOf(note) - notes.indexOf('A'),
 	            delta = 12 * octaveD,
@@ -917,17 +917,17 @@
 	     */
 	
 	
-	    WebSynth.getNotes = function getNotes() {
+	    ElectroPhone.getNotes = function getNotes() {
 	        return notes;
 	    };
 	
-	    return WebSynth;
+	    return ElectroPhone;
 	}();
 	
-	WebSynth.CONST = _Constants.CONST;
-	WebSynth.TYPES = _Constants.TYPES;
+	ElectroPhone.CONST = _Constants.CONST;
+	ElectroPhone.TYPES = _Constants.TYPES;
 	
-	exports.default = WebSynth;
+	exports.default = ElectroPhone;
 
 /***/ },
 /* 8 */
@@ -958,7 +958,7 @@
 	    /**
 	     * Create a synthesizer instance.
 	     * @param {AudioContext} audioContext - Web Audio Context instance.
-	     * @param {WebSynthProperties} [properties] - synth properties.
+	     * @param {ElectroPhoneProperties} [properties] - synth properties.
 	     */
 	    function Synth(audioContext, props) {
 	        _classCallCheck(this, Synth);
@@ -2506,23 +2506,6 @@
 
 /***/ },
 /* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-	
-	var AudioContext = global.AudioContext || global.webkitAudioContext;
-	var StereoPannerNode = __webpack_require__(40);
-	
-	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
-	  AudioContext.prototype.createStereoPanner = function() {
-	    return new StereoPannerNode(this);
-	  };
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2545,12 +2528,12 @@
 
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	var curve = __webpack_require__(38);
+	var curve = __webpack_require__(37);
 	
 	/**
 	 *  StereoPannerImpl
@@ -2649,12 +2632,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var StereoPannerImpl = __webpack_require__(39);
+	var StereoPannerImpl = __webpack_require__(38);
 	
 	function StereoPanner(audioContext) {
 	  var impl = new StereoPannerImpl(audioContext);
@@ -2681,6 +2664,23 @@
 	
 	module.exports = StereoPanner;
 
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	
+	var AudioContext = global.AudioContext || global.webkitAudioContext;
+	var StereoPannerNode = __webpack_require__(39);
+	
+	if (AudioContext && !AudioContext.prototype.createStereoPanner) {
+	  AudioContext.prototype.createStereoPanner = function() {
+	    return new StereoPannerNode(this);
+	  };
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 41 */
@@ -4871,4 +4871,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=web-synth.js.map
+//# sourceMappingURL=electrophone.js.map

@@ -1,17 +1,17 @@
-# WebSynth
+# ElectroPhone
 
 JavaScript Library to build a modular synthesizer.
 
 Based on WebAudio API and WebAudio Effects Libray [tuna](https://github.com/Theodeus/tuna)
 
-[![Build Status](https://travis-ci.org/civa86/web-synth.svg?branch=master)](https://travis-ci.org/civa86/web-synth)
-[![Coverage Status](https://coveralls.io/repos/github/civa86/web-synth/badge.svg?branch=master)](https://coveralls.io/github/civa86/web-synth?branch=master)
+[![Build Status](https://travis-ci.org/civa86/electrophone.svg?branch=master)](https://travis-ci.org/civa86/electrophone)
+[![Coverage Status](https://coveralls.io/repos/github/civa86/electrophone/badge.svg?branch=master)](https://coveralls.io/github/civa86/electrophone?branch=master)
 
 ## Demo Application
 
-[https://civa86.github.io/web-synth](https://civa86.github.io/web-synth)
+[https://civa86.github.io/electrophone](https://civa86.github.io/electrophone)
 
-HTML5 Application to demonstrate the use of `web-synth` library.
+HTML5 Application to demonstrate the use of `electrophone` library.
 
 Frameworks and Libraries:
 
@@ -27,14 +27,14 @@ Frameworks and Libraries:
 
 ## Library Code Documentation
 
-[Documentation Page](http://civa86.github.io/web-synth/docs/)
+[Documentation Page](http://civa86.github.io/electrophone/docs/)
 
-Code Documentation of the WebSynth class provided by the Library.
+Code Documentation of the ElectroPhone class provided by the Library.
 
 For a full development documentation:
 
 - Download / Clone the Repository
-- Enter in the web-synth project folder
+- Enter in the electrophone project folder
 - Run `lib::docs` npm script
 - Run docs/index.html in a browser
 
@@ -43,19 +43,19 @@ For a full development documentation:
 Install npm module
 
 ```bash
-npm install web-synth
+npm install electrophone
 ```
 
 #### Include Library
 
 With ES5 via `<script>` tag:
 
-`<script src="<path_to_node_modules>/web-synth/dist/web-synth.min.js"/>`
+`<script src="<path_to_node_modules>/electrophone/dist/web-synth.min.js"/>`
 
 With ES2015 via [Babel](https://babeljs.io/):
 
 ```javascript
-import WebSynth from 'web-synth'
+import ElectroPhone from 'web-synth'
 ```
 
 #### Create an instance
@@ -64,8 +64,8 @@ import WebSynth from 'web-synth'
 // Get the browser AudioContext
 var AudioCtx = window.AudioContext || window.webkitAudioContext;
 
-// CREATE A WEBSYNTH INSTANCE
-var synth = new WebSynth(new AudioCtx(), {
+// CREATE A ElectroPhone INSTANCE
+var synth = new ElectroPhone(new AudioCtx(), {
         //Optional parameters
         spectrum: <true|false>,            // set true to manage data of playing sound
         updateSpectrum: <dataArray => {}>, // on receive data callback
@@ -127,16 +127,16 @@ synth.getModules();
 
 ```javascript
 // Get module properties by type.
-WebSynth.getModuleProperties("moduleType");
+ElectroPhone.getModuleProperties("moduleType");
 
-// Describe all WebSynth modules with properties configuration.
-WebSynth.describeModules("moduleType");
+// Describe all ElectroPhone modules with properties configuration.
+ElectroPhone.describeModules("moduleType");
 
 // Get frequency float value calculated from given note and octave.
-WebSynth.getFrequency("A", 4);
+ElectroPhone.getFrequency("A", 4);
 
 // Get complete notes list.
-WebSynth.getNotes();
+ElectroPhone.getNotes();
 ```
 
 
@@ -180,35 +180,35 @@ The set of string values to create modules.
 
 | TYPES         | Usage                                                   |
 | ------------- | ------------------------------------------------------- |
-| OSCILLATOR    | synth.create('label', WebSynth.TYPES.OSCILLATOR, {})    |
-| NOISE         | synth.create('label', WebSynth.TYPES.NOISE, {})         |
-| MODULATOR     | synth.create('label', WebSynth.TYPES.MODULATOR, {})     |
-| ENVELOPE      | synth.create('label', WebSynth.TYPES.ENVELOPE, {})      |
-| PAN           | synth.create('label', WebSynth.TYPES.PAN, {})           |
-| FILTER        | synth.create('label', WebSynth.TYPES.FILTER, {})        |
-| DELAY         | synth.create('label', WebSynth.TYPES.DELAY, {})         |
-| PINGPONGDELAY | synth.create('label', WebSynth.TYPES.PINGPONGDELAY, {}) |
-| TREMOLO       | synth.create('label', WebSynth.TYPES.TREMOLO, {})       |
-| OVERDRIVE     | synth.create('label', WebSynth.TYPES.OVERDRIVE, {})     |
-| BITCRUSHER    | synth.create('label', WebSynth.TYPES.BITCRUSHER, {})    |
-| MOOGFILTER    | synth.create('label', WebSynth.TYPES.MOOGFILTER, {})    |
+| OSCILLATOR    | synth.create('label', ElectroPhone.TYPES.OSCILLATOR, {})    |
+| NOISE         | synth.create('label', ElectroPhone.TYPES.NOISE, {})         |
+| MODULATOR     | synth.create('label', ElectroPhone.TYPES.MODULATOR, {})     |
+| ENVELOPE      | synth.create('label', ElectroPhone.TYPES.ENVELOPE, {})      |
+| PAN           | synth.create('label', ElectroPhone.TYPES.PAN, {})           |
+| FILTER        | synth.create('label', ElectroPhone.TYPES.FILTER, {})        |
+| DELAY         | synth.create('label', ElectroPhone.TYPES.DELAY, {})         |
+| PINGPONGDELAY | synth.create('label', ElectroPhone.TYPES.PINGPONGDELAY, {}) |
+| TREMOLO       | synth.create('label', ElectroPhone.TYPES.TREMOLO, {})       |
+| OVERDRIVE     | synth.create('label', ElectroPhone.TYPES.OVERDRIVE, {})     |
+| BITCRUSHER    | synth.create('label', ElectroPhone.TYPES.BITCRUSHER, {})    |
+| MOOGFILTER    | synth.create('label', ElectroPhone.TYPES.MOOGFILTER, {})    |
 
 #### Full Example: Two Voices Synth
 
 ```javascript
 // Load library
-import WebSynth from 'WebSynth';
+import ElectroPhone from 'electrophone';
 
 // Build the synth instance (See Usage Section)
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
-const synth = new WebSynth(new AudioCtx());
+const synth = new ElectroPhone(new AudioCtx());
 
 // Create the first voice
 synth.create(
     'Voice1',
-    WebSynth.TYPES.OSCILLATOR,
+    ElectroPhone.TYPES.OSCILLATOR,
     {
-        wave: WebSynth.CONST.WAVE_SAWTOOTH,
+        wave: ElectroPhone.CONST.WAVE_SAWTOOTH,
         detune: 500,
         level: 50
     }
@@ -217,17 +217,17 @@ synth.create(
 // Create the second voice
 synth.create(
     'Voice2',
-    WebSynth.TYPES.OSCILLATOR,
+    ElectroPhone.TYPES.OSCILLATOR,
     {
-        wave: WebSynth.CONST.WAVE_SAWTOOTH,
+        wave: ElectroPhone.CONST.WAVE_SAWTOOTH,
         detune: -500,
         level: 50
     }
 );
 
 //Link voices to Master
-synth.link('Voice1', WebSynth.CONST.MASTER);
-synth.link('Voice2', WebSynth.CONST.MASTER);
+synth.link('Voice1', ElectroPhone.CONST.MASTER);
+synth.link('Voice2', ElectroPhone.CONST.MASTER);
 
 // Setup ADSR
 synth.adsr({ attack: 0, decay: 1, sustain: 50, release: 25 });
@@ -236,7 +236,7 @@ synth.adsr({ attack: 0, decay: 1, sustain: 50, release: 25 });
 synth.master({ level: 80 });
 
 // Get the A4 note frequency
-const a4 = WebSynth.getFrequency("A", 4);
+const a4 = ElectroPhone.getFrequency("A", 4);
 
 // Play the a4 note
 synth.play(a4);
@@ -247,7 +247,7 @@ setTimeout(() => synth.stop(a4), 1000);
 
 ## Prebuilt Modules
 
-Every WebSynth instance has 2 hardcoded modules: `Master` and `ADSR`.
+Every ElectroPhone instance has 2 hardcoded modules: `Master` and `ADSR`.
 
 This is the minimal configuration to let sound coming out from  your
 sound card and control its behaviour during time.
