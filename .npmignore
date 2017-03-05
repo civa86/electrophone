@@ -1,2 +1,16 @@
 #TODO test package loclly and add all files...
+.idea
 app
+coverage
+docs
+test
+.babelrc
+.eslintrc
+.gitignore
+.npmignore
+.travis.yml
+esdoc.json
+esdoc.public.json
+publish.sh
+release.sh
+webpack.config.js

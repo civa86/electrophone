@@ -50,12 +50,12 @@ npm install electrophone
 
 With ES5 via `<script>` tag:
 
-`<script src="<path_to_node_modules>/electrophone/dist/web-synth.min.js"/>`
+`<script src="<path_to_node_modules>/electrophone/dist/electrophone.min.js"/>`
 
 With ES2015 via [Babel](https://babeljs.io/):
 
 ```javascript
-import ElectroPhone from 'web-synth'
+import ElectroPhone from 'electrophone'
 ```
 
 #### Create an instance
