@@ -85,6 +85,21 @@ class App extends Component {
 
                 modal.find('.modal-body').height(modalH - (modalHeaderH + modalFooterH + 90));
                 modal.find('.modal-pre-hide').fadeIn();
+
+                const newBodyH = modal.find('.modal-body').height();
+                modal.find('.carousel-inner').height(newBodyH);
+                modal.find('.item').height(newBodyH);
+                if (newBodyH < 337) {
+                    modal.find('.anim-slide').height(newBodyH);
+                } else {
+                    modal.find('.anim-slide').height(337);
+                }
+            });
+            $('#tutorial').on('hidden.bs.modal', () => {
+                const modal = $('#tutorial');
+
+                modal.find('.item.active').removeClass('active');
+                modal.find('.item').first().addClass('active');
             });
         });
     }

@@ -26,7 +26,10 @@ const Header = (props) => {
                     </div>
                     <div className="pull-left">
                         <span className="capital">E</span>lectro<span className="capital">P</span>hone
-                        <span className="version visible-xs-block visible-sm-inline">{libVersion}</span>
+                        <span
+                            className="version visible-xs-block visible-sm-inline visible-md-inline visible-lg-inline">
+                            {libVersion}
+                        </span>
                     </div>
                 </div>
 

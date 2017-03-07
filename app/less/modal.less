@@ -190,14 +190,82 @@
 #tutorial {
   .modal-dialog {
     margin: 0;
-    width: 90% !important;
-    height: 80%;
+    width: 80% !important;
+    height: 90%;
 
     .modal-content {
       height: 100%;
+      background: @c-dark;
+      color: @c-light;
 
       .modal-pre-hide {
         display: none;
+      }
+
+      .modal-header {
+        color: @c-secondary;
+        text-align: center;
+        word-spacing: 7px;
+      }
+
+      .item {
+        .anim-slide {
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+
+          &.add-modules-slide {
+            background-image: url('../img/tutorial/add-modules.gif');
+          }
+
+          &.link-modules-slide {
+            background-image: url('../img/tutorial/link-modules.gif');
+          }
+        }
+
+        .carousel-caption {
+          color: @c-secondary;
+          bottom: 0;
+          margin: 0;
+          padding: 0;
+
+          h6 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+          }
+          p {
+            margin: 0; padding: 0;
+            color: #999;
+            font-size: 14px;
+
+            .badge {
+              display: inline-block;
+              margin-right: 5px;
+            }
+            .badge-txt {
+              vertical-align: sub;
+            }
+          }
+        }
+      }
+
+      .carousel-control {
+        background: none;
+        color: @c-light;
+        opacity: 1;
+
+        &:hover, &:active, &:focus {
+          color: @c-secondary;
+          opacity: 1;
+        }
+
+        .carousel-control-icon {
+          position: absolute;
+          top: 50%;
+          z-index: 5;
+          display: inline-block;
+        }
+
       }
     }
   }
