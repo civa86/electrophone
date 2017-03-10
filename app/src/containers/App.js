@@ -101,6 +101,15 @@ class App extends Component {
                 modal.find('.item.active').removeClass('active');
                 modal.find('.item').first().addClass('active');
             });
+            $('#tutorial').on('slide.bs.carousel', function ({ relatedTarget }) {
+                const
+                    modal = $('#tutorial'),
+                    active = $('#tutorial').find('.item.active'),
+                    index = $(relatedTarget).data('index');
+
+                modal.find('.menu').find('li.active').removeClass('active');
+                modal.find('.menu').find('li[data-slide-to="' + index + '"]').addClass('active');
+            });
         });
     }
 

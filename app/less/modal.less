@@ -198,14 +198,35 @@
       background: @c-dark;
       color: @c-light;
 
-      .modal-pre-hide {
-        display: none;
+      .modal-body {
+        padding-top: 0;
+        &.modal-pre-hide {
+          display: none;
+        }
       }
 
       .modal-header {
-        color: @c-secondary;
-        text-align: center;
-        word-spacing: 7px;
+        border: none;
+
+        .logo {
+          color: @c-light;
+          overflow: hidden;
+          line-height: 34px;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          font-size: 18px;
+
+          .icon {
+            img {
+              width: 40px;
+              margin-right: 10px;
+            }
+          }
+
+          .capital {
+            font-size: 28px;
+          }
+        }
       }
 
       .item {
@@ -266,6 +287,64 @@
           display: inline-block;
         }
 
+      }
+    }
+  }
+
+  .menu {
+    margin-top: 10px;
+    ul {
+      overflow: hidden;
+      list-style: none;
+      margin:0; padding: 0;
+
+      li {
+        &.menu-item {
+          display: inline-block;
+          padding-right: @icon-spacing + 3;
+        }
+
+        &.active {
+          a {
+            cursor: pointer;
+            background: @c-dark;
+            color: @c-secondary;
+            .menu-label, .delete-counter {
+              color: @c-secondary;
+            }
+          }
+        }
+
+        a {
+          color: @c-light;
+          font-size: 22px;
+          text-decoration: none;
+
+          .transition-duration(@transition-link);
+
+          &:hover {
+            cursor: pointer;
+            background: @c-dark;
+            color: @c-secondary;
+            .menu-label, .delete-counter {
+              color: @c-secondary;
+            }
+          }
+
+          i {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+            padding-right: 5px;
+          }
+
+          .menu-label, .delete-counter {
+            color: @c-light;
+            padding: 0; margin: 0;
+            font-size: 14px;
+            text-transform: uppercase;
+          }
+        }
       }
     }
   }

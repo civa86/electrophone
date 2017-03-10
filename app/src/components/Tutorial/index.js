@@ -1,12 +1,69 @@
 import React from 'react';
 
+import icon from '../../../img/icon.png';
+
 const Tutorial = () => {
     return (
         <div id="tutorial" className="modal fade" tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header modal-pre-hide">
-                        <h4 className="modal-title">Welcome to ElectroPhone</h4>
+                        <div className="logo no-select cursor-default">
+                            <div className="pull-left icon">
+                                <img src={icon} alt="icon"/>
+                            </div>
+                            <div className="pull-left">
+                                <span className="capital">H</span>ow
+                                <span className="capital">T</span>o
+                                <span className="capital">U</span>se
+                            </div>
+                        </div>
+                        <div className="menu">
+                            <ul className="no-select">
+                                <li className="menu-item active"
+                                    data-target="#carousel-slides" data-slide-to="0">
+                                    <a className="cursor-pointer">
+                                        <i className="ion-information-circled"/>
+                                        <span className="menu-label">Intro</span>
+                                    </a>
+                                </li>
+                                <li className="menu-item"
+                                    data-target="#carousel-slides" data-slide-to="1">
+                                    <a>
+                                        <i className="ion-fork-repo"/>
+                                        <span className="menu-label">Add</span>
+                                    </a>
+                                </li>
+                                <li className="menu-item"
+                                    data-target="#carousel-slides" data-slide-to="2">
+                                    <a>
+                                        <i className="ion-pull-request"/>
+                                        <span className="menu-label">Link</span>
+                                    </a>
+                                </li>
+                                <li className="menu-item"
+                                    data-target="#carousel-slides" data-slide-to="3">
+                                    <a>
+                                        <i className="icon-piano" style={{ fontSize: '18px' }}/>
+                                        <span className="menu-label">Play</span>
+                                    </a>
+                                </li>
+                                <li className="menu-item"
+                                    data-target="#carousel-slides" data-slide-to="3">
+                                    <a>
+                                        <i className="ion-levels"/>
+                                        <span className="menu-label">Control</span>
+                                    </a>
+                                </li>
+                                <li className="menu-item"
+                                    data-target="#carousel-slides" data-slide-to="4">
+                                    <a>
+                                        <i className="ion-trash-b"/>
+                                        <span className="menu-label">Delete</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div className="modal-body modal-pre-hide">
                         <div id="carousel-slides"
@@ -14,7 +71,12 @@ const Tutorial = () => {
                              data-interval="false"
                              data-ride="carousel">
                             <div className="carousel-inner" role="listbox">
-                                <div className="item active">
+
+                                <div className="item active" data-index="0">
+                                    <h1>Intro</h1>
+                                </div>
+
+                                <div className="item" data-index="1">
                                     <div className="anim-slide add-modules-slide"/>
                                     <div className="carousel-caption">
                                         <h6>Add Modules</h6>
@@ -24,7 +86,7 @@ const Tutorial = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="item">
+                                <div className="item" data-index="2">
                                     <div className="anim-slide link-modules-slide"/>
                                     <div className="carousel-caption">
                                         <h6>Link Modules</h6>
