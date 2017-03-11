@@ -79,33 +79,41 @@ const Tutorial = () => {
                                 <div className="item" data-index="1">
                                     <div className="anim-slide add-modules-slide"/>
                                     <div className="carousel-caption">
-                                        <h6>Add Modules</h6>
-                                        <p>
-                                            <span className="badge"><i className="ion-information"></i></span>
-                                            <span className="badge-txt">Oscillator and Noise can make sounds</span>
-                                        </p>
+                                        <i className="badge-icon ion-ios-information-outline"/>
+                                        <span className="badge-txt">
+                                            Add modules and build your synthesizer.<br/>
+                                            Oscillator and Noise can make sounds.
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="item" data-index="2">
                                     <div className="anim-slide link-modules-slide"/>
                                     <div className="carousel-caption">
-                                        <h6>Link Modules</h6>
-                                        <p>
-                                            <span className="badge"><i className="ion-information"></i></span>
-                                            <span className="badge-txt">Press SHIFT to quick toggle link mode</span>
-                                        </p>
+                                        <i className="badge-icon ion-ios-information-outline"/>
+                                        <span className="badge-txt">
+                                            Link modules. Sound comes out from Master.<br/>
+                                            Press <b className="key">SHIFT</b> to quick toggle link mode.
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="item" data-index="3">
                                     <div className="anim-slide play-slide"/>
                                     <div className="carousel-caption top-caption">
-                                        <h6>Play</h6>
-                                        <p>
-                                            <span className="badge"><i className="ion-information"></i></span>
-                                            <span className="badge-txt">
-                                                Press Z X to change octave. Play with your keyboard
-                                            </span>
-                                        </p>
+                                        <i className="badge-icon ion-ios-information-outline"/>
+                                        <span className="badge-txt">
+                                            Play with your keyboard.<br/>
+                                            Press <b className="key">Z</b> <b className="key">X</b> to change octave.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="item" data-index="4">
+                                    <div className="anim-slide control-slide"/>
+                                    <div className="carousel-caption">
+                                        <i className="badge-icon ion-ios-information-outline"/>
+                                        <span className="badge-txt">
+                                            Control module properties.<br/>
+                                            Press <b className="key">TAB</b> to switch view.
+                                        </span>
                                     </div>
                                 </div>
                             </div>

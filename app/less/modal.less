@@ -239,8 +239,8 @@
           width: 20%;
 
           background: @c-dark;
-          border-color: @c-secondary;
-          color: @c-secondary;
+          border-color: @c-light;
+          color: @c-light;
 
           &:hover, &:active {
             background: @c-secondary;
@@ -267,23 +267,27 @@
             bottom: auto !important;
           }
 
-          h6 {
-            margin: 0 0 5px 0;
-            font-size: 18px;
-          }
-          p {
-            margin: 0; padding: 0;
+          .badge-icon {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: super;
             color: @c-light;
-            font-size: 14px;
+            font-size: 28px;
+          }
+          .badge-txt {
+            color: @c-light;
+            font-size: 16px;
+            display: inline-block;
+            vertical-align: sub;
 
-            .badge {
+            .key {
+              //font-weight: normal;
+              border: 1px solid @c-light;
               display: inline-block;
-              margin-right: 5px;
-              color: @c-dark;
-              background: @c-light;
-            }
-            .badge-txt {
-              vertical-align: sub;
+              padding: 3px 7px;
+              font-size: 13px;
+              border-radius: 5px;
+              text-transform: uppercase;
             }
           }
         }
@@ -303,6 +307,10 @@
 
           &.play-slide {
             background-image: url('../img/tutorial/play.gif');
+          }
+
+          &.control-slide {
+            background-image: url('../img/tutorial/control.gif');
           }
         }
       }
