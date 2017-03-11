@@ -19,9 +19,13 @@ import ControlPanel from '../components/ControlPanel';
 import GraphPanel from '../components/Graph';
 
 // Services
+import localCacheService from '../services/localCache';
 import * as screenService from '../services/screen';
 
-const localCacheKey = 'ElectroPhoneApp';
+const
+    localCacheKey = 'ElectroPhoneApp',
+    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
+    tutorialCache = localCacheService(storage);
 
 class App extends Component {
     constructor (props) {
@@ -54,13 +58,12 @@ class App extends Component {
             $('[data-toggle="tooltip"]').tooltip();
 
             //Show Tutorial
-            //Move logic in actions...
-            if (true /*TODO put localcache logic...*/) {
+            const tutorialItem = tutorialCache.getItem('ElectroPhoneTutorial', 'tutorial');
+            if (!tutorialItem || !tutorialItem.item) {
                 $('#tutorial').modal('show');
-                //TODO add localcache viewed state
+                tutorialCache.addItem('ElectroPhoneTutorial', 'tutorial', true);
             }
 
-            //TODO Move events in actions??
             //Add Module Menu Events
             $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
                 $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');

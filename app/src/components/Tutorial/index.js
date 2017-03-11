@@ -73,7 +73,30 @@ const Tutorial = () => {
                             <div className="carousel-inner" role="listbox">
 
                                 <div className="item active" data-index="0">
-                                    <h1>Intro</h1>
+                                    <div className="intro">
+                                        <h4>Welcome to ElectroPhone</h4>
+                                        <p className="sub-title">
+                                            Learn how to start building and playing your custom syntesizer.
+                                        </p>
+                                        <p>
+                                            Based on Web Audio API.
+                                        </p>
+                                        <p>
+                                            Add modules and link them each other.
+                                        </p>
+                                        <p>
+                                            Master module lets sound coming out your sound card.
+                                        </p>
+                                        <p>
+                                            User you keyboard to play notes.
+                                        </p>
+                                        <p>
+                                            Change between graph and control view.
+                                        </p>
+                                        <p>
+                                            Turn knobs to change module properties.
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div className="item" data-index="1">
@@ -113,6 +136,16 @@ const Tutorial = () => {
                                         <span className="badge-txt">
                                             Control module properties.<br/>
                                             Press <b className="key">TAB</b> to switch view.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="item" data-index="5">
+                                    <div className="anim-slide delete-slide"/>
+                                    <div className="carousel-caption">
+                                        <i className="badge-icon ion-ios-information-outline"/>
+                                        <span className="badge-txt">
+                                            Delete modules.<br/>
+                                            press <b className="key">DELETE</b> to remove selected modules.
                                         </span>
                                     </div>
                                 </div>
