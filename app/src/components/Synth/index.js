@@ -213,21 +213,21 @@ class Synth extends Component {
                         className={(!isSpectrumVisible) ? 'closed' : ''}/>
 
                 <div id="keyboard" className={(!isPianoVisible) ? 'closed' : ''}>
-                    <PianoKeyNote note={{ key: 65, label: 'C' }}
-                                  semiNote={{ key: 87, label: 'C#' }}
+                    <PianoKeyNote note={{ key: 65, label: 'A' }}
+                                  semiNote={{ key: 87, label: 'W' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 83, label: 'D' }}
-                                  semiNote={{ key: 69, label: 'D#' }}
+                    <PianoKeyNote note={{ key: 83, label: 'S' }}
+                                  semiNote={{ key: 69, label: 'E' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 68, label: 'E' }}
+                    <PianoKeyNote note={{ key: 68, label: 'D' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
@@ -235,27 +235,27 @@ class Synth extends Component {
                                   octave={state.octave}/>
 
                     <PianoKeyNote note={{ key: 70, label: 'F' }}
-                                  semiNote={{ key: 84, label: 'F#' }}
+                                  semiNote={{ key: 84, label: 'T' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
                     <PianoKeyNote note={{ key: 71, label: 'G' }}
-                                  semiNote={{ key: 89, label: 'G#' }}
+                                  semiNote={{ key: 89, label: 'Y' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 72, label: 'A' }}
-                                  semiNote={{ key: 85, label: 'A#' }}
+                    <PianoKeyNote note={{ key: 72, label: 'H' }}
+                                  semiNote={{ key: 85, label: 'U' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 74, label: 'B' }}
+                    <PianoKeyNote note={{ key: 74, label: 'J' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}

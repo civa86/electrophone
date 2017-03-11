@@ -188,6 +188,10 @@
 }
 
 #tutorial {
+  .modal-pre-hide {
+    display: none;
+  }
+
   .modal-dialog {
     margin: 0;
     width: 80% !important;
@@ -200,9 +204,6 @@
 
       .modal-body {
         padding-top: 0;
-        &.modal-pre-hide {
-          display: none;
-        }
       }
 
       .modal-header {
@@ -225,6 +226,26 @@
 
           .capital {
             font-size: 28px;
+          }
+        }
+      }
+
+      .modal-footer {
+        border: none;
+        text-align: center;
+
+        .btn {
+          display: inline-block;
+          width: 20%;
+
+          background: @c-dark;
+          border-color: @c-secondary;
+          color: @c-secondary;
+
+          &:hover, &:active {
+            background: @c-secondary;
+            border-color: @c-dark;
+            color: @c-dark;
           }
         }
       }
@@ -293,6 +314,7 @@
 
   .menu {
     margin-top: 10px;
+    text-align: center;
     ul {
       overflow: hidden;
       list-style: none;
@@ -301,7 +323,15 @@
       li {
         &.menu-item {
           display: inline-block;
-          padding-right: @icon-spacing + 3;
+
+          &:last-child {
+            a {
+              &:after {
+                display: none;
+              }
+            }
+
+          }
         }
 
         &.active {
@@ -319,6 +349,19 @@
           color: @c-light;
           font-size: 22px;
           text-decoration: none;
+
+          &:after {
+            font-family: "Ionicons";
+            content: "\f3d3";
+            padding: 0 15px;
+            vertical-align: middle;
+            font-size: 16px;
+            color: #999;
+
+            &:hover {
+              color: #ccc;
+            }
+          }
 
           .transition-duration(@transition-link);
 

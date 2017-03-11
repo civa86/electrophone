@@ -18,7 +18,7 @@ const Tutorial = () => {
                                 <span className="capital">U</span>se
                             </div>
                         </div>
-                        <div className="menu">
+                        <div className="menu hidden-xs">
                             <ul className="no-select">
                                 <li className="menu-item active"
                                     data-target="#carousel-slides" data-slide-to="0">
@@ -113,7 +113,7 @@ const Tutorial = () => {
                         </div>
                     </div>
                     <div className="modal-footer modal-pre-hide">
-                        <button className="btn btn-default" data-dismiss="modal">Got It!</button>
+                        <button className="btn" data-dismiss="modal">Got It!</button>
                     </div>
                 </div>
             </div>

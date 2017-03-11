@@ -104,7 +104,6 @@ class App extends Component {
             $('#tutorial').on('slide.bs.carousel', function ({ relatedTarget }) {
                 const
                     modal = $('#tutorial'),
-                    active = $('#tutorial').find('.item.active'),
                     index = $(relatedTarget).data('index');
 
                 modal.find('.menu').find('li.active').removeClass('active');
