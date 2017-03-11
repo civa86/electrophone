@@ -251,6 +251,43 @@
       }
 
       .item {
+
+        .carousel-caption {
+          color: @c-secondary;
+          text-shadow: none !important;
+          right: 0 !important;
+          left: 0 !important;
+          background: fade(#333, 90);
+          bottom: 0;
+          margin: 0;
+          padding: 5px 0;
+
+          &.top-caption {
+            top: 0 !important;
+            bottom: auto !important;
+          }
+
+          h6 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+          }
+          p {
+            margin: 0; padding: 0;
+            color: @c-light;
+            font-size: 14px;
+
+            .badge {
+              display: inline-block;
+              margin-right: 5px;
+              color: @c-dark;
+              background: @c-light;
+            }
+            .badge-txt {
+              vertical-align: sub;
+            }
+          }
+        }
+
         .anim-slide {
           background-position: center center;
           background-repeat: no-repeat;
@@ -263,30 +300,9 @@
           &.link-modules-slide {
             background-image: url('../img/tutorial/link-modules.gif');
           }
-        }
 
-        .carousel-caption {
-          color: @c-secondary;
-          bottom: 0;
-          margin: 0;
-          padding: 0;
-
-          h6 {
-            margin: 0 0 5px 0;
-            font-size: 18px;
-          }
-          p {
-            margin: 0; padding: 0;
-            color: #999;
-            font-size: 14px;
-
-            .badge {
-              display: inline-block;
-              margin-right: 5px;
-            }
-            .badge-txt {
-              vertical-align: sub;
-            }
+          &.play-slide {
+            background-image: url('../img/tutorial/play.gif');
           }
         }
       }

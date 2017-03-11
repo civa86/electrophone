@@ -49,14 +49,14 @@ const Tutorial = () => {
                                     </a>
                                 </li>
                                 <li className="menu-item"
-                                    data-target="#carousel-slides" data-slide-to="3">
+                                    data-target="#carousel-slides" data-slide-to="4">
                                     <a>
                                         <i className="ion-levels"/>
                                         <span className="menu-label">Control</span>
                                     </a>
                                 </li>
                                 <li className="menu-item"
-                                    data-target="#carousel-slides" data-slide-to="4">
+                                    data-target="#carousel-slides" data-slide-to="5">
                                     <a>
                                         <i className="ion-trash-b"/>
                                         <span className="menu-label">Delete</span>
@@ -93,6 +93,18 @@ const Tutorial = () => {
                                         <p>
                                             <span className="badge"><i className="ion-information"></i></span>
                                             <span className="badge-txt">Press SHIFT to quick toggle link mode</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="item" data-index="3">
+                                    <div className="anim-slide play-slide"/>
+                                    <div className="carousel-caption top-caption">
+                                        <h6>Play</h6>
+                                        <p>
+                                            <span className="badge"><i className="ion-information"></i></span>
+                                            <span className="badge-txt">
+                                                Press Z X to change octave. Play with your keyboard
+                                            </span>
                                         </p>
                                     </div>
                                 </div>
