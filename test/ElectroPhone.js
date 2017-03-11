@@ -23,7 +23,6 @@ describe('ElectroPhone', () => {
 
     /** @test {ElectroPhone#getModules} */
     it('should have a method to get modules', () => {
-        //TODO explicit ElectroPhone everywhere
         synth = new ElectroPhone();
         expect(synth.getModules).to.be.a('function');
         expect(synth.getModules()).to.be.a('object');

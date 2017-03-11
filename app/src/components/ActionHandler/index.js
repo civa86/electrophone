@@ -160,7 +160,6 @@ function ActionHandler (WrappedComponent) {
                 { dispatch } = this.props,
                 item = localCache.getItem(localCacheKey, id);
 
-            //TODO check reset link...try also properties...
             $('.modal').modal('hide');
             dispatch(AppActions.loadState(item.item, ElectroPhone.describeModules().map(e => e.type)));
         }
