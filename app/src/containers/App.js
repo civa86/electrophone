@@ -55,7 +55,7 @@ class App extends Component {
 
             //Show Tutorial
             //Move logic in actions...
-            if (true /*TODO put localcache logic...*/) {
+            if (false /*TODO put localcache logic...*/) {
                 $('#tutorial').modal('show');
                 //TODO add localcache viewed state
             }

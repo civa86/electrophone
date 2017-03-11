@@ -17,6 +17,7 @@ const grapLibMock = () => {
         add: () => state = 'addCalled',
         remove: () => state = 'removeCalled',
         nodes: () => [],
+        edges: () => [],
         autoungrabify: () => state = 'autoungrabifyCalled',
         $: () => {
             return {
