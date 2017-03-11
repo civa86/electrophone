@@ -186,3 +186,254 @@
     }
   }
 }
+
+#tutorial {
+  .modal-pre-hide {
+    display: none;
+  }
+
+  .modal-dialog {
+    margin: 0;
+    width: 80% !important;
+    height: 90%;
+
+    .modal-content {
+      height: 100%;
+      background: @c-dark;
+      color: @c-light;
+
+      .modal-body {
+        padding-top: 0;
+      }
+
+      .modal-header {
+        border: none;
+
+        .logo {
+          color: @c-light;
+          overflow: hidden;
+          line-height: 34px;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          font-size: 18px;
+
+          .icon {
+            img {
+              width: 40px;
+              margin-right: 10px;
+            }
+          }
+
+          .capital {
+            font-size: 28px;
+          }
+        }
+      }
+
+      .modal-footer {
+        border: none;
+        text-align: center;
+
+        .btn {
+          display: inline-block;
+          width: 20%;
+
+          background: @c-dark;
+          border-color: @c-light;
+          color: @c-light;
+
+          &:hover, &:active {
+            background: @c-secondary;
+            border-color: @c-dark;
+            color: @c-dark;
+          }
+        }
+      }
+
+      .item {
+
+        .intro {
+          font-size: 16px;
+
+          text-align: center;
+
+          h4 {
+            color: @c-secondary;
+            font-size: 20px;
+          }
+
+          .sub-title {
+            font-size: 18px;
+            margin-bottom: 45px;
+          }
+
+        }
+
+        .carousel-caption {
+          color: @c-secondary;
+          text-shadow: none !important;
+          right: 0 !important;
+          left: 0 !important;
+          background: fade(#333, 90);
+          bottom: 0;
+          margin: 0;
+          padding: 5px 0;
+
+          &.top-caption {
+            top: 0 !important;
+            bottom: auto !important;
+          }
+
+          .badge-icon {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: super;
+            color: @c-light;
+            font-size: 28px;
+          }
+          .badge-txt {
+            color: @c-light;
+            font-size: 16px;
+            display: inline-block;
+            vertical-align: sub;
+
+            .key {
+              //font-weight: normal;
+              border: 1px solid @c-light;
+              display: inline-block;
+              padding: 3px 7px;
+              font-size: 13px;
+              border-radius: 5px;
+              text-transform: uppercase;
+            }
+          }
+        }
+
+        .anim-slide {
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+
+          &.add-modules-slide {
+            background-image: url('../img/tutorial/add-modules.gif');
+          }
+
+          &.link-modules-slide {
+            background-image: url('../img/tutorial/link-modules.gif');
+          }
+
+          &.play-slide {
+            background-image: url('../img/tutorial/play.gif');
+          }
+
+          &.control-slide {
+            background-image: url('../img/tutorial/control.gif');
+          }
+
+          &.delete-slide {
+            background-image: url('../img/tutorial/delete.gif');
+          }
+        }
+      }
+
+      .carousel-control {
+        background: none;
+        color: @c-light;
+        opacity: 1;
+
+        &:hover, &:active, &:focus {
+          color: @c-secondary;
+          opacity: 1;
+        }
+
+        .carousel-control-icon {
+          position: absolute;
+          top: 50%;
+          z-index: 5;
+          display: inline-block;
+        }
+
+      }
+    }
+  }
+
+  .menu {
+    margin-top: 10px;
+    text-align: center;
+    ul {
+      overflow: hidden;
+      list-style: none;
+      margin:0; padding: 0;
+
+      li {
+        &.menu-item {
+          display: inline-block;
+
+          &:last-child {
+            a {
+              &:after {
+                display: none;
+              }
+            }
+
+          }
+        }
+
+        &.active {
+          a {
+            cursor: pointer;
+            background: @c-dark;
+            color: @c-secondary;
+            .menu-label, .delete-counter {
+              color: @c-secondary;
+            }
+          }
+        }
+
+        a {
+          color: @c-light;
+          font-size: 22px;
+          text-decoration: none;
+
+          &:after {
+            font-family: "Ionicons";
+            content: "\f3d3";
+            padding: 0 15px;
+            vertical-align: middle;
+            font-size: 16px;
+            color: #999;
+
+            &:hover {
+              color: #ccc;
+            }
+          }
+
+          .transition-duration(@transition-link);
+
+          &:hover {
+            cursor: pointer;
+            background: @c-dark;
+            color: @c-secondary;
+            .menu-label, .delete-counter {
+              color: @c-secondary;
+            }
+          }
+
+          i {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+            padding-right: 5px;
+          }
+
+          .menu-label, .delete-counter {
+            color: @c-light;
+            padding: 0; margin: 0;
+            font-size: 14px;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+}

@@ -160,6 +160,7 @@ function ActionHandler (WrappedComponent) {
                 { dispatch } = this.props,
                 item = localCache.getItem(localCacheKey, id);
 
+            //TODO check reset link...try also properties...
             $('.modal').modal('hide');
             dispatch(AppActions.loadState(item.item, ElectroPhone.describeModules().map(e => e.type)));
         }
@@ -204,6 +205,10 @@ function ActionHandler (WrappedComponent) {
         setSpectrumVisibility (isSpectrumVisible) {
             const { dispatch } = this.props;
             dispatch(UiActions.setSpectrumVisibility(isSpectrumVisible));
+        }
+
+        launchTutorial () {
+            $('#tutorial').modal('show');
         }
 
         render () {
@@ -261,7 +266,9 @@ function ActionHandler (WrappedComponent) {
 
                     setPianoVisibility: (isPianoVisible) => this.setPianoVisibility(isPianoVisible),
 
-                    setSpectrumVisibility: (isSpectrumVisible) => this.setSpectrumVisibility(isSpectrumVisible)
+                    setSpectrumVisibility: (isSpectrumVisible) => this.setSpectrumVisibility(isSpectrumVisible),
+
+                    launchTutorial: () => this.launchTutorial()
 
                 }}
             />;

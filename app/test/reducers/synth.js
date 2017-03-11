@@ -18,22 +18,22 @@ import {
 const
     initialState = initState.synth,
     deepFreeze = (obj) => {
-    // Retrieve the property names defined on obj
-    const propNames = Object.getOwnPropertyNames(obj);
+        // Retrieve the property names defined on obj
+        const propNames = Object.getOwnPropertyNames(obj);
 
-    // Freeze properties before freezing self
-    propNames.forEach(name => {
-        const prop = obj[name];
+        // Freeze properties before freezing self
+        propNames.forEach(name => {
+            const prop = obj[name];
 
-        // Freeze prop if it is an object
-        if (typeof prop === 'object' && prop !== null) {
-            deepFreeze(prop);
-        }
-    });
+            // Freeze prop if it is an object
+            if (typeof prop === 'object' && prop !== null) {
+                deepFreeze(prop);
+            }
+        });
 
-    // Freeze self (no-op if already frozen)
-    return Object.freeze(obj);
-};
+        // Freeze self (no-op if already frozen)
+        return Object.freeze(obj);
+    };
 
 describe('Synth reducer', () => {
     let state = deepFreeze(synth());
@@ -247,4 +247,100 @@ describe('Synth reducer', () => {
         expect(state).to.deep.equal(initialState);
         expect(state.modules.length).to.equal(1);
     });
+
+    it('should load with correct links', () => {
+        state = synth(state, loadState(
+            {
+                synth: {
+                    octave: 4,
+                    playingVoices: [],
+                    modules: [
+                        {
+                            id: 'master',
+                            type: 'Master',
+                            properties: [],
+                            isMaster: true,
+                            isSelected: false,
+                            link: null,
+                            position: {}
+
+                        },
+                        {
+                            id: 'filt',
+                            type: 'Filter',
+                            properties: [],
+                            isMaster: false,
+                            isSelected: false,
+                            link: 'master',
+                            position: {}
+
+                        },
+                        {
+                            id: 'osc',
+                            type: 'Oscillator',
+                            properties: [],
+                            isMaster: false,
+                            isSelected: false,
+                            link: 'filt',
+                            position: {}
+
+                        }
+                    ]
+                },
+                ui: {}
+            },
+            ['Master', 'Oscillator', 'Filter']
+        ));
+
+        expect(state.modules.length).to.equal(3);
+        expect(state.modules.filter(e => e.id === 'filt').pop().link).to.equal('master');
+        expect(state.modules.filter(e => e.id === 'osc').pop().link).to.equal('filt');
+
+        state = synth(state, loadState(
+            {
+                synth: {
+                    octave: 4,
+                    playingVoices: [],
+                    modules: [
+                        {
+                            id: 'master',
+                            type: 'Master',
+                            properties: [],
+                            isMaster: true,
+                            isSelected: false,
+                            link: null,
+                            position: {}
+
+                        },
+                        {
+                            id: 'filt',
+                            type: 'Filter',
+                            properties: [],
+                            isMaster: false,
+                            isSelected: false,
+                            link: null,
+                            position: {}
+
+                        },
+                        {
+                            id: 'osc',
+                            type: 'Oscillator',
+                            properties: [],
+                            isMaster: false,
+                            isSelected: false,
+                            link: 'master',
+                            position: {}
+
+                        }
+                    ]
+                },
+                ui: {}
+            },
+            ['Master', 'Oscillator', 'Filter']
+        ));
+
+        expect(state.modules.filter(e => e.id === 'filt').pop().link).to.equal(null);
+        expect(state.modules.filter(e => e.id === 'osc').pop().link).to.equal('master');
+    });
+
 });

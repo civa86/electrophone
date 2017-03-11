@@ -136,6 +136,10 @@
                     test:   /\.css$/,
                     loader: ExtractVendorStyle.extract('style', 'css'),
                     include: /node_modules/
+                    //TODO try in production
+                    // options: {
+                    //     minimize: true || {/* CSSNano Options */}
+                    // }
                 },
                 {
                     test:   /\.(txt)$/,

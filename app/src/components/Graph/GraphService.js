@@ -262,6 +262,11 @@ const GraphService = (graphLibrary, window) => {
             newLinkMode = newGraph.linkMode || false;
 
         if (graph) {
+            //REMOVE ALL EXISTING EDGES
+            graph.edges().forEach(e => {
+                graph.remove(e);
+            });
+
             //CREATE NOT EXISTENT MODULES
             createNodes(newNodes);
             //SET NODES PROPERTIES

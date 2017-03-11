@@ -26,7 +26,10 @@ const Header = (props) => {
                     </div>
                     <div className="pull-left">
                         <span className="capital">E</span>lectro<span className="capital">P</span>hone
-                        <span className="version visible-xs-block visible-sm-inline">{libVersion}</span>
+                        <span
+                            className="version visible-xs-block visible-sm-inline visible-md-inline visible-lg-inline">
+                            {libVersion}
+                        </span>
                     </div>
                 </div>
 
@@ -51,6 +54,15 @@ const Header = (props) => {
 
             <div className="menu">
                 <ul className="container-fluid no-select">
+                    <li className="pull-left">
+                        <a className="cursor-pointer"
+                           onClick={() => actions.launchTutorial()}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Help">
+                            <i className="ion-help-circled"></i> <span className="menu-label hidden-xs">Help</span>
+                        </a>
+                    </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
                            onClick={() => actions.resetApplication()}

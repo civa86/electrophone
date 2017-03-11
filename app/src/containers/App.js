@@ -10,17 +10,22 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
-import SaveModal from '../components/Modals/SaveModal';
-import LoadModal from '../components/Modals/LoadModal';
+import SaveModal from '../components/File/SaveModal';
+import LoadModal from '../components/File/LoadModal';
+import Tutorial from '../components/Tutorial';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
 import GraphPanel from '../components/Graph';
 
 // Services
+import localCacheService from '../services/localCache';
 import * as screenService from '../services/screen';
 
-const localCacheKey = 'ElectroPhoneApp';
+const
+    localCacheKey = 'ElectroPhoneApp',
+    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
+    tutorialCache = localCacheService(storage);
 
 class App extends Component {
     constructor (props) {
@@ -52,7 +57,14 @@ class App extends Component {
             //Tooltips
             $('[data-toggle="tooltip"]').tooltip();
 
-            //Add module dropdown
+            //Show Tutorial
+            const tutorialItem = tutorialCache.getItem('ElectroPhoneTutorial', 'tutorial');
+            if (!tutorialItem || !tutorialItem.item) {
+                $('#tutorial').modal('show');
+                tutorialCache.addItem('ElectroPhoneTutorial', 'tutorial', true);
+            }
+
+            //Add Module Menu Events
             $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
                 $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
             });
@@ -60,10 +72,45 @@ class App extends Component {
                 $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
             });
 
-            //Operation Modals
+            //Operation File Events
             $('.operation-modal').on('hidden.bs.modal', () => {
                 $('.operation-modal').find('.confirm-operation').hide();
                 actions.resetSaveForm();
+            });
+
+            //Tutorial Modal Events
+            $('#tutorial').on('shown.bs.modal', () => {
+                const
+                    modal = $('#tutorial'),
+                    modalH = modal.find('.modal-content').height(),
+                    modalHeaderH = modal.find('.modal-header').height(),
+                    modalFooterH = modal.find('.modal-footer').height();
+
+                modal.find('.modal-body').height(modalH - (modalHeaderH + modalFooterH + 90));
+                modal.find('.modal-pre-hide').fadeIn();
+
+                const newBodyH = modal.find('.modal-body').height();
+                modal.find('.carousel-inner').height(newBodyH);
+                modal.find('.item').height(newBodyH);
+                if (newBodyH < 337) {
+                    modal.find('.anim-slide').height(newBodyH);
+                } else {
+                    modal.find('.anim-slide').height(337);
+                }
+            });
+            $('#tutorial').on('hidden.bs.modal', () => {
+                const modal = $('#tutorial');
+
+                modal.find('.item.active').removeClass('active');
+                modal.find('.item').first().addClass('active');
+            });
+            $('#tutorial').on('slide.bs.carousel', function ({ relatedTarget }) {
+                const
+                    modal = $('#tutorial'),
+                    index = $(relatedTarget).data('index');
+
+                modal.find('.menu').find('li.active').removeClass('active');
+                modal.find('.menu').find('li[data-slide-to="' + index + '"]').addClass('active');
             });
         });
     }
@@ -152,6 +199,8 @@ class App extends Component {
         return (
             <div id="main-wrapper" className="container-fluid">
                 <NoAudioWarning/>
+
+                <Tutorial/>
 
                 <SaveModal items={app.savedList} localCacheKey={localCacheKey} />
 
