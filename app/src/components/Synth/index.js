@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-//TODO check...you are importing web-synth source code...try with dist version!
-import WebSynth from 'web-synth';
+import ElectroPhone from 'electrophone';
 import GlobalKeys from '../GlobalKeys';
 import PianoKeyNote from './PianoKeyNote'
 
-//TODO check for spectrum and others init props of synth....pass them from App!!
-//TODO wrtie a synth maanger?
 const noteMapping = {
     65: 'C',    //a
     87: 'C#',   //w
@@ -25,39 +22,23 @@ const noteMapping = {
 
 class Synth extends Component {
     updateSpectrum (dataArray) {
-        const sliceWidth = this.spectrumProps.WIDTH * 1.0 / 256;
+        const
+            k = 256.0,
+            sliceWidth = this.spectrumProps.WIDTH * (dataArray.length / this.spectrumProps.WIDTH) / k;
         let x = 0;
 
         this.spectrumProps.canvasCtx.fillStyle = 'rgb(51, 51, 51)';
         this.spectrumProps.canvasCtx.fillRect(0, 0, this.spectrumProps.WIDTH, this.spectrumProps.HEIGHT);
-        this.spectrumProps.canvasCtx.lineWidth = 1.8;
-        this.spectrumProps.canvasCtx.strokeStyle = 'rgb(70, 188, 236)';
-        this.spectrumProps.canvasCtx.beginPath();
 
         for (let i = 0; i < dataArray.length; i++) {
-            const v = dataArray[i] / 256.0,
+            const v = dataArray[i] / k,
                 y = this.spectrumProps.HEIGHT - (v * this.spectrumProps.HEIGHT);
 
-            if (i === 0) {
-                this.spectrumProps.canvasCtx.moveTo(x, y);
-            } else {
-                this.spectrumProps.canvasCtx.lineTo(x, y);
-            }
-
+            this.spectrumProps.canvasCtx.fillStyle = 'rgb(70, 188, 236)';
+            this.spectrumProps.canvasCtx.fillRect(x, y, sliceWidth - 2, this.spectrumProps.HEIGHT - y);
             x += sliceWidth;
+            this.spectrumProps.canvasCtx.stroke();
         }
-        // for (let i = 0; i < dataArray.length; i++) {
-        //     let value = dataArray[i],
-        //         percent = value / 256,
-        //         height = this.spectrumProps.HEIGHT * percent,
-        //         offset = this.spectrumProps.HEIGHT - height - 1,
-        //         barWidth = this.spectrumProps.WIDTH / dataArray.length,
-        //         hue = i / dataArray.length * 360;
-        //     this.spectrumProps.canvasCtx.fillStyle = 'hsl(' + hue + ', 90%, 50%)';
-        //     this.spectrumProps.canvasCtx.fillRect(i * barWidth, offset, barWidth, height);
-        // }
-
-        this.spectrumProps.canvasCtx.stroke();
     }
 
     resetSpectrum () {
@@ -65,42 +46,46 @@ class Synth extends Component {
     }
 
     playNoteFromKey (event, key) {
-        const { state, updatePlayingVoices } = this.props;
+        const { state, updatePlayingVoices, isOperationInProgress } = this.props;
 
-        if (event && typeof event.stopPropagation === 'function') {
-            event.stopPropagation();
-        }
+        if (!isOperationInProgress()) {
+            if (event && typeof event.stopPropagation === 'function') {
+                event.stopPropagation();
+            }
 
-        if (noteMapping[key]) {
-            this.synth.play(
-                WebSynth.getFrequency(noteMapping[key], state.octave)
-            );
+            if (noteMapping[key]) {
+                this.synth.play(
+                    ElectroPhone.getFrequency(noteMapping[key], state.octave)
+                );
 
-            if (typeof updatePlayingVoices === 'function') {
-                const voiceLabel = key + '-' + state.octave;
+                if (typeof updatePlayingVoices === 'function') {
+                    const voiceLabel = key + '-' + state.octave;
 
-                if (state.playingVoices.indexOf(voiceLabel) === -1) {
-                    updatePlayingVoices([...state.playingVoices, voiceLabel]);
+                    if (state.playingVoices.indexOf(voiceLabel) === -1) {
+                        updatePlayingVoices([...state.playingVoices, voiceLabel]);
+                    }
                 }
             }
         }
     }
 
     stopNoteFromKey (event, key) {
-        const { state, updatePlayingVoices } = this.props;
+        const { state, updatePlayingVoices, isOperationInProgress } = this.props;
 
-        if (event && typeof event.stopPropagation === 'function') {
-            event.stopPropagation();
-        }
+        if (!isOperationInProgress()) {
+            if (event && typeof event.stopPropagation === 'function') {
+                event.stopPropagation();
+            }
 
-        if (noteMapping[key]) {
-            this.synth.stop(
-                WebSynth.getFrequency(noteMapping[key], state.octave)
-            );
+            if (noteMapping[key]) {
+                this.synth.stop(
+                    ElectroPhone.getFrequency(noteMapping[key], state.octave)
+                );
 
-            if (typeof updatePlayingVoices === 'function') {
-                const voiceLabel = key + '-' + state.octave;
-                updatePlayingVoices(state.playingVoices.filter(e => e !== voiceLabel));
+                if (typeof updatePlayingVoices === 'function') {
+                    const voiceLabel = key + '-' + state.octave;
+                    updatePlayingVoices(state.playingVoices.filter(e => e !== voiceLabel));
+                }
             }
         }
     }
@@ -133,7 +118,7 @@ class Synth extends Component {
 
         //DELETE
         Object.keys(currentModules)
-              .filter(e => e !== WebSynth.CONST.MASTER && e !== WebSynth.CONST.ADSR)
+              .filter(e => e !== ElectroPhone.CONST.MASTER && e !== ElectroPhone.CONST.ADSR)
               .forEach(moduleId => {
                   const found = modules.filter(e => e.id === moduleId).pop();
                   if (!found) {
@@ -196,15 +181,14 @@ class Synth extends Component {
 
         this.spectrumProps = {
             canvasCtx: spectrumCanvasCtxElement.getContext('2d'),
-            WIDTH: $(window).width(), //TODO pay attention if ypu want to manage window resize event
+            WIDTH: $("#spectrum").width(),
             HEIGHT: 200
         };
 
         this.resetSpectrum();
 
         if (audioContext) {
-            //TODO write a synth service unit tested!
-            this.synth = new WebSynth(audioContext, {
+            this.synth = new ElectroPhone(audioContext, {
                 spectrum: true,
                 updateSpectrum: (dataArray) => this.updateSpectrum(dataArray),
                 resetSpectrum: () => this.resetSpectrum()
@@ -229,21 +213,21 @@ class Synth extends Component {
                         className={(!isSpectrumVisible) ? 'closed' : ''}/>
 
                 <div id="keyboard" className={(!isPianoVisible) ? 'closed' : ''}>
-                    <PianoKeyNote note={{ key: 65, label: 'C' }}
-                                  semiNote={{ key: 87, label: 'C#' }}
+                    <PianoKeyNote note={{ key: 65, label: 'A' }}
+                                  semiNote={{ key: 87, label: 'W' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 83, label: 'D' }}
-                                  semiNote={{ key: 69, label: 'D#' }}
+                    <PianoKeyNote note={{ key: 83, label: 'S' }}
+                                  semiNote={{ key: 69, label: 'E' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 68, label: 'E' }}
+                    <PianoKeyNote note={{ key: 68, label: 'D' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
@@ -251,27 +235,27 @@ class Synth extends Component {
                                   octave={state.octave}/>
 
                     <PianoKeyNote note={{ key: 70, label: 'F' }}
-                                  semiNote={{ key: 84, label: 'F#' }}
+                                  semiNote={{ key: 84, label: 'T' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
                     <PianoKeyNote note={{ key: 71, label: 'G' }}
-                                  semiNote={{ key: 89, label: 'G#' }}
+                                  semiNote={{ key: 89, label: 'Y' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 72, label: 'A' }}
-                                  semiNote={{ key: 85, label: 'A#' }}
+                    <PianoKeyNote note={{ key: 72, label: 'H' }}
+                                  semiNote={{ key: 85, label: 'U' }}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}
                                   playingVoices={state.playingVoices}
                                   octave={state.octave}/>
 
-                    <PianoKeyNote note={{ key: 74, label: 'B' }}
+                    <PianoKeyNote note={{ key: 74, label: 'J' }}
                                   semiNote={null}
                                   playNoteHandler={(e, key) => this.playNoteFromKey(e, key)}
                                   stopNoteHandler={(e, key) => this.stopNoteFromKey(e, key)}

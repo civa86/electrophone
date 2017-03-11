@@ -1,14 +1,15 @@
 import * as actionTypes from '../constants/ActionTypes';
 
-function addAudioNode (node) {
+function addNode (node, graph) {
     return {
-        type: actionTypes.ADD_AUDIO_NODE,
+        type: actionTypes.ADD_NODE,
         id: node.id,
         isMaster: node.isMaster,
         posX: node.posX || 0,
         posY: node.posY || 0,
         moduleType: node.type,
-        moduleProps: [ ...node.properties ]
+        moduleProps: [ ...node.properties ],
+        graph
     };
 }
 
@@ -43,9 +44,9 @@ function updateNode (id, propertyName, propertyValue) {
     };
 }
 
-function setAudioNodeSelection (node, isSelected) {
+function setNodeSelection (node, isSelected) {
     return {
-        type: actionTypes.SET_AUDIO_NODE_SELECTION,
+        type: actionTypes.SET_NODE_SELECTION,
         node,
         isSelected
     }
@@ -73,21 +74,21 @@ function octaveDecrease () {
     }
 }
 
-function updatePlayingVoices (playingVoices) {
+function updatePlayingVoices (playingVoices, graph) {
     return {
         type: actionTypes.UPDATE_PLAYING_VOICES,
-        playingVoices
+        playingVoices,
+        graph
     }
 }
 
-//TODO refactor names....no audio...
 export {
-    addAudioNode,
+    addNode,
     removeNode,
     removeNodes,
     linkNodes,
     updateNode,
-    setAudioNodeSelection,
+    setNodeSelection,
     setPositions,
     octaveIncrease,
     octaveDecrease,

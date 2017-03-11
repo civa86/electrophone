@@ -4,15 +4,24 @@
   color: @c-light;
   position: fixed;
   top:0; left: 0;
-  z-index: 9000;
+  z-index: 1000;
 
   .header-top {
     padding: 10px;
     overflow: hidden;
     .logo {
+      color: @c-light;
+      line-height: 34px;
       letter-spacing: 5px;
       text-transform: uppercase;
       font-size: 18px;
+
+      .icon {
+        img {
+          width: 40px;
+          margin-right: 10px;
+        }
+      }
 
       .capital {
         font-size: 28px;
@@ -23,6 +32,21 @@
         font-size: 12px;
         color: @c-secondary;
       }
+
+      @media @only-xs {
+        letter-spacing: 3px;
+        font-size: 14px;
+        line-height: 26px;
+
+        .capital {
+          font-size: 20px;
+        }
+        .version {
+          font-size: 11px;
+          line-height: 8px;
+          text-align: right;
+        }
+      }
     }
 
     .links {
@@ -30,11 +54,7 @@
         font-size: 28px;
         color: @c-light;
 
-        //TODO write mixin
-        -moz-transition-duration: @transition-link;
-        -webkit-transition-duration: @transition-link;
-        -o-transition-duration: @transition-link;
-        transition-duration: @transition-link;
+        .transition-duration(@transition-link);
 
         &.link-left {
           padding-right: @icon-spacing;
@@ -88,11 +108,7 @@
           font-size: 22px;
           text-decoration: none;
 
-          //TODO write mixin
-          -moz-transition-duration: @transition-link;
-          -webkit-transition-duration: @transition-link;
-          -o-transition-duration: @transition-link;
-          transition-duration: @transition-link;
+          .transition-duration(@transition-link);
 
           &:hover, &.selected {
             background: @c-dark;

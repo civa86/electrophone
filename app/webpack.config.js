@@ -18,7 +18,6 @@
         //Build Configuration
         console.log('/***** APPLICATION BUILD ****/');
 
-        //TODO isolate and check for assets...
         ExtractStyle = new ExtractTextPlugin('screen.[hash].css');
         ExtractVendorStyle = new ExtractTextPlugin('vendor.[hash].css');
 
@@ -31,10 +30,11 @@
                 'redux',
                 'react-redux',
                 'redux-thunk',
-                'lodash',
                 'jquery',
                 'jquery-knob',
-                'cytoscape'
+                'cytoscape',
+                'moment',
+                'redux-form'
             ]
         };
         output = {
@@ -70,6 +70,7 @@
         entry = [
             'webpack-dev-server/client?http://localhost:3000',
             'webpack/hot/only-dev-server',
+            'react-hot-loader/patch',
             './src/index'
         ];
         output = {
@@ -100,7 +101,7 @@
         plugins: pluginsSet,
         resolve: {
             alias: {
-                'web-synth': path.join(__dirname, '..', 'lib')
+                'electrophone': path.join(__dirname, '..', 'lib')
             }
         },
         resolveLoader: {
@@ -117,7 +118,7 @@
             loaders: [
                 {
                     test: /\.js$/,
-                    loaders: ['react-hot', 'babel'],
+                    loaders: ['babel'],
                     exclude: /node_modules/,
                     include: path.join(__dirname, 'src')
                 },

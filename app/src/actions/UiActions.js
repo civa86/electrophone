@@ -17,35 +17,42 @@ function setPianoVisibility (isPianoVisible) {
     return {
         type: actionTypes.SET_PIANO_VISIBILITY,
         isPianoVisible: !!isPianoVisible
-    }
+    };
 }
 
 function setSpectrumVisibility (isSpectrumVisible) {
     return {
         type: actionTypes.SET_SPECTRUM_VISIBILITY,
         isSpectrumVisible: !!isSpectrumVisible
-    }
+    };
 }
 
 function setViewPanel (panel) {
     return {
         type: actionTypes.SET_VIEW_PANEL,
         panel
-    }
+    };
 }
 
 function setGraphPan (pan) {
     return {
         type: actionTypes.SET_GRAPH_PAN,
         pan
-    }
+    };
 }
 
 function setGraphZoom (zoom) {
     return {
         type: actionTypes.SET_GRAPH_ZOOM,
         zoom
-    }
+    };
+}
+
+function setGraphInstance (graphInstance) {
+    return {
+        type: actionTypes.SET_GRAPH_INSTANCE,
+        graphInstance
+    };
 }
 
 export {
@@ -55,5 +62,6 @@ export {
     setSpectrumVisibility,
     setViewPanel,
     setGraphPan,
-    setGraphZoom
+    setGraphZoom,
+    setGraphInstance
 };

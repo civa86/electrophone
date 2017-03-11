@@ -1,12 +1,16 @@
 import React from 'react';
 
+import { ActionHandler } from '../../components/ActionHandler';
+
+import icon from '../../../img/icon.png';
+
 const Header = (props) => {
 
     const {
         height,
         repoUrl,
         libVersion,
-        viewActions,
+        actions,
         linkMode,
         visiblePanel,
         numSelectedNodes,
@@ -17,8 +21,16 @@ const Header = (props) => {
         <div id="header" style={{ height: height }}>
             <div className="header-top container-fluid">
                 <div className="logo no-select cursor-default pull-left">
-                    <span className="capital">W</span>eb<span className="capital">S</span>ynth
-                    <span className="version">{libVersion}</span>
+                    <div className="pull-left icon">
+                        <img src={icon} alt="icon"/>
+                    </div>
+                    <div className="pull-left">
+                        <span className="capital">E</span>lectro<span className="capital">P</span>hone
+                        <span
+                            className="version visible-xs-block visible-sm-inline visible-md-inline visible-lg-inline">
+                            {libVersion}
+                        </span>
+                    </div>
                 </div>
 
                 <div className="links pull-right">
@@ -44,28 +56,37 @@ const Header = (props) => {
                 <ul className="container-fluid no-select">
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.resetSynth()}
+                           onClick={() => actions.launchTutorial()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Reset Synth">
+                           title="Help">
+                            <i className="ion-help-circled"></i> <span className="menu-label hidden-xs">Help</span>
+                        </a>
+                    </li>
+                    <li className="pull-left">
+                        <a className="cursor-pointer"
+                           onClick={() => actions.resetApplication()}
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Reset">
                             <i className="ion-android-refresh"></i> <span className="menu-label hidden-xs">Reset</span>
                         </a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.saveSynth()}
+                           onClick={() => actions.openSaveModal()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Save Synth">
+                           title="Save">
                             <i className="ion-android-download"></i> <span className="menu-label hidden-xs">Save</span>
                         </a>
                     </li>
                     <li className="pull-left">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.loadSynth()}
+                           onClick={() => actions.openLoadModal()}
                            data-toggle="tooltip"
                            data-placement="bottom"
-                           title="Load Synth">
+                           title="Load">
                             <i className="ion-android-upload"></i> <span className="menu-label hidden-xs">Load</span>
                         </a>
                     </li>
@@ -84,7 +105,7 @@ const Header = (props) => {
                                 return (
                                     <li key={e.type}>
                                         <a className="cursor-pointer"
-                                            onClick={() => viewActions.addModule(e.type)}>
+                                            onClick={() => actions.addSynthModule(e.type)}>
                                             {e.type}
                                         </a>
                                     </li>
@@ -97,7 +118,7 @@ const Header = (props) => {
                         data-placement="top"
                         title="Toggle Link Mode (SHIFT)">
                         <a className={'cursor-pointer' + ((linkMode) ? ' selected' : '')}
-                           onClick={() => viewActions.toggleLinkMode()}>
+                           onClick={() => actions.toggleLinkMode()}>
                             <i className="ion-pull-request"></i> <span className="menu-label hidden-xs">Link</span>
                         </a>
                     </li>
@@ -107,7 +128,7 @@ const Header = (props) => {
                         data-placement="top"
                         title="Delete Selected Nodes">
                         <a className="cursor-pointer"
-                           onClick={() => viewActions.deleteSelectedNodes()}>
+                           onClick={() => actions.deleteSynthSelectedNodes()}>
                             <i className="ion-trash-b"></i> <span className="menu-label hidden-xs">Delete</span>
                             <span className="delete-counter"
                                   style={{ display: (numSelectedNodes > 1) ? 'inline-block' : 'none' }}>&nbsp;
@@ -118,14 +139,14 @@ const Header = (props) => {
 
                     <li className="pull-right last-right-item">
                         <a className={'cursor-pointer' + ((visiblePanel === 'control') ? ' selected' : '')}
-                           onClick={() => viewActions.setViewPanel('control')}
+                           onClick={() => actions.setViewPanel('control')}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Control view (TAB)"><i className="ion-levels"></i></a>
                     </li>
                     <li className="pull-right">
                         <a className={'cursor-pointer' + ((visiblePanel === 'graph') ? ' selected' : '')}
-                           onClick={() => viewActions.setViewPanel('graph')}
+                           onClick={() => actions.setViewPanel('graph')}
                            data-toggle="tooltip"
                            data-placement="bottom"
                            title="Graph view (TAB)"><i className="ion-network"></i></a>
@@ -136,28 +157,4 @@ const Header = (props) => {
     );
 };
 
-export default Header;
-
-/*
- <div className="col-xs-8">
- <button onClick={() => dispatch(SynthActions.toggleLinkMode())}>
- LINK MODE
- </button>
- <button onClick={() => localCache.saveState(localCacheKey, synth)}>
- SAVE SYNTH
- </button>
- <button onClick={() => dispatch(SynthActions.loadState(localCache.loadState(localCacheKey)))}>
- LOAD SYNTH
- </button>
- <button onClick={() => dispatch(SynthActions.resetState())}>
- RESET SYNTH
- </button>
- <br/>
- OCTAVE: {synth.octave}
- <br/>
- <button onClick={() => dispatch(SynthActions.setViewPanel('add'))}>
- ADD MODULE
- </button>
-
- </div>
- */
+export default ActionHandler(Header);

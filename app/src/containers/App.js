@@ -1,38 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-
-import * as AppActions from '../actions/AppActions';
-import * as UiActions from '../actions/UiActions';
-import * as SynthActions from '../actions/SynthActions';
-import WebSynth from 'web-synth';
+import ElectroPhone from 'electrophone';
 
 // Components
+import { ActionHandler } from '../components/ActionHandler';
+import NoAudioWarning from '../components/NoAudioWarning';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Synth from '../components/Synth';
 import GlobalKeys from '../components/GlobalKeys';
+import SaveModal from '../components/File/SaveModal';
+import LoadModal from '../components/File/LoadModal';
+import Tutorial from '../components/Tutorial';
 
 //Panels
 import ControlPanel from '../components/ControlPanel';
-import GraphPanel from '../components/Graph/GraphPanel';
+import GraphPanel from '../components/Graph';
 
 // Services
 import localCacheService from '../services/localCache';
-import screenService from '../services/screen';
+import * as screenService from '../services/screen';
 
 const
-    localCache = localCacheService(),
-    screen = screenService(),
-    localCacheKey = 'webSynth',
-    nodePrefix = 'node',
-    synthModules = WebSynth.describeModules(),
-    headerHeight = 94,
-    footerHeight = 40,
-    Actions = { ...AppActions, ...UiActions, ...SynthActions };
+    localCacheKey = 'ElectroPhoneApp',
+    storage = (typeof(Storage) !== 'undefined' && window.localStorage) ? window.localStorage : null,
+    tutorialCache = localCacheService(storage);
 
 class App extends Component {
-
     constructor (props) {
         super(props);
 
@@ -43,38 +38,103 @@ class App extends Component {
         } else if (typeof window.webkitAudioContext !== 'undefined') {
             this.audioContext = new window.webkitAudioContext();
         } else {
-            //TODO trigger modal...
+            //No Audio Warning
+            $(document).ready(() => {
+                $('#no-audio-warning').modal({
+                    backdrop: 'static'
+                });
+                $('#no-audio-warning').modal('show');
+            });
         }
+    }
+
+    componentDidMount () {
+        const { actions } = this.props;
+
+        actions.updateSavedList(actions.getSavedList(localCacheKey));
 
         $(document).ready(() => {
+            //Tooltips
             $('[data-toggle="tooltip"]').tooltip();
-            $("#main-wrapper").find('li.module-builder').on('show.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
+
+            //Show Tutorial
+            const tutorialItem = tutorialCache.getItem('ElectroPhoneTutorial', 'tutorial');
+            if (!tutorialItem || !tutorialItem.item) {
+                $('#tutorial').modal('show');
+                tutorialCache.addItem('ElectroPhoneTutorial', 'tutorial', true);
+            }
+
+            //Add Module Menu Events
+            $('#main-wrapper').find('li.module-builder').on('show.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').addClass('selected');
             });
-            $("#main-wrapper").find('li.module-builder').on('hidden.bs.dropdown', () => {
-                $("#main-wrapper").find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            $('#main-wrapper').find('li.module-builder').on('hidden.bs.dropdown', () => {
+                $('#main-wrapper').find('li.module-builder').find('a.dropdown-toggle').removeClass('selected');
+            });
+
+            //Operation File Events
+            $('.operation-modal').on('hidden.bs.modal', () => {
+                $('.operation-modal').find('.confirm-operation').hide();
+                actions.resetSaveForm();
+            });
+
+            //Tutorial Modal Events
+            $('#tutorial').on('shown.bs.modal', () => {
+                const
+                    modal = $('#tutorial'),
+                    modalH = modal.find('.modal-content').height(),
+                    modalHeaderH = modal.find('.modal-header').height(),
+                    modalFooterH = modal.find('.modal-footer').height();
+
+                modal.find('.modal-body').height(modalH - (modalHeaderH + modalFooterH + 90));
+                modal.find('.modal-pre-hide').fadeIn();
+
+                const newBodyH = modal.find('.modal-body').height();
+                modal.find('.carousel-inner').height(newBodyH);
+                modal.find('.item').height(newBodyH);
+                if (newBodyH < 337) {
+                    modal.find('.anim-slide').height(newBodyH);
+                } else {
+                    modal.find('.anim-slide').height(337);
+                }
+            });
+            $('#tutorial').on('hidden.bs.modal', () => {
+                const modal = $('#tutorial');
+
+                modal.find('.item.active').removeClass('active');
+                modal.find('.item').first().addClass('active');
+            });
+            $('#tutorial').on('slide.bs.carousel', function ({ relatedTarget }) {
+                const
+                    modal = $('#tutorial'),
+                    index = $(relatedTarget).data('index');
+
+                modal.find('.menu').find('li.active').removeClass('active');
+                modal.find('.menu').find('li[data-slide-to="' + index + '"]').addClass('active');
             });
         });
     }
 
-    removeSelectedNodes () {
-        const
-            { synth, dispatch } = this.props,
-            selectedNodes = synth.modules.filter(e => e.isSelected && !e.isMaster).map(e => e.id);
-
-        if (selectedNodes.length > 0) {
-            dispatch(Actions.removeNodes(selectedNodes));
-        }
+    isOperationInProgress () {
+        return $('.modal.in').length > 0;
     }
 
     getKeyboardMapping () {
-        const { dispatch, ui } = this.props;
+        const { ui, actions } = this.props;
 
         return [
             {
                 keys: [16], //SHIFT
-                down: () => dispatch(Actions.setLinkMode(true)),
-                up: () => dispatch(Actions.setLinkMode(false)),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.setLinkMode(true);
+                    }
+                },
+                up: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.setLinkMode(false);
+                    }
+                },
                 specialKeys: 'shift'
             },
             {
@@ -89,189 +149,102 @@ class App extends Component {
                     } else if (ui.viewPanel === 'control') {
                         toggleView = 'graph';
                     }
-                    dispatch(Actions.setViewPanel(toggleView));
+
+                    if (!this.isOperationInProgress()) {
+                        actions.setViewPanel(toggleView);
+                    }
                 },
                 up: () => false
             },
             {
                 keys: [90], //Z
-                down: () => dispatch(Actions.octaveDecrease()),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.octaveDecrease();
+                    }
+                },
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [88], //X
-                down: () => dispatch(Actions.octaveIncrease()),
+                down: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.octaveIncrease();
+                    }
+                },
                 up: () => false,
                 specialKeys: false
             },
             {
                 keys: [8], //DELETE
-                down: (e) => e.preventDefault(),
-                up: () => this.removeSelectedNodes(),
+                down: (e) => {
+                    if (!this.isOperationInProgress()) {
+                        e.preventDefault()
+                    }
+                },
+                up: () => {
+                    if (!this.isOperationInProgress()) {
+                        actions.deleteSynthSelectedNodes();
+                    }
+                },
                 specialKeys: false
             }
         ]
     }
 
-    getMaxNodeId () {
-        const
-            { synth } = this.props,
-            max = synth.modules.reduce((result, e) => {
-                const idInt = parseInt(e.id.replace(nodePrefix, ''), 10);
-                return isNaN(idInt) ? 0 : Math.max(result, idInt);
-            }, 0);
-
-        return max + 1;
-    }
-
-    addModule (type) {
-        const
-            { dispatch } = this.props,
-            newModule = synthModules.filter(e => e.type === type).pop();
-
-        dispatch(Actions.addAudioNode({
-            ...newModule,
-            id: nodePrefix + this.getMaxNodeId(),
-            isMaster: false,
-            posX: Math.random() * (this.getGraphHeight()),
-            posY: Math.random() * (this.getGraphHeight())
-        }));
-    }
-
-    getNormalizedValue (id, propertyName, propertyValue) {
-        //TODO move this method logic in the reducer
-        const module = this.props.synth.modules
-                           .filter(e => e.id === id)
-                           .pop();
-        let result,
-            property,
-            step = 1;
-
-        if (module) {
-            property = module.properties.filter(prop => prop.name === propertyName).pop();
-
-            if (property && property.type === 'number' && property.step) {
-                step = property.step;
-                result =
-                    Math.round(((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100) / 100;
-            } else {
-                result = propertyValue;
-            }
-        }
-
-        return result;
-    }
-
-    updateModule (id, propertyName, propertyValue) {
-        const
-            { dispatch } = this.props,
-            normalizedPropertyValue = this.getNormalizedValue(id, propertyName, propertyValue);
-
-        dispatch(Actions.updateNode(id, propertyName, normalizedPropertyValue));
-    }
-
-    getGraphHeight () {
-        const
-            windowSize = screen.getWindowSize(),
-            graphHeight = windowSize.height - headerHeight - footerHeight;
-
-        return graphHeight;
-    }
-
-    getGraphWidth () {
-        return $('body').width() - 30;
-    }
-
     render () {
-        const
-            { ui, synth, dispatch } = this.props,
-        //TODO refactor and port into viewActions...
-            graphActions = {
-                onClickHandler: (node, isSeletected) => {
-                    if (node !== WebSynth.CONST.MASTER) {
-                        dispatch(Actions.setAudioNodeSelection(node, isSeletected));
-                    }
-                },
-                onFreeHandler: (nodeId, nodePosition, graphPan, graphZoom) => {
-                    dispatch(Actions.setPositions(nodeId, nodePosition, graphPan, graphZoom));
-                },
-                linkHandler: (sourceNodeId, destNodeId) => {
-                    dispatch(Actions.linkNodes(sourceNodeId, destNodeId));
-                }
-            },
-            viewActions = {
-                setViewPanel: (viewPanel) =>
-                    dispatch(Actions.setViewPanel(viewPanel)),
-                setPianoVisibility: (isPianoVisible) =>
-                    dispatch(Actions.setPianoVisibility(isPianoVisible)),
-                setSpectrumVisibility: (isSpectrumVisible) =>
-                    dispatch(Actions.setSpectrumVisibility(isSpectrumVisible)),
-                saveSynth: () =>
-                    localCache.saveState(localCacheKey, { ui: { ...ui }, synth: { ...synth } }),
-                loadSynth: () =>
-                    dispatch(Actions.loadState(
-                        localCache.loadState(localCacheKey),
-                        WebSynth.describeModules().map(e => e.type)
-                    )),
-                resetSynth: () =>
-                    dispatch(Actions.resetState()),
-                toggleLinkMode: () =>
-                    dispatch(Actions.toggleLinkMode()),
-                addModule: (type) =>
-                    this.addModule(type),
-                deleteSelectedNodes: () =>
-                    this.removeSelectedNodes(),
-                octaveDecrease: () =>
-                    dispatch(Actions.octaveDecrease()),
-                octaveIncrease: () =>
-                    dispatch(Actions.octaveIncrease())
-            },
-            footerMarginBottom = (ui.isPianoVisible) ? 8 : 2;
+        const { app, ui, synth, actions } = this.props;
 
         return (
             <div id="main-wrapper" className="container-fluid">
-                <Header height={headerHeight}
+                <NoAudioWarning/>
+
+                <Tutorial/>
+
+                <SaveModal items={app.savedList} localCacheKey={localCacheKey} />
+
+                <LoadModal items={app.savedList} localCacheKey={localCacheKey} />
+
+                <Header height={screenService.getHeaderHeight()}
                         repoUrl={process.env.GITHUB_REPO_URL}
-                        viewActions={viewActions}
                         linkMode={ui.graph.linkMode}
                         visiblePanel={ui.viewPanel}
-                        synthModules={synthModules.filter(e => e.type !== WebSynth.TYPES.MASTER)}
+                        synthModules={ElectroPhone.describeModules().filter(e => e.type !== ElectroPhone.TYPES.MASTER)}
                         numSelectedNodes={synth.modules.filter(e => e.isSelected === true).length}
                         libVersion={process.env.LIB_VERSION}
                 />
 
                 <div id="panel-wrapper"
-                     style={{ marginTop: headerHeight, marginBottom: footerHeight * footerMarginBottom }}>
+                     style={{ marginTop: screenService.getHeaderHeight() }}>
                     <GraphPanel
                         isVisible={ui.viewPanel === 'graph'}
                         synth={synth}
                         ui={ui}
-                        graphWidth={this.getGraphWidth()}
-                        graphHeight={this.getGraphHeight()}
-                        viewActions={graphActions}
+                        graphWidth={screenService.getGraphWidth()}
+                        graphHeight={screenService.getGraphHeight()}
                     />
                     <ControlPanel
                         isVisible={ui.viewPanel === 'control'}
                         modules={synth.modules}
-                        updateModule={(id, prop, value) => this.updateModule(id, prop, value)}
-                        destroyModule={(id) => dispatch(Actions.removeNode(id))}
+                        updateModule={(id, prop, value) => actions.updateSynthModule(id, prop, value)}
+                        destroyModule={(id) => actions.deleteSynthModule(id)}
                     />
                 </div>
 
                 <Synth state={synth}
+                       isOperationInProgress={() => this.isOperationInProgress()}
                        audioContext={this.audioContext}
-                       footerHeight={footerHeight}
-                       headerHeight={headerHeight}
+                       footerHeight={screenService.getFooterHeight()}
+                       headerHeight={screenService.getHeaderHeight()}
                        isPianoVisible={ui.isPianoVisible}
                        isSpectrumVisible={ui.isSpectrumVisible}
-                       updatePlayingVoices={playingVoices => dispatch(Actions.updatePlayingVoices(playingVoices))}
+                       updatePlayingVoices={playingVoices => actions.updatePlayingVoices(playingVoices)}
                 />
 
                 <GlobalKeys keyboardMapping={this.getKeyboardMapping()}/>
 
-                <Footer height={footerHeight}
-                        viewActions={viewActions}
+                <Footer height={screenService.getFooterHeight()}
                         octave={synth.octave}
                         isPianoVisible={ui.isPianoVisible}
                         isSpectrumVisible={ui.isSpectrumVisible}
@@ -283,9 +256,10 @@ class App extends Component {
 
 function mapStateToProps (state) {
     return {
+        app: state.app,
         synth: state.synth,
         ui: state.ui
     };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(ActionHandler(App));

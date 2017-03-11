@@ -1,13 +1,13 @@
 {
   "source": "./lib/",
-  "includes": ["^(WebSynth|TypeDefinition)\\.js$"],
+  "includes": ["^(ElectroPhone|TypeDefinition)\\.js$"],
   "destination": "./app/dist/docs",
   "test": {
     "type": "mocha",
-    "source": "./lib/",
-    "includes": ["^WebSynth\\.spec.js$"]
+    "source": "./test/",
+    "includes": ["^ElectroPhone\\.js$"]
   },
-  "title": "WebSynth Documentation",
+  "title": "ElectroPhone Documentation",
   "plugins": [
     {"name": "esdoc-es7-plugin"}
   ]

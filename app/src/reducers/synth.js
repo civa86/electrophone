@@ -5,22 +5,46 @@ const initialState = initState.synth;
 
 function synth (state = initialState, action = {}) {
 
-    const cleanNodeLinks = (nodes) => {
-        return nodes.map(e => {
-            if (e.link === null || nodes.filter(ec => ec.id === e.link).length === 1) {
-                return e;
+    const
+        cleanNodeLinks = (nodes) => {
+            return nodes.map(e => {
+                if (e.link === null || nodes.filter(ec => ec.id === e.link).length === 1) {
+                    return e;
+                }
+
+                return {
+                    ...e,
+                    link: null
+                };
+            });
+        },
+        getNormalizedValue =  (id, propertyName, propertyValue)  => {
+            const module = state.modules
+                           .filter(e => e.id === id)
+                           .pop();
+            let result,
+                property,
+                step = 1;
+
+            if (module) {
+                property = module.properties.filter(prop => prop.name === propertyName).pop();
+
+                if (property && property.type === 'number') {
+                    step = property.step || 1;
+                    result = Math.round(
+                            ((~~ (((propertyValue < 0) ? -0.5 : 0.5) + (propertyValue / step))) * step) * 100
+                        ) / 100;
+                } else {
+                    result = propertyValue;
+                }
             }
 
-            return {
-                ...e,
-                link: null
-            };
-        });
-    };
+            return result;
+        };
 
     switch (action.type) {
 
-        case actionTypes.ADD_AUDIO_NODE : {
+        case actionTypes.ADD_NODE : {
             return {
                 ...state,
                 modules: [
@@ -93,7 +117,11 @@ function synth (state = initialState, action = {}) {
 
                             return {
                                 ...p,
-                                value: action.propertyValue
+                                value: getNormalizedValue(
+                                    action.id,
+                                    action.propertyName,
+                                    action.propertyValue
+                                )
                             };
                         })
                     };
@@ -101,7 +129,7 @@ function synth (state = initialState, action = {}) {
             };
         }
 
-        case actionTypes.SET_AUDIO_NODE_SELECTION : {
+        case actionTypes.SET_NODE_SELECTION : {
             return {
                 ...state,
                 modules: state.modules.map(e => {

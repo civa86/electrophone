@@ -13,8 +13,7 @@ const GraphService = (graphLibrary, window) => {
         sourceLinkNode,
         targetLinkNode,
         startX,
-        startY,
-        currentGraph;
+        startY;
 
     function resize () {
         if (graph) {
@@ -42,9 +41,9 @@ const GraphService = (graphLibrary, window) => {
     }
 
     function drawLink (targetX, targetY) {
-        linkAreaCtx.fillStyle = '#000';
-        linkAreaCtx.strokeStyle = '#000';
-        linkAreaCtx.lineWidth = 6;
+        linkAreaCtx.fillStyle = '#666';
+        linkAreaCtx.strokeStyle = '#666';
+        linkAreaCtx.lineWidth = 4;
         linkAreaCtx.setLineDash([6, 5]);
         linkAreaCtx.beginPath();
         linkAreaCtx.moveTo(startX, startY);
@@ -62,7 +61,6 @@ const GraphService = (graphLibrary, window) => {
     function onFreeHandler (e) {
         const node = e.cyTarget;
         if (!linkMode) {
-            //TODO refactor graph pan...zoom....move from here?
             actions.onFreeHandler(
                 node.id(),
                 node.position(),
@@ -79,35 +77,18 @@ const GraphService = (graphLibrary, window) => {
             startY = e.cyRenderedPosition.y;
             sourceLinkNode = e.cyTarget;
             targetLinkNode = null;
-
-            //TODO check master....
-            //if (sourceLinkNode && sourceLinkNode.id() !== 'master') {
-            //    //$rootScope.$broadcast('GRAPH_SET_LINK_SOURCE', {
-            //    //    linkSourceType: sourceLinkNode.data('type'),
-            //    //    linkSourceId: sourceLinkNode.id()
-            //    //});
-            //    //actions.onSetLinkSource();
-            //}
         }
     }
 
     function onTapOver (e) {
         if (linkMode && sourceLinkNode && e.cyTarget.id() !== sourceLinkNode.id() && isDragging) {
             targetLinkNode = e.cyTarget;
-
-            //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', {
-            //    linkTargetType: targetLinkNode.data('type'),
-            //    linkTargetId: targetLinkNode.id()
-            //});
-            //actions.onSetLinkTarget();
         }
     }
 
     function onTapOut () {
         if (linkMode && targetLinkNode) {
             targetLinkNode = null;
-            //$rootScope.$broadcast('GRAPH_SET_LINK_TARGET', null);
-            //actions.onSetLinkTarget(null);
         }
     }
 
@@ -127,16 +108,6 @@ const GraphService = (graphLibrary, window) => {
     }
 
     function onTapEnd () {
-        const currentPan = graph.pan();
-        if (currentPan.x !== currentGraph.pan.x || currentPan.y !== currentGraph.pan.y) {
-            actions.onFreeHandler(
-                null,
-                null,
-                graph.pan(),
-                graph.zoom()
-            );
-        }
-
         if (linkMode) {
             mouseDown = false;
             if (isDragging) {
@@ -200,6 +171,10 @@ const GraphService = (graphLibrary, window) => {
 
             refreshGraph(synthState, uiState);
 
+            if (actions && actions.onGraphCreated && typeof actions.onGraphCreated === 'function') {
+                actions.onGraphCreated(graph);
+            }
+
         } else {
             throw new Error('Missing Graph Library');
         }
@@ -212,17 +187,72 @@ const GraphService = (graphLibrary, window) => {
             graph.autoungrabify(mode);
             graph.nodes().forEach(function (e) {
                 if (mode) {
-                    if (e.data('isMaster') === true) {
-                        e.addClass('link-mode-master');
-                    } else {
-                        e.addClass('link-mode');
-                    }
+                    e.addClass('link-mode');
                 } else {
-                    e.removeClass('link-mode-master');
                     e.removeClass('link-mode');
                 }
             });
             resize();
+        }
+    }
+
+    function createNodes (newNodes) {
+        newNodes.forEach(e => {
+            const node = graph.$('#' + e.id);
+
+            if (e.position.x === 'center') {
+                e.position.x = parseInt(domElement.offsetWidth / 2, 10);
+            }
+            if (e.position.y === 'center') {
+                e.position.y = parseInt(domElement.offsetHeight / 2, 10);
+            }
+
+            if (node.length === 0) {
+                graph.add({
+                    group: 'nodes',
+                    data: {
+                        id: e.id,
+                        isMaster: e.isMaster
+                    },
+                    position: {
+                        x: e.position.x,
+                        y: e.position.y
+                    },
+                    classes: e.type.toLowerCase()
+                });
+            }
+        });
+    }
+
+    function refreshNodeSelection (e, node) {
+        if (e.isSelected === true) {
+            node.addClass('selected');
+        } else {
+            node.removeClass('selected');
+        }
+    }
+
+    function refreshNodePosition (e, node) {
+        node.position({ x: e.position.x, y: e.position.y });
+    }
+
+    function refreshNodeEdges (e, node) {
+        if (e.link) {
+            let edgesFromSource = node.connectedEdges();
+            if (edgesFromSource.length > 0) {
+                edgesFromSource.forEach((edge) => {
+                    if (edge.source().id() === node.id()) {
+                        graph.remove(edge);
+                    }
+                });
+            }
+            graph.add({
+                group: 'edges',
+                data: {
+                    source: node.id(),
+                    target: e.link
+                }
+            });
         }
     }
 
@@ -231,74 +261,20 @@ const GraphService = (graphLibrary, window) => {
             newGraph = uiState.graph || { pan: { x: 0, y: 0 }, zoom: 1 },
             newLinkMode = newGraph.linkMode || false;
 
-        currentGraph = newGraph;
-
         if (graph) {
-            //ADD
-            newNodes.forEach(e => {
-                const node = graph.$('#' + e.id);
-
-                if (e.position.x === 'center') {
-                    e.position.x = parseInt(domElement.offsetWidth / 2, 10);
-                }
-                if (e.position.y === 'center') {
-                    e.position.y = parseInt(domElement.offsetHeight / 2, 10);
-                }
-
-                if (node.length === 0) {
-                    graph.add({
-                        // TODO refactor above...
-                        group: 'nodes',
-                        data: {
-                            id: e.id,
-                            isMaster: e.isMaster
-                        },
-                        position: {
-                            x: e.position.x,
-                            y: e.position.y
-                        },
-                        classes: e.type.toLowerCase()
-                    });
-                }
+            //REMOVE ALL EXISTING EDGES
+            graph.edges().forEach(e => {
+                graph.remove(e);
             });
+
+            //CREATE NOT EXISTENT MODULES
+            createNodes(newNodes);
+            //SET NODES PROPERTIES
             newNodes.forEach(e => {
                 const node = graph.$('#' + e.id);
-
-                //TODO create methodes...
-                // UPDATE SELECTION
-                if (e.isSelected === true) {
-                    node.addClass('selected');
-                } else {
-                    node.removeClass('selected');
-                }
-
-                //SET MASTER CLASS
-                //TODO check to remove that...already set a type class
-                if (e.isMaster && !node.hasClass('isMaster')) {
-                    node.addClass('isMaster');
-                }
-
-                //UPDATE POSITION!!!
-                node.position({ x: e.position.x, y: e.position.y });
-
-                //UPDATE EDGES
-                if (e.link) {
-                    let edgesFromSource = node.connectedEdges();
-                    if (edgesFromSource.length > 0) {
-                        edgesFromSource.forEach((edge) => {
-                            if (edge.source().id() === node.id()) {
-                                graph.remove(edge);
-                            }
-                        });
-                    }
-                    graph.add({
-                        group: 'edges',
-                        data: {
-                            source: node.id(),
-                            target: e.link
-                        }
-                    });
-                }
+                refreshNodeSelection(e, node);
+                refreshNodePosition(e, node);
+                refreshNodeEdges(e, node);
             });
 
             //DELETE

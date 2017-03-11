@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 import Knob from './Knob';
 import Select from './Select'
@@ -14,6 +15,17 @@ class ControlPanel extends Component {
         }
     }
 
+    componentDidMount () {
+        $('.collapse').on('hidden.bs.collapse', function () {
+            const id = $(this).attr('id').replace('collapse', 'title');
+            $('#' + id).addClass('collapsed');
+        });
+        $('.collapse').on('show.bs.collapse', function () {
+            const id = $(this).attr('id').replace('collapse', 'title');
+            $('#' + id).removeClass('collapsed');
+        });
+    }
+
     render () {
         const
             { modules, destroyModule } = this.props,
@@ -25,43 +37,68 @@ class ControlPanel extends Component {
                     {modules.map(module =>
                         <div className="row synth-module" key={module.id}>
                             <div className="col-xs-12">
-                                <div className="row module-title">
-                                    <div className="col-xs-12" style={{ padding: '10px' }}>
-                                        {module.type + ' -- ' + module.id}
+                                <div className="row module-title" id={'module-title-' + module.id}>
+                                    <div className="col-xs-2 col-lg-1 vcenter module-elem-container">
+                                        <div className={'module-elem ' + module.type.toLowerCase()}
+                                             data-toggle="collapse"
+                                             data-target={'#module-collapse-' + module.id}/>
+                                    </div>
+                                    <div className="col-xs-8 col-lg-10 vcenter">
+                                        <div className="module-title-text">
+                                            {module.type}
+                                            {
+                                                !module.isMaster &&
+                                                ' #' + module.id.replace('node', '')
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="col-xs-2 col-lg-1 vcenter module-delete-container">
                                         {
                                             !module.isMaster &&
-                                            <div className="ion-trash-b pull-right"
-                                                 style={{ cursor: 'pointer', fontSize: '24px' }}
-                                                 onClick={() => destroyModule(module.id)}>
-                                            </div>
+                                            <i className="ion-trash-b pull-right"
+                                               onClick={() => destroyModule(module.id)}/>
                                         }
                                     </div>
                                 </div>
 
-                                <div className="row properties-container">
+                                <div className="row properties-container collapse in"
+                                     id={'module-collapse-' + module.id}>
+                                    <div className="col-xs-12" style={{ paddingBottom: '20px' }}>
+                                        <div className="row">
+                                            {
+                                                module.properties
+                                                      .filter(prop => prop.name !== 'link' && prop.name !== 'level')
+                                                      .map(prop =>
+                                                          <div className="col-xs-6 col-md-3"
+                                                               style={{ paddingTop: '20px', height: '100px' }}
+                                                               key={module.id + prop.name}>
+                                                              {this.getControlProperty(module.id, { ...prop })}
+                                                          </div>
+                                                      )
+                                            }
+                                            {
+                                                module.properties
+                                                      .filter(prop => prop.name === 'level')
+                                                      .map(prop => {
+                                                          return (
+                                                              <div className="col-xs-6 col-md-3"
+                                                                   style={{ paddingTop: '20px', height: '100px' }}
+                                                                   key={module.id + prop.name}>
+                                                                  {this.getControlProperty(module.id, { ...prop })}
+                                                              </div>
+                                                          );
+                                                      })
+                                            }
+                                        </div>
+                                    </div>
                                     {
-                                        module.properties
-                                            .filter(prop => prop.name !== 'link' && prop.name !== 'level')
-                                            .map(prop =>
-                                                <div className="col-xs-6 col-md-3"
-                                                     style={{ paddingBottom: '20px', height: '100px' }}
-                                                     key={module.id + prop.name}>
-                                                    {this.getControlProperty(module.id, { ...prop })}
-                                                </div>
-                                            )
-                                    }
-                                    {
-                                        module.properties
-                                              .filter(prop => prop.name === 'level')
-                                              .map(prop => {
-                                                  return (
-                                                      <div className="col-xs-6 col-md-3"
-                                                           style={{ paddingBottom: '20px', height: '100px' }}
-                                                           key={module.id + prop.name}>
-                                                          {this.getControlProperty(module.id, { ...prop })}
-                                                      </div>
-                                                  );
-                                              })
+                                        !module.isMaster &&
+                                        <div className="col-xs-12">
+                                            <div className="link-text">
+                                                <i className="ion-pull-request"/>
+                                                {(module.link ? '#' + module.link.replace('node', '') : 'no link')}
+                                            </div>
+                                        </div>
                                     }
                                 </div>
 

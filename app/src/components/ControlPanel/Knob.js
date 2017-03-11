@@ -20,7 +20,7 @@ class Knob extends Component {
         });
         node.find('input').val(property.value).trigger('change');
 
-        node.find('input').on('keyup', () => onUpdate(module, property.name, parseInt(node.find('input').val(), 10)));
+        node.find('input').on('keyup', () => onUpdate(module, property.name, +node.find('input').val()));
     }
 
     componentWillReceiveProps (newProps) {
@@ -28,7 +28,6 @@ class Knob extends Component {
             node = $(ReactDOM.findDOMNode(this)),
             { property } = newProps;
 
-        //TODO check for float....or parse int based on step?
         node.find('input')
             .val(property.value)
             .trigger('change');

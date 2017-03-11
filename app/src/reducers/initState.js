@@ -58,6 +58,7 @@ const initState = {
     },
     ui: {
         graph: {
+            instance: null,
             linkMode: false,
             pan: {
                 x: 0,
@@ -68,6 +69,9 @@ const initState = {
         viewPanel: 'graph',
         isPianoVisible: false,
         isSpectrumVisible: false
+    },
+    app: {
+        savedList: []
     }
 };
 

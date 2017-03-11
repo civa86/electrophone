@@ -7,18 +7,110 @@
 @c-light: #efefef;
 @c-dark: #333;
 @c-secondary: #46bcec;
+@c-error: #a94442;
+
+@c-master: #ccc;
+@c-control-modules: #f6cde6;
+@c-sound-modules: #add9fe;
+@c-filters-modules: #ddf9d9;
+@c-effect-modules: #ffe5bc;
 
 //Transitions
-//TODO do a mixin...
 @transition-piano-time: 0.4s;
 @transition-link: 0.2s;
 
+.transition-duration (@seconds) {
+  -moz-transition-duration: @seconds;
+  -webkit-transition-duration: @seconds;
+  -o-transition-duration: @seconds;
+  transition-duration: @seconds;
+}
+
+.transition-timing-function (@function) {
+  -moz-transition-timing-function: @function;
+  -webkit-transition-timing-function: @function;
+  -o-transition-timing-function: @function;
+  transition-timing-function: @function;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+//Animations
+
+.animation-spin {
+  animation-name: spin;
+  animation-duration: 2500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs:                  480px;
+//** Deprecated `@screen-xs-min` as of v3.2.0
+@screen-xs-min:              @screen-xs;
+//** Deprecated `@screen-phone` as of v3.0.1
+@screen-phone:               @screen-xs-min;
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm:                  768px;
+@screen-sm-min:              @screen-sm;
+//** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet:              @screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md:                  992px;
+@screen-md-min:              @screen-md;
+//** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop:             @screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg:                  1200px;
+@screen-lg-min:              @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop:          @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+// MEDIA QUERY
+@from-sm: ~"(min-width: 768px)";
+@from-md : ~"(min-width: 992px)";
+@from-lg : ~"(min-width: 1200px)";
+
+@only-xs : ~"(max-width: 767px)";
+@only-sm: ~"(min-width: 768px) and (max-width: 991px)";
+@only-md : ~"(min-width: 992px) and (max-width: 1199px)";
+@only-lg : ~"(min-width: 1200px)";
+
+//Helper classes
 .cursor-pointer {
   cursor: pointer !important;
 }
 
 .cursor-default {
   cursor: default !important;
+}
+
+.text-centered {
+  text-align: center;
 }
 
 .no-select {
@@ -48,4 +140,10 @@
 }
 .icon-piano:before {
   content: "\e800"
+}
+
+.vcenter {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  float: none !important;
 }
