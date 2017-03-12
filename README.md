@@ -4,6 +4,7 @@ JavaScript Library to build a modular synthesizer.
 
 Based on WebAudio API and WebAudio Effects Libray [tuna](https://github.com/Theodeus/tuna)
 
+[![npm version](https://badge.fury.io/js/electrophone.svg)](http://badge.fury.io/js/electrophone)
 [![Build Status](https://travis-ci.org/civa86/electrophone.svg?branch=master)](https://travis-ci.org/civa86/electrophone)
 [![Coverage Status](https://coveralls.io/repos/github/civa86/electrophone/badge.svg?branch=master)](https://coveralls.io/github/civa86/electrophone?branch=master)
 
