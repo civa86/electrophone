@@ -408,6 +408,8 @@
 
 	'use strict';
 	
+	//MASTER
+	
 	exports.__esModule = true;
 	
 	var _Master = __webpack_require__(19);
@@ -416,6 +418,33 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Master).default;
+	  }
+	});
+	
+	var _Oscillator = __webpack_require__(23);
+	
+	Object.defineProperty(exports, 'Oscillator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Oscillator).default;
+	  }
+	});
+	
+	var _Noise = __webpack_require__(22);
+	
+	Object.defineProperty(exports, 'Noise', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Noise).default;
+	  }
+	});
+	
+	var _Modulator = __webpack_require__(21);
+	
+	Object.defineProperty(exports, 'Modulator', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Modulator).default;
 	  }
 	});
 	
@@ -437,39 +466,21 @@
 	  }
 	});
 	
-	var _Oscillator = __webpack_require__(23);
-	
-	Object.defineProperty(exports, 'Oscillator', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_Oscillator).default;
-	  }
-	});
-	
-	var _Modulator = __webpack_require__(21);
-	
-	Object.defineProperty(exports, 'Modulator', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_Modulator).default;
-	  }
-	});
-	
-	var _Noise = __webpack_require__(22);
-	
-	Object.defineProperty(exports, 'Noise', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_Noise).default;
-	  }
-	});
-	
 	var _Filter = __webpack_require__(13);
 	
 	Object.defineProperty(exports, 'Filter', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Filter).default;
+	  }
+	});
+	
+	var _MoogFilter = __webpack_require__(14);
+	
+	Object.defineProperty(exports, 'MoogFilter', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_MoogFilter).default;
 	  }
 	});
 	
@@ -515,15 +526,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Bitcrusher).default;
-	  }
-	});
-	
-	var _MoogFilter = __webpack_require__(14);
-	
-	Object.defineProperty(exports, 'MoogFilter', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_MoogFilter).default;
 	  }
 	});
 

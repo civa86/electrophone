@@ -1,5 +1,19 @@
 'use strict';
 
+import master from '../../../img/master.svg';
+import envelope from '../../../img/envelope.svg';
+import pan from '../../../img/pan.svg';
+import modulator from '../../../img/modulator.svg';
+import oscillator from '../../../img/oscillator.svg';
+import noise from '../../../img/noise.svg';
+import filter from '../../../img/filter.svg';
+import moogfilter from '../../../img/moogfilter.svg';
+import delay from '../../../img/delay.svg';
+import pingpongdelay from '../../../img/pingpongdelay.svg';
+import tremolo from '../../../img/tremolo.svg';
+import overdrive from '../../../img/overdrive.svg';
+import bitcrusher from '../../../img/bitcrusher.svg';
+
 const style = {
     layout: {
         name: 'circle'
@@ -28,7 +42,7 @@ const style = {
                 height: 140,
                 shape: 'hexagon',
                 'border-width': 0,
-                'background-image': '../../../img/master.svg',
+                'background-image': master,
                 'background-color': '#ccc',
                 'background-width': '50%',
                 'background-height': '50%'
@@ -40,7 +54,7 @@ const style = {
             style: {
                 shape: 'polygon',
                 'shape-polygon-points': '0, -0.7, 1, 1, -1, 1',
-                'background-image': '../../../img/envelope.svg',
+                'background-image': envelope,
                 'background-color': '#f6cde6',
                 'background-position-y': '95%',
                 'background-width': '50%',
@@ -52,7 +66,7 @@ const style = {
             style: {
                 shape: 'polygon',
                 'shape-polygon-points': '-1, -1, 1, -1, 0, 0.7',
-                'background-image': '../../../img/pan.svg',
+                'background-image': pan,
                 'background-color': '#f6cde6',
                 'background-position-y': '5%',
                 'background-width': '50%',
@@ -64,7 +78,7 @@ const style = {
             style: {
                 shape: 'polygon',
                 'shape-polygon-points': '-1, -1, 0.7, 0, -1, 1',
-                'background-image': '../../../img/modulator.svg',
+                'background-image': modulator,
                 'background-color': '#f6cde6',
                 'background-position-x': '20%',
                 'background-position-y': '50%',
@@ -76,7 +90,7 @@ const style = {
         {
             selector: 'node.oscillator',
             style: {
-                'background-image': '../../../img/oscillator.svg',
+                'background-image': oscillator,
                 'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -85,7 +99,7 @@ const style = {
         {
             selector: 'node.noise',
             style: {
-                'background-image': '../../../img/noise.svg',
+                'background-image': noise,
                 'background-color': '#add9fe',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -96,7 +110,7 @@ const style = {
             selector: 'node.filter',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/filter.svg',
+                'background-image': filter,
                 'background-color': '#ddf9d9',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -106,7 +120,7 @@ const style = {
             selector: 'node.moogfilter',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/moogfilter.svg',
+                'background-image': moogfilter,
                 'background-color': '#ddf9d9',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -117,7 +131,7 @@ const style = {
             selector: 'node.delay',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/delay.svg',
+                'background-image': delay,
                 'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -127,7 +141,7 @@ const style = {
             selector: 'node.pingpongdelay',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/pingpongdelay.svg',
+                'background-image': pingpongdelay,
                 'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -137,7 +151,7 @@ const style = {
             selector: 'node.tremolo',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/tremolo.svg',
+                'background-image': tremolo,
                 'background-color': '#ffe5bc',
                 'background-width': '80%',
                 'background-height': '80%'
@@ -147,7 +161,7 @@ const style = {
             selector: 'node.overdrive',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/overdrive.svg',
+                'background-image': overdrive,
                 'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
@@ -157,7 +171,7 @@ const style = {
             selector: 'node.bitcrusher',
             style: {
                 shape: 'roundrectangle',
-                'background-image': '../../../img/bitcrusher.svg',
+                'background-image': bitcrusher,
                 'background-color': '#ffe5bc',
                 'background-width': '75%',
                 'background-height': '75%'
