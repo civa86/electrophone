@@ -22,8 +22,24 @@ Frameworks and Libraries:
 | jQuery       | 1.12.11 | [https://jquery.com/](https://jquery.com/)                             |
 | jquery-knob  | 1.2.11  | [http://anthonyterrien.com/knob/](http://anthonyterrien.com/knob/)     |
 | Cytoscape.js | 2.5.5   | [http://js.cytoscape.org/](http://js.cytoscape.org/)                   |
+| Moment.js    | 2.13.0  | [https://momentjs.com/](https://momentjs.com/)                         |
+| ReduxForm    | 6.5.0   | [http://redux-form.com/6.5.0/](http://redux-form.com/6.5.0/)           |
 | Bootstrap    | 3.3.6   | [http://getbootstrap.com/](http://getbootstrap.com/)                   |
 | Ionicons     | 2.0.1   | [http://ionicons.com/](http://ionicons.com/)                           |
+
+Development Tools:
+
+| Name         | Version | Link                                                                                 |
+| ------------ | ------- | ------------------------------------------------------------------------------------ |
+| Babel        | 6.18.0  | [https://babeljs.io/](https://babeljs.io/)                                           |
+| ESLint       | 1.10.3  | [http://eslint.org/](http://eslint.org/)                                             |
+| Less         | 2.5.3   | [http://lesscss.org/](http://lesscss.org/)                                           |
+| webpack      | 1.13.3  | [https://webpack.github.io/](https://webpack.github.io/)                             |
+| Mocha        | 3.2.0   | [https://mochajs.org/](https://mochajs.org/)                                         |
+| Chai         | 3.5.0   | [http://chaijs.com/](http://chaijs.com/)                                             |
+| ESDoc        | 0.4.7   | [https://esdoc.org/](https://esdoc.org/)                                             |
+| isparta      | 4.0.0   | [https://github.com/douglasduteil/isparta](https://github.com/douglasduteil/isparta) |
+
 
 ## Library Code Documentation
 
