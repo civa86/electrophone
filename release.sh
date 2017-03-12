@@ -119,7 +119,7 @@ then
 
     git checkout development
 
-    echo "PUSH MASTER BRANCH TO PUBLISH YOUR BUILD WITH Travis CI!"
+    echo "PUSH MASTER BRANCH TO PUBLISH DEMO APPLICATION WITH Travis CI!"
 else
     echo "REVERTING PACKAGE VERSION: $START_V"
 

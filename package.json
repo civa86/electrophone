@@ -1,6 +1,6 @@
 {
   "name": "electrophone",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Modular Synth Javascript Library",
   "main": "dist/electrophone.js",
   "repository": {
