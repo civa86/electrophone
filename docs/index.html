@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">ElectroPhone Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/civa86/electrophone.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ElectroPhone.js~ElectroPhone.html">ElectroPhone</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AudioContext">AudioContext</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ElectroPhoneProperties">ElectroPhoneProperties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ModuleProperties">ModuleProperties</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="electrophone">ElectroPhone</h1>
+<p>JavaScript Library to build a modular synthesizer.</p>
+<p>Based on WebAudio API and WebAudio Effects Libray <a href="https://github.com/Theodeus/tuna">tuna</a></p>
+<p><a href="http://badge.fury.io/js/electrophone"><img src="https://badge.fury.io/js/electrophone.svg" alt="npm version"></a>
+<a href="https://travis-ci.org/civa86/electrophone"><img src="https://travis-ci.org/civa86/electrophone.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/civa86/electrophone?branch=master"><img src="https://coveralls.io/repos/github/civa86/electrophone/badge.svg?branch=master" alt="Coverage Status"></a></p>
+<h2 id="demo-application">Demo Application</h2>
+<p><a href="https://civa86.github.io/electrophone">https://civa86.github.io/electrophone</a></p>
+<p>HTML5 Application to demonstrate the use of <code>electrophone</code> library.</p>
+<p>Frameworks and Libraries:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>React</td>
+<td>15.4.1</td>
+<td><a href="https://facebook.github.io/react/">https://facebook.github.io/react/</a></td>
+</tr>
+<tr>
+<td>Redux</td>
+<td>3.6.0</td>
+<td><a href="http://redux.js.org/">http://redux.js.org/</a></td>
+</tr>
+<tr>
+<td>jQuery</td>
+<td>1.12.11</td>
+<td><a href="https://jquery.com/">https://jquery.com/</a></td>
+</tr>
+<tr>
+<td>jquery-knob</td>
+<td>1.2.11</td>
+<td><a href="http://anthonyterrien.com/knob/">http://anthonyterrien.com/knob/</a></td>
+</tr>
+<tr>
+<td>Cytoscape.js</td>
+<td>2.5.5</td>
+<td><a href="http://js.cytoscape.org/">http://js.cytoscape.org/</a></td>
+</tr>
+<tr>
+<td>Moment.js</td>
+<td>2.13.0</td>
+<td><a href="https://momentjs.com/">https://momentjs.com/</a></td>
+</tr>
+<tr>
+<td>ReduxForm</td>
+<td>6.5.0</td>
+<td><a href="http://redux-form.com/6.5.0/">http://redux-form.com/6.5.0/</a></td>
+</tr>
+<tr>
+<td>Bootstrap</td>
+<td>3.3.6</td>
+<td><a href="http://getbootstrap.com/">http://getbootstrap.com/</a></td>
+</tr>
+<tr>
+<td>Ionicons</td>
+<td>2.0.1</td>
+<td><a href="http://ionicons.com/">http://ionicons.com/</a></td>
+</tr>
+</tbody>
+</table>
+<p>Development Tools:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Babel</td>
+<td>6.18.0</td>
+<td><a href="https://babeljs.io/">https://babeljs.io/</a></td>
+</tr>
+<tr>
+<td>ESLint</td>
+<td>1.10.3</td>
+<td><a href="http://eslint.org/">http://eslint.org/</a></td>
+</tr>
+<tr>
+<td>Less</td>
+<td>2.5.3</td>
+<td><a href="http://lesscss.org/">http://lesscss.org/</a></td>
+</tr>
+<tr>
+<td>webpack</td>
+<td>1.13.3</td>
+<td><a href="https://webpack.github.io/">https://webpack.github.io/</a></td>
+</tr>
+<tr>
+<td>Mocha</td>
+<td>3.2.0</td>
+<td><a href="https://mochajs.org/">https://mochajs.org/</a></td>
+</tr>
+<tr>
+<td>Chai</td>
+<td>3.5.0</td>
+<td><a href="http://chaijs.com/">http://chaijs.com/</a></td>
+</tr>
+<tr>
+<td>ESDoc</td>
+<td>0.4.7</td>
+<td><a href="https://esdoc.org/">https://esdoc.org/</a></td>
+</tr>
+<tr>
+<td>isparta</td>
+<td>4.0.0</td>
+<td><a href="https://github.com/douglasduteil/isparta">https://github.com/douglasduteil/isparta</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="library-code-documentation">Library Code Documentation</h2>
+<p><a href="http://civa86.github.io/electrophone/docs/">Documentation Page</a></p>
+<p>Code Documentation of the ElectroPhone class provided by the Library.</p>
+<p>For a full development documentation:</p>
+<ul>
+<li>Download / Clone the Repository</li>
+<li>Enter in the electrophone project folder</li>
+<li>Run <code>lib::docs</code> npm script</li>
+<li>Run docs/index.html in a browser</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Install npm module</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install electrophone</code>
+</code></pre>
+<h4 id="include-library">Include Library</h4>
+<p>With ES5 via <code>&lt;script&gt;</code> tag:</p>
+<p><code>&lt;script src=&quot;&lt;path_to_node_modules&gt;/electrophone/dist/electrophone.min.js&quot;/&gt;</code></p>
+<p>With ES2015 via <a href="https://babeljs.io/">Babel</a>:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import ElectroPhone from &apos;electrophone&apos;</code>
+</code></pre>
+<h4 id="create-an-instance">Create an instance</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Get the browser AudioContext
+var AudioCtx = window.AudioContext || window.webkitAudioContext;
+
+// CREATE A ElectroPhone INSTANCE
+var synth = new ElectroPhone(new AudioCtx(), {
+        //Optional parameters
+        spectrum: &lt;true|false&gt;,            // set true to manage data of playing sound
+        updateSpectrum: &lt;dataArray =&gt; {}&gt;, // on receive data callback
+        resetSpectrum: &lt;() =&gt; {}&gt;          // on stop data callback
+    });</code>
+</code></pre>
+<h4 id="create-modules">Create Modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">synth.create(&quot;moduleLabel&quot;, &quot;moduleType&quot;, { ...properties });</code>
+</code></pre>
+<h4 id="update-modules">Update Modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">synth.update(&quot;moduleLabel&quot;, { ...properties });</code>
+</code></pre>
+<h4 id="destroy-modules">Destroy Modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">synth.destroy(&quot;moduleLabel&quot;);</code>
+</code></pre>
+<h4 id="link-modules">Link modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">synth.link(&quot;sourceModuleLabel&quot;, &quot;destinationModuleLabel&quot;);</code>
+</code></pre>
+<h4 id="update-prebuilt-modules">Update Prebuilt Modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Master module
+synth.master({ ...properties });
+
+// ADSR module
+synth.adsr({ ...properties });</code>
+</code></pre>
+<h4 id="play-and-stop-sound">Play and Stop sound</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Play a frequency (20 - 20000)
+synth.play(440);
+
+// Stop a frequency (20 - 20000)
+synth.stop(440);</code>
+</code></pre>
+<h4 id="get-all-created-modules">Get All Created Modules</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">synth.getModules();</code>
+</code></pre>
+<h4 id="static-methods">Static Methods</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Get module properties by type.
+ElectroPhone.getModuleProperties(&quot;moduleType&quot;);
+
+// Describe all ElectroPhone modules with properties configuration.
+ElectroPhone.describeModules(&quot;moduleType&quot;);
+
+// Get frequency float value calculated from given note and octave.
+ElectroPhone.getFrequency(&quot;A&quot;, 4);
+
+// Get complete notes list.
+ElectroPhone.getNotes();</code>
+</code></pre>
+<h2 id="constants">Constants</h2>
+<p>The library expose two set of constants: <code>CONST</code> and <code>TYPES</code></p>
+<h4 id="const">CONST</h4>
+<p>The set of string values to setup module properties.</p>
+<table>
+<thead>
+<tr>
+<th>CONST</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MASTER</td>
+<td>the Master module label</td>
+</tr>
+<tr>
+<td>ADSR</td>
+<td>the ADSR module label</td>
+</tr>
+<tr>
+<td>NOISE_WHITE</td>
+<td>the white Noise color value</td>
+</tr>
+<tr>
+<td>NOISE_PINK</td>
+<td>the pink Noise color value</td>
+</tr>
+<tr>
+<td>NOISE_BROWN</td>
+<td>the brown Noise color value</td>
+</tr>
+<tr>
+<td>WAVE_SINE</td>
+<td>the sine Wave type value</td>
+</tr>
+<tr>
+<td>WAVE_SQUARE</td>
+<td>the square Wave type value</td>
+</tr>
+<tr>
+<td>WAVE_SAWTOOTH</td>
+<td>the sawtooth Wave type value</td>
+</tr>
+<tr>
+<td>WAVE_TRIANLGE</td>
+<td>the triangle Wave type value</td>
+</tr>
+<tr>
+<td>WAVE_CUSTOM</td>
+<td>the custom Wave type value</td>
+</tr>
+<tr>
+<td>FILTER_LOWPASS</td>
+<td>the lowpass Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_HIGHPASS</td>
+<td>the highpass Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_BANDPASS</td>
+<td>the bandpass Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_LOWSHELF</td>
+<td>the lowshelf Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_HIGHSHELF</td>
+<td>the highshelf Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_PEAKING</td>
+<td>the peaking Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_NOTCH</td>
+<td>the notch Filter type value</td>
+</tr>
+<tr>
+<td>FILTER_ALLPASS</td>
+<td>the allpass Filter type value</td>
+</tr>
+<tr>
+<td>MODULATOR_TARGET_FREQ</td>
+<td>the frequency Modulator target value</td>
+</tr>
+<tr>
+<td>MODULATOR_TARGET_DETUNE</td>
+<td>the detune Modulator target value</td>
+</tr>
+<tr>
+<td>ENVELOPE_TARGET_GAIN</td>
+<td>the gain Envelope target value</td>
+</tr>
+<tr>
+<td>ENVELOPE_TARGET_FREQ</td>
+<td>the frequency Envelope target value</td>
+</tr>
+<tr>
+<td>ENVELOPE_TARGET_DETUNE</td>
+<td>the detune Envelope target value</td>
+</tr>
+</tbody>
+</table>
+<h4 id="types">TYPES</h4>
+<p>The set of string values to create modules.</p>
+<table>
+<thead>
+<tr>
+<th>TYPES</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSCILLATOR</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.OSCILLATOR, {})</td>
+</tr>
+<tr>
+<td>NOISE</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.NOISE, {})</td>
+</tr>
+<tr>
+<td>MODULATOR</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.MODULATOR, {})</td>
+</tr>
+<tr>
+<td>ENVELOPE</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.ENVELOPE, {})</td>
+</tr>
+<tr>
+<td>PAN</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.PAN, {})</td>
+</tr>
+<tr>
+<td>FILTER</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.FILTER, {})</td>
+</tr>
+<tr>
+<td>DELAY</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.DELAY, {})</td>
+</tr>
+<tr>
+<td>PINGPONGDELAY</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.PINGPONGDELAY, {})</td>
+</tr>
+<tr>
+<td>TREMOLO</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.TREMOLO, {})</td>
+</tr>
+<tr>
+<td>OVERDRIVE</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.OVERDRIVE, {})</td>
+</tr>
+<tr>
+<td>BITCRUSHER</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.BITCRUSHER, {})</td>
+</tr>
+<tr>
+<td>MOOGFILTER</td>
+<td>synth.create(&apos;label&apos;, ElectroPhone.TYPES.MOOGFILTER, {})</td>
+</tr>
+</tbody>
+</table>
+<h4 id="full-example-two-voices-synth">Full Example: Two Voices Synth</h4>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Load library
+import ElectroPhone from &apos;electrophone&apos;;
+
+// Build the synth instance (See Usage Section)
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+const synth = new ElectroPhone(new AudioCtx());
+
+// Create the first voice
+synth.create(
+    &apos;Voice1&apos;,
+    ElectroPhone.TYPES.OSCILLATOR,
+    {
+        wave: ElectroPhone.CONST.WAVE_SAWTOOTH,
+        detune: 500,
+        level: 50
+    }
+);
+
+// Create the second voice
+synth.create(
+    &apos;Voice2&apos;,
+    ElectroPhone.TYPES.OSCILLATOR,
+    {
+        wave: ElectroPhone.CONST.WAVE_SAWTOOTH,
+        detune: -500,
+        level: 50
+    }
+);
+
+//Link voices to Master
+synth.link(&apos;Voice1&apos;, ElectroPhone.CONST.MASTER);
+synth.link(&apos;Voice2&apos;, ElectroPhone.CONST.MASTER);
+
+// Setup ADSR
+synth.adsr({ attack: 0, decay: 1, sustain: 50, release: 25 });
+
+// Set Master Volume to 80%
+synth.master({ level: 80 });
+
+// Get the A4 note frequency
+const a4 = ElectroPhone.getFrequency(&quot;A&quot;, 4);
+
+// Play the a4 note
+synth.play(a4);
+
+// Stop the a4 note after 1 second
+setTimeout(() =&gt; synth.stop(a4), 1000);</code>
+</code></pre>
+<h2 id="prebuilt-modules">Prebuilt Modules</h2>
+<p>Every ElectroPhone instance has 2 hardcoded modules: <code>Master</code> and <code>ADSR</code>.</p>
+<p>This is the minimal configuration to let sound coming out from  your
+sound card and control its behaviour during time.</p>
+<h4 id="master">Master</h4>
+<p>Main Output Gain.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<h4 id="adsr">ADSR</h4>
+<p>Envelope on the master gain. Describes final sound behavior during time.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>attack</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>decay</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sustain</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>release</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sound-modules">Sound Modules</h2>
+<p>Sound Modules can generate sounds and play frequencies.</p>
+<p>They can be linked to any Effect Module or directly to Master</p>
+<h4 id="oscillator">Oscillator</h4>
+<p>Sound Wave Generator.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>detune</td>
+<td>Integer</td>
+<td>-1200 - 1200</td>
+<td>0</td>
+</tr>
+<tr>
+<td>wave</td>
+<td>String</td>
+<td>sine, square, sawtooth, triangle, custom</td>
+<td>sine</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="noise">Noise</h4>
+<p>Noise Generator.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>detune</td>
+<td>Integer</td>
+<td>-1200 - 1200</td>
+<td>0</td>
+</tr>
+<tr>
+<td>color</td>
+<td>String</td>
+<td>white, brown, pink</td>
+<td>white</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="control-modules">Control Modules</h2>
+<p>Control Modules can change the behavior of a specific module property or modify the final sound.</p>
+<h4 id="modulator">Modulator</h4>
+<p>An Oscillator that produces modulation on another module property.</p>
+<p>It can be linked to any module with <code>freq</code> or <code>detune</code> property.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>freq</td>
+<td>Integer</td>
+<td>1 - 100</td>
+<td>5</td>
+</tr>
+<tr>
+<td>wave</td>
+<td>String</td>
+<td>sine, square, sawtooth, triangle, custom</td>
+<td>sine</td>
+</tr>
+<tr>
+<td>target</td>
+<td>String</td>
+<td>frequency, detune</td>
+<td>frequency</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="envelope">Envelope</h4>
+<p>A module that can describe property changes during time.</p>
+<p>It can be linked to any module with <code>level</code> property (gain target).</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>attack</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>decay</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sustain</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>release</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>5</td>
+</tr>
+<tr>
+<td>target</td>
+<td>String</td>
+<td>frequency, detune, gain</td>
+<td>gain</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pan">Pan</h4>
+<p>A module that routes sound between left and right channel.</p>
+<p>It can be placed between a Sound Module and its destination to setup stereo routing.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>pan</td>
+<td>Float</td>
+<td>-1 - 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="effect-modules">Effect Modules</h2>
+<p>Effect Modules can change the nature of a sound.</p>
+<p>They can be linked to other Effect Modules to create an effect chain and finally to Master.</p>
+<h4 id="filter">Filter</h4>
+<p>A module that filters frequencies with different algorithms.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>freq</td>
+<td>Integer</td>
+<td>20 - 20000</td>
+<td>440</td>
+</tr>
+<tr>
+<td>q</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>10</td>
+</tr>
+<tr>
+<td>filterGain</td>
+<td>Integer</td>
+<td>-40 - 40</td>
+<td>0</td>
+</tr>
+<tr>
+<td>filterType</td>
+<td>String</td>
+<td>lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass</td>
+<td>lowpass</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="delay">Delay</h4>
+<p>A module that plays a sound back after a period of time.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>dry</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>wet</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>feedback</td>
+<td>Float</td>
+<td>0 - 0.9</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>cutoff</td>
+<td>Integer</td>
+<td>20 - 20000</td>
+<td>440</td>
+</tr>
+<tr>
+<td>delayTime</td>
+<td>Integer</td>
+<td>20 - 1000</td>
+<td>100</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pingpongdelay">PingPongDelay</h4>
+<p>A different kind of Delay.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>wet</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>feedback</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>cutoff</td>
+<td>Integer</td>
+<td>20 - 20000</td>
+<td>440</td>
+</tr>
+<tr>
+<td>delayTimeLeft</td>
+<td>Integer</td>
+<td>1 - 10000</td>
+<td>200</td>
+</tr>
+<tr>
+<td>delayTimeRight</td>
+<td>Integer</td>
+<td>1 - 10000</td>
+<td>400</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tremolo">Tremolo</h4>
+<p>A trembling sound effect.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>intensity</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>rate</td>
+<td>Float</td>
+<td>0 - 11</td>
+<td>5</td>
+</tr>
+<tr>
+<td>stereoPhase</td>
+<td>Integer</td>
+<td>0 - 180</td>
+<td>0</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="overdrive">Overdrive</h4>
+<p>A module that alters the sound increasing its gain with distortion.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>outputGain</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>drive</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>curveAmount</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td>algorithmIndex</td>
+<td>Integer</td>
+<td>0 - 5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="bitcrusher">Bitcrusher</h4>
+<p>A module that produces a distortion by the reduction of the resolution or bandwidth of digital audio data.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>bits</td>
+<td>Integer</td>
+<td>1 - 16</td>
+<td>4</td>
+</tr>
+<tr>
+<td>normfreq</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>bufferSize</td>
+<td>Integer</td>
+<td>256 - 16384</td>
+<td>4096</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="moogfilter">Moogfilter</h4>
+<p>A Moog inspired filter</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>Integer</td>
+<td>0 - 100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>cutoff</td>
+<td>Float</td>
+<td>0 - 1</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>resonance</td>
+<td>Float</td>
+<td>0 - 4</td>
+<td>3.5</td>
+</tr>
+<tr>
+<td>bufferSize</td>
+<td>Integer</td>
+<td>256 - 16384</td>
+<td>4096</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>Flag</td>
+<td>0 / 1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>link</td>
+<td>String</td>
+<td>master, &quot;any module label&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

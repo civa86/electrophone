@@ -1,0 +1,11 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <Dario Civallero> -- <Web Developer> -- <https://github.com/civa86>
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, JAVASCRIPT
+    React, Redux, ES6, WebAudio API

@@ -1,0 +1,46 @@
+{
+  "name": "electrophone",
+  "version": "1.0.0",
+  "description": "Modular Synth Javascript Library",
+  "main": "dist/electrophone.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/civa86/electrophone.git"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "devDependencies": {
+    "babel-cli": "6.3.17",
+    "babel-core": "6.3.26",
+    "babel-loader": "6.2.2",
+    "babel-preset-es2015-loose": "6.1.4",
+    "babel-preset-stage-0": "6.3.13",
+    "eslint": "1.10.3",
+    "eslint-loader": "1.2.1",
+    "esdoc": "0.4.7",
+    "esdoc-es7-plugin": "0.0.3",
+    "stereo-panner-shim": "0.1.4",
+    "tunajs": "0.4.2",
+    "mocha": "2.4.5",
+    "node-libs-browser": "0.5.3",
+    "chai": "3.5.0",
+    "isparta": "4.0.0",
+    "coveralls": "2.11.11",
+    "webpack": "1.9.13"
+  },
+  "scripts": {
+    "test": "mocha ./test/*.js ./test/**/*.js --reporter spec --compilers js:babel-core/register --recursive --colors",
+    "test::watch": "npm test -- --watch",
+    "lib::readme::preview": "grip -b",
+    "lib::coverage": "babel-node ./node_modules/.bin/isparta cover --report lcovonly --report html _mocha -- ./test/*.js ./test/**/*.js --reporter spec --recursive --colors",
+    "lib::dev": "webpack --config webpack.config.js --colors",
+    "lib::build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --profile --bail",
+    "lib::dist": "npm test -- --bail && npm run lib::build",
+    "lib::docs": "esdoc -c esdoc.json",
+    "lib::docs::public": "esdoc -c esdoc.public.json"
+  },
+  "engines": {
+    "node": "=6.1.0",
+    "npm": "=3.8.6"
+  }
+}

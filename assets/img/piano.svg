@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+<font id="Fontsaddict" horiz-adv-x="512">
+<font-face font-family="Fontsaddict" units-per-em="512" ascent="448" descent="-64" x-height="240" cap-height="480"/><missing-glyph horiz-adv-x="512"/><glyph unicode="&#xE800;" glyph-name="piano" horiz-adv-x="512" d="M157.336 -44H248h21.336H360h21.336h112V429.816h-112H360H269.336H248H157.336H136H24V-44h112H157.336zM469.336 -20H384V117.336h28V405.816 h57.336V-20zM357.336 117.336V-20H272V117.336h28V405.816h26.664v-288.48H357.336zM245.336 117.336V-20H160V117.336h28V405.816h26.664v-288.48 H245.336zM133.336 -20H48V405.816h54.664v-288.48h30.672V-20z"/></font></defs></svg>

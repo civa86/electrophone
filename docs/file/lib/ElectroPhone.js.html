@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/ElectroPhone.js | ElectroPhone Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/civa86/electrophone.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ElectroPhone.js~ElectroPhone.html">ElectroPhone</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AudioContext">AudioContext</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ElectroPhoneProperties">ElectroPhoneProperties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ModuleProperties">ModuleProperties</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/ElectroPhone.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as Modules from &apos;./src/modules&apos;;
+import * as Props from &apos;./src/properties&apos;;
+import { CONST, TYPES } from &apos;./src/core/Constants&apos;;
+import Synth from &apos;./src/Synth&apos;;
+
+const
+    notes = [&apos;C&apos;, &apos;C#&apos;, &apos;D&apos;, &apos;D#&apos;, &apos;E&apos;, &apos;F&apos;, &apos;F#&apos;, &apos;G&apos;, &apos;G#&apos;, &apos;A&apos;, &apos;A#&apos;, &apos;B&apos;],
+    methods = Object.keys(Modules);
+let synth;
+
+/**
+ * ElectroPhone Library.
+ * @example
+ * const AudioCtx = window.AudioContext || window.webkitAudioContext;
+ * const synth = new ElectroPhone(new AudioCtx(), { spectrum: false });
+ */
+class ElectroPhone {
+    /**
+     * Create a playable web synthesizer instance.
+     * @param {AudioContext} audioContext - Web Audio Context instance.
+     * @param {ElectroPhoneProperties} [properties] - synth properties.
+     */
+    constructor (audioContext, props) {
+        const properties = props || {};
+        synth = new Synth(audioContext, properties);
+        this.isPlaying = false;
+    }
+
+    /**
+     * Returns current synth modules configuration object.
+     * @return {Object} current synth modules configuration.
+     * @property {Object} master - the master ModuleProperties.
+     * @property {Object} adsr - the adsr ModuleProperties.
+     * @property {ModuleProperties} &lt;module_id&gt; - one ModuleProperties for each created module.
+     */
+    getModules () {
+        return {
+            ...synth.modulesConfig
+        };
+    }
+
+    /**
+     * Create a new synth module.
+     * @param {String} id - the module identifier.
+     * @param {String} type - the type of module.
+     * @param {Object} properties - module properties.
+     * @return {ElectroPhone}
+     * @throws {Error} throw error when module with id is already created.
+     */
+    create (id, type, properties) {
+        const currentModule = this.getModules()[id];
+        if (currentModule) {
+            throw new Error(&apos;Module &apos; + id + &apos; already created. Use update method instead.&apos;);
+        }
+        synth.module(type, id, properties);
+        return this;
+    }
+
+    /**
+     * Update the synth module by id.
+     * @param {String} id - the module identifier.
+     * @param {Object} properties - module properties.
+     * @return {ElectroPhone}
+     * @throws {Error} throw error when module with id is not found.
+     */
+    update (id, properties) {
+        const currentModule = this.getModules()[id];
+        if (!currentModule) {
+            throw new Error(&apos;Module &apos; + id + &apos; not found. Use create method instead.&apos;);
+        }
+        synth.module(currentModule.type, id, properties);
+        return this;
+    }
+
+    /**
+     * Update the master module.
+     * @param {Object} properties - master properties.
+     * @return {ElectroPhone}
+     */
+    master (properties) {
+        synth.module(TYPES.MASTER, CONST.MASTER, properties);
+        return this;
+    }
+
+    /**
+     * Update the ADSR module.
+     * @param {Object} properties - ADSR (Envelope) properties
+     * @return {ElectroPhone}
+     */
+    adsr (properties) {
+        synth.module(TYPES.ENVELOPE, CONST.ADSR, properties);
+        return this;
+    }
+
+    /**
+     * Destroy the synth module by id.
+     * @param {String} id - the module identifier.
+     * @return {ElectroPhone}
+     * @throws {Error} throw error when module with id is not found.
+     */
+    destroy (id) {
+        const currentModule = this.getModules()[id];
+        if (!currentModule) {
+            throw new Error(&apos;Module &apos; + id + &apos; not found.&apos;);
+        }
+        synth.destroyModule(id);
+        return this;
+    }
+
+    /**
+     * Start playing the input frequency.
+     * @param {Number} frequency - the frequency value.
+     * @return {ElectroPhone}
+     */
+    play (frequency) {
+        if (+frequency &gt;= 0) {
+            synth.play(frequency);
+            this.isPlaying = true;
+        }
+        return this;
+    }
+
+    /**
+     * Stop playing the input frequency.
+     * @param {Number} frequency - the frequency value.
+     * @return {ElectroPhone}
+     */
+    stop (frequency) {
+        if (+frequency &gt;= 0) {
+            synth.stop(frequency);
+            this.isPlaying = false;
+        }
+        return this;
+    }
+
+    /**
+     * Link two modules, connect source module to target module.
+     * @param {String} source - the source module id.
+     * @param {String} target - the target module id.
+     * @return {ElectroPhone}
+     * @throws {Error} throw error when source is master.
+     * @throws {Error} throw error when source module is not found.
+     * @throws {Error} throw error when target module is not found.
+     */
+    link (source, target) {
+        if (source === CONST.MASTER) {
+            throw new Error(&apos;Module master can\&apos;t be linked to any modules.&apos;);
+        }
+        if (!synth.modulesConfig[source]) {
+            throw new Error(&apos;Source module &apos; + source + &apos; not found.&apos;);
+        }
+
+        if (!synth.modulesConfig[target]) {
+            throw new Error(&apos;Target module &apos; + target + &apos; not found.&apos;);
+        }
+        synth.modulesConfig[source].props.link = target;
+        return this;
+    }
+
+    /**
+     * Get module properties by type.
+     * @param {String} moduleType - module=&apos;&apos; type, taken from ElectroPhone.TYPES.
+     * @return {Array}
+     */
+    static getModuleProperties (moduleType = &apos;&apos;) {
+        const moduleProps = Props[moduleType + &apos;Props&apos;] || {};
+
+        return [
+            ...Object.keys(moduleProps).map(prop =&gt; ({ ...moduleProps[prop], name: prop })),
+            ...Object.keys(Props.DefaultProps).map(prop =&gt; ({ ...Props.DefaultProps[prop], name: prop }))
+        ];
+    }
+
+    /**
+     * Describe all ElectroPhone modules with parameters configuration.
+     * @return {Array}
+     */
+    static describeModules () {
+        return [...methods]
+            .filter(e =&gt; e !== &apos;__esModule&apos;)
+            .reduce((result, e) =&gt; {
+                return [
+                    ...result,
+                    {
+                        type: e,
+                        properties: ElectroPhone.getModuleProperties(e)
+                    }
+                ];
+            }, []);
+    }
+
+    /**
+     * Get frequency float value calculated from given note and octave.
+     * @param {String} note - note char indicator. sharp char for semi-tones.
+     * @param {Number} octave - octave number.
+     * @return {Number}
+     */
+    static getFrequency (note, octave) {
+        const
+            octaveD = parseInt(octave, 10) - 4,
+            noteD = notes.indexOf(note) - notes.indexOf(&apos;A&apos;),
+            delta = 12 * octaveD,
+            exp = (noteD + delta),
+            freq = 440 * Math.pow(1.059463, exp);
+        return parseFloat(freq.toFixed(3)) || 0;
+    }
+
+    /**
+     * Get complete notes list.
+     * @return {Array}
+     */
+    static getNotes () {
+        return notes;
+    }
+}
+
+ElectroPhone.CONST = CONST;
+ElectroPhone.TYPES = TYPES;
+
+export default ElectroPhone;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

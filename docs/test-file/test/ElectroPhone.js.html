@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/ElectroPhone.js | ElectroPhone Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/civa86/electrophone.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ElectroPhone.js~ElectroPhone.html">ElectroPhone</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AudioContext">AudioContext</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ElectroPhoneProperties">ElectroPhoneProperties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ModuleProperties">ModuleProperties</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/ElectroPhone.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { expect } from &apos;chai&apos;;
+import ElectroPhone from &apos;../lib/ElectroPhone&apos;
+
+/** @test {ElectroPhone} */
+describe(&apos;ElectroPhone&apos;, () =&gt; {
+    let synth;
+
+    it(&apos;should have a ElectroPhone function&apos;, () =&gt; {
+        expect(ElectroPhone).to.be.a(&apos;function&apos;);
+    });
+
+    /** @test {ElectroPhone#constructor} */
+    it(&apos;should create a ElectroPhone instance&apos;, () =&gt; {
+        synth = new ElectroPhone();
+        expect(synth).to.be.a(&apos;object&apos;);
+    });
+
+    /** @test {ElectroPhone#isPlaying} */
+    it(&apos;should have a isPlaying property&apos;, () =&gt; {
+        expect(synth.isPlaying).to.be.defined;
+        expect(synth.isPlaying).to.be.equal(false);
+    });
+
+    /** @test {ElectroPhone#getModules} */
+    it(&apos;should have a method to get modules&apos;, () =&gt; {
+        synth = new ElectroPhone();
+        expect(synth.getModules).to.be.a(&apos;function&apos;);
+        expect(synth.getModules()).to.be.a(&apos;object&apos;);
+    });
+
+    /** @test {ElectroPhone#defaultModules} */
+    it(&apos;should have master and adsr modules created&apos;, () =&gt; {
+        const modules = synth.getModules();
+        expect(modules[ElectroPhone.CONST.MASTER]).to.be.a(&apos;object&apos;);
+        expect(modules[ElectroPhone.CONST.ADSR]).to.be.a(&apos;object&apos;);
+    });
+
+    /** @test {ElectroPhone#create} */
+    it(&apos;should have a create method to add new module&apos;, () =&gt; {
+        let modules;
+        const nodeProps = { level: 100, link: null, wave: &apos;sine&apos; };
+
+        expect(synth.create).to.be.a(&apos;function&apos;);
+        synth.create(&apos;node1&apos;, ElectroPhone.TYPES.OSCILLATOR, nodeProps);
+
+        modules = synth.getModules();
+        expect(modules[&apos;node1&apos;]).to.be.a(&apos;object&apos;);
+        expect(modules[&apos;node1&apos;].type).to.equal(ElectroPhone.TYPES.OSCILLATOR);
+        expect(modules[&apos;node1&apos;].props).to.deep.equal(nodeProps);
+    });
+
+    /** @test {ElectroPhone#create} */
+    it(&apos;should fail if try to create an existing module&apos;, () =&gt; {
+        expect(synth.create.bind(synth, &apos;node1&apos;, ElectroPhone.TYPES.OSCILLATOR, {})).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#update} */
+    it(&apos;should have a update method to update a module&apos;, () =&gt; {
+        let modules;
+
+        expect(synth.update).to.be.a(&apos;function&apos;);
+        synth.update(&apos;node1&apos;, { level: 50 });
+
+        modules = synth.getModules();
+        expect(modules[&apos;node1&apos;]).to.be.a(&apos;object&apos;);
+        expect(modules[&apos;node1&apos;].props).to.be.a(&apos;object&apos;);
+        expect(modules[&apos;node1&apos;].props.level).to.equal(50);
+    });
+
+    /** @test {ElectroPhone#update} */
+    it(&apos;should fail if try to update a module that doesn\&apos;t exist&apos;, () =&gt; {
+        expect(synth.update.bind(synth, &apos;nodeX&apos;, {})).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#master} */
+    it(&apos;should have a master method to update the master module&apos;, () =&gt; {
+        let modules;
+
+        expect(synth.master).to.be.a(&apos;function&apos;);
+        synth.master({ level: 50 });
+
+        modules = synth.getModules();
+        expect(modules[ElectroPhone.CONST.MASTER].props).to.be.a(&apos;object&apos;);
+        expect(modules[ElectroPhone.CONST.MASTER].props.level).to.equal(50);
+    });
+
+    /** @test {ElectroPhone#adsr} */
+    it(&apos;should have a adsr method to update the adsr module&apos;, () =&gt; {
+        let modules;
+
+        expect(synth.adsr).to.be.a(&apos;function&apos;);
+        synth.adsr({ attack: 10 });
+
+        modules = synth.getModules();
+        expect(modules[ElectroPhone.CONST.ADSR].props).to.be.a(&apos;object&apos;);
+        expect(modules[ElectroPhone.CONST.ADSR].props.attack).to.equal(10);
+    });
+
+    /** @test {ElectroPhone#destroy} */
+    it(&apos;should have a destroy method to destroy a module&apos;, () =&gt; {
+        let modules;
+
+        expect(synth.destroy).to.be.a(&apos;function&apos;);
+        synth.destroy(&apos;node1&apos;);
+
+        modules = synth.getModules();
+        expect(modules[&apos;node1&apos;]).to.be.undefined;
+    });
+
+    /** @test {ElectroPhone#destroy} */
+    it(&apos;should fail if try to destroy a module that doesn\&apos;t exist&apos;, () =&gt; {
+        expect(synth.destroy.bind(synth, &apos;nodeX&apos;)).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#play} */
+    it(&apos;should have a play method that doesn\&apos;t start if no frequency given&apos;, () =&gt; {
+        synth.play();
+        expect(synth.isPlaying).to.be.equal(false);
+    });
+
+    /** @test {ElectroPhone#play} */
+    it(&apos;should have a play method that start playing given frequency&apos;, () =&gt; {
+        synth.play(440);
+        expect(synth.isPlaying).to.be.equal(true);
+    });
+
+
+    /** @test {ElectroPhone#stop} */
+    it(&apos;should have a stop method that doesn\&apos;t stop if no frequency given&apos;, () =&gt; {
+        synth.stop();
+        expect(synth.isPlaying).to.be.equal(true);
+    });
+
+    /** @test {ElectroPhone#stop} */
+    it(&apos;should have a stop method that stop playing given frequency&apos;, () =&gt; {
+        synth.stop(440);
+        expect(synth.isPlaying).to.be.equal(false);
+    });
+
+    /** @test {ElectroPhone#link} */
+    it(&apos;should have a link method to link two modules&apos;, () =&gt; {
+        const nodeProps = { level: 100, link: null, wave: &apos;sine&apos; };
+        let modules;
+
+        synth.create(&apos;node1&apos;, ElectroPhone.TYPES.OSCILLATOR, nodeProps);
+
+        expect(synth.link).to.be.a(&apos;function&apos;);
+        synth.link(&apos;node1&apos;, ElectroPhone.CONST.MASTER);
+
+        modules = synth.getModules();
+        expect(modules[&apos;node1&apos;]).to.be.a(&apos;object&apos;);
+        expect(modules[&apos;node1&apos;].props).to.be.a(&apos;object&apos;);
+        expect(modules[&apos;node1&apos;].props.link).to.equal(ElectroPhone.CONST.MASTER);
+    });
+
+    /** @test {ElectroPhone#link} */
+    it(&apos;should fail if try to link the master module to anything&apos;, () =&gt; {
+        expect(synth.link.bind(synth, ElectroPhone.CONST.MASTER, &apos;node1&apos;)).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#link} */
+    it(&apos;should fail if try to link a source that doesn\&apos;t exist&apos;, () =&gt; {
+        expect(synth.link.bind(synth, &apos;nodeX&apos;, ElectroPhone.CONST.MASTER)).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#link} */
+    it(&apos;should fail if try to link a source to a target that doesn\&apos;t exist&apos;, () =&gt; {
+        expect(synth.link.bind(synth, &apos;node1&apos;, &apos;nodeX&apos;)).to.throw(Error);
+    });
+
+    /** @test {ElectroPhone#getModuleProperties} */
+    it(&apos;should have a static getModuleProperties method to get module properties by type&apos;, () =&gt; {
+        const
+            props = ElectroPhone.getModuleProperties(),
+            oscProps = ElectroPhone.getModuleProperties(ElectroPhone.TYPES.OSCILLATOR);
+
+        expect(props).is.an(&apos;array&apos;);
+        expect(props.length).to.be.above(0);
+        expect(props.filter(e =&gt; e.name === &apos;level&apos;).pop().defaultValue).to.be.equal(100);
+
+        expect(oscProps).is.an(&apos;array&apos;);
+        expect(oscProps.length).to.be.above(0);
+        expect(oscProps.filter(e =&gt; e.name === &apos;wave&apos;).pop().defaultValue).to.be.equal(ElectroPhone.CONST.WAVE_SINE);
+    });
+
+    /** @test {ElectroPhone#describeModules} */
+    it(&apos;should have a static describeModules method to describe all ElectroPhone modules with properties&apos;, () =&gt; {
+        const modules = ElectroPhone.describeModules();
+
+        expect(modules).is.an(&apos;array&apos;);
+        expect(modules.length).to.be.above(0);
+        expect(modules.filter(e =&gt; e.type === ElectroPhone.TYPES.MASTER).pop().properties).is.an(&apos;array&apos;);
+        expect(
+            modules
+                .filter(e =&gt; e.type === ElectroPhone.TYPES.MASTER)
+                .pop()
+                .properties
+                .filter(p =&gt; p.name === &apos;level&apos;)
+                .pop()
+                .defaultValue
+        ).to.be.equal(100);
+
+        expect(modules.filter(e =&gt; e.type === ElectroPhone.TYPES.OSCILLATOR).pop().properties).is.an(&apos;array&apos;);
+        expect(
+            modules
+                .filter(e =&gt; e.type === ElectroPhone.TYPES.OSCILLATOR)
+                .pop()
+                .properties
+                .filter(p =&gt; p.name === &apos;wave&apos;)
+                .pop()
+                .defaultValue
+        ).to.be.equal(ElectroPhone.CONST.WAVE_SINE);
+    });
+
+    /** @test {ElectroPhone#getFrequency} */
+    it(&apos;should have a static getFrequency method to calculate frequency value from note and octave&apos;, () =&gt; {
+        const
+            freq = ElectroPhone.getFrequency(),
+            freqA4 = ElectroPhone.getFrequency(&apos;A&apos;, 4);
+
+        expect(freq).to.be.a(&apos;number&apos;);
+        expect(freq).to.be.equal(0);
+        expect(freqA4).to.be.a(&apos;number&apos;);
+        expect(freqA4).to.be.equal(440);
+    });
+
+    /** @test {ElectroPhone#getFrequency} */
+    it(&apos;should have a static getNotes method to get notes list&apos;, () =&gt; {
+        const notes = ElectroPhone.getNotes();
+
+        expect(notes).is.an(&apos;array&apos;);
+        expect(notes.length).to.be.equal(12);
+        expect(notes.indexOf(&apos;C&apos;)).to.be.equal(0);
+        expect(notes.indexOf(&apos;A&apos;)).to.be.equal(9);
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
