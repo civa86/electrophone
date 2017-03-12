@@ -117,9 +117,6 @@ then
     git flow release start $RELEASE_NUM
     git flow release finish -m "release-$RELEASE_NUM" $RELEASE_NUM
 
-    echo "PUBLISH PACKAGE $RELEASE_NUM TO NPM REGISTRY"
-    npm publish
-
     git checkout development
 
     echo "PUSH MASTER BRANCH TO PUBLISH DEMO APPLICATION WITH Travis CI!"
